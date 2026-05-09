@@ -837,7 +837,7 @@ MonoBehaviour:
   - dayName: Day1
     lines:
     - speakerName: "\u5C0F\u798F"
-      portrait: {fileID: 567662240, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+      portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
       isLeftPortrait: 1
       text: "\u6211\u662F\u4E00\u53EA\u5728\u6DF1X\u6253\u5DE5\u7684\u793E\u755C"
       backgroundImage: {fileID: 21300000, guid: f470626e478968a4988db6fe18ce57a4, type: 3}
