@@ -26,8 +26,8 @@ public class ShopManager : MonoBehaviour
     {
         if (shopPanel != null) shopPanel.SetActive(true);
         selectedItem = "";
-        RefreshUI("欢迎光临鼠鼠澡堂小卖部！");
-        ShowDetail("请选择一个商品。");
+        RefreshUI("(●'◡'●)欢迎来到商店！");
+        ShowDetail("请选择心仪商品");
         PausePlayer(true);
     }
 
@@ -40,25 +40,25 @@ public class ShopManager : MonoBehaviour
     public void SelectSoap()
     {
         selectedItem = "soap";
-        ShowDetail("肥皂\n价格：10 金币\n效果：战斗中恢复 HP。");
+        ShowDetail("肥皂\n价格:0 金币\n效果:战斗中恢复 HP。");
     }
 
     public void SelectTea()
     {
         selectedItem = "tea";
-        ShowDetail("花茶\n价格：10 金币\n效果：战斗中恢复 SP。");
+        ShowDetail("花茶\n价格:10 金币\n效果:战斗中恢复 SP。");
     }
 
     public void SelectWaterLadle()
     {
         selectedItem = "waterLadle";
-        ShowDetail("【质变】水瓢\n价格：60 金币\n被动效果：每天战斗结束后，自动恢复 40% HP 和 SP。");
+        ShowDetail("[质变]水瓢\n价格:60 金币\n被动效果:每天战斗结束后，自动恢复 40% HP 和 SP。");
     }
 
     public void SelectTowel()
     {
         selectedItem = "towel";
-        ShowDetail("【终极】黄金搓澡巾\n价格：100 金币\n决战道具：第七天 Boss 战中使用，可让 Boss 眩晕一回合。");
+        ShowDetail("[终极]黄金搓澡巾\n价格:100 金币\n决战道具:第七天 Boss 战中使用,可让BOSS眩晕一回合。");
     }
 
     public void ConfirmBuy()
@@ -85,7 +85,7 @@ public class ShopManager : MonoBehaviour
                 return;
             }
 
-            TryBuy(waterLadlePrice, () => GameManager.Instance.hasWaterLadle = true, "获得【质变】水瓢！");
+            TryBuy(waterLadlePrice, () => GameManager.Instance.hasWaterLadle = true, "获得[质变]水瓢！");
         }
         else if (selectedItem == "towel")
         {
@@ -95,7 +95,7 @@ public class ShopManager : MonoBehaviour
                 return;
             }
 
-            TryBuy(towelPrice, () => GameManager.Instance.hasGoldenTowel = true, "获得【终极】黄金搓澡巾！");
+            TryBuy(towelPrice, () => GameManager.Instance.hasGoldenTowel = true, "获得[终极]黄金搓澡巾！");
         }
     }
 

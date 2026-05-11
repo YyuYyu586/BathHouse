@@ -627,10 +627,12 @@ MonoBehaviour:
   playerGold: 20
   playerHP: 100
   playerSP: 50
-  hpHamburgerCount: 0
-  spDrinkCount: 0
-  hasPassiveCert: 0
-  hasBossItem: 0
+  waterLadleCount: 0
+  soapCount: 0
+  teaCount: 0
+  towelCount: 0
+  hasWaterLadle: 0
+  hasGoldenTowel: 0
 --- !u!1 &1366259919
 GameObject:
   m_ObjectHideFlags: 0

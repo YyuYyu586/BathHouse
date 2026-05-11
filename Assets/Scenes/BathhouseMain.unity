@@ -4839,6 +4839,7 @@ GameObject:
   - component: {fileID: 1432489240}
   - component: {fileID: 1432489241}
   - component: {fileID: 1432489242}
+  - component: {fileID: 1432489243}
   m_Layer: 0
   m_Name: player
   m_TagString: Player
@@ -5019,6 +5020,28 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1432489243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1432489236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79695866fe5e11f4e8971a102f6606c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentDay: 1
+  playerGold: 20
+  playerHP: 100
+  playerSP: 50
+  waterLadleCount: 0
+  soapCount: 0
+  teaCount: 0
+  towelCount: 0
+  hasWaterLadle: 0
+  hasGoldenTowel: 0
 --- !u!1 &1495203626
 GameObject:
   m_ObjectHideFlags: 0

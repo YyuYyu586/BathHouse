@@ -849,7 +849,7 @@ MonoBehaviour:
     - speakerName: "\u5C0F\u798F"
       portrait: {fileID: 567662240, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
       isLeftPortrait: 1
-      text: "\u600E\u4E48\u6700\u8FD1\u8FD9\u4E48\u591A\u6076\u6027\u4E8B\u4EF6\uFF0C\u8FD9\u4E16\u9053\u600E\u4E48\u4E86"
+      text: "\u600E\u4E48\u6700\u8FD1\u8FD9\u4E48\u591A\u6076\u6027\u4E8B\u4EF6\uFF0C\u8FD9\u4E16\u9053\u600E\u4E48\u4E86.\u4F60\u5DF2\u7ECF\u4E70\u8FC7\u6C34\u74E2\u4E86\u3002"
       backgroundImage: {fileID: 21300000, guid: f470626e478968a4988db6fe18ce57a4, type: 3}
   - dayName: 
     lines: []
