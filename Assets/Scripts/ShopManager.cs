@@ -9,10 +9,10 @@ public class ShopManager : MonoBehaviour
     public TextMeshProUGUI messageText;
 
     [Header("Prices")]
-    public int hamburgerPrice = 10;
-    public int drinkPrice = 8;
-    public int passiveCertPrice = 30;
-    public int bossItemPrice = 25;
+    public int WaterLadlePrice = 10;
+    public int SoapPrice = 8;
+    public int TeaPrice = 30;
+    public int TowelPrice = 25;
 
     private void Start()
     {
@@ -31,74 +31,52 @@ public class ShopManager : MonoBehaviour
         if (shopPanel != null) shopPanel.SetActive(false);
         PausePlayer(false);
     }
+     public void BuyWaterLadle()
+   {
+    TryBuy(WaterLadlePrice, () => GameManager.Instance.waterLadleCount++, "买到了水瓢！");
+   }  
 
-    public void BuyHamburger()
+     public void BuySoap()
     {
-        TryBuy(hamburgerPrice, () => GameManager.Instance.hpHamburgerCount++, "买到了回血汉堡！");
+    TryBuy(SoapPrice, () => GameManager.Instance.soapCount++, "买到了肥皂！");
     }
 
-    public void BuyDrink()
-    {
-        TryBuy(drinkPrice, () => GameManager.Instance.spDrinkCount++, "买到了回蓝饮料！");
-    }
+    public void BuyTea()
+   {
+    TryBuy(TeaPrice, () => GameManager.Instance.teaCount++, "买到了茶！");
+   }
 
-    public void BuyPassiveCert()
-    {
-        if (GameManager.Instance.hasPassiveCert)
-        {
-            RefreshUI("你已经买过这个证书了。");
-            return;
-        }
-
-        TryBuy(passiveCertPrice, () => GameManager.Instance.hasPassiveCert = true, "获得：40%回复证书！");
-    }
-
-    public void BuyBossItem()
-    {
-        if (GameManager.Instance.hasBossItem)
-        {
-            RefreshUI("Boss道具已经买过了。");
-            return;
-        }
-
-        TryBuy(bossItemPrice, () => GameManager.Instance.hasBossItem = true, "获得：Boss专用道具！");
-    }
+    public void BuyTowel()
+    { 
+    TryBuy(TowelPrice, () => GameManager.Instance.towelCount++, "买到了毛巾！");
+    } 
 
     private void TryBuy(int price, System.Action onSuccess, string successMessage)
     {
-        if (GameManager.Instance == null)
+        if (GameManager.Instance.gold >= price)
         {
-            RefreshUI("错误：场景里没有 GameManager。");
-            return;
+            GameManager.Instance.gold -= price;
+            onSuccess.Invoke();
+            RefreshUI(successMessage);
         }
-
-        if (GameManager.Instance.playerGold < price)
+        else
         {
-            RefreshUI("金币不够，先去搓澡打工吧！");
-            return;
+            RefreshUI("金币不足，无法购买！");
         }
-
-        GameManager.Instance.playerGold -= price;
-        onSuccess?.Invoke();
-        RefreshUI(successMessage);
     }
 
     private void RefreshUI(string message)
     {
-        if (GameManager.Instance != null && goldText != null)
-        {
-            goldText.text = "金币：" + GameManager.Instance.playerGold;
-        }
-
-        if (messageText != null)
-        {
-            messageText.text = message;
-        }
+        if (goldText != null) goldText.text = $"金币: {GameManager.Instance.gold}";
+        if (messageText != null) messageText.text = message;
     }
 
-    private void PausePlayer(bool pause)
+    private void PausePlayer(bool shouldPause)
     {
         PlayerController player = FindObjectOfType<PlayerController>();
-        if (player != null) player.enabled = !pause;
+        if (player != null)
+        {
+            player.enabled = !shouldPause;
+        }
     }
 }
