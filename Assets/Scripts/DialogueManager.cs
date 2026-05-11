@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using System;
 
 [System.Serializable]
 public class DialogueLine
@@ -26,6 +27,8 @@ public class DailyDialogue
 
 public class DialogueManager : MonoBehaviour
 {
+    public Action OnDialogueEnd;
+
     [Header("对话框整体")]
     public GameObject dialoguePanel;
 
@@ -165,6 +168,9 @@ public class DialogueManager : MonoBehaviour
 
         if (dialoguePanel != null)
             dialoguePanel.SetActive(false);
+
+        OnDialogueEnd?.Invoke();
+        OnDialogueEnd = null;
     }
 
     IEnumerator TypeText(string text)
