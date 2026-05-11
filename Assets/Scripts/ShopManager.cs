@@ -26,7 +26,7 @@ public class ShopManager : MonoBehaviour
     {
         if (shopPanel != null) shopPanel.SetActive(true);
         selectedItem = "";
-        RefreshUI("(●'◡'●)欢迎来到商店！");
+        RefreshUI(":)欢迎来到商店！");
         ShowDetail("请选择心仪商品");
         PausePlayer(true);
     }
@@ -52,7 +52,7 @@ public class ShopManager : MonoBehaviour
     public void SelectWaterLadle()
     {
         selectedItem = "waterLadle";
-        ShowDetail("[质变]水瓢\n价格:60 金币\n被动效果:每天战斗结束后，自动恢复 40% HP 和 SP。");
+        ShowDetail("[质变]高级证书\n价格:60 金币\n被动效果:每天战斗结束后，自动恢复 40% HP 和 SP。");
     }
 
     public void SelectTowel()
