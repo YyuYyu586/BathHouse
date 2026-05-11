@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement;
 using System.Collections;
 
 [System.Serializable]
@@ -10,7 +9,7 @@ public class DialogueLine
     public string speakerName;
     public Sprite portrait;
 
-    [Header("¹´Ñ¡´ú±íÔÚ×ó±ß£¬²»¹´Ñ¡ÔÚÓÒ±ß")]
+    [Header("å‹¾é€‰ä»£è¡¨åœ¨å·¦è¾¹ï¼Œä¸å‹¾é€‰ä»£è¡¨åœ¨å³è¾¹")]
     public bool isLeftPortrait = true;
 
     [TextArea(2, 4)]
@@ -21,125 +20,168 @@ public class DialogueLine
 [System.Serializable]
 public class DailyDialogue
 {
-    public string dayName; // ±ÈÈç "Day 1"
+    public string dayName;
     public DialogueLine[] lines;
 }
 
 public class DialogueManager : MonoBehaviour
 {
-    [Header("UI °ó¶¨")]
+    [Header("å¯¹è¯æ¡†æ•´ä½“")]
+    public GameObject dialoguePanel;
+
+    [Header("UI ç»‘å®š")]
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI dialogueText;
 
-    [Header("×óÓÒÁ¢»æ¿ò")]
-    public Image portraitLeft;   // ×ó²àÁ¢»æ¿ò
-    public Image portraitRight;  // ÓÒ²àÁ¢»æ¿ò
+    [Header("å·¦å³ç«‹ç»˜æ¡†")]
+    public Image portraitLeft;
+    public Image portraitRight;
+
+    [Header("èƒŒæ™¯å›¾ï¼Œå¯ä¸å¡«")]
     public Image backgroundImage;
 
-    [Header("7ÌìµÄËùÓĞ¾çÇéÅäÖÃ")]
+    [Header("7å¤©çš„æ‰€æœ‰å‰§æƒ…é…ç½®ï¼Œå¯å…ˆä¸ç®¡")]
     public DailyDialogue[] allDaysDialogues;
+
+    [Header("æ‰“å­—é€Ÿåº¦")]
     public float typingSpeed = 0.05f;
 
     private int currentIndex = 0;
     private bool isTyping = false;
-    private DialogueLine[] currentDayLines;
+    private DialogueLine[] currentLines;
 
     void Start()
     {
-        // ³õÊ¼Òş²ØÁ¢»æ
-        portraitLeft.gameObject.SetActive(false);
-        portraitRight.gameObject.SetActive(false);
+        if (portraitLeft != null)
+            portraitLeft.gameObject.SetActive(false);
 
-        // --- ºËĞÄ£º´Ó GameManager »ñÈ¡½ñÌìÊÇµÚ¼¸Ìì ---
-        // È·±£ÄãÒÑ¾­´´½¨ÁËÏÂÃæµÄ GameManager ½Å±¾
-        int today = GameManager.Instance.currentDay;
+        if (portraitRight != null)
+            portraitRight.gameObject.SetActive(false);
 
-        // »ñÈ¡µ±ÌìµÄ¾çÇéÊı×é£¨ÏÂ±ê´Ó0¿ªÊ¼£¬ËùÒÔtoday-1£©
-        if (allDaysDialogues.Length >= today)
-        {
-            currentDayLines = allDaysDialogues[today - 1].lines;
-            if (currentDayLines.Length > 0)
-            {
-                PlayDialogue(currentDayLines[currentIndex]);
-            }
-        }
-        else
-        {
-            Debug.LogError("¾çÇéÅäÖÃ²»×ã£¡ÇëÔÚ Inspector Ãæ°å¼ì²é allDaysDialogues ÊÇ·ñÅä¹»ÁË 7 Ìì¡£");
-        }
+        if (dialoguePanel != null)
+            dialoguePanel.SetActive(false);
     }
 
     void Update()
     {
+        if (dialoguePanel == null || !dialoguePanel.activeSelf)
+            return;
+
         if (Input.GetMouseButtonDown(0))
         {
             if (isTyping)
             {
-                // Èç¹ûÕıÔÚ´ò×Ö£¬µã»÷ÔòÖ±½ÓÏÔÊ¾È«ÎÄ
                 StopAllCoroutines();
-                dialogueText.text = currentDayLines[currentIndex].text;
+                dialogueText.text = currentLines[currentIndex].text;
                 isTyping = false;
             }
             else
             {
-                // Èç¹ûÒÑ¾­ÏÔÊ¾Íê£¬µã»÷½øÈëÏÂÒ»¾ä
                 currentIndex++;
-                if (currentIndex < currentDayLines.Length)
+
+                if (currentIndex < currentLines.Length)
                 {
-                    PlayDialogue(currentDayLines[currentIndex]);
+                    PlayDialogue(currentLines[currentIndex]);
                 }
                 else
                 {
-                    // ¾çÇé½áÊø£¬Ìø×ªµ½´óÌü
-                    SceneManager.LoadScene("BathhouseMain");
+                    EndDialogue();
                 }
             }
         }
     }
 
-    void PlayDialogue(DialogueLine line)
+    public void StartDialogue(DialogueLine[] lines)
     {
-        nameText.text = line.speakerName;
-
-        if (line.backgroundImage != null)
+        if (lines == null || lines.Length == 0)
         {
-            backgroundImage.sprite = line.backgroundImage;
+            Debug.LogWarning("æ²¡æœ‰å¯æ’­æ”¾çš„å¯¹è¯ã€‚");
+            return;
         }
 
-        // ×óÓÒÁ¢»æÂß¼­
+        currentLines = lines;
+        currentIndex = 0;
+
+        if (dialoguePanel != null)
+            dialoguePanel.SetActive(true);
+
+        PlayDialogue(currentLines[currentIndex]);
+    }
+
+    void PlayDialogue(DialogueLine line)
+    {
+        if (nameText != null)
+            nameText.text = line.speakerName;
+
+        if (backgroundImage != null && line.backgroundImage != null)
+            backgroundImage.sprite = line.backgroundImage;
+
+        if (portraitLeft != null)
+            portraitLeft.gameObject.SetActive(false);
+
+        if (portraitRight != null)
+            portraitRight.gameObject.SetActive(false);
+
         if (line.portrait != null)
         {
             if (line.isLeftPortrait)
             {
-                portraitLeft.sprite = line.portrait;
-                portraitLeft.gameObject.SetActive(true);
-                portraitRight.gameObject.SetActive(false);
+                if (portraitLeft != null)
+                {
+                    portraitLeft.sprite = line.portrait;
+                    portraitLeft.gameObject.SetActive(true);
+                }
             }
             else
             {
-                portraitRight.sprite = line.portrait;
-                portraitRight.gameObject.SetActive(true);
-                portraitLeft.gameObject.SetActive(false);
+                if (portraitRight != null)
+                {
+                    portraitRight.sprite = line.portrait;
+                    portraitRight.gameObject.SetActive(true);
+                }
             }
         }
-        else
-        {
-            portraitLeft.gameObject.SetActive(false);
-            portraitRight.gameObject.SetActive(false);
-        }
 
+        StopAllCoroutines();
         StartCoroutine(TypeText(line.text));
+    }
+
+    void EndDialogue()
+    {
+        StopAllCoroutines();
+        isTyping = false;
+
+        if (portraitLeft != null)
+            portraitLeft.gameObject.SetActive(false);
+
+        if (portraitRight != null)
+            portraitRight.gameObject.SetActive(false);
+
+        if (dialogueText != null)
+            dialogueText.text = "";
+
+        if (nameText != null)
+            nameText.text = "";
+
+        if (dialoguePanel != null)
+            dialoguePanel.SetActive(false);
     }
 
     IEnumerator TypeText(string text)
     {
         isTyping = true;
-        dialogueText.text = "";
+
+        if (dialogueText != null)
+            dialogueText.text = "";
+
         foreach (char letter in text.ToCharArray())
         {
-            dialogueText.text += letter;
+            if (dialogueText != null)
+                dialogueText.text += letter;
+
             yield return new WaitForSeconds(typingSpeed);
         }
+
         isTyping = false;
     }
 }
