@@ -109,7 +109,35 @@ public class DialogueManager : MonoBehaviour
             dialoguePanel.SetActive(true);
 
         PlayDialogue(currentLines[currentIndex]);
+
+
+    
+     
+    Debug.Log("StartDialogue 被调用了");
+
+      if (dialoguePanel == null)
+     {
+         Debug.LogError("DialoguePanel 没拖！");
+        return;
+     }
+
+     if (lines == null || lines.Length == 0)
+     {
+        Debug.LogWarning("没有可播放的对话。");
+        return;
+     }
+
+     currentLines = lines;
+     currentIndex = 0;
+
+     dialoguePanel.SetActive(true);
+     Debug.Log("DialoguePanel 已打开");
+
+     PlayDialogue(currentLines[currentIndex]);
+
     }
+
+    
 
     void PlayDialogue(DialogueLine line)
     {

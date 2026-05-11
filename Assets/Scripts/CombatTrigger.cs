@@ -1,36 +1,57 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class CombatTrigger : MonoBehaviour
 {
-    private bool isPlayerInRange;
+    [Header("ç©å®¶")]
+    public Transform player;
+
+    [Header("å¯¹è¯ç®¡ç†å™¨")]
+    public DialogueManager dialogueManager;
+
+    [Header("äº¤äº’è·ç¦»")]
+    public float interactDistance = 1.5f;
+
+    [Header("é¡¾å®¢è¦è¯´çš„è¯")]
+    public DialogueLine[] lines;
+
+    [Header("çŠ¶æ€æ§åˆ¶")]
+    public GameObject exclamationMark;
+    public GameObject combatTrigger;
+
+    private bool hasTalked = false;
+
+    void Start()
+    {
+        if (exclamationMark != null)
+            exclamationMark.SetActive(true);
+
+        if (combatTrigger != null)
+            combatTrigger.SetActive(false);
+    }
 
     void Update()
     {
-        // ²ÈÔÚµØÌºÉÏ°´ F ½øÈëÕ½¶·
-        if (isPlayerInRange && Input.GetKeyDown(KeyCode.F))
-        {
-            // ÕæÕıÈ¥¸É»î£¡¼ÓÔØÕ½¶·³¡¾°
-            SceneManager.LoadScene("CombatScene");
-        }
-    }
+        if (player == null || dialogueManager == null)
+            return;
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            isPlayerInRange = true;
-            Debug.Log("°´ F ¼ü½øÈë´êÔè¼ä¿ªÊ¼Õ½¶·£¡");
-        }
-    }
+        float distance = Vector2.Distance(transform.position, player.position);
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
+        if (distance <= interactDistance && Input.GetKeyDown(KeyCode.F) && !hasTalked)
         {
-            isPlayerInRange = false;
+            dialogueManager.OnDialogueEnd = () =>
+            {
+                hasTalked = true;
+
+                if (exclamationMark != null)
+                    exclamationMark.SetActive(false);
+
+                if (combatTrigger != null)
+                    combatTrigger.SetActive(true);
+
+                Debug.Log("æ¥å¾…å®Œæˆï¼Œæˆ˜æ–—å…¥å£å¼€å¯ã€‚");
+            };
+
+            dialogueManager.StartDialogue(lines);
         }
     }
 }
