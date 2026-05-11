@@ -12,8 +12,9 @@ public class BattleManager : MonoBehaviour
     public int attackDamage = 12;
     public int soapSkillDamage = 25;
     public int soapSkillCost = 10;
-    public int hamburgerHeal = 35;
-    public int drinkRecoverSP = 25;
+
+    public int waterLadleHeal = 35;
+    public int teaRecoverSP = 25;
 
     [Header("Enemy Stats")]
     public string enemyName = "泥巴怪";
@@ -23,7 +24,7 @@ public class BattleManager : MonoBehaviour
 
     [Header("Flow")]
     public string returnSceneName = "BathhouseMain";
-    public bool advanceDayOnWin = false;
+    public bool advanceDayOnWin = true;
     public float enemyTurnDelay = 0.8f;
 
     [Header("UI Text")]
@@ -64,6 +65,7 @@ public class BattleManager : MonoBehaviour
 
         enemyHP = maxEnemyHP;
         playerCanAct = true;
+        battleEnded = false;
 
         if (victoryPanel != null) victoryPanel.SetActive(false);
         if (defeatPanel != null) defeatPanel.SetActive(false);
@@ -84,41 +86,41 @@ public class BattleManager : MonoBehaviour
 
         if (playerSP < soapSkillCost)
         {
-            RefreshUI("SP不够，放不出泡泡技能！");
+            RefreshUI("SP不够，放不出肥皂泡泡！");
             return;
         }
 
         StartCoroutine(PlayerAction(soapSkillDamage, soapSkillCost, "小福使用肥皂泡泡重击！"));
     }
 
-    public void OnUseHamburgerButton()
+    public void OnUseWaterLadleButton()
     {
         if (!CanPlayerAct()) return;
 
-        if (GameManager.Instance == null || GameManager.Instance.hpHamburgerCount <= 0)
+        if (GameManager.Instance == null || GameManager.Instance.waterLadleCount <= 0)
         {
-            RefreshUI("没有回血汉堡了！");
+            RefreshUI("没有水瓢了！");
             return;
         }
 
-        GameManager.Instance.hpHamburgerCount--;
-        playerHP = Mathf.Min(maxPlayerHP, playerHP + hamburgerHeal);
-        StartCoroutine(EnemyTurnAfterMessage("小福吃下汉堡，回复了HP！"));
+        GameManager.Instance.waterLadleCount--;
+        playerHP = Mathf.Min(maxPlayerHP, playerHP + waterLadleHeal);
+        StartCoroutine(EnemyTurnAfterMessage("小福使用水瓢，回复了 HP！"));
     }
 
-    public void OnUseDrinkButton()
+    public void OnUseTeaButton()
     {
         if (!CanPlayerAct()) return;
 
-        if (GameManager.Instance == null || GameManager.Instance.spDrinkCount <= 0)
+        if (GameManager.Instance == null || GameManager.Instance.teaCount <= 0)
         {
-            RefreshUI("没有回蓝饮料了！");
+            RefreshUI("没有茶了！");
             return;
         }
 
-        GameManager.Instance.spDrinkCount--;
-        playerSP = Mathf.Min(maxPlayerSP, playerSP + drinkRecoverSP);
-        StartCoroutine(EnemyTurnAfterMessage("小福喝下饮料，回复了SP！"));
+        GameManager.Instance.teaCount--;
+        playerSP = Mathf.Min(maxPlayerSP, playerSP + teaRecoverSP);
+        StartCoroutine(EnemyTurnAfterMessage("小福喝下热茶，回复了 SP！"));
     }
 
     public void OnReturnButton()
@@ -149,7 +151,9 @@ public class BattleManager : MonoBehaviour
     {
         playerCanAct = false;
         RefreshUI(message);
+
         yield return new WaitForSeconds(enemyTurnDelay);
+
         EnemyAttack();
     }
 
@@ -182,10 +186,15 @@ public class BattleManager : MonoBehaviour
         if (GameManager.Instance != null)
         {
             GameManager.Instance.playerGold += winGold;
-            if (advanceDayOnWin) GameManager.Instance.currentDay++;
+
+            if (advanceDayOnWin)
+            {
+                GameManager.Instance.GoNextDay();
+            }
         }
 
-        RefreshUI("净化成功！获得 " + winGold + " 金币。点击返回。 ");
+        RefreshUI("净化成功！获得 " + winGold + " 金币。点击返回。");
+
         if (commandPanel != null) commandPanel.SetActive(false);
         if (victoryPanel != null) victoryPanel.SetActive(true);
     }
@@ -194,7 +203,9 @@ public class BattleManager : MonoBehaviour
     {
         battleEnded = true;
         SavePlayerStats();
-        RefreshUI("小福累倒了……点击返回重新准备。 ");
+
+        RefreshUI("小福累倒了……点击返回重新准备。");
+
         if (commandPanel != null) commandPanel.SetActive(false);
         if (defeatPanel != null) defeatPanel.SetActive(true);
     }
@@ -202,20 +213,30 @@ public class BattleManager : MonoBehaviour
     private void SavePlayerStats()
     {
         if (GameManager.Instance == null) return;
+
         GameManager.Instance.playerHP = playerHP;
         GameManager.Instance.playerSP = playerSP;
     }
 
     private void RefreshUI(string message)
     {
-        if (playerHPText != null) playerHPText.text = "HP：" + playerHP + " / " + maxPlayerHP;
-        if (playerSPText != null) playerSPText.text = "SP：" + playerSP + " / " + maxPlayerSP;
-        if (enemyHPText != null) enemyHPText.text = enemyName + "：" + enemyHP + " / " + maxEnemyHP;
-        if (battleMessageText != null) battleMessageText.text = message;
+        if (playerHPText != null)
+            playerHPText.text = "HP：" + playerHP + " / " + maxPlayerHP;
+
+        if (playerSPText != null)
+            playerSPText.text = "SP：" + playerSP + " / " + maxPlayerSP;
+
+        if (enemyHPText != null)
+            enemyHPText.text = enemyName + "：" + enemyHP + " / " + maxEnemyHP;
+
+        if (battleMessageText != null)
+            battleMessageText.text = message;
 
         if (GameManager.Instance != null && itemCountText != null)
         {
-            itemCountText.text = "汉堡 x" + GameManager.Instance.hpHamburgerCount + "  饮料 x" + GameManager.Instance.spDrinkCount;
+            itemCountText.text =
+                "水瓢 x" + GameManager.Instance.waterLadleCount +
+                "  茶 x" + GameManager.Instance.teaCount;
         }
 
         if (playerHPSlider != null)
