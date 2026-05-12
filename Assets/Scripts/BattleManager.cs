@@ -5,29 +5,48 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-// Minimal turn-based combat controller for CombatScene.
+// Controls the minimal CombatScene turn battle and keeps the UI bindings simple.
 public class BattleManager : MonoBehaviour
 {
-    [Header("Battle Stats")]
+    [Header("Player Stats")]
     public int maxPlayerHP = 100;
-    public int maxEnemyHP = 60;
-    public int playerAttackDamage = 18;
-    public int enemyAttackDamage = 12;
+    public int maxPlayerSP = 30;
+    public int playerAttackDamage = 10;
+    public int blurDamage = 18;
+    public int blurSPCost = 10;
+
+    [Header("Enemy Stats")]
+    public int maxEnemyHP = 80;
+    public int enemyAttackDamage = 8;
     public float enemyTurnDelay = 0.7f;
     public float victorySceneDelay = 0.8f;
 
-    [Header("Optional UI References")]
+    [Header("Player UI")]
+    public Slider playerHPSlider;
+    public Slider playerSPSlider;
     public TextMeshProUGUI playerHPText;
+    public TextMeshProUGUI playerSPText;
+
+    [Header("Enemy UI")]
+    public Slider enemyHPSlider;
     public TextMeshProUGUI enemyHPText;
+
+    [Header("Battle UI")]
     public TextMeshProUGUI battleMessageText;
     public Button attackButton;
     public Button defendButton;
-    public Slider playerHPSlider;
-    public Slider enemyHPSlider;
+    public Button blurButton;
+    public Button ultimateButton; // Optional future skill button. Current version does not require it.
     public GameObject commandPanel;
     public GameObject victoryPanel;
 
+    [Header("Damage Popup UI")]
+    public Transform popupParent;
+    public Vector2 enemyPopupPosition = new Vector2(0f, 250f);
+    public Vector2 playerPopupPosition = new Vector2(-520f, -210f);
+
     private int playerHP;
+    private int playerSP;
     private int enemyHP;
     private bool isDefending;
     private bool battleEnded;
@@ -60,10 +79,11 @@ public class BattleManager : MonoBehaviour
         StartBattle();
     }
 
-    // Initializes the one-battle state. Player HP is read from GameManager when available.
+    // Initializes one battle. Player HP comes from GameManager when available.
     private void StartBattle()
     {
         playerHP = GameManager.Instance != null ? Mathf.Clamp(GameManager.Instance.playerHP, 1, maxPlayerHP) : maxPlayerHP;
+        playerSP = maxPlayerSP;
         enemyHP = maxEnemyHP;
         playerTurn = true;
         battleEnded = false;
@@ -75,19 +95,18 @@ public class BattleManager : MonoBehaviour
         if (commandPanel != null)
             commandPanel.SetActive(true);
 
-        SetButtonsInteractable(true);
-        RefreshUI("A bathhouse troublemaker appears.");
+        SetActionButtonsInteractable(true);
+        RefreshUI("Choose an action.");
     }
 
-    // Called by the Attack button.
+    // Attack damages the enemy, then hands control to the enemy turn.
     public void OnAttackButton()
     {
         if (!CanPlayerAct())
             return;
 
         ClearSelectedButton();
-        enemyHP = Mathf.Max(0, enemyHP - playerAttackDamage);
-        RefreshUI("Player attacks for " + playerAttackDamage + " damage.");
+        DamageEnemy(playerAttackDamage, "Monster took " + playerAttackDamage + " damage.");
 
         if (enemyHP <= 0)
         {
@@ -98,7 +117,7 @@ public class BattleManager : MonoBehaviour
         StartCoroutine(EnemyTurn());
     }
 
-    // Called by the Defend button.
+    // Defend reduces only the next incoming enemy attack.
     public void OnDefendButton()
     {
         if (!CanPlayerAct())
@@ -106,21 +125,58 @@ public class BattleManager : MonoBehaviour
 
         ClearSelectedButton();
         isDefending = true;
-        RefreshUI("Player defends. Incoming damage is reduced.");
+        RefreshUI("Player defends.");
         StartCoroutine(EnemyTurn());
+    }
+
+    // Blur costs SP. If there is not enough SP, the player keeps the turn.
+    public void OnBlurButton()
+    {
+        if (!CanPlayerAct())
+            return;
+
+        ClearSelectedButton();
+
+        if (playerSP < blurSPCost)
+        {
+            RefreshUI("Not enough SP for Blur.");
+            return;
+        }
+
+        playerSP = Mathf.Max(0, playerSP - blurSPCost);
+        DamageEnemy(blurDamage, "Monster took " + blurDamage + " damage.");
+
+        if (enemyHP <= 0)
+        {
+            WinBattle();
+            return;
+        }
+
+        StartCoroutine(EnemyTurn());
+    }
+
+    private void DamageEnemy(int damage, string popupText)
+    {
+        enemyHP = Mathf.Max(0, enemyHP - damage);
+        RefreshUI(popupText);
+        ShowDamagePopup(popupText, enemyPopupPosition);
     }
 
     private IEnumerator EnemyTurn()
     {
         playerTurn = false;
-        SetButtonsInteractable(false);
+        SetActionButtonsInteractable(false);
+        RefreshUI("Enemy turn...");
 
         yield return new WaitForSeconds(enemyTurnDelay);
 
         int damage = isDefending ? Mathf.CeilToInt(enemyAttackDamage * 0.5f) : enemyAttackDamage;
         isDefending = false;
         playerHP = Mathf.Max(0, playerHP - damage);
-        RefreshUI("Enemy attacks for " + damage + " damage.");
+
+        string popupText = "Player took " + damage + " damage.";
+        RefreshUI(popupText);
+        ShowDamagePopup(popupText, playerPopupPosition);
 
         if (playerHP <= 0)
         {
@@ -129,7 +185,8 @@ public class BattleManager : MonoBehaviour
         }
 
         playerTurn = true;
-        SetButtonsInteractable(true);
+        SetActionButtonsInteractable(true);
+        RefreshUI("Choose an action.");
     }
 
     private void WinBattle()
@@ -137,7 +194,7 @@ public class BattleManager : MonoBehaviour
         battleEnded = true;
         playerTurn = false;
         SavePlayerHP();
-        SetButtonsInteractable(false);
+        SetActionButtonsInteractable(false);
 
         if (commandPanel != null)
             commandPanel.SetActive(false);
@@ -154,7 +211,7 @@ public class BattleManager : MonoBehaviour
         battleEnded = true;
         playerTurn = false;
         SavePlayerHP();
-        SetButtonsInteractable(false);
+        SetActionButtonsInteractable(false);
         RefreshUI("Defeat.");
     }
 
@@ -184,34 +241,43 @@ public class BattleManager : MonoBehaviour
     private void RefreshUI(string message)
     {
         if (playerHPText != null)
-            playerHPText.text = "Player HP: " + playerHP + " / " + maxPlayerHP;
+            playerHPText.text = "HP " + playerHP + " / " + maxPlayerHP;
+
+        if (playerSPText != null)
+            playerSPText.text = "SP " + playerSP + " / " + maxPlayerSP;
 
         if (enemyHPText != null)
-            enemyHPText.text = "Enemy HP: " + enemyHP + " / " + maxEnemyHP;
+            enemyHPText.text = "HP " + enemyHP + " / " + maxEnemyHP;
 
         if (battleMessageText != null)
             battleMessageText.text = message;
 
-        if (playerHPSlider != null)
-        {
-            playerHPSlider.maxValue = maxPlayerHP;
-            playerHPSlider.value = playerHP;
-        }
-
-        if (enemyHPSlider != null)
-        {
-            enemyHPSlider.maxValue = maxEnemyHP;
-            enemyHPSlider.value = enemyHP;
-        }
+        RefreshSlider(playerHPSlider, playerHP, maxPlayerHP);
+        RefreshSlider(playerSPSlider, playerSP, maxPlayerSP);
+        RefreshSlider(enemyHPSlider, enemyHP, maxEnemyHP);
     }
 
-    private void SetButtonsInteractable(bool interactable)
+    private void RefreshSlider(Slider slider, int currentValue, int maxValue)
     {
-        if (attackButton != null)
-            attackButton.interactable = interactable;
+        if (slider == null)
+            return;
 
-        if (defendButton != null)
-            defendButton.interactable = interactable;
+        slider.minValue = 0;
+        slider.maxValue = maxValue;
+        slider.value = currentValue;
+    }
+
+    private void SetActionButtonsInteractable(bool interactable)
+    {
+        SetButtonInteractable(attackButton, interactable);
+        SetButtonInteractable(defendButton, interactable);
+        SetButtonInteractable(blurButton, interactable);
+    }
+
+    private void SetButtonInteractable(Button button, bool interactable)
+    {
+        if (button != null)
+            button.interactable = interactable;
     }
 
     private void ClearSelectedButton()
@@ -220,55 +286,111 @@ public class BattleManager : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(null);
     }
 
-    // Uses the existing CombatScene UI when possible and creates missing TMP labels/panels.
+    private void ShowDamagePopup(string text, Vector2 anchoredPosition)
+    {
+        Transform parent = popupParent != null ? popupParent : FindObjectOfType<Canvas>()?.transform;
+        if (parent == null)
+            return;
+
+        DamagePopup popup = DamagePopup.Create(parent, anchoredPosition, text);
+        popup.Play();
+    }
+
+    // Uses existing CombatScene UI when possible and creates missing runtime fallback UI.
     private void BindExistingOrCreateUI()
     {
         Canvas canvas = FindObjectOfType<Canvas>();
         if (canvas == null)
             canvas = CreateCanvas();
 
-        if (attackButton == null)
-            attackButton = FindButton("Attack");
-
-        if (defendButton == null)
-            defendButton = FindButton("Defend") ?? FindButton("Ultimate");
+        if (popupParent == null)
+            popupParent = canvas.transform;
 
         if (attackButton == null)
-            attackButton = CreateButton(canvas.transform, "Attack", new Vector2(-140f, -220f));
+            attackButton = FindButton("AttackButton") ?? FindButton("Attack");
 
         if (defendButton == null)
-            defendButton = CreateButton(canvas.transform, "Defend", new Vector2(140f, -220f));
+            defendButton = FindButton("DefendButton") ?? FindButton("Defend");
 
-        SetButtonLabel(attackButton, "Attack");
-        SetButtonLabel(defendButton, "Defend");
-        ConfigureButtonVisuals(attackButton);
-        ConfigureButtonVisuals(defendButton);
+        if (blurButton == null)
+            blurButton = FindButton("BlurButton") ?? FindButton("Blur");
 
-        attackButton.onClick.RemoveListener(OnAttackButton);
-        defendButton.onClick.RemoveListener(OnDefendButton);
-        attackButton.onClick.AddListener(OnAttackButton);
-        defendButton.onClick.AddListener(OnDefendButton);
+        if (ultimateButton == null)
+            ultimateButton = FindButton("UltimateButton") ?? FindButton("Ultimate");
 
-        if (commandPanel == null && attackButton.transform.parent == defendButton.transform.parent)
-            commandPanel = attackButton.transform.parent.gameObject;
+        if (attackButton == null)
+            attackButton = CreateButton(canvas.transform, "AttackButton", new Vector2(-280f, -300f), "Attack");
+
+        if (defendButton == null)
+            defendButton = CreateButton(canvas.transform, "DefendButton", new Vector2(0f, -300f), "Defend");
+
+        if (blurButton == null)
+            blurButton = CreateButton(canvas.transform, "BlurButton", new Vector2(280f, -300f), "Blur");
+
+        PrepareActionButton(attackButton, "Attack", OnAttackButton);
+        PrepareActionButton(defendButton, "Defend", OnDefendButton);
+        PrepareActionButton(blurButton, "Blur", OnBlurButton);
+
+        // Ultimate is intentionally optional and unbound for the current version.
+        if (ultimateButton != null)
+            ConfigureButtonVisuals(ultimateButton);
+
+        if (commandPanel == null)
+            commandPanel = FindCommonParent(attackButton, defendButton, blurButton);
 
         if (playerHPText == null)
-            playerHPText = CreateText(canvas.transform, "PlayerHPText", new Vector2(-260f, 210f), "Player HP");
+            playerHPText = FindText("PlayerHPText") ?? CreateText(canvas.transform, "PlayerHPText", new Vector2(-520f, -210f), "HP");
+
+        if (playerSPText == null)
+            playerSPText = FindText("PlayerSPText") ?? CreateText(canvas.transform, "PlayerSPText", new Vector2(-520f, -250f), "SP");
 
         if (enemyHPText == null)
-            enemyHPText = CreateText(canvas.transform, "EnemyHPText", new Vector2(260f, 210f), "Enemy HP");
-
-        if (playerHPSlider == null)
-            playerHPSlider = CreateHPSlider(canvas.transform, "PlayerHPSlider", new Vector2(-260f, 170f));
-
-        if (enemyHPSlider == null)
-            enemyHPSlider = CreateHPSlider(canvas.transform, "EnemyHPSlider", new Vector2(260f, 170f));
+            enemyHPText = FindText("EnemyHPText") ?? CreateText(canvas.transform, "EnemyHPText", new Vector2(0f, 310f), "HP");
 
         if (battleMessageText == null)
-            battleMessageText = CreateText(canvas.transform, "BattleMessageText", new Vector2(0f, -120f), "");
+            battleMessageText = FindText("BattleMessageText") ?? CreateText(canvas.transform, "BattleMessageText", new Vector2(0f, -130f), "");
+
+        if (playerHPSlider == null)
+            playerHPSlider = FindSlider("PlayerHPSlider") ?? CreateSlider(canvas.transform, "PlayerHPSlider", new Vector2(-300f, -215f), new Color(0.85f, 0.12f, 0.12f, 1f));
+
+        if (playerSPSlider == null)
+            playerSPSlider = FindSlider("PlayerSPSlider") ?? CreateSlider(canvas.transform, "PlayerSPSlider", new Vector2(-300f, -255f), new Color(0.15f, 0.35f, 0.95f, 1f));
+
+        if (enemyHPSlider == null)
+            enemyHPSlider = FindSlider("EnemyHPSlider") ?? CreateSlider(canvas.transform, "EnemyHPSlider", new Vector2(0f, 280f), new Color(0.85f, 0.12f, 0.12f, 1f));
 
         if (victoryPanel == null)
             victoryPanel = CreateVictoryPanel(canvas.transform);
+    }
+
+    private void PrepareActionButton(Button button, string label, UnityEngine.Events.UnityAction action)
+    {
+        SetButtonLabel(button, label);
+        ConfigureButtonVisuals(button);
+        button.onClick.RemoveAllListeners();
+        button.onClick.AddListener(action);
+    }
+
+    private GameObject FindCommonParent(params Button[] buttons)
+    {
+        Transform parent = null;
+
+        foreach (Button button in buttons)
+        {
+            if (button == null)
+                continue;
+
+            if (parent == null)
+            {
+                parent = button.transform.parent;
+                continue;
+            }
+
+            if (button.transform.parent != parent)
+                return null;
+        }
+
+        return parent != null ? parent.gameObject : null;
     }
 
     private Button FindButton(string objectName)
@@ -277,11 +399,27 @@ public class BattleManager : MonoBehaviour
         return found != null ? found.GetComponent<Button>() : null;
     }
 
+    private TextMeshProUGUI FindText(string objectName)
+    {
+        GameObject found = GameObject.Find(objectName);
+        return found != null ? found.GetComponent<TextMeshProUGUI>() : null;
+    }
+
+    private Slider FindSlider(string objectName)
+    {
+        GameObject found = GameObject.Find(objectName);
+        return found != null ? found.GetComponent<Slider>() : null;
+    }
+
     private Canvas CreateCanvas()
     {
         GameObject canvasObject = new GameObject("Canvas", typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
         Canvas canvas = canvasObject.GetComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+
+        CanvasScaler scaler = canvasObject.GetComponent<CanvasScaler>();
+        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        scaler.referenceResolution = new Vector2(1920f, 1080f);
 
         if (FindObjectOfType<EventSystem>() == null)
             new GameObject("EventSystem", typeof(EventSystem), typeof(StandaloneInputModule));
@@ -289,25 +427,28 @@ public class BattleManager : MonoBehaviour
         return canvas;
     }
 
-    private Button CreateButton(Transform parent, string label, Vector2 position)
+    private Button CreateButton(Transform parent, string objectName, Vector2 position, string label)
     {
-        GameObject buttonObject = new GameObject(label, typeof(RectTransform), typeof(Image), typeof(Button));
+        GameObject buttonObject = new GameObject(objectName, typeof(RectTransform), typeof(Image), typeof(Button));
         buttonObject.transform.SetParent(parent, false);
 
         RectTransform rect = buttonObject.GetComponent<RectTransform>();
-        rect.sizeDelta = new Vector2(180f, 64f);
+        rect.sizeDelta = new Vector2(220f, 76f);
         rect.anchoredPosition = position;
 
         Image image = buttonObject.GetComponent<Image>();
         image.color = new Color(0.92f, 0.92f, 0.92f, 1f);
 
-        CreateText(buttonObject.transform, "Text (TMP)", Vector2.zero, label);
+        TextMeshProUGUI buttonText = CreateText(buttonObject.transform, "Text (TMP)", Vector2.zero, label);
+        buttonText.color = Color.black;
+        buttonText.GetComponent<RectTransform>().sizeDelta = rect.sizeDelta;
+
         Button button = buttonObject.GetComponent<Button>();
         ConfigureButtonVisuals(button);
         return button;
     }
 
-    private Slider CreateHPSlider(Transform parent, string objectName, Vector2 position)
+    private Slider CreateSlider(Transform parent, string objectName, Vector2 position, Color fillColor)
     {
         GameObject sliderObject = new GameObject(objectName, typeof(RectTransform), typeof(Slider));
         sliderObject.transform.SetParent(parent, false);
@@ -338,7 +479,7 @@ public class BattleManager : MonoBehaviour
         fillRect.anchorMin = Vector2.zero;
         fillRect.anchorMax = Vector2.one;
         fillRect.sizeDelta = Vector2.zero;
-        fillObject.GetComponent<Image>().color = new Color(0.85f, 0.12f, 0.12f, 1f);
+        fillObject.GetComponent<Image>().color = fillColor;
 
         Slider slider = sliderObject.GetComponent<Slider>();
         slider.transition = Selectable.Transition.None;
@@ -353,6 +494,9 @@ public class BattleManager : MonoBehaviour
 
     private void ConfigureButtonVisuals(Button button)
     {
+        if (button == null)
+            return;
+
         button.transition = Selectable.Transition.ColorTint;
         button.navigation = new Navigation { mode = Navigation.Mode.None };
 
@@ -361,9 +505,9 @@ public class BattleManager : MonoBehaviour
         colors.highlightedColor = new Color(1f, 0.92f, 0.45f, 1f);
         colors.pressedColor = new Color(0.95f, 0.45f, 0.18f, 1f);
         colors.selectedColor = colors.normalColor;
-        colors.disabledColor = new Color(0.35f, 0.35f, 0.35f, 0.65f);
+        colors.disabledColor = new Color(0.45f, 0.45f, 0.45f, 0.75f);
         colors.colorMultiplier = 1f;
-        colors.fadeDuration = 0.08f;
+        colors.fadeDuration = 0.06f;
         button.colors = colors;
     }
 
@@ -373,7 +517,7 @@ public class BattleManager : MonoBehaviour
         textObject.transform.SetParent(parent, false);
 
         RectTransform rect = textObject.GetComponent<RectTransform>();
-        rect.sizeDelta = new Vector2(420f, 60f);
+        rect.sizeDelta = new Vector2(420f, 52f);
         rect.anchoredPosition = position;
 
         TextMeshProUGUI label = textObject.GetComponent<TextMeshProUGUI>();
@@ -405,6 +549,9 @@ public class BattleManager : MonoBehaviour
 
     private void SetButtonLabel(Button button, string label)
     {
+        if (button == null)
+            return;
+
         TextMeshProUGUI text = button.GetComponentInChildren<TextMeshProUGUI>();
         if (text != null)
             text.text = label;
