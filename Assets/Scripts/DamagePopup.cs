@@ -11,6 +11,14 @@ public class DamagePopup : MonoBehaviour
     private RectTransform rectTransform;
     private TextMeshProUGUI textComponent;
 
+    public static DamagePopup CreateAt(RectTransform popupPoint, string text)
+    {
+        Transform parent = popupPoint.parent != null ? popupPoint.parent : popupPoint;
+        DamagePopup popup = Create(parent, popupPoint.anchoredPosition, text);
+        popup.transform.SetAsLastSibling();
+        return popup;
+    }
+
     public static DamagePopup Create(Transform parent, Vector2 anchoredPosition, string text)
     {
         GameObject popupObject = new GameObject("DamagePopup", typeof(RectTransform), typeof(TextMeshProUGUI), typeof(DamagePopup));
