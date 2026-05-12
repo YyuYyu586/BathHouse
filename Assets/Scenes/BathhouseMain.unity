@@ -870,7 +870,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9685534, g: 0.34417143, b: 0.34417143, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1576,15 +1576,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueManager: {fileID: 622208148}
   lines:
-  - speakerName: Test
-    portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
-    isLeftPortrait: 0
-    text: nihao
-    backgroundImage: {fileID: 837111553, guid: b7a6d275be4a7b144b1008cdd85232f0, type: 3}
-  - speakerName: xiaofu
+  - speakerName: "\u5C0F\u798F"
     portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+    isLeftPortrait: 0
+    text: "\u4F60\u597D\uFF01"
+    backgroundImage: {fileID: 837111553, guid: b7a6d275be4a7b144b1008cdd85232f0, type: 3}
+  - speakerName: "\u5B9E\u4E60\u751F\u9F20\u9F20"
+    portrait: {fileID: 21300000, guid: 00a7dd9ec0ffa0e4ca69f93da857b042, type: 3}
     isLeftPortrait: 1
-    text: nshi
+    text: "\u4F60\u662F\uFF1F"
     backgroundImage: {fileID: 837111553, guid: b7a6d275be4a7b144b1008cdd85232f0, type: 3}
   exclamationMark: {fileID: 349106136}
   combatTrigger: {fileID: 602178933}
@@ -2810,8 +2810,8 @@ MonoBehaviour:
   dialoguePanel: {fileID: 1500222994}
   nameText: {fileID: 1914132690}
   dialogueText: {fileID: 1603268463}
-  portraitLeft: {fileID: 0}
-  portraitRight: {fileID: 0}
+  portraitLeft: {fileID: 1325866216}
+  portraitRight: {fileID: 291696656}
   backgroundImage: {fileID: 0}
   allDaysDialogues: []
   typingSpeed: 0.05
@@ -4662,7 +4662,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
