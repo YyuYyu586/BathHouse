@@ -11,6 +11,20 @@ public class DamagePopup : MonoBehaviour
     private RectTransform rectTransform;
     private TextMeshProUGUI textComponent;
 
+    private void Awake()
+    {
+        rectTransform = GetComponent<RectTransform>();
+        textComponent = GetComponent<TextMeshProUGUI>();
+    }
+
+    public void SetText(string text)
+    {
+        if (textComponent == null)
+            textComponent = GetComponent<TextMeshProUGUI>();
+
+        textComponent.text = text;
+    }
+
     public static DamagePopup CreateAt(RectTransform popupPoint, string text)
     {
         Transform parent = popupPoint.parent != null ? popupPoint.parent : popupPoint;
@@ -39,8 +53,12 @@ public class DamagePopup : MonoBehaviour
 
     public void Play()
     {
-        rectTransform = GetComponent<RectTransform>();
-        textComponent = GetComponent<TextMeshProUGUI>();
+        if (rectTransform == null)
+            rectTransform = GetComponent<RectTransform>();
+
+        if (textComponent == null)
+            textComponent = GetComponent<TextMeshProUGUI>();
+
         StartCoroutine(PlayRoutine());
     }
 
