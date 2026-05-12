@@ -171,6 +171,7 @@ public class AfterCombatStoryController : MonoBehaviour
         if (dailyStories != null &&
             index >= 0 &&
             index < dailyStories.Length &&
+            dailyStories[index] != null &&
             !string.IsNullOrWhiteSpace(dailyStories[index].storyText))
         {
             return dailyStories[index].storyText;
