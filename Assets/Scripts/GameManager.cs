@@ -33,6 +33,11 @@ public class GameManager : MonoBehaviour
 
     public void GoNextDay()
     {
+        AdvanceDay();
+    }
+
+    public void AdvanceDay()
+    {
         currentDay++;
         playerHP = 100;
         playerSP = 50;

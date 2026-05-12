@@ -529,8 +529,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -652, y: -285}
-  m_SizeDelta: {x: 400, y: 400}
+  m_AnchoredPosition: {x: -686, y: -285}
+  m_SizeDelta: {x: 400, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &360701054
 MonoBehaviour:
@@ -552,7 +552,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f5d924d7c8541314a8a95fbd54653427, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -838,17 +838,17 @@ MonoBehaviour:
   - dayName: Day1
     lines:
     - speakerName: "\u5C0F\u798F"
-      portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+      portrait: {fileID: 21300000, guid: f5d924d7c8541314a8a95fbd54653427, type: 3}
       isLeftPortrait: 1
       text: "\u6211\u662F\u4E00\u53EA\u5728\u6DF1X\u6253\u5DE5\u7684\u793E\u755C"
       backgroundImage: {fileID: 21300000, guid: f470626e478968a4988db6fe18ce57a4, type: 3}
     - speakerName: "\u5C0F\u798F"
-      portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+      portrait: {fileID: 21300000, guid: f5d924d7c8541314a8a95fbd54653427, type: 3}
       isLeftPortrait: 1
       text: "\u53C8\u52A0\u73ED\u5230\u51CC\u6668\uFF0C\u6211\u8981\u7D2F\u6B7B\u4E86"
       backgroundImage: {fileID: 21300000, guid: f470626e478968a4988db6fe18ce57a4, type: 3}
     - speakerName: "\u5C0F\u798F"
-      portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+      portrait: {fileID: 21300000, guid: f5d924d7c8541314a8a95fbd54653427, type: 3}
       isLeftPortrait: 1
       text: "\u600E\u4E48\u6700\u8FD1\u8FD9\u4E48\u591A\u6076\u6027\u4E8B\u4EF6\uFF0C\u8FD9\u4E16\u9053\u600E\u4E48\u4E86\u3002"
       backgroundImage: {fileID: 21300000, guid: f470626e478968a4988db6fe18ce57a4, type: 3}

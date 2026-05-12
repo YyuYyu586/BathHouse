@@ -1,57 +1,32 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
+// Opens the combat scene when the player presses F inside this trigger.
 public class CombatTrigger : MonoBehaviour
 {
-    [Header("玩家")]
-    public Transform player;
+    private bool playerInRange;
 
-    [Header("对话管理器")]
-    public DialogueManager dialogueManager;
-
-    [Header("交互距离")]
-    public float interactDistance = 1.5f;
-
-    [Header("顾客要说的话")]
-    public DialogueLine[] lines;
-
-    [Header("状态控制")]
-    public GameObject exclamationMark;
-    public GameObject combatTrigger;
-
-    private bool hasTalked = false;
-
-    void Start()
+    private void Update()
     {
-        if (exclamationMark != null)
-            exclamationMark.SetActive(true);
-
-        if (combatTrigger != null)
-            combatTrigger.SetActive(false);
+        if (playerInRange && Input.GetKeyDown(KeyCode.F))
+        {
+            SceneManager.LoadScene("CombatScene");
+        }
     }
 
-    void Update()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (player == null || dialogueManager == null)
-            return;
-
-        float distance = Vector2.Distance(transform.position, player.position);
-
-        if (distance <= interactDistance && Input.GetKeyDown(KeyCode.F) && !hasTalked)
+        if (other.CompareTag("Player"))
         {
-            dialogueManager.OnDialogueEnd = () =>
-            {
-                hasTalked = true;
+            playerInRange = true;
+        }
+    }
 
-                if (exclamationMark != null)
-                    exclamationMark.SetActive(false);
-
-                if (combatTrigger != null)
-                    combatTrigger.SetActive(true);
-
-                Debug.Log("接待完成，战斗入口开启。");
-            };
-
-            dialogueManager.StartDialogue(lines);
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = false;
         }
     }
 }
