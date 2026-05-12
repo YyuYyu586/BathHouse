@@ -11,9 +11,12 @@ public class AfterCombatStoryController : MonoBehaviour
     public TextMeshProUGUI storyText;
     public Button continueButton;
 
-    [Header("Story Text")]
+    [Header("Fallback Story Text")]
     [TextArea(2, 4)]
     public string placeholderText = "The bathhouse grows quiet after the battle.\n\nPress F or click Continue.";
+
+    [Header("Seven Days Post-Combat Story")]
+    public DailyPostCombatStory[] dailyStories = new DailyPostCombatStory[7];
 
     private bool storyEnded;
 
@@ -44,10 +47,13 @@ public class AfterCombatStoryController : MonoBehaviour
         BindExistingOrCreateUI();
 
         if (storyText != null)
-            storyText.text = placeholderText;
+            storyText.text = GetTodayStoryText();
 
         if (continueButton != null)
+        {
+            continueButton.onClick.RemoveListener(EndStory);
             continueButton.onClick.AddListener(EndStory);
+        }
     }
 
     private void Update()
@@ -156,4 +162,29 @@ public class AfterCombatStoryController : MonoBehaviour
         button.navigation = new Navigation { mode = Navigation.Mode.None };
         return button;
     }
+
+    private string GetTodayStoryText()
+    {
+        int today = GameManager.Instance != null ? GameManager.Instance.currentDay : 1;
+        int index = today - 1;
+
+        if (dailyStories != null &&
+            index >= 0 &&
+            index < dailyStories.Length &&
+            !string.IsNullOrWhiteSpace(dailyStories[index].storyText))
+        {
+            return dailyStories[index].storyText;
+        }
+
+        return placeholderText;
+    }
+}
+
+[System.Serializable]
+public class DailyPostCombatStory
+{
+    public string dayName;
+
+    [TextArea(3, 8)]
+    public string storyText;
 }

@@ -1,31 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
 
 public class StorySceneController : MonoBehaviour
 {
     public DialogueManager dialogueManager;
+    public DialogueLine[] openingLines;
 
-    void Start()
+    private void Start()
     {
-        int today = GameManager.Instance.currentDay;
-
-        if (dialogueManager.allDaysDialogues.Length >= today)
+        if (dialogueManager == null)
         {
-            DialogueLine[] lines = dialogueManager.allDaysDialogues[today - 1].lines;
-
-            dialogueManager.OnDialogueEnd = () =>
-            {
-                SceneManager.LoadScene("BathhouseMain");
-            };
-
-            dialogueManager.StartDialogue(lines);
+            Debug.LogError("StorySceneController needs a DialogueManager reference.");
+            return;
         }
-        else
+
+        dialogueManager.OnDialogueEnd = () =>
         {
-            Debug.LogError("剧情配置不足，请检查 allDaysDialogues。");
+            SceneManager.LoadScene("BathhouseMain");
+        };
+
+        if (openingLines != null && openingLines.Length > 0)
+        {
+            dialogueManager.StartDialogue(openingLines);
+            return;
         }
+
+        if (dialogueManager.allDaysDialogues != null && dialogueManager.allDaysDialogues.Length > 0)
+        {
+            // Backward-compatible fallback for the current StoryScene setup.
+            dialogueManager.StartDialogue(dialogueManager.allDaysDialogues[0].lines);
+            return;
+        }
+
+        Debug.LogWarning("StoryScene has no opening dialogue. Loading BathhouseMain.");
+        SceneManager.LoadScene("BathhouseMain");
     }
 }
