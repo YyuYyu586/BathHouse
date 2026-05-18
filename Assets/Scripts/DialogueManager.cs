@@ -1,8 +1,8 @@
+using System;
+using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using System.Collections;
-using System;
 
 [System.Serializable]
 public class DialogueLine
@@ -10,11 +10,13 @@ public class DialogueLine
     public string speakerName;
     public Sprite portrait;
 
-    [Header("勾选代表在左边，不勾选代表在右边")]
+    [Header("Checked = left portrait, unchecked = right portrait")]
     public bool isLeftPortrait = true;
 
     [TextArea(2, 4)]
     public string text;
+
+    [Header("Optional. Leave empty to keep the current scene background.")]
     public Sprite backgroundImage;
 }
 
@@ -29,147 +31,130 @@ public class DialogueManager : MonoBehaviour
 {
     public Action OnDialogueEnd;
 
-    [Header("对话框整体")]
+    [Header("Dialogue Panel")]
     public GameObject dialoguePanel;
 
-    [Header("UI 绑定")]
+    [Header("Text")]
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI dialogueText;
 
-    [Header("左右立绘框")]
+    [Header("Portraits")]
     public Image portraitLeft;
     public Image portraitRight;
 
-    [Header("背景图，可不填")]
+    [Header("Optional Background Image")]
     public Image backgroundImage;
 
-    [Header("7天的所有剧情配置，可先不管")]
+    [Header("Optional Daily Dialogue Fallback")]
     public DailyDialogue[] allDaysDialogues;
 
-    [Header("打字速度")]
+    [Header("Typing")]
     public float typingSpeed = 0.05f;
 
-    private int currentIndex = 0;
-    private bool isTyping = false;
     private DialogueLine[] currentLines;
+    private int currentIndex;
+    private bool isTyping;
 
-    void Start()
+    private void Start()
     {
-        if (portraitLeft != null)
-            portraitLeft.gameObject.SetActive(false);
-
-        if (portraitRight != null)
-            portraitRight.gameObject.SetActive(false);
+        HidePortraits();
 
         if (dialoguePanel != null)
             dialoguePanel.SetActive(false);
     }
 
-    void Update()
+    private void Update()
     {
         if (dialoguePanel == null || !dialoguePanel.activeSelf)
             return;
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.F))
         {
-            if (isTyping)
-            {
-                StopAllCoroutines();
-                dialogueText.text = currentLines[currentIndex].text;
-                isTyping = false;
-            }
-            else
-            {
-                currentIndex++;
-
-                if (currentIndex < currentLines.Length)
-                {
-                    PlayDialogue(currentLines[currentIndex]);
-                }
-                else
-                {
-                    EndDialogue();
-                }
-            }
+            ContinueDialogue();
         }
     }
 
     public void StartDialogue(DialogueLine[] lines)
     {
-        if (lines == null || lines.Length == 0)
+        if (dialoguePanel == null)
         {
-            Debug.LogWarning("没有可播放的对话。");
+            Debug.LogError("DialogueManager needs a DialoguePanel reference.");
             return;
         }
 
+        if (lines == null || lines.Length == 0)
+        {
+            Debug.LogWarning("DialogueManager received no dialogue lines.");
+            return;
+        }
+
+        StopAllCoroutines();
         currentLines = lines;
         currentIndex = 0;
+        isTyping = false;
 
-        if (dialoguePanel != null)
-            dialoguePanel.SetActive(true);
-
+        dialoguePanel.SetActive(true);
         PlayDialogue(currentLines[currentIndex]);
-
-
-    
-     
-    Debug.Log("StartDialogue 被调用了");
-
-      if (dialoguePanel == null)
-     {
-         Debug.LogError("DialoguePanel 没拖！");
-        return;
-     }
-
-     if (lines == null || lines.Length == 0)
-     {
-        Debug.LogWarning("没有可播放的对话。");
-        return;
-     }
-
-     currentLines = lines;
-     currentIndex = 0;
-
-     dialoguePanel.SetActive(true);
-     Debug.Log("DialoguePanel 已打开");
-
-     PlayDialogue(currentLines[currentIndex]);
-
     }
 
-    
-
-    void PlayDialogue(DialogueLine line)
+    private void ContinueDialogue()
     {
+        if (currentLines == null || currentLines.Length == 0)
+        {
+            EndDialogue();
+            return;
+        }
+
+        if (isTyping)
+        {
+            StopAllCoroutines();
+
+            if (dialogueText != null)
+                dialogueText.text = currentLines[currentIndex].text;
+
+            isTyping = false;
+            return;
+        }
+
+        currentIndex++;
+
+        if (currentIndex < currentLines.Length)
+        {
+            PlayDialogue(currentLines[currentIndex]);
+        }
+        else
+        {
+            EndDialogue();
+        }
+    }
+
+    private void PlayDialogue(DialogueLine line)
+    {
+        if (line == null)
+        {
+            ContinueDialogue();
+            return;
+        }
+
         if (nameText != null)
             nameText.text = line.speakerName;
 
+        // Empty background means "keep the current Unity scene as the background".
         if (backgroundImage != null && line.backgroundImage != null)
+        {
             backgroundImage.sprite = line.backgroundImage;
+            backgroundImage.gameObject.SetActive(true);
+        }
 
-        if (portraitLeft != null)
-            portraitLeft.gameObject.SetActive(false);
-
-        if (portraitRight != null)
-            portraitRight.gameObject.SetActive(false);
+        HidePortraits();
 
         if (line.portrait != null)
         {
-            if (line.isLeftPortrait)
+            Image targetPortrait = line.isLeftPortrait ? portraitLeft : portraitRight;
+            if (targetPortrait != null)
             {
-                if (portraitLeft != null)
-                {
-                    portraitLeft.sprite = line.portrait;
-                    portraitLeft.gameObject.SetActive(true);
-                }
-            }
-            else
-            {
-                if (portraitRight != null)
-                {
-                    portraitRight.sprite = line.portrait;
-                    portraitRight.gameObject.SetActive(true);
-                }
+                targetPortrait.sprite = line.portrait;
+                targetPortrait.gameObject.SetActive(true);
             }
         }
 
@@ -177,16 +162,14 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(TypeText(line.text));
     }
 
-    void EndDialogue()
+    private void EndDialogue()
     {
         StopAllCoroutines();
         isTyping = false;
+        currentLines = null;
+        currentIndex = 0;
 
-        if (portraitLeft != null)
-            portraitLeft.gameObject.SetActive(false);
-
-        if (portraitRight != null)
-            portraitRight.gameObject.SetActive(false);
+        HidePortraits();
 
         if (dialogueText != null)
             dialogueText.text = "";
@@ -197,18 +180,30 @@ public class DialogueManager : MonoBehaviour
         if (dialoguePanel != null)
             dialoguePanel.SetActive(false);
 
-        OnDialogueEnd?.Invoke();
+        Action endCallback = OnDialogueEnd;
         OnDialogueEnd = null;
+        endCallback?.Invoke();
     }
 
-    IEnumerator TypeText(string text)
+    private void HidePortraits()
+    {
+        if (portraitLeft != null)
+            portraitLeft.gameObject.SetActive(false);
+
+        if (portraitRight != null)
+            portraitRight.gameObject.SetActive(false);
+    }
+
+    private IEnumerator TypeText(string text)
     {
         isTyping = true;
 
         if (dialogueText != null)
             dialogueText.text = "";
 
-        foreach (char letter in text.ToCharArray())
+        string safeText = text ?? "";
+
+        foreach (char letter in safeText)
         {
             if (dialogueText != null)
                 dialogueText.text += letter;

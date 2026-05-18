@@ -1,191 +1,89 @@
-using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
-// Placeholder controller for the post-combat story scene.
+// Plays the post-combat story for the current day, then advances the main loop.
 public class AfterCombatStoryController : MonoBehaviour
 {
-    [Header("Optional UI References")]
-    public TextMeshProUGUI storyText;
-    public Button continueButton;
+    [Header("Dialogue")]
+    public DialogueManager dialogueManager;
 
-    [Header("Fallback Story Text")]
-    [TextArea(2, 4)]
-    public string placeholderText = "The bathhouse grows quiet after the battle.\n\nPress F or click Continue.";
+    [Header("Seven Days Post-Combat Dialogue")]
+    public DailyDialogue[] afterCombatDialogues = new DailyDialogue[7];
 
-    [Header("Seven Days Post-Combat Story")]
-    public DailyPostCombatStory[] dailyStories = new DailyPostCombatStory[7];
+    private const string BathhouseSceneName = "BathhouseMain";
+    private const string MainMenuSceneName = "MainMenu";
 
+    private GameManager gameManager;
     private bool storyEnded;
-
-    // Keeps AfterCombatScene runnable even before this script is manually added.
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
-    private static void InstallForAfterCombatScene()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-        TryCreateForScene(SceneManager.GetActiveScene());
-    }
-
-    private static void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        TryCreateForScene(scene);
-    }
-
-    private static void TryCreateForScene(Scene scene)
-    {
-        if (scene.name != "AfterCombatScene" || FindObjectOfType<AfterCombatStoryController>() != null)
-            return;
-
-        new GameObject("AfterCombatStoryController").AddComponent<AfterCombatStoryController>();
-    }
 
     private void Start()
     {
-        EnsureGameManagerExists();
-        BindExistingOrCreateUI();
+        gameManager = GameManager.EnsureInstance();
 
-        if (storyText != null)
-            storyText.text = GetTodayStoryText();
-
-        if (continueButton != null)
+        DialogueLine[] todayLines = GetTodayDialogueLines();
+        if (todayLines == null || todayLines.Length == 0)
         {
-            continueButton.onClick.RemoveListener(EndStory);
-            continueButton.onClick.AddListener(EndStory);
-        }
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
+            Debug.LogWarning("No after-combat dialogue found for day " + gameManager.currentDay + ". Continuing flow.");
             EndStory();
+            return;
+        }
+
+        if (dialogueManager == null)
+        {
+            Debug.LogError("AfterCombatStoryController needs a DialogueManager reference. Continuing flow to avoid blocking the demo.");
+            EndStory();
+            return;
+        }
+
+        dialogueManager.OnDialogueEnd = EndStory;
+        dialogueManager.StartDialogue(todayLines);
     }
 
-    // Called by the Continue button or F key when the placeholder story is done.
-    public void EndStory()
+    // Called when DialogueManager finishes all lines, or immediately if today's story is empty.
+    private void EndStory()
     {
         if (storyEnded)
             return;
 
         storyEnded = true;
+        gameManager = GameManager.EnsureInstance();
 
-        if (GameManager.Instance != null)
-            GameManager.Instance.AdvanceDay();
-
-        SceneManager.LoadScene("BathhouseMain");
-    }
-
-    private void EnsureGameManagerExists()
-    {
-        if (GameManager.Instance == null)
-            new GameObject("GameManager").AddComponent<GameManager>();
-    }
-
-    private void BindExistingOrCreateUI()
-    {
-        Canvas canvas = FindObjectOfType<Canvas>();
-        if (canvas == null)
-            canvas = CreateCanvas();
-
-        if (storyText == null)
-            storyText = FindText("StoryText") ?? CreateText(canvas.transform, "StoryText", new Vector2(0f, 80f), placeholderText);
-
-        if (continueButton == null)
-            continueButton = FindButton("ContinueButton") ?? CreateButton(canvas.transform, "ContinueButton", new Vector2(0f, -120f), "Continue");
-    }
-
-    private Canvas CreateCanvas()
-    {
-        GameObject canvasObject = new GameObject("Canvas", typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
-        Canvas canvas = canvasObject.GetComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-
-        CanvasScaler scaler = canvasObject.GetComponent<CanvasScaler>();
-        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1920f, 1080f);
-
-        if (FindObjectOfType<EventSystem>() == null)
-            new GameObject("EventSystem", typeof(EventSystem), typeof(StandaloneInputModule));
-
-        return canvas;
-    }
-
-    private TextMeshProUGUI FindText(string objectName)
-    {
-        GameObject found = GameObject.Find(objectName);
-        return found != null ? found.GetComponent<TextMeshProUGUI>() : null;
-    }
-
-    private Button FindButton(string objectName)
-    {
-        GameObject found = GameObject.Find(objectName);
-        return found != null ? found.GetComponent<Button>() : null;
-    }
-
-    private TextMeshProUGUI CreateText(Transform parent, string objectName, Vector2 position, string text)
-    {
-        GameObject textObject = new GameObject(objectName, typeof(RectTransform), typeof(TextMeshProUGUI));
-        textObject.transform.SetParent(parent, false);
-
-        RectTransform rect = textObject.GetComponent<RectTransform>();
-        rect.sizeDelta = new Vector2(900f, 220f);
-        rect.anchoredPosition = position;
-
-        TextMeshProUGUI label = textObject.GetComponent<TextMeshProUGUI>();
-        label.text = text;
-        label.fontSize = 36f;
-        label.alignment = TextAlignmentOptions.Center;
-        label.color = Color.white;
-        return label;
-    }
-
-    private Button CreateButton(Transform parent, string objectName, Vector2 position, string label)
-    {
-        GameObject buttonObject = new GameObject(objectName, typeof(RectTransform), typeof(Image), typeof(Button));
-        buttonObject.transform.SetParent(parent, false);
-
-        RectTransform rect = buttonObject.GetComponent<RectTransform>();
-        rect.sizeDelta = new Vector2(260f, 72f);
-        rect.anchoredPosition = position;
-
-        Image image = buttonObject.GetComponent<Image>();
-        image.color = new Color(0.92f, 0.92f, 0.92f, 1f);
-
-        TextMeshProUGUI buttonText = CreateText(buttonObject.transform, "Text (TMP)", Vector2.zero, label);
-        RectTransform textRect = buttonText.GetComponent<RectTransform>();
-        textRect.sizeDelta = rect.sizeDelta;
-        buttonText.fontSize = 30f;
-        buttonText.color = Color.black;
-
-        Button button = buttonObject.GetComponent<Button>();
-        button.navigation = new Navigation { mode = Navigation.Mode.None };
-        return button;
-    }
-
-    private string GetTodayStoryText()
-    {
-        int today = GameManager.Instance != null ? GameManager.Instance.currentDay : 1;
-        int index = today - 1;
-
-        if (dailyStories != null &&
-            index >= 0 &&
-            index < dailyStories.Length &&
-            dailyStories[index] != null &&
-            !string.IsNullOrWhiteSpace(dailyStories[index].storyText))
+        if (gameManager.IsFinalDay)
         {
-            return dailyStories[index].storyText;
+            Debug.Log("Day 7 after-combat story finished. Returning to MainMenu without advancing to Day 8.");
+            SceneManager.LoadScene(MainMenuSceneName);
+            return;
         }
 
-        return placeholderText;
+        Debug.Log("AfterCombatScene finished. Advancing from day " + gameManager.currentDay + " to day " + (gameManager.currentDay + 1) + ".");
+        gameManager.AdvanceDay();
+        SceneManager.LoadScene(BathhouseSceneName);
     }
-}
 
-[System.Serializable]
-public class DailyPostCombatStory
-{
-    public string dayName;
+    private DialogueLine[] GetTodayDialogueLines()
+    {
+        int index = Mathf.Clamp(gameManager.currentDay, 1, gameManager.maxDay) - 1;
 
-    [TextArea(3, 8)]
-    public string storyText;
+        if (afterCombatDialogues != null &&
+            index >= 0 &&
+            index < afterCombatDialogues.Length &&
+            afterCombatDialogues[index] != null &&
+            afterCombatDialogues[index].lines != null &&
+            afterCombatDialogues[index].lines.Length > 0)
+        {
+            return afterCombatDialogues[index].lines;
+        }
+
+        // Optional fallback for scenes already configured on DialogueManager.
+        if (dialogueManager != null &&
+            dialogueManager.allDaysDialogues != null &&
+            index >= 0 &&
+            index < dialogueManager.allDaysDialogues.Length &&
+            dialogueManager.allDaysDialogues[index] != null)
+        {
+            return dialogueManager.allDaysDialogues[index].lines;
+        }
+
+        return null;
+    }
 }

@@ -1624,7 +1624,7 @@ GameObject:
   - component: {fileID: 346326818}
   - component: {fileID: 346326817}
   m_Layer: 0
-  m_Name: Customer_Day1
+  m_Name: Customer_Day2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1782,7 +1782,7 @@ GameObject:
   - component: {fileID: 348963584}
   - component: {fileID: 348963583}
   m_Layer: 0
-  m_Name: Customer_Day5
+  m_Name: Customer_Day6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2969,6 +2969,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 397eec701d30e64458e32a8e37e5fe99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blockDayOneCombat: 1
+  combatSceneName: CombatScene
 --- !u!61 &602178937
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3307,7 +3309,7 @@ GameObject:
   - component: {fileID: 798137962}
   - component: {fileID: 798137961}
   m_Layer: 0
-  m_Name: Customer_Day3
+  m_Name: Customer_Day4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3988,6 +3990,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customers:
   - {fileID: 346326815}
+  - {fileID: 1222357669}
+  - {fileID: 798137959}
+  - {fileID: 1731938823}
+  - {fileID: 348963581}
+  - {fileID: 1823683727}
 --- !u!1 &975168852
 GameObject:
   m_ObjectHideFlags: 0
@@ -4711,7 +4718,7 @@ GameObject:
   - component: {fileID: 1222357672}
   - component: {fileID: 1222357671}
   m_Layer: 0
-  m_Name: Customer_Day2
+  m_Name: Customer_Day3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6688,6 +6695,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Daily_UI
       objectReference: {fileID: 0}
+    - target: {fileID: 6710029590054511685, guid: a29edcf0f68193a4089b939bff1fccdb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6840,7 +6851,7 @@ GameObject:
   - component: {fileID: 1731938826}
   - component: {fileID: 1731938825}
   m_Layer: 0
-  m_Name: Customer_Day4
+  m_Name: Customer_Day5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6998,7 +7009,7 @@ GameObject:
   - component: {fileID: 1823683730}
   - component: {fileID: 1823683729}
   m_Layer: 0
-  m_Name: Customer_Day1 (5)
+  m_Name: Customer_Day7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

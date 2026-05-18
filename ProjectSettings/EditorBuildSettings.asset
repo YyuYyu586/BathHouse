@@ -20,7 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CombatScene.unity
     guid: 2253d56a911654b45a06adbb17d3ae69
+  - enabled: 0
+    path: Assets/Scenes/AfterCombatScene1.unity
+    guid: d4cc01ec158443043988d1cfe8e434d9
   - enabled: 1
     path: Assets/Scenes/AfterCombatScene.unity
-    guid: d4cc01ec158443043988d1cfe8e434d9
+    guid: 4fce687e42e4eee488ee0b2d91dfb9dc
   m_configObjects: {}

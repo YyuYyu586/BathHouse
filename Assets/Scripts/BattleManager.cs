@@ -9,6 +9,25 @@ using UnityEngine.UI;
 // All main UI objects should already exist in the scene and be assigned in the Inspector.
 public class BattleManager : MonoBehaviour
 {
+    [System.Serializable]
+    private class EnemyDayData
+    {
+        public int day = 2;
+        public string enemyName = "Monster";
+        public int maxHP = 80;
+        public int attackDamage = 8;
+        public int goldReward = 10;
+
+        public EnemyDayData(int day, string enemyName, int maxHP, int attackDamage, int goldReward)
+        {
+            this.day = day;
+            this.enemyName = enemyName;
+            this.maxHP = maxHP;
+            this.attackDamage = attackDamage;
+            this.goldReward = goldReward;
+        }
+    }
+
     [Header("Player Stats")]
     [SerializeField] private int maxPlayerHP = 100;
     [SerializeField] private int maxPlayerSP = 30;
@@ -21,6 +40,16 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private int enemyAttackDamage = 8;
     [SerializeField] private float enemyTurnDelay = 0.8f;
     [SerializeField] private float fillSmoothTime = 0.2f;
+    [SerializeField] private EnemyDayData[] enemiesByDay =
+    {
+        new EnemyDayData(2, "Bubble Rookie", 70, 7, 10),
+        new EnemyDayData(3, "Mud Slime", 85, 8, 12),
+        new EnemyDayData(4, "Noise Bubble", 100, 9, 14),
+        new EnemyDayData(5, "Tile Monster", 120, 10, 16),
+        new EnemyDayData(6, "Storm Scrub", 140, 12, 18),
+        new EnemyDayData(7, "Bathhouse Boss", 180, 14, 30)
+    };
+    [SerializeField] private int defeatGoldRewardDivisor = 2;
 
     [Header("Player UI")]
     [SerializeField] private Image hpFillImage;
@@ -50,6 +79,10 @@ public class BattleManager : MonoBehaviour
     private int currentPlayerHP;
     private int currentPlayerSP;
     private int currentEnemyHP;
+    private int currentDay;
+    private int currentEnemyGoldReward;
+    private string currentEnemyName = "Monster";
+    private GameManager gameManager;
     private bool isPlayerTurn;
     private bool battleEnded;
     private Coroutine playerHPFillRoutine;
@@ -68,11 +101,31 @@ public class BattleManager : MonoBehaviour
     // Resets battle state and initializes every assigned UI field.
     private void StartBattle()
     {
-        currentPlayerHP = GameManager.Instance != null
-            ? Mathf.Clamp(GameManager.Instance.playerHP, 1, maxPlayerHP)
+        gameManager = GameManager.EnsureInstance();
+        currentDay = gameManager.currentDay;
+
+        EnemyDayData enemyData = GetEnemyForDay(currentDay);
+        if (enemyData != null)
+        {
+            currentEnemyName = enemyData.enemyName;
+            maxEnemyHP = enemyData.maxHP;
+            enemyAttackDamage = enemyData.attackDamage;
+            currentEnemyGoldReward = enemyData.goldReward;
+        }
+        else
+        {
+            currentEnemyName = currentDay <= 1 ? "No Battle" : "Monster";
+            currentEnemyGoldReward = 0;
+        }
+
+        currentPlayerHP = gameManager != null
+            ? Mathf.Clamp(gameManager.playerHP, 1, maxPlayerHP)
             : maxPlayerHP;
 
-        currentPlayerSP = maxPlayerSP;
+        currentPlayerSP = gameManager != null
+            ? Mathf.Clamp(gameManager.playerSP, 0, maxPlayerSP)
+            : maxPlayerSP;
+
         currentEnemyHP = maxEnemyHP;
         isPlayerTurn = true;
         battleEnded = false;
@@ -82,8 +135,22 @@ public class BattleManager : MonoBehaviour
 
         SetActionButtonsInteractable(true);
         SetPlayerMessage("Choose an action.");
-        SetEnemyMessage("");
+        SetEnemyMessage("Day " + currentDay + ": " + currentEnemyName);
         RefreshAllUI();
+
+        if (currentDay <= 1)
+        {
+            battleEnded = true;
+            isPlayerTurn = false;
+            currentEnemyHP = 0;
+            RefreshEnemyUI();
+            SetActionButtonsInteractable(false);
+            SetPlayerMessage("Day 1 is story only. Return and start work tomorrow.");
+            SetEnemyMessage("No battle today.");
+
+            if (victoryPanel != null)
+                victoryPanel.SetActive(true);
+        }
     }
 
     // Attack is the basic no-cost player action.
@@ -96,7 +163,7 @@ public class BattleManager : MonoBehaviour
 
         ClearSelectedButton();
         SetPlayerMessage("Attack!");
-        DealDamageToEnemy(attackDamage, "Monster took " + attackDamage + " damage.");
+        DealDamageToEnemy(attackDamage, currentEnemyName + " took " + attackDamage + " damage.");
     }
 
     // Blur costs SP and deals higher damage. Not enough SP does not spend the player turn.
@@ -118,7 +185,7 @@ public class BattleManager : MonoBehaviour
         currentPlayerSP = Mathf.Max(0, currentPlayerSP - blurSPCost);
         SetPlayerMessage("Blur!");
         RefreshPlayerUI();
-        DealDamageToEnemy(blurDamage, "Monster took " + blurDamage + " damage.");
+        DealDamageToEnemy(blurDamage, currentEnemyName + " took " + blurDamage + " damage.");
     }
 
     // Reserved for the future. Current version does not spend the turn.
@@ -180,11 +247,15 @@ public class BattleManager : MonoBehaviour
 
     private void WinBattle()
     {
+        if (battleEnded)
+            return;
+
         battleEnded = true;
         isPlayerTurn = false;
         SetActionButtonsInteractable(false);
-        SavePlayerHP();
-        SetEnemyMessage("Enemy defeated.");
+        SavePlayerState();
+        GiveGoldReward(currentEnemyGoldReward);
+        SetEnemyMessage(currentEnemyName + " defeated.");
 
         if (victoryPanel != null)
             victoryPanel.SetActive(true);
@@ -192,11 +263,21 @@ public class BattleManager : MonoBehaviour
 
     private void LoseBattle()
     {
+        if (battleEnded)
+            return;
+
         battleEnded = true;
         isPlayerTurn = false;
         SetActionButtonsInteractable(false);
-        SavePlayerHP();
-        SetPlayerMessage("Player was defeated.");
+
+        if (gameManager != null && gameManager.IsFinalDay)
+        {
+            StartCoroutine(FinalDayRescueRoutine());
+        }
+        else
+        {
+            CompleteNormalDefeatWithFailsafe();
+        }
     }
 
     private bool CanPlayerAct()
@@ -204,10 +285,95 @@ public class BattleManager : MonoBehaviour
         return !battleEnded && isPlayerTurn;
     }
 
-    private void SavePlayerHP()
+    private void SavePlayerState()
     {
-        if (GameManager.Instance != null)
-            GameManager.Instance.playerHP = currentPlayerHP;
+        if (gameManager == null)
+            gameManager = GameManager.EnsureInstance();
+
+        gameManager.playerHP = currentPlayerHP;
+        gameManager.playerSP = currentPlayerSP;
+    }
+
+    private void CompleteNormalDefeatWithFailsafe()
+    {
+        currentPlayerHP = 1;
+        SavePlayerState();
+
+        int reducedReward = defeatGoldRewardDivisor > 0
+            ? currentEnemyGoldReward / defeatGoldRewardDivisor
+            : 0;
+
+        GiveGoldReward(reducedReward);
+        SetPlayerMessage("You were defeated, but the bath god helped finish today's work.");
+        SetEnemyMessage("Failsafe cleared. Continue to the story.");
+
+        if (victoryPanel != null)
+            victoryPanel.SetActive(true);
+    }
+
+    private IEnumerator FinalDayRescueRoutine()
+    {
+        currentPlayerHP = 1;
+        SavePlayerState();
+        SetPlayerMessage("Everyone helps you. The bath god appears!");
+
+        yield return new WaitForSeconds(1f);
+
+        currentEnemyHP = 0;
+        RefreshEnemyUI();
+        SpawnDamagePopup(enemyDamagePopupPoint, "999");
+        GiveGoldReward(currentEnemyGoldReward);
+        SetEnemyMessage(currentEnemyName + " was defeated by everyone's help.");
+
+        if (victoryPanel != null)
+            victoryPanel.SetActive(true);
+    }
+
+    private void GiveGoldReward(int amount)
+    {
+        if (amount <= 0)
+            return;
+
+        if (gameManager == null)
+            gameManager = GameManager.EnsureInstance();
+
+        gameManager.playerGold += amount;
+        Debug.Log("Battle reward gold: " + amount + ". Current gold: " + gameManager.playerGold);
+    }
+
+    private EnemyDayData GetEnemyForDay(int day)
+    {
+        if (enemiesByDay == null)
+            return null;
+
+        for (int i = 0; i < enemiesByDay.Length; i++)
+        {
+            if (enemiesByDay[i] != null && enemiesByDay[i].day == day)
+                return enemiesByDay[i];
+        }
+
+        return GetDefaultEnemyForDay(day);
+    }
+
+    private EnemyDayData GetDefaultEnemyForDay(int day)
+    {
+        switch (day)
+        {
+            case 2:
+                return new EnemyDayData(2, "Bubble Rookie", 70, 7, 10);
+            case 3:
+                return new EnemyDayData(3, "Mud Slime", 85, 8, 12);
+            case 4:
+                return new EnemyDayData(4, "Noise Bubble", 100, 9, 14);
+            case 5:
+                return new EnemyDayData(5, "Tile Monster", 120, 10, 16);
+            case 6:
+                return new EnemyDayData(6, "Storm Scrub", 140, 12, 18);
+            case 7:
+                return new EnemyDayData(7, "Bathhouse Boss", 180, 14, 30);
+            default:
+                return null;
+        }
     }
 
     private void RefreshAllUI()
