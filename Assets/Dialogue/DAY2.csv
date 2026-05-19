@@ -1,0 +1,34 @@
+﻿Text_ID,StoryType,Day,Order,Speaker Name,Text,Background Image,Portrait,Side
+040,BeforeCombat,2,1,小福,"我来了！想了想这里确实不错,比起公司！昨天搓完下来现在一点也不觉得累了",BathHouse,XiaoFu,R
+041,BeforeCombat,2,2,小福,也看不到昨天那些黑漆漆的泥巴了,BathHouse,XiaoFu,R
+042,BeforeCombat,2,3,金嫂,好啊，小伙子,BathHouse,Jinsao_portrait,L
+043,BeforeCombat,2,4,金嫂,我来教你！那你就正式成为我的员工了！,BathHouse,Jinsao_portrait,L
+044,BeforeCombat,2,5,我是旁白,啪！一块散发着神秘光芒的布料砸在你的脸上。获得初始武器：【高级搓澡巾】,BathHouse,none,none
+045,BeforeCombat,2,6,金嫂,按WASD上下走动，想要些趁手的工具去柜台按F键，记住没！！,BathHouse,Jinsao_portrait,L
+046,BeforeCombat,2,7,小福,可以再说一遍不......,BathHouse,lihui_dafu_ganga,R
+047,BeforeCombat,2,8,金嫂,按WASD上下走动，想要些趁手的工具去柜台按F键，我不会再说了！,BathHouse,Jinsao_portrait,L
+048,BeforeCombat,2,9,金嫂,还有，听着，想和顾客聊天也按F键，接待完之后站蓝色地毯上按F键！,,,
+049,BeforeCombat,2,10,金嫂,一定要牢记于心知道吗！,,,
+050,BeforeCombat,2,11,小福,好的，我记住了。,,,
+051,BeforeCombat,2,12,金嫂,"刚好一会儿有个客人预约了,就你上吧,我会在旁边看着的！",BathHouse,Jinsao_portrait,L
+052,BeforeCombat,2,13,实习生鼠鼠,"你好,我预约了15：00的位置......",BathHouse,lihui_shixisheng_jusang,L
+053,BeforeCombat,2,14,金嫂,"好的,欸,你去一下！",BathHouse,Jinsao_portrait,L
+054,BeforeCombat,2,15,小福,"你好,是预约15：00的鼠鼠吗？这边请哈",BathHouse,XiaoFu,R
+055,BeforeCombat,2,16,实习生鼠鼠,好......,BathHouse,lihui_shixisheng_jusang,L
+056,AfterCombat,2,17,实习生鼠鼠,……呼。原来我的脖子还是能转的啊,BathHouse,lihui_shixisheng,L
+057,AfterCombat,2,18,小福,我懂你，我们这儿的服务不错吧，谁能想到我前几天还在这附近加班呢......,BathHouse,XiaoFu,R
+058,AfterCombat,2,19,实习生鼠鼠,没想到我们曾经也是同病相怜......,BathHouse,lihui_shixisheng,L
+059,AfterCombat,2,20,实习生鼠鼠,甚至每天忙到连饭都忘记吃......,BathHouse,lihui_shixisheng,L
+060,AfterCombat,2,21,我是旁白,实习生鼠鼠放在一旁的手机：「@所有人 明天上午前把竞品分析发出来！」,BathHouse,none,none
+061,AfterCombat,2,22,实习生鼠鼠,其实我想了很久，来你这里享受了这么一下，也想有点想下定决心了,BathHouse,lihui_shixisheng,L
+062,AfterCombat,2,23,实习生鼠鼠,反正我只是来实习的，这个地方不好自有下一个待遇更好的地方，我也已经得到这份经验了......,BathHouse,lihui_shixisheng,L
+063,AfterCombat,2,24,实习生鼠鼠,所以！,BathHouse,lihui_shixisheng,L
+064,AfterCombat,2,25,实习生鼠鼠,去他的竞品分析，我明天就不干了！,BathHouse,lihui_shixisheng,L
+065,AfterCombat,2,26,实习生鼠鼠,正好学校也在这边，我要好好休息一小段时间，我还要准备毕业设计啊......,BathHouse,lihui_shixisheng,L
+066,AfterCombat,2,27,实习生鼠鼠,听说附近新开了一家火锅店，先不管别的了，我要好好犒劳一下自己!,BathHouse,lihui_shixisheng,L
+067,AfterCombat,2,28,小福,去吧，好吃的话记得推荐给我哦,BathHouse,XiaoFu,R
+068,AfterCombat,2,29,金嫂,哟哟哟，可以，看你这样子，这第一次上班就这么上道,BathHouse,Jinsao_portrait,L
+069,AfterCombat,2,30,金嫂,手法虽然生涩，但手劲还不小嘛，这顾客看着挺满意的,BathHouse,Jinsao_portrait,L
+070,AfterCombat,2,31,金嫂,以后体力活就交给你了，我就可以没那么累咯。,BathHouse,Jinsao_portrait,L
+071,AfterCombat,2,32,小福,......,BathHouse,lihui_dafu_pibei,R
+072,AfterCombat,2,33,金嫂,放心，钱少不了你的！,BathHouse,Jinsao_portrait,L

@@ -1,0 +1,22 @@
+﻿Text_ID,StoryType,Day,Order,Speaker Name,Text,Background Image,Portrait,Side
+073,BeforeCombat,3,1,小福,嗯...,BathHouse,lihui_dafu_pibei,R
+074,BeforeCombat,3,2,金嫂,发什么呆呢？昨天的提成拿着，去柜台那边搞点花茶喝喝，看你累的,BathHouse,Jinsao_portrait,L
+075,BeforeCombat,3,3,主管鼠,咳...现在有位置吗？,BathHouse,lihui_zhuguan_weixiao,L
+076,BeforeCombat,3,4,金嫂,有的，先生。,BathHouse,Jinsao_portrait,L
+077,BeforeCombat,3,5,主管鼠,马上给我安排一个30分钟的洗浴套餐。我还要赶着去开个会。,BathHouse,lihui_zhuguan_weixiao,L
+078,BeforeCombat,3,6,金嫂,看到什么了，这么惊讶，看来是个大客户哈,BathHouse,Jinsao_portrait,L
+079,BeforeCombat,3,7,小福,……好家伙，背上砌了一堵墙啊！,BathHouse,XiaoFu,R
+080,BeforeCombat,3,8,金嫂,去吧，今天这活儿费手~,BathHouse,Jinsao_portrait,L
+081,BeforeCombat,3,9,金嫂,先生这边请~,BathHouse,Jinsao_portrait,L
+082,AfterCombat,3,10,主管鼠,居然半个小时的搓澡效果也这么好，我感觉我都快睡过去了。,BathHouse,lihui_zhuguan_weixiao,L
+083,AfterCombat,3,11,主管鼠,刚刚梦到自己在骂人，没骂到你吧？,BathHouse,lihui_zhuguan_weixiao,L
+084,AfterCombat,3,12,小福,嘿嘿...没事儿，我没听清。,BathHouse,lihui_dafu_ganga,R
+085,AfterCombat,3,13,我是旁白,叮咚！“@所有人：三十分钟后拉个会对齐一下上周进度！”,BathHouse,none,none
+086,AfterCombat,3,14,主管鼠,！！！……我，我马上就来！马上！,BathHouse,lihui_zhuguan_weixiao,L
+087,AfterCombat,3,15,小福,什么回事！？那些厚厚的东西...又贴回了他的背上了,BathHouse,XiaoFu,R
+088,AfterCombat,3,16,金嫂,别看了，脖子都要伸成长颈鹿了。,BathHouse,Jinsao_portrait,L
+089,AfterCombat,3,17,金嫂,他在那把椅子上坐一天，那块东西就一直在，也是为了保护自己吧，以自己的本我面对这些东西是个人都受不了。,BathHouse,Jinsao_portrait,L
+090,AfterCombat,3,18,小福,可刚才明明都洗干净了…,BathHouse,XiaoFu,R
+091,AfterCombat,3,19,金嫂,行了，收起你那悲天悯人的表情。至少这一小会儿，他至少是畅快的。,BathHouse,Jinsao_portrait,L
+092,AfterCombat,3,20,金嫂,今天就这样，我想收工了，忘记说了，每个月10号发工资哈！,BathHouse,Jinsao_portrait,L
+093,AfterCombat,3,21,金嫂,滚回家睡觉去，你不嫌累老娘数钱都快数麻了。,BathHouse,Jinsao_portrait,L

@@ -1,0 +1,24 @@
+﻿Text_ID,StoryType,Day,Order,Speaker Name,Text,Background Image,Portrait,Side
+094,BeforeCombat,4,1,清洁工,那个…不好意思，我可以进来吗？,BathHouse,lihui_qijiegong_jusang,L
+095,BeforeCombat,4,2,清洁工,我是说……如果不方便的话，我就走。,BathHouse,lihui_qijiegong_jusang,L
+096,BeforeCombat,4,3,小福,诶！这话就不对了，请进！,BathHouse,XiaoFu,R
+097,BeforeCombat,4,4,小福,哪有把客人往外赶的道理？快进来，我们刚开张。,BathHouse,XiaoFu,R
+098,BeforeCombat,4,5,金嫂,他在这扫了三年地，你是第一个请他进来的。,BathHouse,Jinsao_portrait,L
+099,BeforeCombat,4,6,金嫂,想不到呀，你还蛮有心。,BathHouse,Jinsao_portrait,L
+100,BeforeCombat,4,7,小福,这是...根本看不清呀！,BathHouse,XiaoFu,R
+101,BeforeCombat,4,8,金嫂,当一只鼠被长期无视，它在别人的眼里是什么？,BathHouse,Jinsao_portrait,L
+102,BeforeCombat,4,9,金嫂,它现在就像摸不着抓不着的泡泡，所以你看不清。,,,
+103,BeforeCombat,4,10,金嫂,针对这样的顾客多使用延缓对方行动的技能（blur），记住！！,,,
+104,BeforeCombat,4,11,小福,记住了...,BathHouse,XiaoFu,R
+105,AfterCombat,4,12,清洁工,以前...大家看见我都绕道走...,BathHouse,lihui_qijiegong_jusang,L
+106,AfterCombat,4,13,小福,叔，您别管外头那些不长眼的人怎么看。,BathHouse,XiaoFu,R
+107,AfterCombat,4,14,小福,每天起早贪黑，把这城市收拾得干干净净，要是没有你，鼠们连块干净的地儿都踩不上！,BathHouse,XiaoFu,R
+108,AfterCombat,4,15,小福,我知道这附近有大学，所以刚好也有地摊，那一片最难清理了吧......,,,
+109,AfterCombat,4,16,小福,所以我们这儿，就是为了洗掉鼠鼠们身上的疲惫与委屈而存在，希望你满意。,BathHouse,XiaoFu,R
+110,AfterCombat,4,17,清洁工,哎...这话说得我心里真是...今天真是谢谢你了，小师傅。,BathHouse,lihui_qinjiegog,L
+111,AfterCombat,4,18,小福,多大点事儿！洗完舒舒服服睡一觉，以后累了随时来！,BathHouse,XiaoFu,R
+112,AfterCombat,4,19,我是旁白,第二天夜晚，清洁工鼠鼠正在街上扫地。,StreetNight,none,none
+113,AfterCombat,4,20,实习生鼠鼠,鼠叔，多亏你今早把路口的积水清理了，不然我赶早高峰非得摔一跤不可哈哈哈！最近下雨那边老是湿漉漉的......,StreetNight,lihui_shixisheng,L
+114,AfterCombat,4,21,实习生鼠鼠,给，刚买的热茶，辛苦了！,StreetNight,lihui_shixisheng,L
+115,AfterCombat,4,22,清洁工,谢谢你小鼠！你的心意我收下了。,StreetNight,lihui_qinjiegog,L
+116,AfterCombat,4,23,清洁工,（他握着那杯茶，心里感到无比温暖。）,StreetNight,lihui_qinjiegog,L
