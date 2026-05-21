@@ -16,6 +16,13 @@ public class StorySceneController : MonoBehaviour
 
         dialogueManager.OnDialogueEnd = () =>
         {
+            GameManager gameManager = GameManager.EnsureInstance();
+            if (gameManager.currentDay < 2)
+            {
+                gameManager.currentDay = 2;
+                Debug.Log("Day1 intro finished. currentDay set to 2 before entering BathhouseMain.");
+            }
+
             SceneManager.LoadScene("BathhouseMain");
         };
 
