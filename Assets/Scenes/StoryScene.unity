@@ -1298,6 +1298,26 @@ MonoBehaviour:
     isLeftPortrait: 1
     text: "\u771F\u60F3\u6765\u660E\u5929\u4E0B\u5348\u5728\u8FD9\u513F\u7B49\u4F60\uFF01\u7ED9\u4F60\u5DE5\u88C5,\u660E\u5929\u7A7F\u8FD9\u4E2A\u6765\u627E\u6211\uFF01"
     backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+  - speakerName: "\u5C0F\u798F"
+    portrait: {fileID: 21300000, guid: f5d924d7c8541314a8a95fbd54653427, type: 3}
+    isLeftPortrait: 1
+    text: "\u2026\u2026\u660E\u5929\u4E0B\u5348\uFF1F"
+    backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+  - speakerName: "\u91D1\u5AC2"
+    portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
+    isLeftPortrait: 1
+    text: "\u5BF9\uFF0C\u7761\u4E00\u89C9\u518D\u60F3\u3002\u60F3\u4E0D\u901A\u4E5F\u6CA1\u4E8B\uFF0C\u6FA1\u5802\u7684\u95E8\u4E00\u76F4\u5F00\u7740\u3002"
+    backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+  - speakerName: "\u6211\u662F\u65C1\u767D"
+    portrait: {fileID: 0}
+    isLeftPortrait: 1
+    text: "\u5C0F\u798F\u62B1\u7740\u90A3\u5957\u5DE5\u88C5\u8D70\u51FA\u6FA1\u5802\u3002"
+    backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+  - speakerName: "\u6211\u662F\u65C1\u767D"
+    portrait: {fileID: 0}
+    isLeftPortrait: 1
+    text: "\u591C\u98CE\u8FD8\u662F\u51B7\u7684\uFF0C\u4F46\u8EAB\u4E0A\u90A3\u4E9B\u8BA9\u5B83\u611F\u5230\u6C89\u91CD\u7684\u9ED1\u6CE5\uFF0C\u786E\u5B9E\u4E0D\u89C1\u4E86\u3002"
+    backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
 --- !u!4 &2123385963
 Transform:
   m_ObjectHideFlags: 0

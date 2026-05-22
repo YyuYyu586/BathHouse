@@ -3224,6 +3224,11 @@ MonoBehaviour:
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - speakerName: "\u5C0F\u798F"
       portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+      isLeftPortrait: 1
+      text: "\u4E5F\u770B\u4E0D\u5230\u6628\u5929\u90A3\u4E9B\u9ED1\u6F06\u6F06\u7684\u6CE5\u5DF4\u4E86\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - speakerName: "\u5C0F\u798F"
+      portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
       isLeftPortrait: 0
       text: "\u4E5F\u770B\u4E0D\u5230\u6628\u5929\u90A3\u4E9B\u9ED1\u6F06\u6F06\u7684\u6CE5\u5DF4\u4E86"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
@@ -3302,7 +3307,7 @@ MonoBehaviour:
     - speakerName: "\u5C0F\u798F"
       portrait: {fileID: 21300000, guid: 9dd247752bf53b44bb26469a85071715, type: 3}
       isLeftPortrait: 0
-      text: "\u55EF..."
+      text: "\u55EF...\u6628\u5929\u90A3\u4E2A\u5B9E\u4E60\u751F\u9F20\u9F20\uFF0C\u5E94\u8BE5\u771F\u7684\u4F1A\u8F9E\u804C\u5427\u2026\u2026"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - speakerName: "\u91D1\u5AC2"
       portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
