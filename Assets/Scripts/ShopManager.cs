@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class ShopManager : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class ShopManager : MonoBehaviour
 
     private void Start()
     {
+        BindBackButtons();
         CloseShop();
     }
 
@@ -110,6 +112,28 @@ public class ShopManager : MonoBehaviour
     {
     CloseShop();
 }
+
+    private void BindBackButtons()
+    {
+        if (shopPanel == null)
+            return;
+
+        Button[] buttons = shopPanel.GetComponentsInChildren<Button>(true);
+        foreach (Button button in buttons)
+        {
+            string buttonName = button.gameObject.name.ToLowerInvariant();
+            if (buttonName == "back" ||
+                buttonName == "close" ||
+                buttonName == "exit" ||
+                buttonName == "return" ||
+                button.gameObject.name == "返回")
+            {
+                button.onClick.AddListener(CloseShop);
+                Debug.Log("ShopManager bound close action to button: " + button.gameObject.name);
+            }
+        }
+    }
+
     private void TryBuy(int price, System.Action onSuccess, string successMessage)
     {
         if (GameManager.Instance.playerGold >= price)

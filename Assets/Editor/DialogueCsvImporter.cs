@@ -174,6 +174,68 @@ public static class DialogueCsvImporter
         Debug.Log(BuildBeforeCombatImportSummary(fileStats, importedByDay, totalSkippedAfterCombat, missingSprites, controller));
     }
 
+    [MenuItem("Tools/Dialogue/Import BathhouseIntro CSVs")]
+    public static void ImportBathhouseIntroCsvs()
+    {
+        BathhouseDayStoryController controller = GetBathhouseDayStoryController();
+        if (controller == null)
+        {
+            Debug.LogError("BathhouseIntro CSV import failed: BathhouseDayStoryController could not be created or found in BathhouseMain.");
+            return;
+        }
+
+        EnsureBathhouseIntroArray(controller);
+
+        Dictionary<int, List<OrderedDialogueLine>> linesByDay = new Dictionary<int, List<OrderedDialogueLine>>();
+        Dictionary<string, CsvImportStats> fileStats = new Dictionary<string, CsvImportStats>();
+        HashSet<string> missingSprites = new HashSet<string>();
+        int totalSkippedBeforeCombat = 0;
+        int totalSkippedAfterCombat = 0;
+
+        foreach (string csvPath in AfterCombatCsvPaths)
+        {
+            CsvImportStats stats = ReadBathhouseIntroLines(csvPath, linesByDay, missingSprites);
+            fileStats[csvPath] = stats;
+            totalSkippedBeforeCombat += stats.skippedBeforeCombatRows;
+            totalSkippedAfterCombat += stats.skippedAfterCombatRows;
+        }
+
+        Dictionary<int, int> importedByDay = new Dictionary<int, int>();
+        foreach (KeyValuePair<int, List<OrderedDialogueLine>> pair in linesByDay)
+        {
+            int day = pair.Key;
+            int index = day - 1;
+
+            if (index < 0 || index >= controller.bathhouseIntroDialogues.Length)
+            {
+                Debug.LogWarning("BathhouseIntro CSV import: day out of range, skipped day " + day);
+                continue;
+            }
+
+            DailyDialogue dailyDialogue = controller.bathhouseIntroDialogues[index];
+            if (dailyDialogue == null)
+                dailyDialogue = new DailyDialogue();
+
+            dailyDialogue.dayName = "Day " + day;
+            dailyDialogue.lines = pair.Value
+                .OrderBy(item => item.order)
+                .Select(item => item.line)
+                .ToArray();
+
+            controller.bathhouseIntroDialogues[index] = dailyDialogue;
+            importedByDay[day] = dailyDialogue.lines.Length;
+        }
+
+        if (controller.dialogueManager == null)
+            controller.dialogueManager = UnityEngine.Object.FindObjectOfType<DialogueManager>(true);
+
+        EditorUtility.SetDirty(controller);
+        EditorSceneManager.MarkSceneDirty(controller.gameObject.scene);
+        EditorSceneManager.SaveScene(controller.gameObject.scene);
+
+        Debug.Log(BuildBathhouseIntroImportSummary(fileStats, importedByDay, totalSkippedBeforeCombat, totalSkippedAfterCombat, missingSprites, controller));
+    }
+
     private static string GetDay1CsvPath()
     {
         Directory.CreateDirectory("Assets/Dialogue");
@@ -370,6 +432,79 @@ public static class DialogueCsvImporter
         return stats;
     }
 
+    private static CsvImportStats ReadBathhouseIntroLines(
+        string csvPath,
+        Dictionary<int, List<OrderedDialogueLine>> linesByDay,
+        HashSet<string> missingSprites)
+    {
+        CsvImportStats stats = new CsvImportStats();
+
+        if (!File.Exists(csvPath))
+        {
+            Debug.LogWarning("BathhouseIntro CSV import: file not found: " + csvPath);
+            return stats;
+        }
+
+        string csvText = File.ReadAllText(csvPath, new UTF8Encoding(false, true));
+        List<List<string>> rows = ParseCsv(csvText);
+        stats.totalRows = Math.Max(0, rows.Count - 1);
+
+        if (rows.Count == 0)
+            return stats;
+
+        Dictionary<string, int> headers = BuildHeaderMap(rows[0]);
+
+        for (int i = 1; i < rows.Count; i++)
+        {
+            List<string> row = rows[i];
+            if (IsEmptyRow(row))
+            {
+                stats.skippedOtherRows++;
+                continue;
+            }
+
+            string storyType = GetValue(row, headers, "StoryType");
+            if (string.Equals(storyType, "BeforeCombat", StringComparison.OrdinalIgnoreCase))
+            {
+                stats.skippedBeforeCombatRows++;
+                continue;
+            }
+
+            if (string.Equals(storyType, "AfterCombat", StringComparison.OrdinalIgnoreCase))
+            {
+                stats.skippedAfterCombatRows++;
+                continue;
+            }
+
+            if (!string.Equals(storyType, "BathhouseIntro", StringComparison.OrdinalIgnoreCase))
+            {
+                stats.skippedOtherRows++;
+                continue;
+            }
+
+            int day = ParseInt(GetValue(row, headers, "Day"), -1);
+            int order = ParseInt(GetValue(row, headers, "Order"), int.MaxValue);
+            if (day < 1 || day > 7)
+            {
+                stats.skippedOtherRows++;
+                Debug.LogWarning("BathhouseIntro CSV import: invalid day in " + csvPath + " row " + (i + 1));
+                continue;
+            }
+
+            DialogueLine line = CreateDialogueLine(row, headers, missingSprites);
+            if (!linesByDay.TryGetValue(day, out List<OrderedDialogueLine> dayLines))
+            {
+                dayLines = new List<OrderedDialogueLine>();
+                linesByDay.Add(day, dayLines);
+            }
+
+            dayLines.Add(new OrderedDialogueLine(order, line));
+            stats.importedBathhouseIntroRows++;
+        }
+
+        return stats;
+    }
+
     private static StorySceneController GetStorySceneController()
     {
         if (SceneManager.GetActiveScene().path != StoryScenePath)
@@ -454,6 +589,21 @@ public static class DialogueCsvImporter
 
         for (int i = 0; i < existing.Length && i < controller.beforeCombatDialogues.Length; i++)
             controller.beforeCombatDialogues[i] = existing[i];
+    }
+
+    private static void EnsureBathhouseIntroArray(BathhouseDayStoryController controller)
+    {
+        if (controller.bathhouseIntroDialogues != null && controller.bathhouseIntroDialogues.Length >= 7)
+            return;
+
+        DailyDialogue[] existing = controller.bathhouseIntroDialogues;
+        controller.bathhouseIntroDialogues = new DailyDialogue[7];
+
+        if (existing == null)
+            return;
+
+        for (int i = 0; i < existing.Length && i < controller.bathhouseIntroDialogues.Length; i++)
+            controller.bathhouseIntroDialogues[i] = existing[i];
     }
 
     private static DialogueLine CreateDialogueLine(
@@ -608,6 +758,40 @@ public static class DialogueCsvImporter
         return builder.ToString();
     }
 
+    private static string BuildBathhouseIntroImportSummary(
+        Dictionary<string, CsvImportStats> fileStats,
+        Dictionary<int, int> importedByDay,
+        int totalSkippedBeforeCombat,
+        int totalSkippedAfterCombat,
+        HashSet<string> missingSprites,
+        BathhouseDayStoryController controller)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendLine("BathhouseIntro CSV import complete.");
+
+        foreach (KeyValuePair<string, CsvImportStats> pair in fileStats)
+        {
+            CsvImportStats stats = pair.Value;
+            builder.AppendLine(
+                pair.Key + ": read " + stats.totalRows +
+                " rows, imported BathhouseIntro " + stats.importedBathhouseIntroRows +
+                ", skipped BeforeCombat " + stats.skippedBeforeCombatRows +
+                ", skipped AfterCombat " + stats.skippedAfterCombatRows +
+                ", skipped other " + stats.skippedOtherRows);
+        }
+
+        foreach (KeyValuePair<int, int> pair in importedByDay.OrderBy(pair => pair.Key))
+            builder.AppendLine("Day " + pair.Key + " imported BathhouseIntro lines: " + pair.Value);
+
+        builder.AppendLine("Total skipped BeforeCombat rows: " + totalSkippedBeforeCombat);
+        builder.AppendLine("Total skipped AfterCombat rows: " + totalSkippedAfterCombat);
+        builder.AppendLine("Missing sprites: " + FormatMissingSprites(missingSprites));
+        builder.AppendLine("Target: BathhouseDayStoryController.bathhouseIntroDialogues on " + controller.gameObject.name);
+        builder.AppendLine("DialogueManager: " + (controller.dialogueManager != null ? controller.dialogueManager.gameObject.name : "Missing"));
+
+        return builder.ToString();
+    }
+
     private static List<List<string>> ParseCsv(string csvText)
     {
         List<List<string>> rows = new List<List<string>>();
@@ -685,6 +869,7 @@ public static class DialogueCsvImporter
         public int totalRows;
         public int importedAfterCombatRows;
         public int importedBeforeCombatRows;
+        public int importedBathhouseIntroRows;
         public int skippedBeforeCombatRows;
         public int skippedAfterCombatRows;
         public int skippedOtherRows;

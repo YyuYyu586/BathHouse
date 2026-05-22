@@ -2,30 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Plays the current day's before-combat dialogue when BathhouseMain opens.
+// Plays the current day's short bathhouse intro when BathhouseMain opens.
 public class BathhouseDayStoryController : MonoBehaviour
 {
     public DialogueManager dialogueManager;
+    public DailyDialogue[] bathhouseIntroDialogues = new DailyDialogue[7];
     public DailyDialogue[] beforeCombatDialogues = new DailyDialogue[7];
 
-    private static readonly HashSet<int> playedBeforeCombatDays = new HashSet<int>();
+    private static readonly HashSet<int> playedBathhouseIntroDays = new HashSet<int>();
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void ResetPlayedDays()
     {
-        playedBeforeCombatDays.Clear();
+        playedBathhouseIntroDays.Clear();
     }
 
     private IEnumerator Start()
     {
         // Wait one frame so DialogueManager.Start can finish hiding/resetting the panel first.
         yield return null;
-        TryPlayTodayBeforeCombat();
+        TryPlayTodayBathhouseIntro();
     }
 
-    private void TryPlayTodayBeforeCombat()
+    private void TryPlayTodayBathhouseIntro()
     {
-        Debug.Log("BathhouseDayStoryController checking before-combat dialogue.");
+        Debug.Log("BathhouseDayStoryController checking bathhouse intro dialogue.");
 
         GameManager gameManager = GameManager.EnsureInstance();
         int currentDay = gameManager.currentDay;
@@ -37,9 +38,9 @@ public class BathhouseDayStoryController : MonoBehaviour
             return;
         }
 
-        if (playedBeforeCombatDays.Contains(currentDay))
+        if (playedBathhouseIntroDays.Contains(currentDay))
         {
-            Debug.Log("BeforeCombat already played for day " + currentDay + ".");
+            Debug.Log("BathhouseIntro already played for day " + currentDay + ".");
             return;
         }
 
@@ -50,21 +51,21 @@ public class BathhouseDayStoryController : MonoBehaviour
         }
 
         int index = currentDay - 1;
-        Debug.Log("Reading beforeCombatDialogues element " + index + ".");
+        Debug.Log("Reading bathhouseIntroDialogues element " + index + ".");
 
-        if (beforeCombatDialogues == null ||
+        if (bathhouseIntroDialogues == null ||
             index < 0 ||
-            index >= beforeCombatDialogues.Length ||
-            beforeCombatDialogues[index] == null ||
-            beforeCombatDialogues[index].lines == null ||
-            beforeCombatDialogues[index].lines.Length == 0)
+            index >= bathhouseIntroDialogues.Length ||
+            bathhouseIntroDialogues[index] == null ||
+            bathhouseIntroDialogues[index].lines == null ||
+            bathhouseIntroDialogues[index].lines.Length == 0)
         {
-            Debug.LogWarning("No BeforeCombat lines found for day " + currentDay + " at element " + index + ".");
+            Debug.LogWarning("No BathhouseIntro lines found for day " + currentDay + " at element " + index + ".");
             return;
         }
 
-        playedBeforeCombatDays.Add(currentDay);
-        Debug.Log("Starting BeforeCombat dialogue for day " + currentDay + ", lines: " + beforeCombatDialogues[index].lines.Length);
-        dialogueManager.StartDialogue(beforeCombatDialogues[index].lines);
+        playedBathhouseIntroDays.Add(currentDay);
+        Debug.Log("Starting BathhouseIntro dialogue for day " + currentDay + ", lines: " + bathhouseIntroDialogues[index].lines.Length);
+        dialogueManager.StartDialogue(bathhouseIntroDialogues[index].lines);
     }
 }

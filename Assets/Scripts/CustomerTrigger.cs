@@ -6,6 +6,7 @@ public class CustomerTrigger : MonoBehaviour
 {
     [Header("对话管理器")]
     public DialogueManager dialogueManager;
+    public BathhouseDayStoryController bathhouseDayStoryController;
 
     [Header("顾客要说的话")]
     public DialogueLine[] lines;
@@ -19,6 +20,9 @@ public class CustomerTrigger : MonoBehaviour
 
     void Start()
     {
+        if (bathhouseDayStoryController == null)
+            bathhouseDayStoryController = FindObjectOfType<BathhouseDayStoryController>();
+
         if (exclamationMark != null)
             exclamationMark.SetActive(true);
 
@@ -53,9 +57,46 @@ public class CustomerTrigger : MonoBehaviour
                     Debug.Log("接待完成，战斗入口开启。");
                 };
 
-                dialogueManager.StartDialogue(lines);
+                DialogueLine[] dialogueLines = GetDialogueLinesForToday();
+                if (dialogueLines == null || dialogueLines.Length == 0)
+                {
+                    Debug.LogWarning("CustomerTrigger has no dialogue lines to play.");
+                    return;
+                }
+
+                dialogueManager.StartDialogue(dialogueLines);
             }
         }
+    }
+
+    private DialogueLine[] GetDialogueLinesForToday()
+    {
+        if (bathhouseDayStoryController != null)
+        {
+            GameManager gameManager = GameManager.EnsureInstance();
+            int currentDay = gameManager.currentDay;
+            int index = currentDay - 1;
+
+            if (bathhouseDayStoryController.beforeCombatDialogues != null &&
+                index >= 0 &&
+                index < bathhouseDayStoryController.beforeCombatDialogues.Length &&
+                bathhouseDayStoryController.beforeCombatDialogues[index] != null &&
+                bathhouseDayStoryController.beforeCombatDialogues[index].lines != null &&
+                bathhouseDayStoryController.beforeCombatDialogues[index].lines.Length > 0)
+            {
+                Debug.Log("Using CSV BeforeCombat dialogue for day " + currentDay + ".");
+                return bathhouseDayStoryController.beforeCombatDialogues[index].lines;
+            }
+        }
+
+        if (lines != null && lines.Length > 0)
+        {
+            Debug.Log("Using fallback CustomerTrigger.lines.");
+            return lines;
+        }
+
+        Debug.LogWarning("CustomerTrigger could not find CSV BeforeCombat dialogue or fallback lines.");
+        return null;
     }
 
     private void OnTriggerStay2D(Collider2D other)
