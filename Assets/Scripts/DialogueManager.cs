@@ -7,7 +7,11 @@ using UnityEngine.UI;
 [System.Serializable]
 public class DialogueLine
 {
+    public string textId;
+    public int order;
     public string speakerName;
+    public string portraitSourceName;
+    public string side;
     public Sprite portrait;
 
     [Header("Checked = left portrait, unchecked = right portrait")]
@@ -30,6 +34,7 @@ public class DailyDialogue
 public class DialogueManager : MonoBehaviour
 {
     public Action OnDialogueEnd;
+    private Action dialogueEndListeners;
 
     [Header("Dialogue Panel")]
     public GameObject dialoguePanel;
@@ -97,6 +102,17 @@ public class DialogueManager : MonoBehaviour
         PlayDialogue(currentLines[currentIndex]);
     }
 
+    public void AddDialogueEndListener(Action callback)
+    {
+        dialogueEndListeners -= callback;
+        dialogueEndListeners += callback;
+    }
+
+    public void RemoveDialogueEndListener(Action callback)
+    {
+        dialogueEndListeners -= callback;
+    }
+
     private void ContinueDialogue()
     {
         if (currentLines == null || currentLines.Length == 0)
@@ -157,6 +173,12 @@ public class DialogueManager : MonoBehaviour
                 targetPortrait.gameObject.SetActive(true);
             }
         }
+        else
+        {
+            Debug.Log("DialogueManager line has no portrait. Both portrait images are hidden for this line.");
+        }
+
+        LogCurrentLine(line);
 
         StopAllCoroutines();
         StartCoroutine(TypeText(line.text));
@@ -181,8 +203,10 @@ public class DialogueManager : MonoBehaviour
             dialoguePanel.SetActive(false);
 
         Action endCallback = OnDialogueEnd;
+        Action listenerCallbacks = dialogueEndListeners;
         OnDialogueEnd = null;
         endCallback?.Invoke();
+        listenerCallbacks?.Invoke();
     }
 
     private void HidePortraits()
@@ -212,5 +236,32 @@ public class DialogueManager : MonoBehaviour
         }
 
         isTyping = false;
+    }
+
+    private void LogCurrentLine(DialogueLine line)
+    {
+        int currentDay = GameManager.Instance != null ? GameManager.Instance.currentDay : -1;
+        string portraitName = line.portrait != null ? line.portrait.name : "None";
+        string preview = GetPreview(line.text, 20);
+
+        Debug.Log(
+            "Dialogue line play: currentDay=" + currentDay +
+            ", dialogueIndex=" + currentIndex +
+            ", lineOrder=" + line.order +
+            ", textId=" + line.textId +
+            ", speakerName=" + line.speakerName +
+            ", portraitSource=" + line.portraitSourceName +
+            ", portraitSprite=" + portraitName +
+            ", isLeftPortrait=" + line.isLeftPortrait +
+            ", side=" + line.side +
+            ", textPreview=" + preview);
+    }
+
+    private string GetPreview(string text, int maxLength)
+    {
+        if (string.IsNullOrEmpty(text))
+            return "";
+
+        return text.Length <= maxLength ? text : text.Substring(0, maxLength);
     }
 }

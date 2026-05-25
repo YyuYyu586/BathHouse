@@ -1,7 +1,9 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-// Plays the post-combat story for the current day, then advances the main loop.
+// Plays the post-combat story for the current day, then shows the day transition.
 public class AfterCombatStoryController : MonoBehaviour
 {
     [Header("Dialogue")]
@@ -10,27 +12,49 @@ public class AfterCombatStoryController : MonoBehaviour
     [Header("Seven Days Post-Combat Dialogue")]
     public DailyDialogue[] afterCombatDialogues = new DailyDialogue[7];
 
+    [Header("Day Transition")]
+    public GameObject dayTransitionPanel;
+    public TextMeshProUGUI transitionText;
+    public Button continueButton;
+
     private const string BathhouseSceneName = "BathhouseMain";
     private const string MainMenuSceneName = "MainMenu";
 
     private GameManager gameManager;
     private bool storyEnded;
+    private bool transitionContinued;
 
     private void Start()
     {
         gameManager = GameManager.EnsureInstance();
 
+        if (dayTransitionPanel != null)
+            dayTransitionPanel.SetActive(false);
+
+        if (continueButton != null)
+        {
+            continueButton.onClick.RemoveListener(OnDayTransitionContinue);
+            continueButton.onClick.AddListener(OnDayTransitionContinue);
+        }
+        else
+        {
+            Debug.LogWarning("AfterCombatStoryController continueButton is not assigned. Drag the DayTransitionPanel Continue Button in Inspector.");
+        }
+
         DialogueLine[] todayLines = GetTodayDialogueLines();
+        int linesCount = todayLines != null ? todayLines.Length : 0;
+        Debug.Log("AfterCombatScene currentDay = " + gameManager.currentDay + ", index = " + GetTodayIndex() + ", lines = " + linesCount + ".");
+
         if (todayLines == null || todayLines.Length == 0)
         {
-            Debug.LogWarning("No after-combat dialogue found for day " + gameManager.currentDay + ". Continuing flow.");
+            Debug.LogWarning("No after-combat dialogue found for day " + gameManager.currentDay + ". Showing DayTransitionPanel.");
             EndStory();
             return;
         }
 
         if (dialogueManager == null)
         {
-            Debug.LogError("AfterCombatStoryController needs a DialogueManager reference. Continuing flow to avoid blocking the demo.");
+            Debug.LogError("AfterCombatStoryController needs a DialogueManager reference. Showing DayTransitionPanel to avoid blocking the demo.");
             EndStory();
             return;
         }
@@ -46,23 +70,65 @@ public class AfterCombatStoryController : MonoBehaviour
             return;
 
         storyEnded = true;
+        ShowDayTransition();
+    }
+
+    private void ShowDayTransition()
+    {
+        gameManager = GameManager.EnsureInstance();
+        int currentDay = gameManager.currentDay;
+
+        if (transitionText != null)
+        {
+            if (gameManager.IsFinalDay)
+            {
+                transitionText.text = "七天结束\n鼠鼠澡堂的故事暂告一段落";
+            }
+            else
+            {
+                transitionText.text = "第 " + currentDay + " 天结束\n第 " + (currentDay + 1) + " 天，澡堂重新开门";
+            }
+        }
+        else
+        {
+            Debug.LogWarning("AfterCombatStoryController transitionText is not assigned. Drag the transition text in Inspector.");
+        }
+
+        if (dayTransitionPanel != null)
+        {
+            dayTransitionPanel.SetActive(true);
+            Debug.Log("Showing DayTransitionPanel. currentDay = " + currentDay + ", isFinalDay = " + gameManager.IsFinalDay + ".");
+        }
+        else
+        {
+            Debug.LogError("AfterCombatStoryController dayTransitionPanel is not assigned. Drag the DayTransitionPanel in Inspector.");
+        }
+    }
+
+    public void OnDayTransitionContinue()
+    {
+        if (transitionContinued)
+            return;
+
+        transitionContinued = true;
         gameManager = GameManager.EnsureInstance();
 
         if (gameManager.IsFinalDay)
         {
-            Debug.Log("Day 7 after-combat story finished. Returning to MainMenu without advancing to Day 8.");
+            Debug.Log("DayTransition Continue clicked. currentDay = " + gameManager.currentDay + ", next scene = " + MainMenuSceneName + ".");
             SceneManager.LoadScene(MainMenuSceneName);
             return;
         }
 
-        Debug.Log("AfterCombatScene finished. Advancing from day " + gameManager.currentDay + " to day " + (gameManager.currentDay + 1) + ".");
+        int previousDay = gameManager.currentDay;
         gameManager.AdvanceDay();
+        Debug.Log("DayTransition Continue clicked. Advanced from day " + previousDay + " to day " + gameManager.currentDay + ", next scene = " + BathhouseSceneName + ".");
         SceneManager.LoadScene(BathhouseSceneName);
     }
 
     private DialogueLine[] GetTodayDialogueLines()
     {
-        int index = Mathf.Clamp(gameManager.currentDay, 1, gameManager.maxDay) - 1;
+        int index = GetTodayIndex();
 
         if (afterCombatDialogues != null &&
             index >= 0 &&
@@ -74,16 +140,12 @@ public class AfterCombatStoryController : MonoBehaviour
             return afterCombatDialogues[index].lines;
         }
 
-        // Optional fallback for scenes already configured on DialogueManager.
-        if (dialogueManager != null &&
-            dialogueManager.allDaysDialogues != null &&
-            index >= 0 &&
-            index < dialogueManager.allDaysDialogues.Length &&
-            dialogueManager.allDaysDialogues[index] != null)
-        {
-            return dialogueManager.allDaysDialogues[index].lines;
-        }
-
         return null;
+    }
+
+    private int GetTodayIndex()
+    {
+        gameManager = GameManager.EnsureInstance();
+        return Mathf.Clamp(gameManager.currentDay, 1, gameManager.maxDay) - 1;
     }
 }

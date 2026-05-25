@@ -1,72 +1,89 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CustomerTrigger : MonoBehaviour
 {
-    [Header("对话管理器")]
+    [Header("Dialogue")]
     public DialogueManager dialogueManager;
     public BathhouseDayStoryController bathhouseDayStoryController;
 
-    [Header("顾客要说的话")]
+    [Header("Fallback Dialogue")]
     public DialogueLine[] lines;
 
-    [Header("状态控制")]
+    [Header("State")]
     public GameObject exclamationMark;
     public GameObject combatTrigger;
 
     private bool playerNear = false;
     private bool hasTalked = false;
+    private bool isDialoguePlaying = false;
 
-    void Start()
+    private void Start()
     {
         if (bathhouseDayStoryController == null)
             bathhouseDayStoryController = FindObjectOfType<BathhouseDayStoryController>();
 
+        GameManager gameManager = GameManager.EnsureInstance();
+        int currentDay = gameManager != null ? gameManager.currentDay : -1;
+        Debug.Log(
+            "CustomerTrigger Start. currentDay = " + currentDay +
+            ", customer = " + gameObject.name +
+            ", exclamationMarkBound = " + (exclamationMark != null) + ".");
+
         if (exclamationMark != null)
+        {
             exclamationMark.SetActive(true);
+            Debug.Log("CustomerTrigger exclamation initialized. customer = " + gameObject.name + ", exclamationActive = " + exclamationMark.activeSelf + ".");
+        }
+        else
+        {
+            Debug.LogWarning("CustomerTrigger missing exclamationMark reference. customer = " + gameObject.name + ".");
+        }
 
         if (combatTrigger != null)
+        {
             combatTrigger.SetActive(false);
+            Debug.Log("CustomerTrigger combatTrigger initialized. customer = " + gameObject.name + ", combatTriggerActive = " + combatTrigger.activeSelf + ".");
+        }
     }
 
-    void Update()
+    private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (!Input.GetKeyDown(KeyCode.F))
+            return;
+
+        Debug.Log(
+            "CustomerTrigger F pressed. customer = " + gameObject.name +
+            ", playerNear = " + playerNear +
+            ", hasTalked = " + hasTalked +
+            ", isDialoguePlaying = " + isDialoguePlaying +
+            ", exclamationActive = " + GetExclamationActiveState() + ".");
+
+        if (!playerNear || hasTalked || isDialoguePlaying)
+            return;
+
+        if (dialogueManager == null)
         {
-            Debug.Log("按下了F，playerNear = " + playerNear);
-
-            if (playerNear && !hasTalked)
-            {
-                if (dialogueManager == null)
-                {
-                    Debug.LogError("DialogueManager 没拖！");
-                    return;
-                }
-
-                dialogueManager.OnDialogueEnd = () =>
-                {
-                    hasTalked = true;
-
-                    if (exclamationMark != null)
-                        exclamationMark.SetActive(false);
-
-                    if (combatTrigger != null)
-                        combatTrigger.SetActive(true);
-
-                    Debug.Log("接待完成，战斗入口开启。");
-                };
-
-                DialogueLine[] dialogueLines = GetDialogueLinesForToday();
-                if (dialogueLines == null || dialogueLines.Length == 0)
-                {
-                    Debug.LogWarning("CustomerTrigger has no dialogue lines to play.");
-                    return;
-                }
-
-                dialogueManager.StartDialogue(dialogueLines);
-            }
+            Debug.LogError("CustomerTrigger needs a DialogueManager reference.");
+            return;
         }
+
+        DialogueLine[] dialogueLines = GetDialogueLinesForToday();
+        if (dialogueLines == null || dialogueLines.Length == 0)
+        {
+            Debug.LogWarning("CustomerTrigger has no dialogue lines to play.");
+            return;
+        }
+
+        dialogueManager.RemoveDialogueEndListener(OnBeforeCombatDialogueEnd);
+        dialogueManager.AddDialogueEndListener(OnBeforeCombatDialogueEnd);
+        isDialoguePlaying = true;
+        Debug.Log(
+            "BeforeCombat dialogue starting. currentDay = " + GameManager.EnsureInstance().currentDay +
+            ", customer = " + gameObject.name +
+            ", beforeCombatStarted = true" +
+            ", exclamationMarkBound = " + (exclamationMark != null) +
+            ", exclamationActiveBeforeDialogue = " + GetExclamationActiveState() + ".");
+        dialogueManager.StartDialogue(dialogueLines);
     }
 
     private DialogueLine[] GetDialogueLinesForToday()
@@ -84,14 +101,23 @@ public class CustomerTrigger : MonoBehaviour
                 bathhouseDayStoryController.beforeCombatDialogues[index].lines != null &&
                 bathhouseDayStoryController.beforeCombatDialogues[index].lines.Length > 0)
             {
-                Debug.Log("Using CSV BeforeCombat dialogue for day " + currentDay + ".");
-                return bathhouseDayStoryController.beforeCombatDialogues[index].lines;
+                DialogueLine[] todayLines = bathhouseDayStoryController.beforeCombatDialogues[index].lines;
+                int linesCount = todayLines.Length;
+                Debug.Log("Using CSV BeforeCombat dialogue. currentDay = " + currentDay + ", beforeCombatIndex = " + index + ", lines = " + linesCount + ".");
+                LogBeforeCombatLines(currentDay, index, todayLines);
+                return todayLines;
             }
+
+            Debug.LogWarning("No CSV BeforeCombat dialogue found. currentDay = " + currentDay + ", beforeCombatIndex = " + index + ". Falling back to CustomerTrigger.lines.");
+        }
+        else
+        {
+            Debug.LogWarning("CustomerTrigger has no BathhouseDayStoryController reference. Falling back to CustomerTrigger.lines.");
         }
 
         if (lines != null && lines.Length > 0)
         {
-            Debug.Log("Using fallback CustomerTrigger.lines.");
+            Debug.LogWarning("Using fallback CustomerTrigger.lines. lines = " + lines.Length + ".");
             return lines;
         }
 
@@ -99,14 +125,112 @@ public class CustomerTrigger : MonoBehaviour
         return null;
     }
 
+    private void LogBeforeCombatLines(int currentDay, int dialogueIndex, DialogueLine[] dialogueLines)
+    {
+        for (int i = 0; i < dialogueLines.Length; i++)
+        {
+            DialogueLine line = dialogueLines[i];
+            if (line == null)
+            {
+                Debug.LogWarning("BeforeCombat line is null. currentDay=" + currentDay + ", dialogueIndex=" + dialogueIndex + ", lineIndex=" + i + ".");
+                continue;
+            }
+
+            string portraitName = line.portrait != null ? line.portrait.name : "None";
+            Debug.Log(
+                "BeforeCombat line loaded: currentDay=" + currentDay +
+                ", beforeCombatIndex=" + dialogueIndex +
+                ", lineIndex=" + i +
+                ", lineOrder=" + line.order +
+                ", textId=" + line.textId +
+                ", speakerName=" + line.speakerName +
+                ", portraitSource=" + line.portraitSourceName +
+                ", portraitSprite=" + portraitName +
+                ", isLeftPortrait=" + line.isLeftPortrait +
+                ", side=" + line.side + ".");
+
+            if (!string.IsNullOrWhiteSpace(line.portraitSourceName) &&
+                line.portraitSourceName.ToLowerInvariant() != "none" &&
+                line.portrait == null)
+            {
+                Debug.LogWarning(
+                    "BeforeCombat portrait is missing after import. currentDay=" + currentDay +
+                    ", beforeCombatIndex=" + dialogueIndex +
+                    ", lineIndex=" + i +
+                    ", textId=" + line.textId +
+                    ", speakerName=" + line.speakerName +
+                    ", portraitSource=" + line.portraitSourceName + ".");
+            }
+        }
+    }
+
+    private void OnBeforeCombatDialogueEnd()
+    {
+        if (dialogueManager != null)
+            dialogueManager.RemoveDialogueEndListener(OnBeforeCombatDialogueEnd);
+
+        Debug.Log("CustomerTrigger OnDialogueEnd triggered. customer = " + gameObject.name + ".");
+        CompleteCustomerInteraction();
+    }
+
+    private void CompleteCustomerInteraction()
+    {
+        GameManager gameManager = GameManager.EnsureInstance();
+        int currentDay = gameManager != null ? gameManager.currentDay : -1;
+        string customerName = gameObject.name;
+        string exclamationBefore = GetExclamationActiveState();
+
+        isDialoguePlaying = false;
+        hasTalked = true;
+
+        if (exclamationMark != null)
+        {
+            exclamationMark.SetActive(false);
+            Debug.Log(
+                "CompleteCustomerInteraction. ExclamationMark SetActive(false). currentDay = " + currentDay +
+                ", customer = " + customerName +
+                ", exclamationActiveBefore = " + exclamationBefore +
+                ", exclamationActiveAfterDialogue = " + exclamationMark.activeSelf + ".");
+        }
+        else
+        {
+            Debug.LogWarning("CompleteCustomerInteraction missing exclamationMark reference. customer = " + customerName + ".");
+        }
+
+        if (combatTrigger != null)
+        {
+            combatTrigger.SetActive(true);
+            Debug.Log(
+                "CompleteCustomerInteraction. combatTrigger SetActive(true). currentDay = " + currentDay +
+                ", customer = " + customerName +
+                ", combatTriggerActive = " + combatTrigger.activeSelf + ".");
+        }
+        else
+        {
+            Debug.LogWarning("CompleteCustomerInteraction missing combatTrigger reference. customer = " + customerName + ".");
+        }
+
+        Debug.Log(
+            "CompleteCustomerInteraction finished. currentDay = " + currentDay +
+            ", customer = " + customerName +
+            ", hasTalked = " + hasTalked +
+            ", customerWillSetActiveFalse = true.");
+
+        gameObject.SetActive(false);
+        Debug.Log("Customer GameObject SetActive(false). customer = " + customerName + ".");
+    }
+
+    private string GetExclamationActiveState()
+    {
+        return exclamationMark != null ? exclamationMark.activeSelf.ToString() : "Missing";
+    }
+
     private void OnTriggerStay2D(Collider2D other)
     {
-        Debug.Log("正在碰到：" + other.name);
+        Debug.Log("CustomerTrigger touching: " + other.name);
 
         if (other.CompareTag("Player"))
-        {
             playerNear = true;
-        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -114,7 +238,7 @@ public class CustomerTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerNear = false;
-            Debug.Log("玩家离开顾客范围");
+            Debug.Log("Player left CustomerTrigger range.");
         }
     }
 }

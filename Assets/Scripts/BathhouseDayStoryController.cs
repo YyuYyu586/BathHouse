@@ -26,7 +26,7 @@ public class BathhouseDayStoryController : MonoBehaviour
 
     private void TryPlayTodayBathhouseIntro()
     {
-        Debug.Log("BathhouseDayStoryController checking bathhouse intro dialogue.");
+        Debug.Log("BathhouseDayStoryController checking BathhouseIntro dialogue.");
 
         GameManager gameManager = GameManager.EnsureInstance();
         int currentDay = gameManager.currentDay;
@@ -34,7 +34,7 @@ public class BathhouseDayStoryController : MonoBehaviour
 
         if (currentDay <= 1 || currentDay > 7)
         {
-            Debug.Log("Day " + currentDay + " has no before-combat dialogue. Skipping.");
+            Debug.Log("Day " + currentDay + " has no BathhouseIntro dialogue. Skipping.");
             return;
         }
 
@@ -51,7 +51,7 @@ public class BathhouseDayStoryController : MonoBehaviour
         }
 
         int index = currentDay - 1;
-        Debug.Log("Reading bathhouseIntroDialogues element " + index + ".");
+        Debug.Log("Reading bathhouseIntroDialogues element " + index + " for currentDay " + currentDay + ".");
 
         if (bathhouseIntroDialogues == null ||
             index < 0 ||

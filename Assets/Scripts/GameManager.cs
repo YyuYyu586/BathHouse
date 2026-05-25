@@ -53,6 +53,11 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (scene.name == "BathhouseMain")
+        {
+            Debug.Log("Entered BathhouseMain. GameManager currentDay = " + currentDay + ".");
+        }
+
         if (scene.name == "MainMenu")
         {
             ResetGame();

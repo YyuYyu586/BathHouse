@@ -5,8 +5,9 @@ using UnityEngine;
 // Small UI popup that floats upward and destroys itself.
 public class DamagePopup : MonoBehaviour
 {
-    public float lifetime = 0.8f;
-    public float floatDistance = 60f;
+    public float lifetime = 1.15f;
+    public float floatDistance = 42f;
+    public float minimumFontSize = 46f;
 
     private RectTransform rectTransform;
     private TextMeshProUGUI textComponent;
@@ -44,7 +45,7 @@ public class DamagePopup : MonoBehaviour
 
         TextMeshProUGUI label = popupObject.GetComponent<TextMeshProUGUI>();
         label.text = text;
-        label.fontSize = 30f;
+        label.fontSize = 46f;
         label.alignment = TextAlignmentOptions.Center;
         label.color = Color.white;
 
@@ -58,6 +59,12 @@ public class DamagePopup : MonoBehaviour
 
         if (textComponent == null)
             textComponent = GetComponent<TextMeshProUGUI>();
+
+        lifetime = Mathf.Max(lifetime, 1.15f);
+        floatDistance = Mathf.Min(floatDistance, 42f);
+
+        if (textComponent != null && textComponent.fontSize < minimumFontSize)
+            textComponent.fontSize = minimumFontSize;
 
         StartCoroutine(PlayRoutine());
     }
