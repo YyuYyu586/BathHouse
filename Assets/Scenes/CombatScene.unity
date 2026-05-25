@@ -231,10 +231,46 @@ MonoBehaviour:
   attackDamage: 10
   blurDamage: 18
   blurSPCost: 5
+  ultimateUnlocked: 0
+  ultimateDamage: 35
+  ultimateSPCost: 20
   maxEnemyHP: 80
   enemyAttackDamage: 8
   enemyTurnDelay: 0.8
   fillSmoothTime: 0.2
+  enemiesByDay:
+  - day: 2
+    enemyName: Bubble Rookie
+    maxHP: 70
+    attackDamage: 7
+    goldReward: 10
+  - day: 3
+    enemyName: Mud Slime
+    maxHP: 85
+    attackDamage: 8
+    goldReward: 12
+  - day: 4
+    enemyName: Noise Bubble
+    maxHP: 100
+    attackDamage: 9
+    goldReward: 14
+  - day: 5
+    enemyName: Tile Monster
+    maxHP: 120
+    attackDamage: 10
+    goldReward: 16
+  - day: 6
+    enemyName: Storm Scrub
+    maxHP: 140
+    attackDamage: 12
+    goldReward: 18
+  - day: 7
+    enemyName: Bathhouse Boss
+    maxHP: 180
+    attackDamage: 14
+    goldReward: 30
+  defeatGoldRewardDivisor: 2
+  bathGodTurnLimit: 8
   hpFillImage: {fileID: 787644361}
   spFillImage: {fileID: 2138528695}
   playerHPText: {fileID: 0}
@@ -250,6 +286,8 @@ MonoBehaviour:
   ultimateButton: {fileID: 0}
   victoryPanel: {fileID: 1799496488}
   damagePopupPrefab: {fileID: 4875413417841535176, guid: 72a59718d5a13d0448a67f0e1db3827f, type: 3}
+  playerDamagePopupOffset: {x: 0, y: -18}
+  enemyDamagePopupOffset: {x: 0, y: -18}
 --- !u!4 &209039713
 Transform:
   m_ObjectHideFlags: 0
@@ -1773,7 +1811,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u8FDB\u5165\u4E0B\u4E00\u5929"
+  m_text: "\u6413\u6FA1\u5B8C\u6210\uFF01"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fb597f968f600644f8e498625747c66f, type: 2}
   m_sharedMaterial: {fileID: -9151189292296192530, guid: fb597f968f600644f8e498625747c66f, type: 2}
@@ -2327,7 +2365,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1799496489
 RectTransform:
   m_ObjectHideFlags: 0

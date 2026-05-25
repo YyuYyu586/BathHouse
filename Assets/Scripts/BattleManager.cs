@@ -34,6 +34,9 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private int attackDamage = 10;
     [SerializeField] private int blurDamage = 18;
     [SerializeField] private int blurSPCost = 5;
+    [SerializeField] private bool ultimateUnlocked = false;
+    [SerializeField] private int ultimateDamage = 35;
+    [SerializeField] private int ultimateSPCost = 20;
 
     [Header("Enemy Stats")]
     [SerializeField] private int maxEnemyHP = 80;
@@ -50,6 +53,9 @@ public class BattleManager : MonoBehaviour
         new EnemyDayData(7, "Bathhouse Boss", 180, 14, 30)
     };
     [SerializeField] private int defeatGoldRewardDivisor = 2;
+
+    [Header("Failsafe")]
+    [SerializeField] private int bathGodTurnLimit = 8;
 
     [Header("Player UI")]
     [SerializeField] private Image hpFillImage;
@@ -75,6 +81,8 @@ public class BattleManager : MonoBehaviour
 
     [Header("Damage Popup")]
     [SerializeField] private DamagePopup damagePopupPrefab;
+    [SerializeField] private Vector2 playerDamagePopupOffset = new Vector2(0f, -18f);
+    [SerializeField] private Vector2 enemyDamagePopupOffset = new Vector2(0f, -18f);
 
     private int currentPlayerHP;
     private int currentPlayerSP;
@@ -85,6 +93,8 @@ public class BattleManager : MonoBehaviour
     private GameManager gameManager;
     private bool isPlayerTurn;
     private bool battleEnded;
+    private bool bathGodIntervened;
+    private int currentRound = 1;
     private Coroutine playerHPFillRoutine;
     private Coroutine playerSPFillRoutine;
     private Coroutine enemyHPFillRoutine;
@@ -93,6 +103,7 @@ public class BattleManager : MonoBehaviour
     {
         Debug.Log("BattleManager Start");
         LogInspectorReferences();
+        ResolveButtonReferences();
         BindButtonEvents();
         ConfigureButtons();
         StartBattle();
@@ -129,14 +140,17 @@ public class BattleManager : MonoBehaviour
         currentEnemyHP = maxEnemyHP;
         isPlayerTurn = true;
         battleEnded = false;
+        bathGodIntervened = false;
+        currentRound = 1;
 
         if (victoryPanel != null)
             victoryPanel.SetActive(false);
 
-        SetActionButtonsInteractable(true);
+        RefreshActionButtonsForCurrentState("battle start");
         SetPlayerMessage("Choose an action.");
         SetEnemyMessage("Day " + currentDay + ": " + currentEnemyName);
         RefreshAllUI();
+        LogBattleState("Battle started");
 
         if (currentDay <= 1)
         {
@@ -147,6 +161,7 @@ public class BattleManager : MonoBehaviour
             SetActionButtonsInteractable(false);
             SetPlayerMessage("Day 1 is story only. Return and start work tomorrow.");
             SetEnemyMessage("No battle today.");
+            LogBattleState("Day 1 no battle");
 
             if (victoryPanel != null)
                 victoryPanel.SetActive(true);
@@ -162,8 +177,9 @@ public class BattleManager : MonoBehaviour
             return;
 
         ClearSelectedButton();
-        SetPlayerMessage("Attack!");
-        DealDamageToEnemy(attackDamage, currentEnemyName + " took " + attackDamage + " damage.");
+        BeginPlayerAction("Attack");
+        SetPlayerMessage("You scrub hard. " + currentEnemyName + " takes " + attackDamage + " damage.");
+        DealDamageToEnemy(attackDamage, currentEnemyName + " staggered from the scrub: -" + attackDamage + " HP.");
     }
 
     // Blur costs SP and deals higher damage. Not enough SP does not spend the player turn.
@@ -179,13 +195,15 @@ public class BattleManager : MonoBehaviour
         if (currentPlayerSP < blurSPCost)
         {
             SetPlayerMessage("SP is not enough.");
+            RefreshActionButtonsForCurrentState("blur blocked by SP");
             return;
         }
 
+        BeginPlayerAction("Blur");
         currentPlayerSP = Mathf.Max(0, currentPlayerSP - blurSPCost);
-        SetPlayerMessage("Blur!");
+        SetPlayerMessage("Blur washes over the room. " + currentEnemyName + " takes " + blurDamage + " damage.");
         RefreshPlayerUI();
-        DealDamageToEnemy(blurDamage, currentEnemyName + " took " + blurDamage + " damage.");
+        DealDamageToEnemy(blurDamage, currentEnemyName + " was slowed by the steam: -" + blurDamage + " HP.");
     }
 
     // Reserved for the future. Current version does not spend the turn.
@@ -197,7 +215,19 @@ public class BattleManager : MonoBehaviour
             return;
 
         ClearSelectedButton();
-        SetPlayerMessage("Ultimate is not unlocked.");
+
+        if (!IsUltimateAvailable())
+        {
+            SetPlayerMessage("Ultimate is not ready yet.");
+            RefreshActionButtonsForCurrentState("ultimate unavailable");
+            return;
+        }
+
+        BeginPlayerAction("Ultimate");
+        currentPlayerSP = Mathf.Max(0, currentPlayerSP - ultimateSPCost);
+        SetPlayerMessage("Ultimate scrub unleashed! " + currentEnemyName + " takes " + ultimateDamage + " damage.");
+        RefreshPlayerUI();
+        DealDamageToEnemy(ultimateDamage, currentEnemyName + " was blasted by the ultimate scrub: -" + ultimateDamage + " HP.");
     }
 
     // Optional hook for a Continue button inside VictoryPanel.
@@ -206,16 +236,30 @@ public class BattleManager : MonoBehaviour
         SceneManager.LoadScene("AfterCombatScene");
     }
 
+    private void BeginPlayerAction(string actionName)
+    {
+        isPlayerTurn = false;
+        SetActionButtonsInteractable(false);
+        LogBattleState("Player action: " + actionName);
+    }
+
     private void DealDamageToEnemy(int damage, string message)
     {
         currentEnemyHP = Mathf.Max(0, currentEnemyHP - damage);
         RefreshEnemyUI();
         SetEnemyMessage(message);
-        SpawnDamagePopup(enemyDamagePopupPoint, damage.ToString());
+        SpawnDamagePopup(enemyDamagePopupPoint, damage.ToString(), enemyDamagePopupOffset);
+        LogBattleState("Enemy damaged");
 
         if (currentEnemyHP <= 0)
         {
             WinBattle();
+            return;
+        }
+
+        if (HasReachedBathGodTurnLimit())
+        {
+            TriggerBathGodIntervention("Turn limit reached.");
             return;
         }
 
@@ -226,23 +270,27 @@ public class BattleManager : MonoBehaviour
     {
         isPlayerTurn = false;
         SetActionButtonsInteractable(false);
+        LogBattleState("Enemy turn started");
 
         yield return new WaitForSeconds(enemyTurnDelay);
 
         currentPlayerHP = Mathf.Max(0, currentPlayerHP - enemyAttackDamage);
         RefreshPlayerUI();
-        SetPlayerMessage("Player took " + enemyAttackDamage + " damage.");
-        SpawnDamagePopup(playerDamagePopupPoint, enemyAttackDamage.ToString());
+        SetPlayerMessage(currentEnemyName + " strikes back. You take " + enemyAttackDamage + " damage.");
+        SpawnDamagePopup(playerDamagePopupPoint, enemyAttackDamage.ToString(), playerDamagePopupOffset);
+        LogBattleState("Enemy attacked");
 
         if (currentPlayerHP <= 0)
         {
-            LoseBattle();
+            TriggerBathGodIntervention("Player HP reached zero.");
             yield break;
         }
 
+        currentRound++;
         isPlayerTurn = true;
-        SetActionButtonsInteractable(true);
+        RefreshActionButtonsForCurrentState("player turn restored");
         SetPlayerMessage("Choose an action.");
+        LogBattleState("Player turn started");
     }
 
     private void WinBattle()
@@ -256,33 +304,54 @@ public class BattleManager : MonoBehaviour
         SavePlayerState();
         GiveGoldReward(currentEnemyGoldReward);
         SetEnemyMessage(currentEnemyName + " defeated.");
+        LogBattleState("Battle won");
 
         if (victoryPanel != null)
             victoryPanel.SetActive(true);
     }
 
-    private void LoseBattle()
+    private void TriggerBathGodIntervention(string reason)
     {
         if (battleEnded)
             return;
 
         battleEnded = true;
         isPlayerTurn = false;
+        bathGodIntervened = true;
         SetActionButtonsInteractable(false);
 
-        if (gameManager != null && gameManager.IsFinalDay)
-        {
-            StartCoroutine(FinalDayRescueRoutine());
-        }
-        else
-        {
-            CompleteNormalDefeatWithFailsafe();
-        }
+        currentPlayerHP = Mathf.Max(1, currentPlayerHP);
+        currentEnemyHP = 0;
+        SavePlayerState();
+        RefreshAllUI();
+        SpawnDamagePopup(enemyDamagePopupPoint, "999", enemyDamagePopupOffset);
+
+        int reducedReward = defeatGoldRewardDivisor > 0
+            ? currentEnemyGoldReward / defeatGoldRewardDivisor
+            : 0;
+
+        GiveGoldReward(reducedReward);
+        SetPlayerMessage("The bath god intervenes! A divine scrub finishes today's work.");
+        SetEnemyMessage(reason + " " + currentEnemyName + " was cleansed by the bath god.");
+        LogBattleState("Bath god intervention: " + reason);
+
+        if (victoryPanel != null)
+            victoryPanel.SetActive(true);
     }
 
     private bool CanPlayerAct()
     {
         return !battleEnded && isPlayerTurn;
+    }
+
+    private bool HasReachedBathGodTurnLimit()
+    {
+        return bathGodTurnLimit > 0 && currentRound >= bathGodTurnLimit;
+    }
+
+    private bool IsUltimateAvailable()
+    {
+        return ultimateUnlocked && currentPlayerSP >= ultimateSPCost;
     }
 
     private void SavePlayerState()
@@ -292,41 +361,6 @@ public class BattleManager : MonoBehaviour
 
         gameManager.playerHP = currentPlayerHP;
         gameManager.playerSP = currentPlayerSP;
-    }
-
-    private void CompleteNormalDefeatWithFailsafe()
-    {
-        currentPlayerHP = 1;
-        SavePlayerState();
-
-        int reducedReward = defeatGoldRewardDivisor > 0
-            ? currentEnemyGoldReward / defeatGoldRewardDivisor
-            : 0;
-
-        GiveGoldReward(reducedReward);
-        SetPlayerMessage("You were defeated, but the bath god helped finish today's work.");
-        SetEnemyMessage("Failsafe cleared. Continue to the story.");
-
-        if (victoryPanel != null)
-            victoryPanel.SetActive(true);
-    }
-
-    private IEnumerator FinalDayRescueRoutine()
-    {
-        currentPlayerHP = 1;
-        SavePlayerState();
-        SetPlayerMessage("Everyone helps you. The bath god appears!");
-
-        yield return new WaitForSeconds(1f);
-
-        currentEnemyHP = 0;
-        RefreshEnemyUI();
-        SpawnDamagePopup(enemyDamagePopupPoint, "999");
-        GiveGoldReward(currentEnemyGoldReward);
-        SetEnemyMessage(currentEnemyName + " was defeated by everyone's help.");
-
-        if (victoryPanel != null)
-            victoryPanel.SetActive(true);
     }
 
     private void GiveGoldReward(int amount)
@@ -477,6 +511,36 @@ public class BattleManager : MonoBehaviour
         BindButton(ultimateButton, OnUltimateButton);
     }
 
+    private void ResolveButtonReferences()
+    {
+        if (attackButton == null)
+            attackButton = FindButtonByName("Attack");
+
+        if (blurButton == null)
+            blurButton = FindButtonByName("Blur");
+
+        if (ultimateButton == null)
+            ultimateButton = FindButtonByName("Ultimate");
+
+        LogButtonState("after resolving button references");
+    }
+
+    private Button FindButtonByName(string objectName)
+    {
+        GameObject buttonObject = GameObject.Find(objectName);
+        if (buttonObject == null)
+        {
+            Debug.LogWarning("BattleManager could not find button named " + objectName + ".");
+            return null;
+        }
+
+        Button button = buttonObject.GetComponent<Button>();
+        if (button == null)
+            Debug.LogWarning("BattleManager found " + objectName + " but it has no Button component.");
+
+        return button;
+    }
+
     private void BindButton(Button button, UnityEngine.Events.UnityAction action)
     {
         if (button == null)
@@ -513,9 +577,23 @@ public class BattleManager : MonoBehaviour
 
     private void SetActionButtonsInteractable(bool interactable)
     {
+        if (!interactable)
+            ClearSelectedButton();
+
         SetButtonInteractable(attackButton, interactable);
         SetButtonInteractable(blurButton, interactable);
         SetButtonInteractable(ultimateButton, interactable);
+        LogButtonState("set all buttons interactable = " + interactable);
+    }
+
+    private void RefreshActionButtonsForCurrentState(string reason)
+    {
+        bool canAct = !battleEnded && isPlayerTurn;
+
+        SetButtonInteractable(attackButton, canAct);
+        SetButtonInteractable(blurButton, canAct && currentPlayerSP >= blurSPCost);
+        SetButtonInteractable(ultimateButton, canAct && IsUltimateAvailable());
+        LogButtonState(reason);
     }
 
     private void SetButtonInteractable(Button button, bool interactable)
@@ -524,13 +602,30 @@ public class BattleManager : MonoBehaviour
             button.interactable = interactable;
     }
 
+    private void LogButtonState(string reason)
+    {
+        Debug.Log(
+            "Button state [" + reason + "] " +
+            "Attack=" + GetButtonState(attackButton) + ", " +
+            "Blur=" + GetButtonState(blurButton) + ", " +
+            "Ultimate=" + GetButtonState(ultimateButton));
+    }
+
+    private string GetButtonState(Button button)
+    {
+        if (button == null)
+            return "Missing";
+
+        return button.interactable ? "Enabled" : "Disabled";
+    }
+
     private void ClearSelectedButton()
     {
         if (EventSystem.current != null)
             EventSystem.current.SetSelectedGameObject(null);
     }
 
-    private void SpawnDamagePopup(RectTransform popupPoint, string text)
+    private void SpawnDamagePopup(RectTransform popupPoint, string text, Vector2 offset)
     {
         if (damagePopupPrefab == null)
         {
@@ -546,7 +641,7 @@ public class BattleManager : MonoBehaviour
 
         DamagePopup popup = Instantiate(damagePopupPrefab, popupPoint.parent);
         RectTransform popupRect = popup.GetComponent<RectTransform>();
-        popupRect.anchoredPosition = popupPoint.anchoredPosition;
+        popupRect.anchoredPosition = popupPoint.anchoredPosition + offset;
         popup.SetText(text);
         popup.Play();
     }
@@ -577,6 +672,18 @@ public class BattleManager : MonoBehaviour
             Debug.LogWarning(fieldName + " is not assigned.");
         else
             Debug.Log(fieldName + " assigned: " + reference.name);
+    }
+
+    private void LogBattleState(string context)
+    {
+        Debug.Log(
+            "Battle state [" + context + "] " +
+            "round=" + currentRound + ", " +
+            "playerTurn=" + isPlayerTurn + ", " +
+            "playerHP=" + currentPlayerHP + "/" + maxPlayerHP + ", " +
+            "playerSP=" + currentPlayerSP + "/" + maxPlayerSP + ", " +
+            "enemyHP=" + currentEnemyHP + "/" + maxEnemyHP + ", " +
+            "bathGodIntervened=" + bathGodIntervened);
     }
 
     private void CheckFillImage(string fieldName, Image image)

@@ -14,13 +14,24 @@ public static class DialogueCsvImporter
     private const string StoryScenePath = "Assets/Scenes/StoryScene.unity";
     private const string BathhouseMainScenePath = "Assets/Scenes/BathhouseMain.unity";
     private const string AfterCombatScenePath = "Assets/Scenes/AfterCombatScene.unity";
+    private const string SpriteSearchPathText = "Assets/Art/Character, Assets/Art/Chararcter, Assets/Sprites, Assets/Dialogue";
+
+    private static readonly string[] PreferredSpriteSearchFolders =
+    {
+        "Assets/Art/Character",
+        "Assets/Art/Chararcter",
+        "Assets/Sprites",
+        "Assets/Dialogue"
+    };
 
     private static readonly string[] AfterCombatCsvPaths =
     {
         "Assets/Dialogue/DAY2.csv",
         "Assets/Dialogue/DAY3.csv",
         "Assets/Dialogue/DAY4.csv",
-        "Assets/Dialogue/DAY5.csv"
+        "Assets/Dialogue/DAY5.csv",
+        "Assets/Dialogue/DAY6.csv",
+        "Assets/Dialogue/DAY7.csv"
     };
 
     [MenuItem("Tools/Dialogue/Import Day1 Intro CSV")]
@@ -613,14 +624,22 @@ public static class DialogueCsvImporter
     {
         string portraitName = GetValue(row, headers, "Portrait");
         string backgroundName = GetValue(row, headers, "Background Image");
+        string textId = GetValue(row, headers, "Text_ID");
+        string speakerName = GetValue(row, headers, "Speaker Name");
+        int order = ParseInt(GetValue(row, headers, "Order"), 0);
+        string side = GetValue(row, headers, "Side");
 
         return new DialogueLine
         {
-            speakerName = GetValue(row, headers, "Speaker Name"),
+            textId = textId,
+            order = order,
+            speakerName = speakerName,
+            portraitSourceName = portraitName,
+            side = side,
             text = GetValue(row, headers, "Text"),
-            portrait = FindSpriteOrNull(portraitName, missingSprites),
+            portrait = FindPortraitSpriteOrNull(portraitName, textId, speakerName, missingSprites),
             backgroundImage = FindSpriteOrNull(backgroundName, missingSprites),
-            isLeftPortrait = IsLeftSide(GetValue(row, headers, "Side"))
+            isLeftPortrait = IsLeftSide(side)
         };
     }
 
@@ -656,7 +675,31 @@ public static class DialogueCsvImporter
 
     private static bool IsLeftSide(string side)
     {
-        return string.Equals(side, "L", StringComparison.OrdinalIgnoreCase);
+        return string.Equals(side, "L", StringComparison.OrdinalIgnoreCase) ||
+               string.Equals(side, "Left", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static Sprite FindPortraitSpriteOrNull(
+        string spriteName,
+        string textId,
+        string speakerName,
+        HashSet<string> missingSprites)
+    {
+        if (IsNone(spriteName))
+            return null;
+
+        Sprite sprite = FindSpriteOrNull(spriteName, missingSprites);
+        if (sprite != null)
+            return sprite;
+
+        Debug.LogWarning(
+            "Dialogue CSV import: portrait sprite not found. " +
+            "Text_ID=" + textId +
+            ", Speaker Name=" + speakerName +
+            ", Portrait=" + spriteName +
+            ", Search paths=" + SpriteSearchPathText);
+
+        return null;
     }
 
     private static Sprite FindSpriteOrNull(string spriteName, HashSet<string> missingSprites)
@@ -664,17 +707,58 @@ public static class DialogueCsvImporter
         if (IsNone(spriteName))
             return null;
 
+        string[] existingFolders = PreferredSpriteSearchFolders
+            .Where(AssetDatabase.IsValidFolder)
+            .ToArray();
+
+        Sprite sprite = FindSpriteInFolders(spriteName, existingFolders);
+        if (sprite != null)
+            return sprite;
+
         string[] guids = AssetDatabase.FindAssets(spriteName + " t:Sprite");
         foreach (string guid in guids)
         {
             string path = AssetDatabase.GUIDToAssetPath(guid);
-            Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(path);
-            if (sprite != null && string.Equals(sprite.name, spriteName, StringComparison.OrdinalIgnoreCase))
+            sprite = LoadMatchingSpriteAtPath(path, spriteName);
+            if (sprite != null)
                 return sprite;
         }
 
         missingSprites.Add(spriteName);
-        Debug.LogWarning("Dialogue CSV import: sprite not found: " + spriteName);
+        return null;
+    }
+
+    private static Sprite FindSpriteInFolders(string spriteName, string[] folders)
+    {
+        if (folders == null || folders.Length == 0)
+            return null;
+
+        string[] guids = AssetDatabase.FindAssets(spriteName + " t:Sprite", folders);
+        foreach (string guid in guids)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guid);
+            Sprite sprite = LoadMatchingSpriteAtPath(path, spriteName);
+            if (sprite != null)
+                return sprite;
+        }
+
+        return null;
+    }
+
+    private static Sprite LoadMatchingSpriteAtPath(string path, string spriteName)
+    {
+        Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(path);
+        if (sprite != null && string.Equals(sprite.name, spriteName, StringComparison.OrdinalIgnoreCase))
+            return sprite;
+
+        UnityEngine.Object[] assets = AssetDatabase.LoadAllAssetsAtPath(path);
+        foreach (UnityEngine.Object asset in assets)
+        {
+            sprite = asset as Sprite;
+            if (sprite != null && string.Equals(sprite.name, spriteName, StringComparison.OrdinalIgnoreCase))
+                return sprite;
+        }
+
         return null;
     }
 

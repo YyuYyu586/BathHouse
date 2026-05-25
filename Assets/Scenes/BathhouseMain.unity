@@ -122,6 +122,258 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &14301552
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 14301553}
+  - component: {fileID: 14301554}
+  m_Layer: 0
+  m_Name: ExclamationMark (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &14301553
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14301552}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.53599995, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1222357670}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &14301554
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14301552}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 6
+  m_Sprite: {fileID: 21300000, guid: 69a3bfb809b48fd47a2eb31ecafbab5a, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.30769232, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!1 &27682665
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 27682666}
+  - component: {fileID: 27682667}
+  m_Layer: 0
+  m_Name: ExclamationMark (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &27682666
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 27682665}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.53599995, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1823683728}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &27682667
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 27682665}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 6
+  m_Sprite: {fileID: 21300000, guid: 69a3bfb809b48fd47a2eb31ecafbab5a, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.30769232, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!1 &69113110
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 69113111}
+  - component: {fileID: 69113112}
+  m_Layer: 0
+  m_Name: ExclamationMark (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &69113111
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69113110}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.53599995, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 348963582}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &69113112
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69113110}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 6
+  m_Sprite: {fileID: 21300000, guid: 69a3bfb809b48fd47a2eb31ecafbab5a, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.30769232, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &77717821
 GameObject:
   m_ObjectHideFlags: 0
@@ -854,8 +1106,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 657, y: 125}
-  m_SizeDelta: {x: 400, y: 500}
+  m_AnchoredPosition: {x: 697, y: 100}
+  m_SizeDelta: {x: 500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &291696656
 MonoBehaviour:
@@ -877,9 +1129,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 9dd247752bf53b44bb26469a85071715, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -1555,10 +1807,11 @@ Transform:
   m_GameObject: {fileID: 346326815}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.05, y: -1.63, z: -0.021066181}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: -3.05, y: -1.48, z: -0.021066181}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1889319513}
   m_Father: {fileID: 943457592}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &346326817
@@ -1576,12 +1829,20 @@ MonoBehaviour:
   dialogueManager: {fileID: 622208148}
   bathhouseDayStoryController: {fileID: 0}
   lines:
-  - speakerName: "\u5C0F\u798F"
+  - textId: 
+    order: 0
+    speakerName: "\u5C0F\u798F"
+    portraitSourceName: 
+    side: 
     portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
     isLeftPortrait: 0
     text: "\u4F60\u597D\uFF01"
     backgroundImage: {fileID: 837111553, guid: b7a6d275be4a7b144b1008cdd85232f0, type: 3}
-  - speakerName: "\u5B9E\u4E60\u751F\u9F20\u9F20"
+  - textId: 
+    order: 0
+    speakerName: "\u5B9E\u4E60\u751F\u9F20\u9F20"
+    portraitSourceName: 
+    side: 
     portrait: {fileID: 21300000, guid: 00a7dd9ec0ffa0e4ca69f93da857b042, type: 3}
     isLeftPortrait: 1
     text: "\u4F60\u662F\uFF1F"
@@ -1713,10 +1974,11 @@ Transform:
   m_GameObject: {fileID: 348963581}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.05, y: -1.63, z: -0.021066181}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: -3.05, y: -1.4799999, z: -0.021066181}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 69113111}
   m_Father: {fileID: 943457592}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &348963583
@@ -1734,12 +1996,20 @@ MonoBehaviour:
   dialogueManager: {fileID: 622208148}
   bathhouseDayStoryController: {fileID: 0}
   lines:
-  - speakerName: "\u5C0F\u798F"
+  - textId: 
+    order: 0
+    speakerName: "\u5C0F\u798F"
+    portraitSourceName: 
+    side: 
     portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
     isLeftPortrait: 0
     text: "\u4F60\u597D\uFF01"
     backgroundImage: {fileID: 837111553, guid: b7a6d275be4a7b144b1008cdd85232f0, type: 3}
-  - speakerName: "\u5B9E\u4E60\u751F\u9F20\u9F20"
+  - textId: 
+    order: 0
+    speakerName: "\u5B9E\u4E60\u751F\u9F20\u9F20"
+    portraitSourceName: 
+    side: 
     portrait: {fileID: 21300000, guid: 00a7dd9ec0ffa0e4ca69f93da857b042, type: 3}
     isLeftPortrait: 1
     text: "\u4F60\u662F\uFF1F"
@@ -2573,7 +2843,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 4
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 9732ef21707bf614f96839d448c1b769, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3049,74 +3319,130 @@ MonoBehaviour:
     lines: []
   - dayName: Day 2
     lines:
-    - speakerName: "\u5C0F\u798F"
+    - textId: 
+      order: 0
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: 
+      side: 
       portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
       isLeftPortrait: 0
       text: "\u6211\u6765\u4E86\uFF01\u60F3\u4E86\u60F3\u8FD9\u91CC\u786E\u5B9E\u4E0D\u9519,\u6BD4\u8D77\u516C\u53F8\uFF01\u6628\u5929\u6413\u5B8C\u4E0B\u6765\u73B0\u5728\u4E00\u70B9\u4E5F\u4E0D\u89C9\u5F97\u7D2F\u4E86"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u5C0F\u798F"
+    - textId: 
+      order: 0
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: 
+      side: 
       portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
       isLeftPortrait: 0
       text: "\u4E5F\u770B\u4E0D\u5230\u6628\u5929\u90A3\u4E9B\u9ED1\u6F06\u6F06\u7684\u6CE5\u5DF4\u4E86"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u91D1\u5AC2"
+    - textId: 
+      order: 0
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: 
+      side: 
       portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
       isLeftPortrait: 1
       text: "\u597D\u554A\uFF0C\u5C0F\u4F19\u5B50"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u91D1\u5AC2"
+    - textId: 
+      order: 0
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: 
+      side: 
       portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
       isLeftPortrait: 1
       text: "\u6211\u6765\u6559\u4F60\uFF01\u90A3\u4F60\u5C31\u6B63\u5F0F\u6210\u4E3A\u6211\u7684\u5458\u5DE5\u4E86\uFF01"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u6211\u662F\u65C1\u767D"
+    - textId: 
+      order: 0
+      speakerName: "\u6211\u662F\u65C1\u767D"
+      portraitSourceName: 
+      side: 
       portrait: {fileID: 0}
       isLeftPortrait: 0
       text: "\u556A\uFF01\u4E00\u5757\u6563\u53D1\u7740\u795E\u79D8\u5149\u8292\u7684\u5E03\u6599\u7838\u5728\u4F60\u7684\u8138\u4E0A\u3002\u83B7\u5F97\u521D\u59CB\u6B66\u5668\uFF1A\u3010\u9AD8\u7EA7\u6413\u6FA1\u5DFE\u3011"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u91D1\u5AC2"
+    - textId: 
+      order: 0
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: 
+      side: 
       portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
       isLeftPortrait: 1
       text: "\u6309WASD\u4E0A\u4E0B\u8D70\u52A8\uFF0C\u60F3\u8981\u4E9B\u8D81\u624B\u7684\u5DE5\u5177\u53BB\u67DC\u53F0\u6309F\u952E\uFF0C\u8BB0\u4F4F\u6CA1\uFF01\uFF01"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u5C0F\u798F"
+    - textId: 
+      order: 0
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: 
+      side: 
       portrait: {fileID: 21300000, guid: ac0535dcc348ae44ca02e86c3dfa7287, type: 3}
       isLeftPortrait: 0
       text: "\u53EF\u4EE5\u518D\u8BF4\u4E00\u904D\u4E0D......"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u91D1\u5AC2"
+    - textId: 
+      order: 0
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: 
+      side: 
       portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
       isLeftPortrait: 1
       text: "\u6309WASD\u4E0A\u4E0B\u8D70\u52A8\uFF0C\u60F3\u8981\u4E9B\u8D81\u624B\u7684\u5DE5\u5177\u53BB\u67DC\u53F0\u6309F\u952E\uFF0C\u6211\u4E0D\u4F1A\u518D\u8BF4\u4E86\uFF01"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u91D1\u5AC2"
+    - textId: 
+      order: 0
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: 
+      side: 
       portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
       isLeftPortrait: 1
       text: "\u8FD8\u6709\uFF0C\u542C\u7740\uFF0C\u60F3\u548C\u987E\u5BA2\u804A\u5929\u4E5F\u6309F\u952E\uFF0C\u63A5\u5F85\u5B8C\u4E4B\u540E\u7AD9\u84DD\u8272\u5730\u6BEF\u4E0A\u6309F\u952E\uFF01"
       backgroundImage: {fileID: 0}
-    - speakerName: "\u91D1\u5AC2"
+    - textId: 
+      order: 0
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: 
+      side: 
       portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
       isLeftPortrait: 1
       text: "\u4E00\u5B9A\u8981\u7262\u8BB0\u4E8E\u5FC3\u77E5\u9053\u5417\uFF01"
       backgroundImage: {fileID: 0}
-    - speakerName: "\u5C0F\u798F"
+    - textId: 
+      order: 0
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: 
+      side: 
       portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
       isLeftPortrait: 0
       text: "\u597D\u7684\uFF0C\u6211\u8BB0\u4F4F\u4E86\u3002"
       backgroundImage: {fileID: 0}
-    - speakerName: "\u91D1\u5AC2"
+    - textId: 
+      order: 0
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: 
+      side: 
       portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
       isLeftPortrait: 1
       text: "\u521A\u597D\u73B0\u5728\u6709\u4E2A\u9884\u7EA6\u7684\u5BA2\u4EBA\u5230\u4E86,\u5C31\u4F60\u4E0A\u5427,\u6211\u4F1A\u5728\u65C1\u8FB9\u770B\u7740\u7684\uFF01"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
   - dayName: Day 3
     lines:
-    - speakerName: "\u5C0F\u798F"
+    - textId: 
+      order: 0
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: 
+      side: 
       portrait: {fileID: 21300000, guid: 9dd247752bf53b44bb26469a85071715, type: 3}
       isLeftPortrait: 0
       text: "\u55EF...\u6628\u5929\u7684\u5B9E\u4E60\u751F\u9F20\u9F20\u771F\u8F9E\u804C\u4E86\u5417\uFF1F"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u91D1\u5AC2"
+    - textId: 
+      order: 0
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: 
+      side: 
       portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
       isLeftPortrait: 1
       text: "\u53D1\u4EC0\u4E48\u5446\u5462\uFF1F\u6628\u5929\u7684\u63D0\u6210\u62FF\u7740\uFF0C\u53BB\u67DC\u53F0\u90A3\u8FB9\u641E\u70B9\u82B1\u8336\u559D\u559D\uFF0C\u770B\u4F60\u7D2F\u7684"
@@ -3134,163 +3460,296 @@ MonoBehaviour:
     lines: []
   - dayName: Day 2
     lines:
-    - speakerName: "\u5B9E\u4E60\u751F\u9F20\u9F20"
+    - textId: 52
+      order: 13
+      speakerName: "\u5B9E\u4E60\u751F\u9F20\u9F20"
+      portraitSourceName: lihui_shixisheng_jusang
+      side: L
       portrait: {fileID: 21300000, guid: 00a7dd9ec0ffa0e4ca69f93da857b042, type: 3}
       isLeftPortrait: 1
       text: "\u4F60\u597D,\u6211\u9884\u7EA6\u4E8615\uFF1A00\u7684\u4F4D\u7F6E......"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u91D1\u5AC2"
+    - textId: 53
+      order: 14
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: Jinsao_portrait
+      side: L
       portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
       isLeftPortrait: 1
-      text: "\u4F60\u52A0\u6CB9\u54C8\uFF01"
+      text: "\u597D\u7684,\u54CE,\u4F60\u53BB\u4E00\u4E0B\uFF01"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u5C0F\u798F"
+    - textId: 54
+      order: 15
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: XiaoFu
+      side: R
       portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
       isLeftPortrait: 0
-      text: "\u4F60\u597D,\u9884\u7EA615\uFF1A00\u7684\u5BA2\u4EBA\uFF0C\u8FD9\u8FB9\u8BF7\u54C8"
+      text: "\u4F60\u597D,\u662F\u9884\u7EA615\uFF1A00\u7684\u9F20\u9F20\u5417\uFF1F\u8FD9\u8FB9\u8BF7\u54C8"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u5B9E\u4E60\u751F\u9F20\u9F20"
+    - textId: 55
+      order: 16
+      speakerName: "\u5B9E\u4E60\u751F\u9F20\u9F20"
+      portraitSourceName: lihui_shixisheng_jusang
+      side: L
       portrait: {fileID: 21300000, guid: 00a7dd9ec0ffa0e4ca69f93da857b042, type: 3}
       isLeftPortrait: 1
       text: "\u597D......"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 56
+      order: 17
+      speakerName: "\u6211\u662F\u65C1\u767D"
+      portraitSourceName: none
+      side: none
+      portrait: {fileID: 0}
+      isLeftPortrait: 0
+      text: "\u73B0\u5728\u53EF\u4EE5\u53BB\u4E0A\u8FB9\u7684\u84DD\u8272\u5730\u6BEF\u51FA\u6309F\u952E\u8FDB\u5165\u70ED\u8840\u7684\u6413\u6FA1\u4E86\uFF01\uFF01\uFF01"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
   - dayName: Day 3
     lines:
-    - speakerName: "\u4E3B\u7BA1\u9F20"
+    - textId: 72
+      order: 3
+      speakerName: "\u4E3B\u7BA1\u9F20"
+      portraitSourceName: lihui_zhuguan_weixiao
+      side: L
       portrait: {fileID: 21300000, guid: 7a6fee42ebe8be640ad45ee233859826, type: 3}
       isLeftPortrait: 1
       text: "\u54B3...\u73B0\u5728\u6709\u4F4D\u7F6E\u5417\uFF1F"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u91D1\u5AC2"
+    - textId: 73
+      order: 4
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: Jinsao_portrait
+      side: L
       portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
       isLeftPortrait: 1
       text: "\u6709\u7684\uFF0C\u5148\u751F\u3002"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u4E3B\u7BA1\u9F20"
+    - textId: 74
+      order: 5
+      speakerName: "\u4E3B\u7BA1\u9F20"
+      portraitSourceName: lihui_zhuguan_weixiao
+      side: L
       portrait: {fileID: 21300000, guid: 7a6fee42ebe8be640ad45ee233859826, type: 3}
       isLeftPortrait: 1
       text: "\u9A6C\u4E0A\u7ED9\u6211\u5B89\u6392\u4E00\u4E2A30\u5206\u949F\u7684\u6D17\u6D74\u5957\u9910\u3002\u6211\u8FD8\u8981\u8D76\u7740\u53BB\u5F00\u4E2A\u4F1A\u3002"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u91D1\u5AC2"
+    - textId: 75
+      order: 6
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: Jinsao_portrait
+      side: L
       portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
       isLeftPortrait: 1
       text: "\u770B\u5230\u4EC0\u4E48\u4E86\uFF0C\u8FD9\u4E48\u60CA\u8BB6\uFF0C\u770B\u6765\u662F\u4E2A\u5927\u5BA2\u6237\u54C8"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u5C0F\u798F"
+    - textId: 76
+      order: 7
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: XiaoFu
+      side: R
       portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
       isLeftPortrait: 0
       text: "\u2026\u2026\u597D\u5BB6\u4F19\uFF0C\u80CC\u4E0A\u780C\u4E86\u4E00\u5835\u5899\u554A\uFF01"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u91D1\u5AC2"
+    - textId: 77
+      order: 8
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: Jinsao_portrait
+      side: L
       portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
       isLeftPortrait: 1
       text: "\u53BB\u5427\uFF0C\u4ECA\u5929\u8FD9\u6D3B\u513F\u8D39\u624B~"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u91D1\u5AC2"
+    - textId: 78
+      order: 9
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: Jinsao_portrait
+      side: L
       portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
       isLeftPortrait: 1
       text: "\u5148\u751F\u8FD9\u8FB9\u8BF7~"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
   - dayName: Day 4
     lines:
-    - speakerName: "\u6E05\u6D01\u5DE5"
+    - textId: 094
+      order: 1
+      speakerName: "\u6E05\u6D01\u5DE5"
+      portraitSourceName: lihui_qijiegong_jusang
+      side: L
       portrait: {fileID: 21300000, guid: 30fe5b071a05dda4c8093721e72c3561, type: 3}
       isLeftPortrait: 1
       text: "\u90A3\u4E2A\u2026\u4E0D\u597D\u610F\u601D\uFF0C\u6211\u53EF\u4EE5\u8FDB\u6765\u5417\uFF1F"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u6E05\u6D01\u5DE5"
+    - textId: 095
+      order: 2
+      speakerName: "\u6E05\u6D01\u5DE5"
+      portraitSourceName: lihui_qijiegong_jusang
+      side: L
       portrait: {fileID: 21300000, guid: 30fe5b071a05dda4c8093721e72c3561, type: 3}
       isLeftPortrait: 1
       text: "\u6211\u662F\u8BF4\u2026\u2026\u5982\u679C\u4E0D\u65B9\u4FBF\u7684\u8BDD\uFF0C\u6211\u5C31\u8D70\u3002"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u5C0F\u798F"
+    - textId: 096
+      order: 3
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: XiaoFu
+      side: R
       portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
       isLeftPortrait: 0
       text: "\u8BF6\uFF01\u8FD9\u8BDD\u5C31\u4E0D\u5BF9\u4E86\uFF0C\u8BF7\u8FDB\uFF01"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u5C0F\u798F"
+    - textId: 097
+      order: 4
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: XiaoFu
+      side: R
       portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
       isLeftPortrait: 0
       text: "\u54EA\u6709\u628A\u5BA2\u4EBA\u5F80\u5916\u8D76\u7684\u9053\u7406\uFF1F\u5FEB\u8FDB\u6765\uFF0C\u6211\u4EEC\u521A\u5F00\u5F20\u3002"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u91D1\u5AC2"
+    - textId: 098
+      order: 5
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: Jinsao_portrait
+      side: L
       portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
       isLeftPortrait: 1
       text: "\u4ED6\u5728\u8FD9\u626B\u4E86\u4E09\u5E74\u5730\uFF0C\u4F60\u662F\u7B2C\u4E00\u4E2A\u8BF7\u4ED6\u8FDB\u6765\u7684\u3002"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u91D1\u5AC2"
+    - textId: 099
+      order: 6
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: Jinsao_portrait
+      side: L
       portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
       isLeftPortrait: 1
       text: "\u60F3\u4E0D\u5230\u5440\uFF0C\u4F60\u8FD8\u86EE\u6709\u5FC3\u3002"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u5C0F\u798F"
+    - textId: 100
+      order: 7
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: XiaoFu
+      side: R
       portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
       isLeftPortrait: 0
       text: "\u8FD9\u662F...\u6839\u672C\u770B\u4E0D\u6E05\u5440\uFF01"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u91D1\u5AC2"
+    - textId: 101
+      order: 8
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: Jinsao_portrait
+      side: L
       portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
       isLeftPortrait: 1
       text: "\u5F53\u4E00\u53EA\u9F20\u88AB\u957F\u671F\u65E0\u89C6\uFF0C\u5B83\u5728\u522B\u4EBA\u7684\u773C\u91CC\u662F\u4EC0\u4E48\uFF1F"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u91D1\u5AC2"
+    - textId: 102
+      order: 9
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: 
+      side: 
       portrait: {fileID: 0}
       isLeftPortrait: 0
       text: "\u5B83\u73B0\u5728\u5C31\u50CF\u6478\u4E0D\u7740\u6293\u4E0D\u7740\u7684\u6CE1\u6CE1\uFF0C\u6240\u4EE5\u4F60\u770B\u4E0D\u6E05\u3002"
       backgroundImage: {fileID: 0}
-    - speakerName: "\u91D1\u5AC2"
+    - textId: 103
+      order: 10
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: 
+      side: 
       portrait: {fileID: 0}
       isLeftPortrait: 0
       text: "\u9488\u5BF9\u8FD9\u6837\u7684\u987E\u5BA2\u591A\u4F7F\u7528\u5EF6\u7F13\u5BF9\u65B9\u884C\u52A8\u7684\u6280\u80FD\uFF08blur\uFF09\uFF0C\u8BB0\u4F4F\uFF01\uFF01"
       backgroundImage: {fileID: 0}
-    - speakerName: "\u5C0F\u798F"
+    - textId: 104
+      order: 11
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: XiaoFu
+      side: R
       portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
       isLeftPortrait: 0
       text: "\u8BB0\u4F4F\u4E86..."
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
   - dayName: Day 5
     lines:
-    - speakerName: "\u91D1\u5AC2"
+    - textId: 117
+      order: 1
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: Jinsao_portrait
+      side: L
       portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
       isLeftPortrait: 1
       text: "\u5C0F\u5B50\uFF0C\u770B\u4F60\u8FD9\u51E0\u5929\u6CA1\u5C11\u6512\u94B1\u3002\u8FDB\u4E86\u65B0\u8D27\uFF0C\u53BB\u641E\u70B9\u597D\u7528\u7684\u5DE5\u5177\uFF01"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u5916\u5356\u5458\u9F20"
+    - textId: 118
+      order: 2
+      speakerName: "\u5916\u5356\u5458\u9F20"
+      portraitSourceName: lihui_waimaiyuan_jusang
+      side: L
       portrait: {fileID: 21300000, guid: d8bc113f0b8ef3948b6a4199ac0bff13, type: 3}
       isLeftPortrait: 1
       text: "\u8001\u677F\uFF0C\u5FEB\u5FEB\u5FEB\uFF01\u521A\u521A\u4E0B\u66B4\u96E8\u6211\u9001\u9644\u8FD1\u7684\u5730\u65B9\u641E\u5F97\u5168\u8EAB\u90FD\u6E7F\u4E86\uFF01\u6211\u4E4B\u540E\u8FD8\u8981\u53BB\u627E\u6211\u5973\u513F\uFF0C\u80FD\u7ED9\u6211\u5B89\u6392\u4E00\u4E2A\u624B\u901F\u5FEB\u7684\u5E08\u5085\u5417\uFF1F"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u91D1\u5AC2"
+    - textId: 119
+      order: 3
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: Jinsao_portrait
+      side: L
       portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
       isLeftPortrait: 1
       text: "\u597D\u561E\u597D\u561E\uFF0C\u522B\u7740\u6025\u5440"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u5C0F\u798F"
+    - textId: 120
+      order: 4
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: XiaoFu
+      side: R
       portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
       isLeftPortrait: 0
       text: "\u4ED6\u8EAB\u4E0A\u2026\u2026\u8FD9\u56E2\u75AF\u72C2\u8086\u8650\u7684\u72C2\u98CE\uFF01\u5439\u5F97\u4EBA\u773C\u775B\u90FD\u7741\u4E0D\u5F00\uFF01"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u91D1\u5AC2"
+    - textId: 121
+      order: 5
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: Jinsao_portrait
+      side: L
       portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
       isLeftPortrait: 1
       text: "\u6BCF\u5929\u5728\u9A6C\u8DEF\u4E0A\u72C2\u98D9\uFF0C\u6700\u540E\u8FD9\u9635\u5996\u98CE\u5168\u522E\u8FDB\u4E86\u81EA\u5DF1\u5FC3\u91CC\u53BB\u54AF\u3002"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u91D1\u5AC2"
+    - textId: 122
+      order: 6
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: Jinsao_portrait
+      side: L
       portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
       isLeftPortrait: 1
       text: "\u53BB\u5427\uFF0C\u4ECA\u5929\u5C31\u5F53\u7EC3\u7EC3\u624B\u901F\u3002\u8BA9\u4ED6\u505C\u4E0B\u6765\u3002"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u91D1\u5AC2"
+    - textId: 123
+      order: 7
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: Jinsao_portrait
+      side: L
       portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
       isLeftPortrait: 1
       text: "\u5BF9\u4ED8\u8FD9\u79CD\u654C\u4EBA\u591A\u4F7F\u7528\u7729\u6655\u6280\u80FD\uFF0C\u9632\u6B62\u5BF9\u65B9\u5728\u4E00\u56DE\u5408\u5185\u653B\u51FB\u4F60\u591A\u6B21"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u91D1\u5AC2"
+    - textId: 124
+      order: 8
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: Jinsao_portrait
+      side: L
       portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
       isLeftPortrait: 1
       text: "\u5662\uFF0C\u8FD8\u8981\u6CE8\u610F\u70B9\uFF0C\u522B\u5F04\u4E71\u8001\u5A18\u7684\u53D1\u578B\u3002"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-    - speakerName: "\u5C0F\u798F"
+    - textId: 125
+      order: 9
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: lihui_dafu_pibei
+      side: R
       portrait: {fileID: 21300000, guid: 9dd247752bf53b44bb26469a85071715, type: 3}
       isLeftPortrait: 0
       text: "\u597D\u7684\uFF0C\u8001\u677F..."
@@ -3685,10 +4144,11 @@ Transform:
   m_GameObject: {fileID: 798137959}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.05, y: -1.63, z: -0.021066181}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: -3.05, y: -1.4799999, z: -0.021066181}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 846568825}
   m_Father: {fileID: 943457592}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &798137961
@@ -3706,12 +4166,20 @@ MonoBehaviour:
   dialogueManager: {fileID: 622208148}
   bathhouseDayStoryController: {fileID: 0}
   lines:
-  - speakerName: "\u5C0F\u798F"
+  - textId: 
+    order: 0
+    speakerName: "\u5C0F\u798F"
+    portraitSourceName: 
+    side: 
     portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
     isLeftPortrait: 0
     text: "\u4F60\u597D\uFF01"
     backgroundImage: {fileID: 837111553, guid: b7a6d275be4a7b144b1008cdd85232f0, type: 3}
-  - speakerName: "\u5B9E\u4E60\u751F\u9F20\u9F20"
+  - textId: 
+    order: 0
+    speakerName: "\u5B9E\u4E60\u751F\u9F20\u9F20"
+    portraitSourceName: 
+    side: 
     portrait: {fileID: 21300000, guid: 00a7dd9ec0ffa0e4ca69f93da857b042, type: 3}
     isLeftPortrait: 1
     text: "\u4F60\u662F\uFF1F"
@@ -3810,6 +4278,90 @@ SpriteRenderer:
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.49023438, y: 0.5371094}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!1 &846568824
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 846568825}
+  - component: {fileID: 846568826}
+  m_Layer: 0
+  m_Name: ExclamationMark (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &846568825
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846568824}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.53599995, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 798137960}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &846568826
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846568824}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 6
+  m_Sprite: {fileID: 21300000, guid: 69a3bfb809b48fd47a2eb31ecafbab5a, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.30769232, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -4611,7 +5163,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 9732ef21707bf614f96839d448c1b769, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4880,10 +5432,11 @@ Transform:
   m_GameObject: {fileID: 1222357669}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.05, y: -1.63, z: -0.021066181}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: -3.05, y: -1.4799999, z: -0.021066181}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 14301553}
   m_Father: {fileID: 943457592}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1222357671
@@ -4901,12 +5454,20 @@ MonoBehaviour:
   dialogueManager: {fileID: 622208148}
   bathhouseDayStoryController: {fileID: 0}
   lines:
-  - speakerName: "\u5C0F\u798F"
+  - textId: 
+    order: 0
+    speakerName: "\u5C0F\u798F"
+    portraitSourceName: 
+    side: 
     portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
     isLeftPortrait: 0
     text: "\u4F60\u597D\uFF01"
     backgroundImage: {fileID: 837111553, guid: b7a6d275be4a7b144b1008cdd85232f0, type: 3}
-  - speakerName: "\u5B9E\u4E60\u751F\u9F20\u9F20"
+  - textId: 
+    order: 0
+    speakerName: "\u5B9E\u4E60\u751F\u9F20\u9F20"
+    portraitSourceName: 
+    side: 
     portrait: {fileID: 21300000, guid: 00a7dd9ec0ffa0e4ca69f93da857b042, type: 3}
     isLeftPortrait: 1
     text: "\u4F60\u662F\uFF1F"
@@ -5434,8 +5995,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -652, y: 65}
-  m_SizeDelta: {x: 500, y: 400}
+  m_AnchoredPosition: {x: -701, y: 111}
+  m_SizeDelta: {x: 500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1325866216
 MonoBehaviour:
@@ -5457,9 +6018,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -6276,6 +6837,90 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1549007648
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1549007649}
+  - component: {fileID: 1549007650}
+  m_Layer: 0
+  m_Name: ExclamationMark (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1549007649
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1549007648}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.53599995, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1731938824}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &1549007650
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1549007648}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 6
+  m_Sprite: {fileID: 21300000, guid: 69a3bfb809b48fd47a2eb31ecafbab5a, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.30769232, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &1553645031
 GameObject:
   m_ObjectHideFlags: 0
@@ -6833,7 +7478,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 47, y: -34}
+  m_AnchoredPosition: {x: 51, y: -34}
   m_SizeDelta: {x: 900, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1603268463
@@ -7091,10 +7736,11 @@ Transform:
   m_GameObject: {fileID: 1731938823}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.05, y: -1.63, z: -0.021066181}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: -3.05, y: -1.4799999, z: -0.021066181}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1549007649}
   m_Father: {fileID: 943457592}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1731938825
@@ -7112,12 +7758,20 @@ MonoBehaviour:
   dialogueManager: {fileID: 622208148}
   bathhouseDayStoryController: {fileID: 0}
   lines:
-  - speakerName: "\u5C0F\u798F"
+  - textId: 
+    order: 0
+    speakerName: "\u5C0F\u798F"
+    portraitSourceName: 
+    side: 
     portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
     isLeftPortrait: 0
     text: "\u4F60\u597D\uFF01"
     backgroundImage: {fileID: 837111553, guid: b7a6d275be4a7b144b1008cdd85232f0, type: 3}
-  - speakerName: "\u5B9E\u4E60\u751F\u9F20\u9F20"
+  - textId: 
+    order: 0
+    speakerName: "\u5B9E\u4E60\u751F\u9F20\u9F20"
+    portraitSourceName: 
+    side: 
     portrait: {fileID: 21300000, guid: 00a7dd9ec0ffa0e4ca69f93da857b042, type: 3}
     isLeftPortrait: 1
     text: "\u4F60\u662F\uFF1F"
@@ -7355,10 +8009,11 @@ Transform:
   m_GameObject: {fileID: 1823683727}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.05, y: -1.63, z: -0.021066181}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: -3.05, y: -1.4799999, z: -0.021066181}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 27682666}
   m_Father: {fileID: 943457592}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1823683729
@@ -7376,12 +8031,20 @@ MonoBehaviour:
   dialogueManager: {fileID: 622208148}
   bathhouseDayStoryController: {fileID: 0}
   lines:
-  - speakerName: "\u5C0F\u798F"
+  - textId: 
+    order: 0
+    speakerName: "\u5C0F\u798F"
+    portraitSourceName: 
+    side: 
     portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
     isLeftPortrait: 0
     text: "\u4F60\u597D\uFF01"
     backgroundImage: {fileID: 837111553, guid: b7a6d275be4a7b144b1008cdd85232f0, type: 3}
-  - speakerName: "\u5B9E\u4E60\u751F\u9F20\u9F20"
+  - textId: 
+    order: 0
+    speakerName: "\u5B9E\u4E60\u751F\u9F20\u9F20"
+    portraitSourceName: 
+    side: 
     portrait: {fileID: 21300000, guid: 00a7dd9ec0ffa0e4ca69f93da857b042, type: 3}
     isLeftPortrait: 1
     text: "\u4F60\u662F\uFF1F"
@@ -7569,6 +8232,90 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1889319512
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1889319513}
+  - component: {fileID: 1889319514}
+  m_Layer: 0
+  m_Name: ExclamationMark
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1889319513
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1889319512}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.536, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 346326816}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &1889319514
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1889319512}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 6
+  m_Sprite: {fileID: 21300000, guid: 69a3bfb809b48fd47a2eb31ecafbab5a, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.30769232, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &1907274735
 GameObject:
   m_ObjectHideFlags: 0
@@ -7733,7 +8480,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -367, y: 72}
+  m_AnchoredPosition: {x: -327, y: 72}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1914132690
