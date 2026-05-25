@@ -13,14 +13,24 @@ public class CustomerTrigger : MonoBehaviour
     public GameObject exclamationMark;
     public GameObject combatTrigger;
 
+    [Header("Collision")]
+    public float interactionDistance = 1.8f;
+    public bool forceCustomerColliderBlocksPlayer = true;
+
     private bool playerNear = false;
     private bool hasTalked = false;
     private bool isDialoguePlaying = false;
+    private Transform playerTransform;
+    private Collider2D playerCollider;
+    private Collider2D customerCollider;
 
     private void Start()
     {
         if (bathhouseDayStoryController == null)
             bathhouseDayStoryController = FindObjectOfType<BathhouseDayStoryController>();
+
+        FindPlayerForPhysicsLog();
+        ConfigureCustomerCollider();
 
         GameManager gameManager = GameManager.EnsureInstance();
         int currentDay = gameManager != null ? gameManager.currentDay : -1;
@@ -48,6 +58,8 @@ public class CustomerTrigger : MonoBehaviour
 
     private void Update()
     {
+        RefreshPlayerNearByDistance();
+
         if (!Input.GetKeyDown(KeyCode.F))
             return;
 
@@ -56,6 +68,7 @@ public class CustomerTrigger : MonoBehaviour
             ", playerNear = " + playerNear +
             ", hasTalked = " + hasTalked +
             ", isDialoguePlaying = " + isDialoguePlaying +
+            ", interactionDistance = " + interactionDistance +
             ", exclamationActive = " + GetExclamationActiveState() + ".");
 
         if (!playerNear || hasTalked || isDialoguePlaying)
@@ -223,6 +236,120 @@ public class CustomerTrigger : MonoBehaviour
     private string GetExclamationActiveState()
     {
         return exclamationMark != null ? exclamationMark.activeSelf.ToString() : "Missing";
+    }
+
+    private void FindPlayerForPhysicsLog()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null)
+        {
+            Debug.LogWarning("CustomerTrigger could not find Player by tag. customer = " + gameObject.name + ".");
+            return;
+        }
+
+        playerTransform = player.transform;
+        Rigidbody2D playerRigidbody = player.GetComponent<Rigidbody2D>();
+        playerCollider = player.GetComponent<Collider2D>();
+
+        Debug.Log(
+            "CustomerTrigger player physics check. customer = " + gameObject.name +
+            ", player = " + player.name +
+            ", playerRigidbody2DExists = " + (playerRigidbody != null) +
+            ", playerCollider2DExists = " + (playerCollider != null) +
+            ", playerLayer = " + LayerMask.LayerToName(player.layer) + ".");
+
+        if (playerRigidbody == null)
+            Debug.LogWarning("Player needs a Rigidbody2D for customer blocking. customer = " + gameObject.name + ".");
+
+        if (playerCollider == null)
+            Debug.LogWarning("Player needs a Collider2D for customer blocking. customer = " + gameObject.name + ".");
+    }
+
+    private void ConfigureCustomerCollider()
+    {
+        customerCollider = GetComponent<Collider2D>();
+        if (customerCollider == null)
+        {
+            Debug.LogWarning("CustomerTrigger needs a Collider2D on the customer object for blocking. customer = " + gameObject.name + ".");
+            return;
+        }
+
+        bool wasTrigger = customerCollider.isTrigger;
+        Debug.Log(
+            "CustomerTrigger customer collider check. customer = " + gameObject.name +
+            ", customerCollider2DExists = true" +
+            ", customerColliderIsTrigger = " + wasTrigger +
+            ", customerLayer = " + LayerMask.LayerToName(gameObject.layer) + ".");
+
+        if (forceCustomerColliderBlocksPlayer && customerCollider.isTrigger)
+        {
+            customerCollider.isTrigger = false;
+            Debug.Log(
+                "CustomerTrigger set customer Collider2D IsTrigger to false for blocking. customer = " + gameObject.name +
+                ", wasTrigger = " + wasTrigger +
+                ", isTriggerNow = " + customerCollider.isTrigger + ".");
+        }
+    }
+
+    private void RefreshPlayerNearByDistance()
+    {
+        if (playerTransform == null)
+            return;
+
+        float distance = GetDistanceToPlayer();
+        bool isNearByDistance = distance <= interactionDistance;
+
+        if (playerNear != isNearByDistance)
+        {
+            playerNear = isNearByDistance;
+            Debug.Log(
+                "CustomerTrigger distance interaction state changed. customer = " + gameObject.name +
+                ", playerNear = " + playerNear +
+                ", distance = " + distance +
+                ", interactionDistance = " + interactionDistance + ".");
+        }
+    }
+
+    private float GetDistanceToPlayer()
+    {
+        if (customerCollider != null && playerCollider != null)
+        {
+            ColliderDistance2D colliderDistance = customerCollider.Distance(playerCollider);
+            return colliderDistance.distance;
+        }
+
+        return Vector2.Distance(transform.position, playerTransform.position);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        bool isPlayer = collision.collider.CompareTag("Player");
+        Debug.Log(
+            "CustomerTrigger OnCollisionEnter2D. customer = " + gameObject.name +
+            ", other = " + collision.collider.name +
+            ", isPlayer = " + isPlayer +
+            ", customerLayer = " + LayerMask.LayerToName(gameObject.layer) +
+            ", otherLayer = " + LayerMask.LayerToName(collision.collider.gameObject.layer) + ".");
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Player"))
+            playerNear = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        bool isPlayer = other.CompareTag("Player");
+        Debug.Log(
+            "CustomerTrigger OnTriggerEnter2D. customer = " + gameObject.name +
+            ", other = " + other.name +
+            ", isPlayer = " + isPlayer +
+            ", customerLayer = " + LayerMask.LayerToName(gameObject.layer) +
+            ", otherLayer = " + LayerMask.LayerToName(other.gameObject.layer) + ".");
+
+        if (isPlayer)
+            playerNear = true;
     }
 
     private void OnTriggerStay2D(Collider2D other)
