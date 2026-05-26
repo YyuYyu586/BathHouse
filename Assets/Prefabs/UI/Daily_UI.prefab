@@ -296,6 +296,7 @@ GameObject:
   - component: {fileID: 8203630314483779900}
   - component: {fileID: 5401674913389813630}
   - component: {fileID: 6696499639381064505}
+  - component: {fileID: 3189184150220182291}
   m_Layer: 5
   m_Name: Daily_UI
   m_TagString: Untagged
@@ -389,6 +390,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &3189184150220182291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6710029590054511685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b06ee96f64a4bb4a90b1caac6dedf2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dayText: {fileID: 0}
+  coinText: {fileID: 0}
+  refreshInterval: 0.2
 --- !u!1 &7068636168009263118
 GameObject:
   m_ObjectHideFlags: 0

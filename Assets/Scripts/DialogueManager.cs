@@ -70,6 +70,9 @@ public class DialogueManager : MonoBehaviour
 
     private void Update()
     {
+        if (SavePanelController.IsPanelOpen)
+            return;
+
         if (dialoguePanel == null || !dialoguePanel.activeSelf)
             return;
 

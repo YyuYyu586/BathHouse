@@ -11,6 +11,8 @@ public class MainMenuManager : MonoBehaviour
 
     private void Awake()
     {
+        SavePanelController.ResetPanelState();
+
         // 如果 Inspector 没有手动拖引用，就按名字自动找到 MainMenu 里的云。
         if (clouds == null || clouds.Length == 0)
         {
@@ -30,6 +32,8 @@ public class MainMenuManager : MonoBehaviour
 
     public void StartGame()
     {
+        SavePanelController.ResetPanelState();
+        Debug.Log("MainMenu StartGame clicked. Loading StoryScene.");
         SceneManager.LoadScene("StoryScene");
     }
 

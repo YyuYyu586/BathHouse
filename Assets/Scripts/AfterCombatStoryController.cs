@@ -78,7 +78,7 @@ public class AfterCombatStoryController : MonoBehaviour
         gameManager = GameManager.EnsureInstance();
         int currentDay = gameManager.currentDay;
 
-        if (transitionText != null)
+        if (CanWriteTransitionText())
         {
             if (gameManager.IsFinalDay)
             {
@@ -88,10 +88,6 @@ public class AfterCombatStoryController : MonoBehaviour
             {
                 transitionText.text = "第 " + currentDay + " 天结束\n第 " + (currentDay + 1) + " 天，澡堂重新开门";
             }
-        }
-        else
-        {
-            Debug.LogWarning("AfterCombatStoryController transitionText is not assigned. Drag the transition text in Inspector.");
         }
 
         if (dayTransitionPanel != null)
@@ -103,6 +99,20 @@ public class AfterCombatStoryController : MonoBehaviour
         {
             Debug.LogError("AfterCombatStoryController dayTransitionPanel is not assigned. Drag the DayTransitionPanel in Inspector.");
         }
+    }
+
+    private bool CanWriteTransitionText()
+    {
+        if (transitionText == null)
+            return false;
+
+        if (continueButton != null && transitionText.transform.IsChildOf(continueButton.transform))
+        {
+            Debug.LogWarning("AfterCombatStoryController transitionText points to ContinueButton text. Skipping transition text write so the button label stays unchanged.");
+            return false;
+        }
+
+        return true;
     }
 
     public void OnDayTransitionContinue()

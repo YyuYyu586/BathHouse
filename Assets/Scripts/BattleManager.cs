@@ -30,13 +30,11 @@ public class BattleManager : MonoBehaviour
 
     [Header("Player Stats")]
     [SerializeField] private int maxPlayerHP = 100;
-    [SerializeField] private int maxPlayerSP = 30;
+    [SerializeField] private int maxPlayerSP = 50;
     [SerializeField] private int attackDamage = 10;
-    [SerializeField] private int blurDamage = 18;
-    [SerializeField] private int blurSPCost = 5;
-    [SerializeField] private bool ultimateUnlocked = false;
-    [SerializeField] private int ultimateDamage = 35;
-    [SerializeField] private int ultimateSPCost = 20;
+    [SerializeField] private int attackSPRecover = 5;
+    [SerializeField] private int ultimateDamage = 80;
+    [SerializeField] private int ultimateSPCost = 40;
 
     [Header("Enemy Stats")]
     [SerializeField] private int maxEnemyHP = 80;
@@ -45,12 +43,13 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private float fillSmoothTime = 0.2f;
     [SerializeField] private EnemyDayData[] enemiesByDay =
     {
-        new EnemyDayData(2, "Bubble Rookie", 70, 7, 10),
-        new EnemyDayData(3, "Mud Slime", 85, 8, 12),
-        new EnemyDayData(4, "Noise Bubble", 100, 9, 14),
-        new EnemyDayData(5, "Tile Monster", 120, 10, 16),
-        new EnemyDayData(6, "Storm Scrub", 140, 12, 18),
-        new EnemyDayData(7, "Bathhouse Boss", 180, 14, 30)
+        new EnemyDayData(1, "Day1兜底 / 泥巴怪", 30, 3, 0),
+        new EnemyDayData(2, "实习生鼠鼠 / 焦虑的泥巴", 70, 7, 15),
+        new EnemyDayData(3, "主管鼠鼠 / 坚硬的外壳", 85, 8, 18),
+        new EnemyDayData(4, "清洁工鼠鼠 / 模糊的自我", 110, 10, 22),
+        new EnemyDayData(5, "外卖员鼠鼠 / 厌倦的狂风", 130, 12, 26),
+        new EnemyDayData(6, "大学生鼠鼠 / 迷茫的泡影", 160, 14, 32),
+        new EnemyDayData(7, "临近崩溃的主管 / 崩溃的外壳", 120, 14, 0)
     };
     [SerializeField] private int defeatGoldRewardDivisor = 2;
 
@@ -66,18 +65,49 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private RectTransform playerDamagePopupPoint;
 
     [Header("Enemy UI")]
+    [SerializeField] private Image enemyImage;
+    [SerializeField] private EnemyAnimationPlayer enemyAnimationPlayer;
     [SerializeField] private Image enemyHPFillImage;
     [SerializeField] private TextMeshProUGUI enemyHPText;
     [SerializeField] private TextMeshProUGUI enemyBattleMessageText;
     [SerializeField] private RectTransform enemyDamagePopupPoint;
 
+    [Header("Enemy Sprites")]
+    [SerializeField] private Sprite day1FallbackEnemySprite;
+    [SerializeField] private Sprite day2EnemySprite;
+    [SerializeField] private Sprite day3EnemySprite;
+    [SerializeField] private Sprite day4EnemySprite;
+    [SerializeField] private Sprite day5EnemySprite;
+    [SerializeField] private Sprite day6EnemySprite;
+    [SerializeField] private Sprite day7Phase1Sprite;
+    [SerializeField] private Sprite day7Phase2Sprite;
+
+    [Header("Enemy Idle Animation Frames")]
+    [SerializeField] private Sprite[] day2EnemyIdleFrames;
+    [SerializeField] private Sprite[] day3EnemyIdleFrames;
+    [SerializeField] private Sprite[] day4EnemyIdleFrames;
+    [SerializeField] private Sprite[] day5EnemyIdleFrames;
+    [SerializeField] private Sprite[] day6EnemyIdleFrames;
+    [SerializeField] private Sprite[] day7Phase1IdleFrames;
+    [SerializeField] private Sprite[] day7Phase2IdleFrames;
+
     [Header("Buttons")]
     [SerializeField] private Button attackButton;
     [SerializeField] private Button blurButton;
+    [SerializeField] private Button polishButton;
     [SerializeField] private Button ultimateButton;
 
     [Header("Victory")]
     [SerializeField] private GameObject victoryPanel;
+
+    [Header("Day7 Interlude")]
+    [SerializeField] private GameObject day7InterludePanel;
+    [SerializeField] private TextMeshProUGUI day7InterludeText;
+    [SerializeField] private RectTransform day7InterludeTextRect;
+    [SerializeField] private Button day7InterludeContinueButton;
+    [SerializeField] private float day7InterludeScrollDuration = 10f;
+    [SerializeField] private float day7InterludeStartY = -500f;
+    [SerializeField] private float day7InterludeEndY = 500f;
 
     [Header("Damage Popup")]
     [SerializeField] private DamagePopup damagePopupPrefab;
@@ -94,6 +124,9 @@ public class BattleManager : MonoBehaviour
     private bool isPlayerTurn;
     private bool battleEnded;
     private bool bathGodIntervened;
+    private bool isDay7Phase2;
+    private bool isChangingDay7Phase;
+    private bool isDay7InterludePlaying;
     private int currentRound = 1;
     private Coroutine playerHPFillRoutine;
     private Coroutine playerSPFillRoutine;
@@ -104,14 +137,29 @@ public class BattleManager : MonoBehaviour
         Debug.Log("BattleManager Start");
         LogInspectorReferences();
         ResolveButtonReferences();
+        ResolveEnemyAnimationPlayer();
         BindButtonEvents();
         ConfigureButtons();
         StartBattle();
     }
 
+    private void Update()
+    {
+        if (isDay7InterludePlaying)
+            return;
+
+        if (Input.GetKeyDown(KeyCode.H))
+            TryUseSoap();
+
+        if (Input.GetKeyDown(KeyCode.J))
+            TryUseTea();
+    }
+
     // Resets battle state and initializes every assigned UI field.
     private void StartBattle()
     {
+        ApplyDemoCombatTuning();
+
         gameManager = GameManager.EnsureInstance();
         currentDay = gameManager.currentDay;
 
@@ -141,31 +189,35 @@ public class BattleManager : MonoBehaviour
         isPlayerTurn = true;
         battleEnded = false;
         bathGodIntervened = false;
+        isDay7Phase2 = false;
+        isChangingDay7Phase = false;
+        isDay7InterludePlaying = false;
         currentRound = 1;
 
         if (victoryPanel != null)
             victoryPanel.SetActive(false);
 
+        if (day7InterludePanel != null)
+            day7InterludePanel.SetActive(false);
+
+        PlayEnemyIdleAnimation(GetEnemyIdleFramesForCurrentDay(), GetEnemySpriteForCurrentDay());
         RefreshActionButtonsForCurrentState("battle start");
-        SetPlayerMessage("Choose an action.");
+        SetPlayerMessage("选择一个行动。");
         SetEnemyMessage("Day " + currentDay + ": " + currentEnemyName);
         RefreshAllUI();
+        Debug.Log("Combat day setup. currentDay=" + currentDay + ", enemyName=" + currentEnemyName + ", enemyHP=" + maxEnemyHP + ", enemyAttack=" + enemyAttackDamage + ", rewardGold=" + currentEnemyGoldReward + ".");
         LogBattleState("Battle started");
+    }
 
-        if (currentDay <= 1)
-        {
-            battleEnded = true;
-            isPlayerTurn = false;
-            currentEnemyHP = 0;
-            RefreshEnemyUI();
-            SetActionButtonsInteractable(false);
-            SetPlayerMessage("Day 1 is story only. Return and start work tomorrow.");
-            SetEnemyMessage("No battle today.");
-            LogBattleState("Day 1 no battle");
-
-            if (victoryPanel != null)
-                victoryPanel.SetActive(true);
-        }
+    private void ApplyDemoCombatTuning()
+    {
+        maxPlayerHP = 100;
+        maxPlayerSP = 50;
+        attackDamage = 10;
+        attackSPRecover = 5;
+        ultimateDamage = 80;
+        ultimateSPCost = 40;
+        Debug.Log("Applied demo combat tuning. maxPlayerHP=" + maxPlayerHP + ", maxPlayerSP=" + maxPlayerSP + ", attackDamage=" + attackDamage + ", attackSPRecover=" + attackSPRecover + ", ultimateDamage=" + ultimateDamage + ", ultimateSPCost=" + ultimateSPCost + ".");
     }
 
     // Attack is the basic no-cost player action.
@@ -177,12 +229,56 @@ public class BattleManager : MonoBehaviour
             return;
 
         ClearSelectedButton();
-        BeginPlayerAction("Attack");
-        SetPlayerMessage("You scrub hard. " + currentEnemyName + " takes " + attackDamage + " damage.");
-        DealDamageToEnemy(attackDamage, currentEnemyName + " staggered from the scrub: -" + attackDamage + " HP.");
+
+        if (!IsAttackUnlocked())
+        {
+            SetPlayerMessage("普通搓澡需要 Day2 开始才能使用。");
+            RefreshActionButtonsForCurrentState("attack locked by day");
+            return;
+        }
+
+        BeginPlayerAction("普通搓澡");
+        currentPlayerSP = Mathf.Min(maxPlayerSP, currentPlayerSP + attackSPRecover);
+        RefreshPlayerUI();
+        SetPlayerMessage("普通搓澡！造成 " + attackDamage + " 点伤害，回复 " + attackSPRecover + " SP。");
+        DealDamageToEnemy(attackDamage, currentEnemyName + " -" + attackDamage + " HP.");
     }
 
-    // Blur costs SP and deals higher damage. Not enough SP does not spend the player turn.
+    // Polish is the fixed combo skill. Not enough SP does not spend the player turn.
+    public void OnPolishButton()
+    {
+        Debug.Log("Polish clicked");
+
+        if (!CanPlayerAct())
+            return;
+
+        ClearSelectedButton();
+
+        if (!IsPolishUnlocked())
+        {
+            SetPlayerMessage("搓澡巾连击需要 Day2 开始才能使用。");
+            RefreshActionButtonsForCurrentState("polish locked by day");
+            return;
+        }
+
+        int spCost = 15;
+        int damage = 25;
+
+        if (currentPlayerSP < spCost)
+        {
+            SetPlayerMessage("SP 不足，无法使用搓澡巾连击。");
+            RefreshActionButtonsForCurrentState("polish blocked by SP");
+            return;
+        }
+
+        BeginPlayerAction("搓澡巾连击");
+        currentPlayerSP = Mathf.Max(0, currentPlayerSP - spCost);
+        SetPlayerMessage("搓澡巾连击！造成 " + damage + " 点伤害。");
+        RefreshPlayerUI();
+        DealDamageToEnemy(damage, currentEnemyName + " -" + damage + " HP.");
+    }
+
+    // Blur is fixed to bubble eye. It unlocks on Day4 and does not stun yet.
     public void OnBlurButton()
     {
         Debug.Log("Blur clicked");
@@ -192,18 +288,32 @@ public class BattleManager : MonoBehaviour
 
         ClearSelectedButton();
 
-        if (currentPlayerSP < blurSPCost)
+        if (!IsBlurUnlocked())
         {
-            SetPlayerMessage("SP is not enough.");
+            SetPlayerMessage("泡泡迷人眼需要 Day4 开始才能使用。");
+            RefreshActionButtonsForCurrentState("blur locked by day");
+            return;
+        }
+
+        int spCost = 20;
+        int damage = 15;
+        int heal = 15;
+
+        if (currentPlayerSP < spCost)
+        {
+            SetPlayerMessage("SP 不足，无法使用泡泡迷人眼。");
             RefreshActionButtonsForCurrentState("blur blocked by SP");
             return;
         }
 
-        BeginPlayerAction("Blur");
-        currentPlayerSP = Mathf.Max(0, currentPlayerSP - blurSPCost);
-        SetPlayerMessage("Blur washes over the room. " + currentEnemyName + " takes " + blurDamage + " damage.");
+        BeginPlayerAction("泡泡迷人眼");
+        currentPlayerSP = Mathf.Max(0, currentPlayerSP - spCost);
+
+        currentPlayerHP = Mathf.Min(maxPlayerHP, currentPlayerHP + heal);
+
+        SetPlayerMessage("泡泡迷人眼！造成 " + damage + " 点伤害，回复 " + heal + " HP。");
         RefreshPlayerUI();
-        DealDamageToEnemy(blurDamage, currentEnemyName + " was slowed by the steam: -" + blurDamage + " HP.");
+        DealDamageToEnemy(damage, currentEnemyName + " -" + damage + " HP.");
     }
 
     // Reserved for the future. Current version does not spend the turn.
@@ -216,23 +326,31 @@ public class BattleManager : MonoBehaviour
 
         ClearSelectedButton();
 
-        if (!IsUltimateAvailable())
+        if (!IsUltimateUnlockedForToday())
         {
-            SetPlayerMessage("Ultimate is not ready yet.");
-            RefreshActionButtonsForCurrentState("ultimate unavailable");
+            SetPlayerMessage("灵魂抛光需要 Day5 及以后才能使用。");
+            RefreshActionButtonsForCurrentState("ultimate locked by day");
             return;
         }
 
-        BeginPlayerAction("Ultimate");
+        if (currentPlayerSP < ultimateSPCost)
+        {
+            SetPlayerMessage("SP不足，无法使用灵魂抛光。");
+            RefreshActionButtonsForCurrentState("ultimate blocked by SP");
+            return;
+        }
+
+        BeginPlayerAction("灵魂抛光");
         currentPlayerSP = Mathf.Max(0, currentPlayerSP - ultimateSPCost);
-        SetPlayerMessage("Ultimate scrub unleashed! " + currentEnemyName + " takes " + ultimateDamage + " damage.");
+        SetPlayerMessage("灵魂抛光！造成 " + ultimateDamage + " 点伤害。");
         RefreshPlayerUI();
-        DealDamageToEnemy(ultimateDamage, currentEnemyName + " was blasted by the ultimate scrub: -" + ultimateDamage + " HP.");
+        DealDamageToEnemy(ultimateDamage, currentEnemyName + " -" + ultimateDamage + " HP.");
     }
 
     // Optional hook for a Continue button inside VictoryPanel.
     public void OnVictoryContinueButton()
     {
+        Debug.Log("Victory Continue clicked. Loading AfterCombatScene.");
         SceneManager.LoadScene("AfterCombatScene");
     }
 
@@ -253,6 +371,12 @@ public class BattleManager : MonoBehaviour
 
         if (currentEnemyHP <= 0)
         {
+            if (ShouldEnterDay7Phase2())
+            {
+                StartCoroutine(SwitchToDay7Phase2Routine());
+                return;
+            }
+
             WinBattle();
             return;
         }
@@ -276,7 +400,7 @@ public class BattleManager : MonoBehaviour
 
         currentPlayerHP = Mathf.Max(0, currentPlayerHP - enemyAttackDamage);
         RefreshPlayerUI();
-        SetPlayerMessage(currentEnemyName + " strikes back. You take " + enemyAttackDamage + " damage.");
+        SetPlayerMessage(currentEnemyName + "反击！你受到 " + enemyAttackDamage + " 点伤害。");
         SpawnDamagePopup(playerDamagePopupPoint, enemyAttackDamage.ToString(), playerDamagePopupOffset);
         LogBattleState("Enemy attacked");
 
@@ -289,7 +413,7 @@ public class BattleManager : MonoBehaviour
         currentRound++;
         isPlayerTurn = true;
         RefreshActionButtonsForCurrentState("player turn restored");
-        SetPlayerMessage("Choose an action.");
+        SetPlayerMessage("选择一个行动。");
         LogBattleState("Player turn started");
     }
 
@@ -302,8 +426,13 @@ public class BattleManager : MonoBehaviour
         isPlayerTurn = false;
         SetActionButtonsInteractable(false);
         SavePlayerState();
-        GiveGoldReward(currentEnemyGoldReward);
-        SetEnemyMessage(currentEnemyName + " defeated.");
+        int gainedGold = GiveGoldReward(currentEnemyGoldReward);
+        SetEnemyMessage(currentEnemyName + "被净化了。");
+        if (currentDay >= 7 || gainedGold <= 0)
+            SetPlayerMessage("最终战胜利！点击 Continue 进入战后剧情。");
+        else
+            SetPlayerMessage("净化成功！获得 " + gainedGold + " 金币。点击 Continue 进入战后剧情。");
+        Debug.Log("Battle won. gainedGold=" + gainedGold + ". VictoryPanel will show. Continue loads AfterCombatScene.");
         LogBattleState("Battle won");
 
         if (victoryPanel != null)
@@ -312,27 +441,69 @@ public class BattleManager : MonoBehaviour
 
     private void TriggerBathGodIntervention(string reason)
     {
-        if (battleEnded)
+        if (battleEnded || isChangingDay7Phase)
             return;
 
+        StartCoroutine(BathGodInterventionRoutine(reason));
+    }
+
+    private IEnumerator BathGodInterventionRoutine(string reason)
+    {
         battleEnded = true;
         isPlayerTurn = false;
         bathGodIntervened = true;
         SetActionButtonsInteractable(false);
 
+        if (ShouldEnterDay7Phase2())
+        {
+            SetPlayerMessage("搓澡之神降临！先把这层崩溃的外壳洗掉！");
+            SetEnemyMessage(reason);
+            SpawnDamagePopup(enemyDamagePopupPoint, "999", enemyDamagePopupOffset);
+            yield return new WaitForSeconds(0.8f);
+
+            currentPlayerHP = Mathf.Max(1, currentPlayerHP);
+            currentEnemyHP = 0;
+            SavePlayerState();
+            RefreshAllUI();
+
+            battleEnded = false;
+            yield return SwitchToDay7Phase2Routine();
+            yield break;
+        }
+
+        if (currentDay >= 7)
+        {
+            SetPlayerMessage("你已经很努力了……但你不是一个人在战斗。");
+            SetEnemyMessage(reason);
+            yield return new WaitForSeconds(1.2f);
+            SetPlayerMessage("全员意志化作金光，造成 9999 伤害！");
+            SpawnDamagePopup(enemyDamagePopupPoint, "9999", enemyDamagePopupOffset);
+            yield return new WaitForSeconds(0.8f);
+        }
+        else
+        {
+            SetPlayerMessage("搓澡之神降临！今天也不能卡在这里！");
+            SetEnemyMessage(reason);
+            SpawnDamagePopup(enemyDamagePopupPoint, "999", enemyDamagePopupOffset);
+            yield return new WaitForSeconds(0.6f);
+        }
+
         currentPlayerHP = Mathf.Max(1, currentPlayerHP);
         currentEnemyHP = 0;
         SavePlayerState();
         RefreshAllUI();
-        SpawnDamagePopup(enemyDamagePopupPoint, "999", enemyDamagePopupOffset);
 
         int reducedReward = defeatGoldRewardDivisor > 0
             ? currentEnemyGoldReward / defeatGoldRewardDivisor
             : 0;
 
-        GiveGoldReward(reducedReward);
-        SetPlayerMessage("The bath god intervenes! A divine scrub finishes today's work.");
-        SetEnemyMessage(reason + " " + currentEnemyName + " was cleansed by the bath god.");
+        int gainedGold = GiveGoldReward(reducedReward);
+        SetEnemyMessage(currentEnemyName + "被保底净化了。");
+        if (currentDay >= 7 || gainedGold <= 0)
+            SetPlayerMessage("最终战胜利！点击 Continue 进入战后剧情。");
+        else
+            SetPlayerMessage("搓澡之神帮你完成了净化，但今天状态很差，金币奖励减少。获得 " + gainedGold + " 金币。");
+        Debug.Log("Bath god reduced reward. originalGold=" + currentEnemyGoldReward + ", gainedGold=" + gainedGold + ", divisor=" + defeatGoldRewardDivisor + ".");
         LogBattleState("Bath god intervention: " + reason);
 
         if (victoryPanel != null)
@@ -351,7 +522,73 @@ public class BattleManager : MonoBehaviour
 
     private bool IsUltimateAvailable()
     {
-        return ultimateUnlocked && currentPlayerSP >= ultimateSPCost;
+        return IsUltimateUnlockedForToday() && currentPlayerSP >= ultimateSPCost;
+    }
+
+    private bool IsAttackUnlocked()
+    {
+        return currentDay >= 2;
+    }
+
+    private bool IsUltimateUnlockedForToday()
+    {
+        return currentDay >= 5;
+    }
+
+    private bool IsPolishUnlocked()
+    {
+        return currentDay >= 2;
+    }
+
+    private bool IsBlurUnlocked()
+    {
+        return currentDay >= 4;
+    }
+
+    private void TryUseSoap()
+    {
+        if (!CanPlayerAct())
+            return;
+
+        if (gameManager == null)
+            gameManager = GameManager.EnsureInstance();
+
+        if (gameManager.soapCount <= 0)
+        {
+            SetPlayerMessage("没有肥皂了。");
+            Debug.Log("Use soap failed. soapCount=0, playerHP=" + currentPlayerHP + "/" + maxPlayerHP + ".");
+            return;
+        }
+
+        gameManager.soapCount--;
+        currentPlayerHP = Mathf.Min(maxPlayerHP, currentPlayerHP + 30);
+        SavePlayerState();
+        RefreshPlayerUI();
+        SetPlayerMessage("使用肥皂，恢复 30 HP。剩余肥皂：" + gameManager.soapCount);
+        Debug.Log("Used soap. playerHP=" + currentPlayerHP + "/" + maxPlayerHP + ", soapCount=" + gameManager.soapCount + ".");
+    }
+
+    private void TryUseTea()
+    {
+        if (!CanPlayerAct())
+            return;
+
+        if (gameManager == null)
+            gameManager = GameManager.EnsureInstance();
+
+        if (gameManager.teaCount <= 0)
+        {
+            SetPlayerMessage("没有花茶了。");
+            Debug.Log("Use tea failed. teaCount=0, playerSP=" + currentPlayerSP + "/" + maxPlayerSP + ".");
+            return;
+        }
+
+        gameManager.teaCount--;
+        currentPlayerSP = Mathf.Min(maxPlayerSP, currentPlayerSP + 20);
+        SavePlayerState();
+        RefreshPlayerUI();
+        SetPlayerMessage("饮用花茶，恢复 20 SP。剩余花茶：" + gameManager.teaCount);
+        Debug.Log("Used tea. playerSP=" + currentPlayerSP + "/" + maxPlayerSP + ", teaCount=" + gameManager.teaCount + ".");
     }
 
     private void SavePlayerState()
@@ -363,29 +600,25 @@ public class BattleManager : MonoBehaviour
         gameManager.playerSP = currentPlayerSP;
     }
 
-    private void GiveGoldReward(int amount)
+    private int GiveGoldReward(int amount)
     {
-        if (amount <= 0)
-            return;
-
         if (gameManager == null)
             gameManager = GameManager.EnsureInstance();
 
+        if (amount <= 0)
+        {
+            Debug.Log("Battle reward gold: 0. Current gold: " + gameManager.playerGold);
+            return 0;
+        }
+
         gameManager.playerGold += amount;
         Debug.Log("Battle reward gold: " + amount + ". Current gold: " + gameManager.playerGold);
+        return amount;
     }
 
     private EnemyDayData GetEnemyForDay(int day)
     {
-        if (enemiesByDay == null)
-            return null;
-
-        for (int i = 0; i < enemiesByDay.Length; i++)
-        {
-            if (enemiesByDay[i] != null && enemiesByDay[i].day == day)
-                return enemiesByDay[i];
-        }
-
+        // Use code-defined data so old serialized Inspector values cannot block the demo loop.
         return GetDefaultEnemyForDay(day);
     }
 
@@ -393,27 +626,221 @@ public class BattleManager : MonoBehaviour
     {
         switch (day)
         {
+            case 1:
+                return new EnemyDayData(1, "Day1兜底 / 泥巴怪", 30, 3, 0);
             case 2:
-                return new EnemyDayData(2, "Bubble Rookie", 70, 7, 10);
+                return new EnemyDayData(2, "实习生鼠鼠 / 焦虑的泥巴", 70, 7, 15);
             case 3:
-                return new EnemyDayData(3, "Mud Slime", 85, 8, 12);
+                return new EnemyDayData(3, "主管鼠鼠 / 坚硬的外壳", 85, 8, 18);
             case 4:
-                return new EnemyDayData(4, "Noise Bubble", 100, 9, 14);
+                return new EnemyDayData(4, "清洁工鼠鼠 / 模糊的自我", 110, 10, 22);
             case 5:
-                return new EnemyDayData(5, "Tile Monster", 120, 10, 16);
+                return new EnemyDayData(5, "外卖员鼠鼠 / 厌倦的狂风", 130, 12, 26);
             case 6:
-                return new EnemyDayData(6, "Storm Scrub", 140, 12, 18);
+                return new EnemyDayData(6, "大学生鼠鼠 / 迷茫的泡影", 160, 14, 32);
             case 7:
-                return new EnemyDayData(7, "Bathhouse Boss", 180, 14, 30);
+                return new EnemyDayData(7, "临近崩溃的主管 / 崩溃的外壳", 120, 14, 0);
             default:
-                return null;
+                return new EnemyDayData(day, "Day1兜底 / 泥巴怪", 30, 3, 0);
         }
+    }
+
+    private EnemyDayData GetDay7Phase2Enemy()
+    {
+        return new EnemyDayData(7, "不安愤怒沮丧焦虑失望悲伤", 260, 18, 0);
+    }
+
+    private bool ShouldEnterDay7Phase2()
+    {
+        return currentDay == 7 && !isDay7Phase2;
+    }
+
+    private IEnumerator SwitchToDay7Phase2Routine()
+    {
+        if (isChangingDay7Phase)
+            yield break;
+
+        isChangingDay7Phase = true;
+        isPlayerTurn = false;
+        SetActionButtonsInteractable(false);
+
+        yield return Day7InterludeRoutine();
+
+        EnemyDayData phase2Enemy = GetDay7Phase2Enemy();
+        currentEnemyName = phase2Enemy.enemyName;
+        maxEnemyHP = phase2Enemy.maxHP;
+        enemyAttackDamage = phase2Enemy.attackDamage;
+        currentEnemyGoldReward = phase2Enemy.goldReward;
+        currentEnemyHP = maxEnemyHP;
+        currentRound = 1;
+        isDay7Phase2 = true;
+        battleEnded = false;
+        isChangingDay7Phase = false;
+        isPlayerTurn = true;
+
+        PlayEnemyIdleAnimation(day7Phase2IdleFrames, day7Phase2Sprite);
+        RefreshAllUI();
+        SetEnemyMessage("Day 7 Phase 2: " + currentEnemyName);
+        RefreshActionButtonsForCurrentState("day7 phase2 started");
+        Debug.Log("Day7 phase changed to phase2. enemyName=" + currentEnemyName + ", enemyHP=" + maxEnemyHP + ", enemyAttack=" + enemyAttackDamage + ", rewardGold=" + currentEnemyGoldReward + ".");
+        LogBattleState("Day7 phase2 started");
+    }
+
+    private IEnumerator Day7InterludeRoutine()
+    {
+        isDay7InterludePlaying = true;
+        SetActionButtonsInteractable(false);
+
+        string interludeText =
+            "小福，你这几天真的很努力了。\n" +
+            "你洗净了很多人的疲惫。\n\n" +
+            "这座城市还没有完全变好。\n" +
+            "但它已经因为你，多了一点喘息的地方。\n\n" +
+            "可是……\n" +
+            "那些不安、愤怒、沮丧、焦虑、失望、悲伤……\n" +
+            "还没有消失。\n\n" +
+            "有什么东西出现了。";
+
+        if (day7InterludePanel != null)
+            day7InterludePanel.SetActive(true);
+        else
+            Debug.LogWarning("day7InterludePanel is not assigned. Showing Day7 interlude in BattleMessageText instead.");
+
+        if (day7InterludeContinueButton != null)
+            day7InterludeContinueButton.gameObject.SetActive(false);
+
+        if (day7InterludeTextRect == null && day7InterludeText != null)
+            day7InterludeTextRect = day7InterludeText.rectTransform;
+
+        if (day7InterludeText != null)
+            day7InterludeText.text = interludeText;
+        else
+            Debug.LogWarning("day7InterludeText is not assigned. Showing Day7 interlude in BattleMessageText instead.");
+
+        if (day7InterludeTextRect != null)
+        {
+            Vector2 startPosition = day7InterludeTextRect.anchoredPosition;
+            startPosition.y = day7InterludeStartY;
+            day7InterludeTextRect.anchoredPosition = startPosition;
+
+            float duration = Mathf.Max(0.1f, day7InterludeScrollDuration);
+            float elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsed / duration);
+                Vector2 position = day7InterludeTextRect.anchoredPosition;
+                position.y = Mathf.Lerp(day7InterludeStartY, day7InterludeEndY, t);
+                day7InterludeTextRect.anchoredPosition = position;
+                yield return null;
+            }
+
+            Vector2 endPosition = day7InterludeTextRect.anchoredPosition;
+            endPosition.y = day7InterludeEndY;
+            day7InterludeTextRect.anchoredPosition = endPosition;
+        }
+        else
+        {
+            SetPlayerMessage(interludeText);
+            yield return new WaitForSeconds(Mathf.Max(1f, day7InterludeScrollDuration));
+        }
+
+        Debug.Log("Day7 interlude scroll finished.");
+        yield return new WaitForSeconds(0.5f);
+
+        if (day7InterludeContinueButton != null)
+            day7InterludeContinueButton.gameObject.SetActive(false);
+
+        if (day7InterludePanel != null)
+            day7InterludePanel.SetActive(false);
+
+        isDay7InterludePlaying = false;
+        Debug.Log("Day7 interlude finished. Switching to phase 2.");
     }
 
     private void RefreshAllUI()
     {
         RefreshPlayerUI();
         RefreshEnemyUI();
+    }
+
+    private Sprite GetEnemySpriteForCurrentDay()
+    {
+        switch (currentDay)
+        {
+            case 1:
+                return day1FallbackEnemySprite;
+            case 2:
+                return day2EnemySprite;
+            case 3:
+                return day3EnemySprite;
+            case 4:
+                return day4EnemySprite;
+            case 5:
+                return day5EnemySprite;
+            case 6:
+                return day6EnemySprite;
+            case 7:
+                return isDay7Phase2 ? day7Phase2Sprite : day7Phase1Sprite;
+            default:
+                return day1FallbackEnemySprite;
+        }
+    }
+
+    private Sprite[] GetEnemyIdleFramesForCurrentDay()
+    {
+        switch (currentDay)
+        {
+            case 2:
+                return day2EnemyIdleFrames;
+            case 3:
+                return day3EnemyIdleFrames;
+            case 4:
+                return day4EnemyIdleFrames;
+            case 5:
+                return day5EnemyIdleFrames;
+            case 6:
+                return day6EnemyIdleFrames;
+            case 7:
+                return isDay7Phase2 ? day7Phase2IdleFrames : day7Phase1IdleFrames;
+            default:
+                return null;
+        }
+    }
+
+    private void PlayEnemyIdleAnimation(Sprite[] idleFrames, Sprite fallbackSprite)
+    {
+        if (enemyAnimationPlayer == null)
+        {
+            Debug.LogWarning("enemyAnimationPlayer is not assigned. Falling back to static enemy sprite.");
+            ApplyEnemySprite(fallbackSprite);
+            return;
+        }
+
+        if (enemyAnimationPlayer.targetImage == null && enemyImage != null)
+            enemyAnimationPlayer.targetImage = enemyImage;
+
+        enemyAnimationPlayer.Play(idleFrames, fallbackSprite);
+        Debug.Log("Enemy idle animation requested. currentDay=" + currentDay + ", isDay7Phase2=" + isDay7Phase2 + ", frames=" + (idleFrames != null ? idleFrames.Length : 0) + ".");
+    }
+
+    private void ApplyEnemySprite(Sprite sprite)
+    {
+        if (enemyImage == null)
+        {
+            Debug.LogWarning("enemyImage is not assigned. Drag the CombatScene enemy Image into BattleManager.enemyImage.");
+            return;
+        }
+
+        if (sprite == null)
+        {
+            Debug.LogWarning("Enemy sprite is not assigned for currentDay=" + currentDay + ", isDay7Phase2=" + isDay7Phase2 + ". Keeping current enemy image.");
+            return;
+        }
+
+        enemyImage.sprite = sprite;
+        Debug.Log("Enemy sprite applied. currentDay=" + currentDay + ", isDay7Phase2=" + isDay7Phase2 + ", sprite=" + sprite.name + ".");
     }
 
     private void RefreshPlayerUI()
@@ -508,6 +935,7 @@ public class BattleManager : MonoBehaviour
     {
         BindButton(attackButton, OnAttackButton);
         BindButton(blurButton, OnBlurButton);
+        BindButton(polishButton, OnPolishButton);
         BindButton(ultimateButton, OnUltimateButton);
     }
 
@@ -519,10 +947,46 @@ public class BattleManager : MonoBehaviour
         if (blurButton == null)
             blurButton = FindButtonByName("Blur");
 
+        if (polishButton == null)
+            polishButton = FindButtonByNames("Polish", "PolishButton", "Polish Button", "PolishSkillButton", "Button_Polish");
+
         if (ultimateButton == null)
             ultimateButton = FindButtonByName("Ultimate");
 
         LogButtonState("after resolving button references");
+    }
+
+    private void ResolveEnemyAnimationPlayer()
+    {
+        if (enemyAnimationPlayer == null && enemyImage != null)
+            enemyAnimationPlayer = enemyImage.GetComponent<EnemyAnimationPlayer>();
+
+        if (enemyAnimationPlayer != null && enemyAnimationPlayer.targetImage == null)
+            enemyAnimationPlayer.targetImage = enemyImage;
+
+        if (enemyAnimationPlayer == null)
+            Debug.LogWarning("enemyAnimationPlayer is not assigned. Enemy idle animation will fall back to static sprites.");
+        else
+            Debug.Log("enemyAnimationPlayer assigned: " + enemyAnimationPlayer.name);
+    }
+
+    private Button FindButtonByNames(params string[] objectNames)
+    {
+        foreach (string objectName in objectNames)
+        {
+            GameObject buttonObject = GameObject.Find(objectName);
+            if (buttonObject == null)
+                continue;
+
+            Button button = buttonObject.GetComponent<Button>();
+            if (button != null)
+                return button;
+
+            Debug.LogWarning("BattleManager found " + objectName + " but it has no Button component.");
+        }
+
+        Debug.LogWarning("BattleManager could not find button by names: " + string.Join(", ", objectNames) + ".");
+        return null;
     }
 
     private Button FindButtonByName(string objectName)
@@ -554,6 +1018,7 @@ public class BattleManager : MonoBehaviour
     {
         ConfigureButton(attackButton);
         ConfigureButton(blurButton);
+        ConfigureButton(polishButton);
         ConfigureButton(ultimateButton);
     }
 
@@ -582,6 +1047,7 @@ public class BattleManager : MonoBehaviour
 
         SetButtonInteractable(attackButton, interactable);
         SetButtonInteractable(blurButton, interactable);
+        SetButtonInteractable(polishButton, interactable);
         SetButtonInteractable(ultimateButton, interactable);
         LogButtonState("set all buttons interactable = " + interactable);
     }
@@ -590,9 +1056,10 @@ public class BattleManager : MonoBehaviour
     {
         bool canAct = !battleEnded && isPlayerTurn;
 
-        SetButtonInteractable(attackButton, canAct);
-        SetButtonInteractable(blurButton, canAct && currentPlayerSP >= blurSPCost);
-        SetButtonInteractable(ultimateButton, canAct && IsUltimateAvailable());
+        SetButtonInteractable(attackButton, canAct && IsAttackUnlocked());
+        SetButtonInteractable(blurButton, canAct && IsBlurUnlocked());
+        SetButtonInteractable(polishButton, canAct && IsPolishUnlocked());
+        SetButtonInteractable(ultimateButton, canAct && IsUltimateUnlockedForToday());
         LogButtonState(reason);
     }
 
@@ -608,6 +1075,7 @@ public class BattleManager : MonoBehaviour
             "Button state [" + reason + "] " +
             "Attack=" + GetButtonState(attackButton) + ", " +
             "Blur=" + GetButtonState(blurButton) + ", " +
+            "Polish=" + GetButtonState(polishButton) + ", " +
             "Ultimate=" + GetButtonState(ultimateButton));
     }
 
@@ -650,6 +1118,8 @@ public class BattleManager : MonoBehaviour
     {
         LogReference("hpFillImage", hpFillImage);
         LogReference("spFillImage", spFillImage);
+        LogReference("enemyImage", enemyImage);
+        LogReference("enemyAnimationPlayer", enemyAnimationPlayer);
         LogReference("enemyHPFillImage", enemyHPFillImage);
         LogReference("playerBattleMessageText", playerBattleMessageText);
         LogReference("enemyBattleMessageText", enemyBattleMessageText);
@@ -658,8 +1128,13 @@ public class BattleManager : MonoBehaviour
         LogReference("damagePopupPrefab", damagePopupPrefab);
         LogReference("attackButton", attackButton);
         LogReference("blurButton", blurButton);
+        LogReference("polishButton", polishButton);
         LogReference("ultimateButton", ultimateButton);
         LogReference("victoryPanel", victoryPanel);
+        LogReference("day7InterludePanel", day7InterludePanel);
+        LogReference("day7InterludeText", day7InterludeText);
+        LogReference("day7InterludeTextRect", day7InterludeTextRect);
+        LogReference("day7InterludeContinueButton", day7InterludeContinueButton);
 
         CheckFillImage("hpFillImage", hpFillImage);
         CheckFillImage("spFillImage", spFillImage);
@@ -679,6 +1154,9 @@ public class BattleManager : MonoBehaviour
         Debug.Log(
             "Battle state [" + context + "] " +
             "round=" + currentRound + ", " +
+            "currentDay=" + currentDay + ", " +
+            "enemyName=" + currentEnemyName + ", " +
+            "enemyAttack=" + enemyAttackDamage + ", " +
             "playerTurn=" + isPlayerTurn + ", " +
             "playerHP=" + currentPlayerHP + "/" + maxPlayerHP + ", " +
             "playerSP=" + currentPlayerSP + "/" + maxPlayerSP + ", " +
