@@ -1,0 +1,19 @@
+﻿Text_ID,StoryType,Day,Order,Speaker Name,Text,Background Image,Portrait,Side
+146,BeforeCombat,6,1,大学生鼠,绩点不够...实习没着落...又没法保研...,BathHouse,lihui_daxuesheng,L
+147,BeforeCombat,6,2,小福,您好…？请问需要什么服务呢？,BathHouse,XiaoFu,R
+148,BeforeCombat,6,3,大学生鼠,你好，请问可以带我的平板进去不？我得把这个慕课刷完...,BathHouse,XiaoFu,R
+149,BeforeCombat,6,4,小福,可以的哈，但是我们这儿的客人一般搓着搓着都睡着了，这边请。,BathHouse,XiaoFu,R
+150,BeforeCombat,6,5,小福,（OMG仿佛看见了当年的自己，那些大坨大坨的泡泡是什么！？）,BathHouse,Jinsao_portrait,L
+151,BeforeCombat,6,6,金嫂,这是它脑子里的噪音......,BathHouse,Jinsao_portrait,L
+152,BeforeCombat,6,7,金嫂,被外在的信息塞满了脑子，自己都自身难保了。去，用你这几天锻炼出来的手法，把那些迷蒙的泡泡全戳破。,BathHouse,Jinsao_portrait,L
+153,BeforeCombat,6,8,小福,好嘞！,BathHouse,XiaoFu,R
+154,AfterCombat,6,9,大学生鼠,...脑子突然好清静，刚才我到底在发什么疯？,BathHouse,lihui_daxuesheng_weixiao,L
+155,AfterCombat,6,10,小福,嘿，你的平板还放着呢，课不听啦？,BathHouse,XiaoFu,R
+156,AfterCombat,6,11,大学生鼠,嗯...刚刚突然想明白一件事。如果我卷赢了这帮人，结果又能怎么样呢？,BathHouse,lihui_daxuesheng_weixiao,L
+157,AfterCombat,6,12,大学生鼠,在这儿拼死拼活地卷，最后不也是给自己抢一块风水好点的墓地？,BathHouse,lihui_daxuesheng_weixiao,L
+158,AfterCombat,6,13,大学生鼠,以前天天听着身边这些噪音，感觉自己好像被洗脑了，其实根本不知道自己要做什么。,BathHouse,lihui_daxuesheng_weixiao,L
+159,AfterCombat,6,14,大学生鼠,说起来，电脑里存着一个做了半年的游戏企划案……我想试试那条路。,BathHouse,lihui_daxuesheng_weixiao,L
+160,AfterCombat,6,15,小福,酷啊！那你还在等什么？赶紧回去敲代码啊。,BathHouse,XiaoFu,R
+161,AfterCombat,6,16,大学生鼠,这就去。天塌下来，有那些拿了年薪百万 Offer 的高个子顶着。晚安，这个操蛋的内卷世界。,BathHouse,lihui_daxuesheng_weixiao,L
+162,AfterCombat,6,17,金嫂,恭喜你啊小福老板，又成功策反了一个优质的社会牛马。再这么搓下去，这城市的 GDP 都要被你搓下降了。,BathHouse,Jinsao_portrait,L
+163,AfterCombat,6,18,小福,降就降呗，反正也没分给我。我只管池子里的水干净就行。,BathHouse,XiaoFu,R
