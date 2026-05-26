@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: bf48e9f57a8165c46b2d0b7bd990f8bf
+guid: 4e1ae138bf39d9c4cab3ce9ed6b1b5bf
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -44,11 +44,11 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
-  spriteExtrude: 1
-  spriteMeshType: 1
+  spriteExtrude: 12
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 256
+  spritePixelsToUnits: 384
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -93,354 +93,341 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: jinsao_animation_0
+      name: zaoyinguai_DZ_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 288
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5365b48e309533409c8b333e83b72a4
+      internalID: -2115939012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zaoyinguai_DZ_1
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 288
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 530b32db3d90b974b99e12aea6a56074
+      internalID: -658142585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zaoyinguai_DZ_2
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 288
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4993963d7df4e2419aedbac0182b1d9
+      internalID: 1765508507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zaoyinguai_DZ_3
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 288
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 453bf13cfa3a403448c76fb7fb14758c
+      internalID: -96475184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zaoyinguai_DZ_4
       rect:
         serializedVersion: 2
         x: 0
         y: 192
-        width: 64
-        height: 64
+        width: 96
+        height: 96
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7f65c37ab211bb14dbf53f5f4f49cf88
-      internalID: -318553587
+      spriteID: 55e7f36fd7dca9e4799f72e5c7559aac
+      internalID: -1524963117
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: jinsao_animation_1
+      name: zaoyinguai_DZ_5
       rect:
         serializedVersion: 2
-        x: 63
+        x: 96
         y: 192
-        width: 64
-        height: 64
+        width: 96
+        height: 96
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 34a459b18d28dd64da36da834c119d4f
-      internalID: -510061502
+      spriteID: 188b6d07bc9f4484eae398788be69fe3
+      internalID: -1920358248
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: jinsao_animation_2
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 192
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8165f3da4a29cf04bac6b483a05eddcd
-      internalID: -1200304879
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: jinsao_animation_3
+      name: zaoyinguai_DZ_6
       rect:
         serializedVersion: 2
         x: 192
         y: 192
-        width: 64
-        height: 64
+        width: 96
+        height: 96
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d8cd9a8538e605443bb4b342ee6e5324
-      internalID: -600220621
+      spriteID: cf263debc830b5a499e7c3cbbb7ab75e
+      internalID: 668078910
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: jinsao_animation_4
+      name: zaoyinguai_DZ_7
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 192
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8c1db0b3135c714699fbd6472b9f058
+      internalID: 619068790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zaoyinguai_DZ_8
       rect:
         serializedVersion: 2
         x: 0
-        y: 128
-        width: 64
-        height: 64
+        y: 96
+        width: 96
+        height: 96
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 95b3bdf2f91bb934981ffa6cab2d643c
-      internalID: -33584475
+      spriteID: 32caa68a0bb8e6a4f8abd4574b682eaa
+      internalID: 337990656
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: jinsao_animation_5
+      name: zaoyinguai_DZ_9
       rect:
         serializedVersion: 2
-        x: 64
-        y: 128
-        width: 64
-        height: 64
+        x: 96
+        y: 96
+        width: 96
+        height: 96
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7eedf4dd485493b4dac260bfb589110b
-      internalID: 657853021
+      spriteID: 39f7eb638aea0944d969e4d3832c5db5
+      internalID: 83827278
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: jinsao_animation_6
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 128
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 573cd6ec9c564834fad23d282358aa95
-      internalID: -545675463
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: jinsao_animation_7
+      name: zaoyinguai_DZ_10
       rect:
         serializedVersion: 2
         x: 192
-        y: 128
-        width: 64
-        height: 64
+        y: 96
+        width: 96
+        height: 96
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: db082e20767322f47acd268284340d44
-      internalID: -116479227
+      spriteID: b879ac578b5fb1a46a61cb96c15a8b4e
+      internalID: -1820473195
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: jinsao_animation_8
+      name: zaoyinguai_DZ_11
       rect:
         serializedVersion: 2
-        x: 0
-        y: 64
-        width: 64
-        height: 64
+        x: 288
+        y: 96
+        width: 96
+        height: 96
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0e630c4db780e734a9636075a94b31b9
-      internalID: -347607141
+      spriteID: 7960e237e3644b84cbbfc52aac285f07
+      internalID: -443245565
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: jinsao_animation_9
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 64
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ad703d52e5cb0e64b96019a275f20324
-      internalID: -2646708
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: jinsao_animation_10
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 64
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ef80c6c5d18b1fd498f456ac3856b249
-      internalID: -502567235
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: jinsao_animation_11
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 64
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8ccad2efa81686a4c99c7a4a4a878bec
-      internalID: 92272842
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: jinsao_animation_12
+      name: zaoyinguai_DZ_12
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
+        width: 96
+        height: 96
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 15af20940d392fb4da32a0aeca246fe8
-      internalID: 824347992
+      spriteID: aca6ba8740a933f4c90834ee0ff4d6c1
+      internalID: -1279029478
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: jinsao_animation_13
+      name: zaoyinguai_DZ_13
       rect:
         serializedVersion: 2
-        x: 64
+        x: 96
         y: 0
-        width: 64
-        height: 64
+        width: 96
+        height: 96
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d18999c4b0cb7d948894ab0de9d8acd7
-      internalID: -2136860860
+      spriteID: f2c2653ac423d184c925d84622be2c76
+      internalID: -195398319
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: jinsao_animation_14
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 33ee9c6826836334cb232d1b6cde997b
-      internalID: -1762032593
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: jinsao_animation_15
+      name: zaoyinguai_DZ_14
       rect:
         serializedVersion: 2
         x: 192
         y: 0
-        width: 64
-        height: 64
+        width: 96
+        height: 96
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3d7d0044b1bc8604f839f168c04bd668
-      internalID: 2056385435
+      spriteID: c9f66f5054435e64186212e7628b4305
+      internalID: -150413918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zaoyinguai_DZ_15
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49314073de5ef20408dde58fdcaedb96
+      internalID: 1430781724
       vertices: []
       indices: 
       edges: []
@@ -456,22 +443,22 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      jinsao_animation_0: -318553587
-      jinsao_animation_1: -510061502
-      jinsao_animation_10: -502567235
-      jinsao_animation_11: 92272842
-      jinsao_animation_12: 824347992
-      jinsao_animation_13: -2136860860
-      jinsao_animation_14: -1762032593
-      jinsao_animation_15: 2056385435
-      jinsao_animation_2: -1200304879
-      jinsao_animation_3: -600220621
-      jinsao_animation_4: -33584475
-      jinsao_animation_5: 657853021
-      jinsao_animation_6: -545675463
-      jinsao_animation_7: -116479227
-      jinsao_animation_8: -347607141
-      jinsao_animation_9: -2646708
+      zaoyinguai_DZ_0: -2115939012
+      zaoyinguai_DZ_1: -658142585
+      zaoyinguai_DZ_10: -1820473195
+      zaoyinguai_DZ_11: -443245565
+      zaoyinguai_DZ_12: -1279029478
+      zaoyinguai_DZ_13: -195398319
+      zaoyinguai_DZ_14: -150413918
+      zaoyinguai_DZ_15: 1430781724
+      zaoyinguai_DZ_2: 1765508507
+      zaoyinguai_DZ_3: -96475184
+      zaoyinguai_DZ_4: -1524963117
+      zaoyinguai_DZ_5: -1920358248
+      zaoyinguai_DZ_6: 668078910
+      zaoyinguai_DZ_7: 619068790
+      zaoyinguai_DZ_8: 337990656
+      zaoyinguai_DZ_9: 83827278
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
