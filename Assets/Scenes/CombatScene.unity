@@ -753,15 +753,127 @@ MonoBehaviour:
   day4EnemySprite: {fileID: 0}
   day5EnemySprite: {fileID: 0}
   day6EnemySprite: {fileID: 0}
-  day7Phase1Sprite: {fileID: 0}
-  day7Phase2Sprite: {fileID: 0}
-  day2EnemyIdleFrames: []
-  day3EnemyIdleFrames: []
-  day4EnemyIdleFrames: []
-  day5EnemyIdleFrames: []
-  day6EnemyIdleFrames: []
-  day7Phase1IdleFrames: []
-  day7Phase2IdleFrames: []
+  day7BossSprite: {fileID: 0}
+  day7BossWeakenedSprite: {fileID: 0}
+  day2EnemyIdleFrames:
+  - {fileID: -1609513239, guid: 90d384637b797424b800b924ed205612, type: 3}
+  - {fileID: -998434474, guid: 90d384637b797424b800b924ed205612, type: 3}
+  - {fileID: 62389941, guid: 90d384637b797424b800b924ed205612, type: 3}
+  - {fileID: 1886613571, guid: 90d384637b797424b800b924ed205612, type: 3}
+  - {fileID: -325286605, guid: 90d384637b797424b800b924ed205612, type: 3}
+  - {fileID: 35147388, guid: 90d384637b797424b800b924ed205612, type: 3}
+  - {fileID: 420557223, guid: 90d384637b797424b800b924ed205612, type: 3}
+  - {fileID: 1594955725, guid: 90d384637b797424b800b924ed205612, type: 3}
+  - {fileID: 322494451, guid: 90d384637b797424b800b924ed205612, type: 3}
+  - {fileID: 1146275505, guid: 90d384637b797424b800b924ed205612, type: 3}
+  - {fileID: -557724702, guid: 90d384637b797424b800b924ed205612, type: 3}
+  - {fileID: 863969736, guid: 90d384637b797424b800b924ed205612, type: 3}
+  - {fileID: 1111474336, guid: 90d384637b797424b800b924ed205612, type: 3}
+  - {fileID: -1870513306, guid: 90d384637b797424b800b924ed205612, type: 3}
+  - {fileID: -947738701, guid: 90d384637b797424b800b924ed205612, type: 3}
+  - {fileID: -2083772992, guid: 90d384637b797424b800b924ed205612, type: 3}
+  day3EnemyIdleFrames:
+  - {fileID: 1120590294, guid: 5295ccea7f59c964eade6ed2f45bad03, type: 3}
+  - {fileID: 1884958772, guid: 5295ccea7f59c964eade6ed2f45bad03, type: 3}
+  - {fileID: -1719558837, guid: 5295ccea7f59c964eade6ed2f45bad03, type: 3}
+  - {fileID: -1420777154, guid: 5295ccea7f59c964eade6ed2f45bad03, type: 3}
+  - {fileID: -1588204254, guid: 5295ccea7f59c964eade6ed2f45bad03, type: 3}
+  - {fileID: -771092245, guid: 5295ccea7f59c964eade6ed2f45bad03, type: 3}
+  - {fileID: 835754079, guid: 5295ccea7f59c964eade6ed2f45bad03, type: 3}
+  - {fileID: 1132712283, guid: 5295ccea7f59c964eade6ed2f45bad03, type: 3}
+  - {fileID: -1195300496, guid: 5295ccea7f59c964eade6ed2f45bad03, type: 3}
+  - {fileID: -483655540, guid: 5295ccea7f59c964eade6ed2f45bad03, type: 3}
+  - {fileID: 470880456, guid: 5295ccea7f59c964eade6ed2f45bad03, type: 3}
+  - {fileID: 1027583746, guid: 5295ccea7f59c964eade6ed2f45bad03, type: 3}
+  - {fileID: -1019444943, guid: 5295ccea7f59c964eade6ed2f45bad03, type: 3}
+  - {fileID: 547356298, guid: 5295ccea7f59c964eade6ed2f45bad03, type: 3}
+  - {fileID: 460924974, guid: 5295ccea7f59c964eade6ed2f45bad03, type: 3}
+  - {fileID: 1118789796, guid: 5295ccea7f59c964eade6ed2f45bad03, type: 3}
+  day4EnemyIdleFrames:
+  - {fileID: 967137357, guid: 98138fd220f7c2a4bbd5032dd9f5719f, type: 3}
+  - {fileID: 1526645153, guid: 98138fd220f7c2a4bbd5032dd9f5719f, type: 3}
+  - {fileID: -958420365, guid: 98138fd220f7c2a4bbd5032dd9f5719f, type: 3}
+  - {fileID: -179206920, guid: 98138fd220f7c2a4bbd5032dd9f5719f, type: 3}
+  - {fileID: 282156652, guid: 98138fd220f7c2a4bbd5032dd9f5719f, type: 3}
+  - {fileID: -1104875202, guid: 98138fd220f7c2a4bbd5032dd9f5719f, type: 3}
+  - {fileID: -1882289355, guid: 98138fd220f7c2a4bbd5032dd9f5719f, type: 3}
+  - {fileID: -1585997906, guid: 98138fd220f7c2a4bbd5032dd9f5719f, type: 3}
+  - {fileID: 933535252, guid: 98138fd220f7c2a4bbd5032dd9f5719f, type: 3}
+  - {fileID: -920431267, guid: 98138fd220f7c2a4bbd5032dd9f5719f, type: 3}
+  - {fileID: 1299765892, guid: 98138fd220f7c2a4bbd5032dd9f5719f, type: 3}
+  - {fileID: 2110384526, guid: 98138fd220f7c2a4bbd5032dd9f5719f, type: 3}
+  - {fileID: 1132547614, guid: 98138fd220f7c2a4bbd5032dd9f5719f, type: 3}
+  - {fileID: 110155943, guid: 98138fd220f7c2a4bbd5032dd9f5719f, type: 3}
+  - {fileID: 1173667745, guid: 98138fd220f7c2a4bbd5032dd9f5719f, type: 3}
+  - {fileID: -445744704, guid: 98138fd220f7c2a4bbd5032dd9f5719f, type: 3}
+  day5EnemyIdleFrames:
+  - {fileID: 1757935756, guid: edf56ed0ea7763b43b36c19f731f69b2, type: 3}
+  - {fileID: 1882705975, guid: edf56ed0ea7763b43b36c19f731f69b2, type: 3}
+  - {fileID: 1835693461, guid: edf56ed0ea7763b43b36c19f731f69b2, type: 3}
+  - {fileID: -871073453, guid: edf56ed0ea7763b43b36c19f731f69b2, type: 3}
+  - {fileID: 1709623408, guid: edf56ed0ea7763b43b36c19f731f69b2, type: 3}
+  - {fileID: 708749788, guid: edf56ed0ea7763b43b36c19f731f69b2, type: 3}
+  - {fileID: 2101375725, guid: edf56ed0ea7763b43b36c19f731f69b2, type: 3}
+  - {fileID: 1404279035, guid: edf56ed0ea7763b43b36c19f731f69b2, type: 3}
+  - {fileID: 539602006, guid: edf56ed0ea7763b43b36c19f731f69b2, type: 3}
+  - {fileID: 404203328, guid: edf56ed0ea7763b43b36c19f731f69b2, type: 3}
+  - {fileID: 532063472, guid: edf56ed0ea7763b43b36c19f731f69b2, type: 3}
+  - {fileID: 1907778145, guid: edf56ed0ea7763b43b36c19f731f69b2, type: 3}
+  - {fileID: -1453379042, guid: edf56ed0ea7763b43b36c19f731f69b2, type: 3}
+  - {fileID: -1442635003, guid: edf56ed0ea7763b43b36c19f731f69b2, type: 3}
+  - {fileID: 1123534876, guid: edf56ed0ea7763b43b36c19f731f69b2, type: 3}
+  - {fileID: -1805007509, guid: edf56ed0ea7763b43b36c19f731f69b2, type: 3}
+  day6EnemyIdleFrames:
+  - {fileID: -2115939012, guid: 4e1ae138bf39d9c4cab3ce9ed6b1b5bf, type: 3}
+  - {fileID: -658142585, guid: 4e1ae138bf39d9c4cab3ce9ed6b1b5bf, type: 3}
+  - {fileID: 1765508507, guid: 4e1ae138bf39d9c4cab3ce9ed6b1b5bf, type: 3}
+  - {fileID: -96475184, guid: 4e1ae138bf39d9c4cab3ce9ed6b1b5bf, type: 3}
+  - {fileID: -1524963117, guid: 4e1ae138bf39d9c4cab3ce9ed6b1b5bf, type: 3}
+  - {fileID: -1920358248, guid: 4e1ae138bf39d9c4cab3ce9ed6b1b5bf, type: 3}
+  - {fileID: 668078910, guid: 4e1ae138bf39d9c4cab3ce9ed6b1b5bf, type: 3}
+  - {fileID: 619068790, guid: 4e1ae138bf39d9c4cab3ce9ed6b1b5bf, type: 3}
+  - {fileID: 337990656, guid: 4e1ae138bf39d9c4cab3ce9ed6b1b5bf, type: 3}
+  - {fileID: 83827278, guid: 4e1ae138bf39d9c4cab3ce9ed6b1b5bf, type: 3}
+  - {fileID: -1820473195, guid: 4e1ae138bf39d9c4cab3ce9ed6b1b5bf, type: 3}
+  - {fileID: -443245565, guid: 4e1ae138bf39d9c4cab3ce9ed6b1b5bf, type: 3}
+  - {fileID: -1279029478, guid: 4e1ae138bf39d9c4cab3ce9ed6b1b5bf, type: 3}
+  - {fileID: -195398319, guid: 4e1ae138bf39d9c4cab3ce9ed6b1b5bf, type: 3}
+  - {fileID: -150413918, guid: 4e1ae138bf39d9c4cab3ce9ed6b1b5bf, type: 3}
+  - {fileID: 1430781724, guid: 4e1ae138bf39d9c4cab3ce9ed6b1b5bf, type: 3}
+  day7BossIdleFrames:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  day7BossWeakenedIdleFrames:
+  - {fileID: -1893111800, guid: f73bccc3ba02d0d44be2f2fcf5eb9180, type: 3}
+  - {fileID: 1055073647, guid: f73bccc3ba02d0d44be2f2fcf5eb9180, type: 3}
+  - {fileID: 2025328176, guid: f73bccc3ba02d0d44be2f2fcf5eb9180, type: 3}
+  - {fileID: -1586072741, guid: f73bccc3ba02d0d44be2f2fcf5eb9180, type: 3}
+  - {fileID: -765050448, guid: f73bccc3ba02d0d44be2f2fcf5eb9180, type: 3}
+  - {fileID: -1737490741, guid: f73bccc3ba02d0d44be2f2fcf5eb9180, type: 3}
+  - {fileID: -2063139958, guid: f73bccc3ba02d0d44be2f2fcf5eb9180, type: 3}
+  - {fileID: 107128837, guid: f73bccc3ba02d0d44be2f2fcf5eb9180, type: 3}
+  - {fileID: -493152386, guid: f73bccc3ba02d0d44be2f2fcf5eb9180, type: 3}
+  - {fileID: -523436607, guid: f73bccc3ba02d0d44be2f2fcf5eb9180, type: 3}
+  - {fileID: 123621689, guid: f73bccc3ba02d0d44be2f2fcf5eb9180, type: 3}
+  - {fileID: -2002040859, guid: f73bccc3ba02d0d44be2f2fcf5eb9180, type: 3}
+  - {fileID: -1903417680, guid: f73bccc3ba02d0d44be2f2fcf5eb9180, type: 3}
+  - {fileID: -1737464849, guid: f73bccc3ba02d0d44be2f2fcf5eb9180, type: 3}
+  - {fileID: 975122639, guid: f73bccc3ba02d0d44be2f2fcf5eb9180, type: 3}
+  - {fileID: -1635101012, guid: f73bccc3ba02d0d44be2f2fcf5eb9180, type: 3}
   attackButton: {fileID: 998121152}
   blurButton: {fileID: 285529374}
   polishButton: {fileID: 76049501}
@@ -774,6 +886,8 @@ MonoBehaviour:
   day7InterludeScrollDuration: 10
   day7InterludeStartY: -500
   day7InterludeEndY: 500
+  day7WeakenedPlayerDamageMultiplier: 2
+  day7WeakenedEnemyAttackMultiplier: 0.5
   damagePopupPrefab: {fileID: 4875413417841535176, guid: 72a59718d5a13d0448a67f0e1db3827f, type: 3}
   playerDamagePopupOffset: {x: 0, y: -18}
   enemyDamagePopupOffset: {x: 0, y: -18}

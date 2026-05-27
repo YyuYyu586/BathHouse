@@ -1,5 +1,7 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using TMPro;
 
@@ -14,19 +16,22 @@ public class SavePanelController : MonoBehaviour
     [Header("Buttons")]
     [SerializeField] private Button saveButton;
     [SerializeField] private Button restartButton;
-    [SerializeField] private Button quitButton;
+    [FormerlySerializedAs("quitButton")]
+    [SerializeField] private Button backToMenuButton;
     [SerializeField] private Button closeButton;
     [SerializeField] private Button settingsButton;
 
     [Header("Restart")]
     [SerializeField] private string restartSceneName = "MainMenu";
 
+    [Header("Back To Menu")]
+    [SerializeField] private string mainMenuSceneName = "MainMenu";
+
     private float previousTimeScale = 1f;
 
     private void Awake()
     {
-        if (savePanel == null)
-            savePanel = gameObject;
+        EnsurePanelReference();
 
         AutoBindButtons();
         BindButtonEvents();
@@ -42,12 +47,16 @@ public class SavePanelController : MonoBehaviour
 
     private void Update()
     {
+        EnsurePanelReference();
+
         if (savePanel != null && savePanel.activeSelf && Input.GetKeyDown(KeyCode.Escape))
             ClosePanel();
     }
 
     public void OpenPanel()
     {
+        EnsurePanelReference();
+
         if (savePanel == null)
         {
             Debug.LogWarning("SavePanelController has no savePanel assigned.");
@@ -66,6 +75,8 @@ public class SavePanelController : MonoBehaviour
 
     public void ClosePanel()
     {
+        EnsurePanelReference();
+
         if (savePanel != null)
             savePanel.SetActive(false);
 
@@ -108,16 +119,22 @@ public class SavePanelController : MonoBehaviour
         gameManager.ResetGame();
         ClearSavedGame();
 
-        ResetPanelState();
+        PrepareForSceneChange();
 
         Debug.Log("Game restarted. Loading scene: " + restartSceneName);
         SceneManager.LoadScene(restartSceneName);
     }
 
+    public void BackToMainMenu()
+    {
+        PrepareForSceneChange();
+        Debug.Log("BackToMenu button clicked. Loading scene: " + mainMenuSceneName);
+        SceneManager.LoadScene(mainMenuSceneName);
+    }
+
     public void QuitPanel()
     {
-        Debug.Log("Quit button clicked. Closing SavePanel.");
-        ClosePanel();
+        BackToMainMenu();
     }
 
     public void OpenSettings()
@@ -125,22 +142,41 @@ public class SavePanelController : MonoBehaviour
         Debug.Log("Settings not implemented yet.");
     }
 
+    private void EnsurePanelReference()
+    {
+        if (savePanel == null)
+            savePanel = gameObject;
+    }
+
+    private void PrepareForSceneChange()
+    {
+        if (savePanel != null)
+            savePanel.SetActive(false);
+
+        ResetPanelState();
+
+        if (EventSystem.current != null)
+            EventSystem.current.SetSelectedGameObject(null);
+
+        Input.ResetInputAxes();
+    }
+
     private void AutoBindButtons()
     {
         if (saveButton == null)
-            saveButton = FindChildButton(new[] { "Save", "SaveButton" }, new[] { "保存进度" });
+            saveButton = FindChildButton(new[] { "Save", "SaveButton" }, new string[0]);
 
         if (restartButton == null)
-            restartButton = FindChildButton(new[] { "Restart", "RestartButton" }, new[] { "重新开始游戏" });
+            restartButton = FindChildButton(new[] { "Restart", "RestartButton" }, new string[0]);
 
-        if (quitButton == null)
-            quitButton = FindChildButton(new[] { "quit", "Quit", "QuitButton" }, new[] { "返回", "关闭", "退出" });
+        if (backToMenuButton == null)
+            backToMenuButton = FindChildButton(new[] { "BackToMenu", "BackToMenuButton", "MainMenuButton", "quit", "Quit", "QuitButton" }, new string[0]);
 
         if (closeButton == null)
-            closeButton = FindChildButton(new[] { "Close", "CloseButton", "BackButton", "返回" }, new[] { "返回", "关闭" }, saveButton, restartButton, quitButton);
+            closeButton = FindChildButton(new[] { "Close", "CloseButton", "BackButton" }, new string[0], saveButton, restartButton, backToMenuButton);
 
         if (settingsButton == null)
-            settingsButton = FindChildButton(new[] { "Settings", "SettingsButton" }, new[] { "设置" }, saveButton, restartButton, quitButton, closeButton);
+            settingsButton = FindChildButton(new[] { "Settings", "SettingsButton" }, new string[0], saveButton, restartButton, backToMenuButton, closeButton);
     }
 
     private Button FindChildButton(string[] names, string[] labels, params Button[] excludedButtons)
@@ -190,7 +226,7 @@ public class SavePanelController : MonoBehaviour
     {
         BindButton(saveButton, SaveGame, "saveButton");
         BindButton(restartButton, RestartGame, "restartButton");
-        BindButton(quitButton, QuitPanel, "quitButton");
+        BindButton(backToMenuButton, BackToMainMenu, "backToMenuButton");
         BindButton(closeButton, ClosePanel, "closeButton");
         BindButton(settingsButton, OpenSettings, "settingsButton", false);
     }
@@ -222,7 +258,23 @@ public class SavePanelController : MonoBehaviour
         }
 
         button.onClick.RemoveListener(action);
-        button.onClick.AddListener(action);
+
+        if (!HasPersistentListener(button, action.Method.Name))
+            button.onClick.AddListener(action);
+
         Debug.Log("SavePanelController bound " + fieldName + " to " + button.name + ".");
+    }
+
+    private bool HasPersistentListener(Button button, string methodName)
+    {
+        int eventCount = button.onClick.GetPersistentEventCount();
+
+        for (int i = 0; i < eventCount; i++)
+        {
+            if (button.onClick.GetPersistentMethodName(i) == methodName)
+                return true;
+        }
+
+        return false;
     }
 }

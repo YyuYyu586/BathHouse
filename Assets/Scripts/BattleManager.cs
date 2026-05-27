@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 // Minimal turn-based battle controller for CombatScene.
@@ -79,8 +80,10 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private Sprite day4EnemySprite;
     [SerializeField] private Sprite day5EnemySprite;
     [SerializeField] private Sprite day6EnemySprite;
-    [SerializeField] private Sprite day7Phase1Sprite;
-    [SerializeField] private Sprite day7Phase2Sprite;
+    [FormerlySerializedAs("day7Phase1Sprite")]
+    [SerializeField] private Sprite day7BossSprite;
+    [FormerlySerializedAs("day7Phase2Sprite")]
+    [SerializeField] private Sprite day7BossWeakenedSprite;
 
     [Header("Enemy Idle Animation Frames")]
     [SerializeField] private Sprite[] day2EnemyIdleFrames;
@@ -88,8 +91,10 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private Sprite[] day4EnemyIdleFrames;
     [SerializeField] private Sprite[] day5EnemyIdleFrames;
     [SerializeField] private Sprite[] day6EnemyIdleFrames;
-    [SerializeField] private Sprite[] day7Phase1IdleFrames;
-    [SerializeField] private Sprite[] day7Phase2IdleFrames;
+    [FormerlySerializedAs("day7Phase1IdleFrames")]
+    [SerializeField] private Sprite[] day7BossIdleFrames;
+    [FormerlySerializedAs("day7Phase2IdleFrames")]
+    [SerializeField] private Sprite[] day7BossWeakenedIdleFrames;
 
     [Header("Buttons")]
     [SerializeField] private Button attackButton;
@@ -108,6 +113,8 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private float day7InterludeScrollDuration = 10f;
     [SerializeField] private float day7InterludeStartY = -500f;
     [SerializeField] private float day7InterludeEndY = 500f;
+    [SerializeField] private float day7WeakenedPlayerDamageMultiplier = 2f;
+    [SerializeField] private float day7WeakenedEnemyAttackMultiplier = 0.5f;
 
     [Header("Damage Popup")]
     [SerializeField] private DamagePopup damagePopupPrefab;
@@ -127,6 +134,8 @@ public class BattleManager : MonoBehaviour
     private bool isDay7Phase2;
     private bool isChangingDay7Phase;
     private bool isDay7InterludePlaying;
+    private bool day7InterludeTriggered;
+    private bool day7BossWeakened;
     private int currentRound = 1;
     private Coroutine playerHPFillRoutine;
     private Coroutine playerSPFillRoutine;
@@ -192,6 +201,8 @@ public class BattleManager : MonoBehaviour
         isDay7Phase2 = false;
         isChangingDay7Phase = false;
         isDay7InterludePlaying = false;
+        day7InterludeTriggered = false;
+        day7BossWeakened = false;
         currentRound = 1;
 
         if (victoryPanel != null)
@@ -237,11 +248,13 @@ public class BattleManager : MonoBehaviour
             return;
         }
 
+        int damage = GetPlayerDamageAfterModifiers(attackDamage);
+
         BeginPlayerAction("普通搓澡");
         currentPlayerSP = Mathf.Min(maxPlayerSP, currentPlayerSP + attackSPRecover);
         RefreshPlayerUI();
-        SetPlayerMessage("普通搓澡！造成 " + attackDamage + " 点伤害，回复 " + attackSPRecover + " SP。");
-        DealDamageToEnemy(attackDamage, currentEnemyName + " -" + attackDamage + " HP.");
+        SetPlayerMessage("普通搓澡！造成 " + damage + " 点伤害，回复 " + attackSPRecover + " SP。");
+        DealDamageToEnemy(damage, currentEnemyName + " -" + damage + " HP.");
     }
 
     // Polish is the fixed combo skill. Not enough SP does not spend the player turn.
@@ -262,7 +275,7 @@ public class BattleManager : MonoBehaviour
         }
 
         int spCost = 15;
-        int damage = 25;
+        int damage = GetPlayerDamageAfterModifiers(25);
 
         if (currentPlayerSP < spCost)
         {
@@ -296,7 +309,7 @@ public class BattleManager : MonoBehaviour
         }
 
         int spCost = 20;
-        int damage = 15;
+        int damage = GetPlayerDamageAfterModifiers(15);
         int heal = 15;
 
         if (currentPlayerSP < spCost)
@@ -340,11 +353,13 @@ public class BattleManager : MonoBehaviour
             return;
         }
 
+        int damage = GetPlayerDamageAfterModifiers(ultimateDamage);
+
         BeginPlayerAction("灵魂抛光");
         currentPlayerSP = Mathf.Max(0, currentPlayerSP - ultimateSPCost);
-        SetPlayerMessage("灵魂抛光！造成 " + ultimateDamage + " 点伤害。");
+        SetPlayerMessage("灵魂抛光！造成 " + damage + " 点伤害。");
         RefreshPlayerUI();
-        DealDamageToEnemy(ultimateDamage, currentEnemyName + " -" + ultimateDamage + " HP.");
+        DealDamageToEnemy(damage, currentEnemyName + " -" + damage + " HP.");
     }
 
     // Optional hook for a Continue button inside VictoryPanel.
@@ -363,20 +378,26 @@ public class BattleManager : MonoBehaviour
 
     private void DealDamageToEnemy(int damage, string message)
     {
-        currentEnemyHP = Mathf.Max(0, currentEnemyHP - damage);
+        int nextEnemyHP = Mathf.Max(0, currentEnemyHP - damage);
+        bool shouldTriggerDay7Interlude = ShouldTriggerDay7HalfHpInterlude(nextEnemyHP);
+
+        if (shouldTriggerDay7Interlude && nextEnemyHP <= 0)
+            nextEnemyHP = 1;
+
+        currentEnemyHP = nextEnemyHP;
         RefreshEnemyUI();
         SetEnemyMessage(message);
         SpawnDamagePopup(enemyDamagePopupPoint, damage.ToString(), enemyDamagePopupOffset);
         LogBattleState("Enemy damaged");
 
+        if (shouldTriggerDay7Interlude)
+        {
+            StartCoroutine(Day7HalfHpInterludeRoutine());
+            return;
+        }
+
         if (currentEnemyHP <= 0)
         {
-            if (ShouldEnterDay7Phase2())
-            {
-                StartCoroutine(SwitchToDay7Phase2Routine());
-                return;
-            }
-
             WinBattle();
             return;
         }
@@ -476,9 +497,23 @@ public class BattleManager : MonoBehaviour
             SetPlayerMessage("你已经很努力了……但你不是一个人在战斗。");
             SetEnemyMessage(reason);
             yield return new WaitForSeconds(1.2f);
-            SetPlayerMessage("全员意志化作金光，造成 9999 伤害！");
-            SpawnDamagePopup(enemyDamagePopupPoint, "9999", enemyDamagePopupOffset);
-            yield return new WaitForSeconds(0.8f);
+            SetPlayerMessage("全员意志支撑着你，最终 Boss 露出了破绽。");
+
+            currentPlayerHP = Mathf.Min(maxPlayerHP, Mathf.Max(1, currentPlayerHP) + Mathf.CeilToInt(maxPlayerHP * 0.5f));
+            currentPlayerSP = Mathf.Min(maxPlayerSP, currentPlayerSP + Mathf.CeilToInt(maxPlayerSP * 0.5f));
+
+            if (!day7InterludeTriggered)
+                yield return Day7InterludeRoutine();
+
+            ApplyDay7BossWeakening();
+            battleEnded = false;
+            isPlayerTurn = true;
+            SavePlayerState();
+            RefreshAllUI();
+            SetEnemyMessage(currentEnemyName + "进入虚弱状态。");
+            RefreshActionButtonsForCurrentState("day7 bath god support");
+            LogBattleState("Day7 bath god support: " + reason);
+            yield break;
         }
         else
         {
@@ -513,6 +548,59 @@ public class BattleManager : MonoBehaviour
     private bool CanPlayerAct()
     {
         return !battleEnded && isPlayerTurn;
+    }
+
+    private int GetPlayerDamageAfterModifiers(int baseDamage)
+    {
+        if (currentDay == 7 && day7BossWeakened)
+            return Mathf.Max(1, Mathf.RoundToInt(baseDamage * Mathf.Max(1f, day7WeakenedPlayerDamageMultiplier)));
+
+        return baseDamage;
+    }
+
+    private bool ShouldTriggerDay7HalfHpInterlude(int nextEnemyHP)
+    {
+        if (currentDay != 7 || day7InterludeTriggered || day7BossWeakened)
+            return false;
+
+        int halfHpThreshold = Mathf.CeilToInt(maxEnemyHP * 0.5f);
+        return nextEnemyHP <= halfHpThreshold;
+    }
+
+    private IEnumerator Day7HalfHpInterludeRoutine()
+    {
+        if (isChangingDay7Phase)
+            yield break;
+
+        day7InterludeTriggered = true;
+        isChangingDay7Phase = true;
+        isPlayerTurn = false;
+        SetActionButtonsInteractable(false);
+        SetEnemyMessage(currentEnemyName + "的气势开始动摇。");
+
+        yield return Day7InterludeRoutine();
+
+        ApplyDay7BossWeakening();
+        isChangingDay7Phase = false;
+        isPlayerTurn = true;
+        PlayEnemyIdleAnimation(GetEnemyIdleFramesForCurrentDay(), GetEnemySpriteForCurrentDay());
+        RefreshAllUI();
+        SetPlayerMessage("大家的意志支撑着你。继续战斗！");
+        SetEnemyMessage(currentEnemyName + "进入虚弱状态。");
+        RefreshActionButtonsForCurrentState("day7 boss weakened");
+        LogBattleState("Day7 half HP interlude finished");
+    }
+
+    private void ApplyDay7BossWeakening()
+    {
+        day7InterludeTriggered = true;
+
+        if (day7BossWeakened)
+            return;
+
+        day7BossWeakened = true;
+        enemyAttackDamage = Mathf.Max(1, Mathf.RoundToInt(enemyAttackDamage * Mathf.Max(0.01f, day7WeakenedEnemyAttackMultiplier)));
+        Debug.Log("Day7 boss weakened. playerDamageMultiplier=" + day7WeakenedPlayerDamageMultiplier + ", enemyAttackDamage=" + enemyAttackDamage + ".");
     }
 
     private bool HasReachedBathGodTurnLimit()
@@ -652,7 +740,7 @@ public class BattleManager : MonoBehaviour
 
     private bool ShouldEnterDay7Phase2()
     {
-        return currentDay == 7 && !isDay7Phase2;
+        return false;
     }
 
     private IEnumerator SwitchToDay7Phase2Routine()
@@ -678,7 +766,7 @@ public class BattleManager : MonoBehaviour
         isChangingDay7Phase = false;
         isPlayerTurn = true;
 
-        PlayEnemyIdleAnimation(day7Phase2IdleFrames, day7Phase2Sprite);
+        PlayEnemyIdleAnimation(day7BossWeakenedIdleFrames, day7BossWeakenedSprite);
         RefreshAllUI();
         SetEnemyMessage("Day 7 Phase 2: " + currentEnemyName);
         RefreshActionButtonsForCurrentState("day7 phase2 started");
@@ -756,7 +844,7 @@ public class BattleManager : MonoBehaviour
             day7InterludePanel.SetActive(false);
 
         isDay7InterludePlaying = false;
-        Debug.Log("Day7 interlude finished. Switching to phase 2.");
+        Debug.Log("Day7 interlude finished.");
     }
 
     private void RefreshAllUI()
@@ -782,7 +870,7 @@ public class BattleManager : MonoBehaviour
             case 6:
                 return day6EnemySprite;
             case 7:
-                return isDay7Phase2 ? day7Phase2Sprite : day7Phase1Sprite;
+                return day7BossWeakened && day7BossWeakenedSprite != null ? day7BossWeakenedSprite : day7BossSprite;
             default:
                 return day1FallbackEnemySprite;
         }
@@ -803,7 +891,9 @@ public class BattleManager : MonoBehaviour
             case 6:
                 return day6EnemyIdleFrames;
             case 7:
-                return isDay7Phase2 ? day7Phase2IdleFrames : day7Phase1IdleFrames;
+                return day7BossWeakened && day7BossWeakenedIdleFrames != null && day7BossWeakenedIdleFrames.Length > 0
+                    ? day7BossWeakenedIdleFrames
+                    : day7BossIdleFrames;
             default:
                 return null;
         }

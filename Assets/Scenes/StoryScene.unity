@@ -705,8 +705,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ef99dca4cc54441a7a0cf76f584a80d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  savePanelController: {fileID: 0}
-  backButton: {fileID: 0}
+  savePanelController: {fileID: 1397982151590994303}
+  backButton: {fileID: 551051953}
 --- !u!1 &592750177
 GameObject:
   m_ObjectHideFlags: 0
@@ -1747,6 +1747,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SavePanel
       objectReference: {fileID: 0}
+    - target: {fileID: 3544445102083737901, guid: 1e6ff63d035755d4b96268eaa54b01e8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1757,6 +1761,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2727268511067195533, guid: 1e6ff63d035755d4b96268eaa54b01e8, type: 3}
   m_PrefabInstance: {fileID: 1397982151590994301}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1397982151590994303 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6074821044173600011, guid: 1e6ff63d035755d4b96268eaa54b01e8, type: 3}
+  m_PrefabInstance: {fileID: 1397982151590994301}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74f3a48709824b4e8c83e57a8bc4c46b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
