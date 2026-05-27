@@ -2103,6 +2103,7 @@ GameObject:
   - component: {fileID: 346326819}
   - component: {fileID: 346326818}
   - component: {fileID: 346326817}
+  - component: {fileID: 346326820}
   m_Layer: 0
   m_Name: Customer_Day2
   m_TagString: Untagged
@@ -2120,7 +2121,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.05, y: -1.48, z: -0.021066181}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1889319513}
@@ -2195,7 +2196,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.003717959, y: -0.20102692}
+  m_Offset: {x: -0.023124948, y: -0.22851998}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -2206,7 +2207,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5193424, y: 0.9873519}
+  m_Size: {x: 0.35761836, y: 0.9323658}
   m_EdgeRadius: 0
 --- !u!212 &346326819
 SpriteRenderer:
@@ -2260,6 +2261,39 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &346326820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346326815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3435a07e4a01024c92aa125d58e31ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRenderer: {fileID: 0}
+  frames:
+  - {fileID: 466195356, guid: f577078c0635eee4eb229e6e1e814170, type: 3}
+  - {fileID: 1244836356, guid: f577078c0635eee4eb229e6e1e814170, type: 3}
+  - {fileID: -1984149613, guid: f577078c0635eee4eb229e6e1e814170, type: 3}
+  - {fileID: -854720181, guid: f577078c0635eee4eb229e6e1e814170, type: 3}
+  - {fileID: 1606665791, guid: f577078c0635eee4eb229e6e1e814170, type: 3}
+  - {fileID: 989169485, guid: f577078c0635eee4eb229e6e1e814170, type: 3}
+  - {fileID: 1019034191, guid: f577078c0635eee4eb229e6e1e814170, type: 3}
+  - {fileID: 1702989618, guid: f577078c0635eee4eb229e6e1e814170, type: 3}
+  - {fileID: 1147945723, guid: f577078c0635eee4eb229e6e1e814170, type: 3}
+  - {fileID: -1816879998, guid: f577078c0635eee4eb229e6e1e814170, type: 3}
+  - {fileID: 2094382090, guid: f577078c0635eee4eb229e6e1e814170, type: 3}
+  - {fileID: -851303740, guid: f577078c0635eee4eb229e6e1e814170, type: 3}
+  - {fileID: 248832986, guid: f577078c0635eee4eb229e6e1e814170, type: 3}
+  - {fileID: 374983779, guid: f577078c0635eee4eb229e6e1e814170, type: 3}
+  - {fileID: -1603157172, guid: f577078c0635eee4eb229e6e1e814170, type: 3}
+  - {fileID: -1378934293, guid: f577078c0635eee4eb229e6e1e814170, type: 3}
+  frameRate: 8
+  loop: 1
+  playOnEnable: 1
 --- !u!1 &348963581
 GameObject:
   m_ObjectHideFlags: 0
@@ -2272,6 +2306,7 @@ GameObject:
   - component: {fileID: 348963585}
   - component: {fileID: 348963584}
   - component: {fileID: 348963583}
+  - component: {fileID: 348963586}
   m_Layer: 0
   m_Name: Customer_Day6
   m_TagString: Untagged
@@ -2429,6 +2464,39 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &348963586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 348963581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3435a07e4a01024c92aa125d58e31ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRenderer: {fileID: 0}
+  frames:
+  - {fileID: 82670364, guid: 5eb446b6c47f7284080bef29eb1ecaeb, type: 3}
+  - {fileID: 1440324068, guid: 5eb446b6c47f7284080bef29eb1ecaeb, type: 3}
+  - {fileID: 1254044450, guid: 5eb446b6c47f7284080bef29eb1ecaeb, type: 3}
+  - {fileID: -1942958944, guid: 5eb446b6c47f7284080bef29eb1ecaeb, type: 3}
+  - {fileID: -506471172, guid: 5eb446b6c47f7284080bef29eb1ecaeb, type: 3}
+  - {fileID: -1636938401, guid: 5eb446b6c47f7284080bef29eb1ecaeb, type: 3}
+  - {fileID: 1656402801, guid: 5eb446b6c47f7284080bef29eb1ecaeb, type: 3}
+  - {fileID: 1514882729, guid: 5eb446b6c47f7284080bef29eb1ecaeb, type: 3}
+  - {fileID: 1675587411, guid: 5eb446b6c47f7284080bef29eb1ecaeb, type: 3}
+  - {fileID: -99838569, guid: 5eb446b6c47f7284080bef29eb1ecaeb, type: 3}
+  - {fileID: -2091742911, guid: 5eb446b6c47f7284080bef29eb1ecaeb, type: 3}
+  - {fileID: 1291055914, guid: 5eb446b6c47f7284080bef29eb1ecaeb, type: 3}
+  - {fileID: -967671505, guid: 5eb446b6c47f7284080bef29eb1ecaeb, type: 3}
+  - {fileID: -279205970, guid: 5eb446b6c47f7284080bef29eb1ecaeb, type: 3}
+  - {fileID: -1805435549, guid: 5eb446b6c47f7284080bef29eb1ecaeb, type: 3}
+  - {fileID: -1172357856, guid: 5eb446b6c47f7284080bef29eb1ecaeb, type: 3}
+  frameRate: 8
+  loop: 1
+  playOnEnable: 1
 --- !u!1 &390686491
 GameObject:
   m_ObjectHideFlags: 0
@@ -3727,6 +3795,7 @@ GameObject:
   m_Component:
   - component: {fileID: 622208149}
   - component: {fileID: 622208148}
+  - component: {fileID: 622208151}
   - component: {fileID: 622208150}
   m_Layer: 0
   m_Name: _scripts
@@ -4371,6 +4440,29 @@ MonoBehaviour:
       isLeftPortrait: 1
       text: "\u7CDF\u4E86\uFF01\u8FD9\u5B59\u5B50\uFF0C\u6028\u6C14\u5FEB\u628A\u8001\u5A18\u7684\u62DB\u724C\u718F\u9ED1\u4E86\uFF01\u5FEB\u963B\u6B62\u4ED6\uFF01"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+--- !u!114 &622208151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622208147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79695866fe5e11f4e8971a102f6606c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentDay: 2
+  maxDay: 7
+  playerGold: 20
+  playerHP: 100
+  playerSP: 50
+  waterLadleCount: 0
+  soapCount: 0
+  teaCount: 0
+  towelCount: 0
+  hasWaterLadle: 0
+  hasGoldenTowel: 0
 --- !u!1 &628705836
 GameObject:
   m_ObjectHideFlags: 0
@@ -4771,6 +4863,7 @@ GameObject:
   - component: {fileID: 798137963}
   - component: {fileID: 798137962}
   - component: {fileID: 798137961}
+  - component: {fileID: 798137964}
   m_Layer: 0
   m_Name: Customer_Day4
   m_TagString: Untagged
@@ -4928,6 +5021,39 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &798137964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 798137959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3435a07e4a01024c92aa125d58e31ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRenderer: {fileID: 0}
+  frames:
+  - {fileID: 1193053745, guid: 1894791fa8c23f14780eb48a5390a7e7, type: 3}
+  - {fileID: 1188307953, guid: 1894791fa8c23f14780eb48a5390a7e7, type: 3}
+  - {fileID: 2084042401, guid: 1894791fa8c23f14780eb48a5390a7e7, type: 3}
+  - {fileID: -152101725, guid: 1894791fa8c23f14780eb48a5390a7e7, type: 3}
+  - {fileID: 31855632, guid: 1894791fa8c23f14780eb48a5390a7e7, type: 3}
+  - {fileID: 1480457201, guid: 1894791fa8c23f14780eb48a5390a7e7, type: 3}
+  - {fileID: -2117317622, guid: 1894791fa8c23f14780eb48a5390a7e7, type: 3}
+  - {fileID: -441358754, guid: 1894791fa8c23f14780eb48a5390a7e7, type: 3}
+  - {fileID: -743396830, guid: 1894791fa8c23f14780eb48a5390a7e7, type: 3}
+  - {fileID: -471811743, guid: 1894791fa8c23f14780eb48a5390a7e7, type: 3}
+  - {fileID: -439372200, guid: 1894791fa8c23f14780eb48a5390a7e7, type: 3}
+  - {fileID: -890651319, guid: 1894791fa8c23f14780eb48a5390a7e7, type: 3}
+  - {fileID: 339374959, guid: 1894791fa8c23f14780eb48a5390a7e7, type: 3}
+  - {fileID: -2120296551, guid: 1894791fa8c23f14780eb48a5390a7e7, type: 3}
+  - {fileID: 1303754687, guid: 1894791fa8c23f14780eb48a5390a7e7, type: 3}
+  - {fileID: -1672449807, guid: 1894791fa8c23f14780eb48a5390a7e7, type: 3}
+  frameRate: 8
+  loop: 1
+  playOnEnable: 1
 --- !u!1 &846568824
 GameObject:
   m_ObjectHideFlags: 0
@@ -6108,6 +6234,7 @@ GameObject:
   - component: {fileID: 1222357673}
   - component: {fileID: 1222357672}
   - component: {fileID: 1222357671}
+  - component: {fileID: 1222357674}
   m_Layer: 0
   m_Name: Customer_Day3
   m_TagString: Untagged
@@ -6145,25 +6272,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueManager: {fileID: 622208148}
   bathhouseDayStoryController: {fileID: 0}
-  lines:
-  - textId: 
-    order: 0
-    speakerName: "\u5C0F\u798F"
-    portraitSourceName: 
-    side: 
-    portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
-    isLeftPortrait: 0
-    text: "\u4F60\u597D\uFF01"
-    backgroundImage: {fileID: 837111553, guid: b7a6d275be4a7b144b1008cdd85232f0, type: 3}
-  - textId: 
-    order: 0
-    speakerName: "\u5B9E\u4E60\u751F\u9F20\u9F20"
-    portraitSourceName: 
-    side: 
-    portrait: {fileID: 21300000, guid: 00a7dd9ec0ffa0e4ca69f93da857b042, type: 3}
-    isLeftPortrait: 1
-    text: "\u4F60\u662F\uFF1F"
-    backgroundImage: {fileID: 837111553, guid: b7a6d275be4a7b144b1008cdd85232f0, type: 3}
+  lines: []
   exclamationMark: {fileID: 0}
   combatTrigger: {fileID: 602178933}
   interactionDistance: 1.8
@@ -6265,6 +6374,39 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1222357674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1222357669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3435a07e4a01024c92aa125d58e31ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRenderer: {fileID: 0}
+  frames:
+  - {fileID: -947377234, guid: 1f635e7eae2fdeb41956698df51c6f21, type: 3}
+  - {fileID: -1492301372, guid: 1f635e7eae2fdeb41956698df51c6f21, type: 3}
+  - {fileID: -518582319, guid: 1f635e7eae2fdeb41956698df51c6f21, type: 3}
+  - {fileID: -111087774, guid: 1f635e7eae2fdeb41956698df51c6f21, type: 3}
+  - {fileID: 953322273, guid: 1f635e7eae2fdeb41956698df51c6f21, type: 3}
+  - {fileID: 962746192, guid: 1f635e7eae2fdeb41956698df51c6f21, type: 3}
+  - {fileID: -1046549743, guid: 1f635e7eae2fdeb41956698df51c6f21, type: 3}
+  - {fileID: 91644643, guid: 1f635e7eae2fdeb41956698df51c6f21, type: 3}
+  - {fileID: 1957388315, guid: 1f635e7eae2fdeb41956698df51c6f21, type: 3}
+  - {fileID: 1742412732, guid: 1f635e7eae2fdeb41956698df51c6f21, type: 3}
+  - {fileID: -850354828, guid: 1f635e7eae2fdeb41956698df51c6f21, type: 3}
+  - {fileID: -1731146511, guid: 1f635e7eae2fdeb41956698df51c6f21, type: 3}
+  - {fileID: -982142471, guid: 1f635e7eae2fdeb41956698df51c6f21, type: 3}
+  - {fileID: -1301562411, guid: 1f635e7eae2fdeb41956698df51c6f21, type: 3}
+  - {fileID: 1029514104, guid: 1f635e7eae2fdeb41956698df51c6f21, type: 3}
+  - {fileID: -1675901678, guid: 1f635e7eae2fdeb41956698df51c6f21, type: 3}
+  frameRate: 8
+  loop: 1
+  playOnEnable: 1
 --- !u!1 &1240535123
 GameObject:
   m_ObjectHideFlags: 0
@@ -8772,6 +8914,7 @@ GameObject:
   - component: {fileID: 1731938827}
   - component: {fileID: 1731938826}
   - component: {fileID: 1731938825}
+  - component: {fileID: 1731938828}
   m_Layer: 0
   m_Name: Customer_Day5
   m_TagString: Untagged
@@ -8929,6 +9072,39 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1731938828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1731938823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3435a07e4a01024c92aa125d58e31ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRenderer: {fileID: 0}
+  frames:
+  - {fileID: 2049089747, guid: 3fa77ec555001f5458948c0105f11d23, type: 3}
+  - {fileID: -282493830, guid: 3fa77ec555001f5458948c0105f11d23, type: 3}
+  - {fileID: -1515333061, guid: 3fa77ec555001f5458948c0105f11d23, type: 3}
+  - {fileID: -1368494289, guid: 3fa77ec555001f5458948c0105f11d23, type: 3}
+  - {fileID: 1868156579, guid: 3fa77ec555001f5458948c0105f11d23, type: 3}
+  - {fileID: -207997110, guid: 3fa77ec555001f5458948c0105f11d23, type: 3}
+  - {fileID: -1144595036, guid: 3fa77ec555001f5458948c0105f11d23, type: 3}
+  - {fileID: 2125168945, guid: 3fa77ec555001f5458948c0105f11d23, type: 3}
+  - {fileID: 1271721049, guid: 3fa77ec555001f5458948c0105f11d23, type: 3}
+  - {fileID: 2042938317, guid: 3fa77ec555001f5458948c0105f11d23, type: 3}
+  - {fileID: -448546959, guid: 3fa77ec555001f5458948c0105f11d23, type: 3}
+  - {fileID: 53257677, guid: 3fa77ec555001f5458948c0105f11d23, type: 3}
+  - {fileID: -1869459776, guid: 3fa77ec555001f5458948c0105f11d23, type: 3}
+  - {fileID: -917921555, guid: 3fa77ec555001f5458948c0105f11d23, type: 3}
+  - {fileID: -2034714494, guid: 3fa77ec555001f5458948c0105f11d23, type: 3}
+  - {fileID: -739161206, guid: 3fa77ec555001f5458948c0105f11d23, type: 3}
+  frameRate: 8
+  loop: 1
+  playOnEnable: 1
 --- !u!1 &1819402742
 GameObject:
   m_ObjectHideFlags: 0
@@ -9047,6 +9223,7 @@ GameObject:
   - component: {fileID: 1823683731}
   - component: {fileID: 1823683730}
   - component: {fileID: 1823683729}
+  - component: {fileID: 1823683732}
   m_Layer: 0
   m_Name: Customer_Day7
   m_TagString: Untagged
@@ -9204,6 +9381,39 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1823683732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823683727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3435a07e4a01024c92aa125d58e31ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRenderer: {fileID: 0}
+  frames:
+  - {fileID: 769474112, guid: 83fdc8643695ad7438a947e4bebb5694, type: 3}
+  - {fileID: -1137947763, guid: 83fdc8643695ad7438a947e4bebb5694, type: 3}
+  - {fileID: 191700207, guid: 83fdc8643695ad7438a947e4bebb5694, type: 3}
+  - {fileID: 1981408733, guid: 83fdc8643695ad7438a947e4bebb5694, type: 3}
+  - {fileID: -56499146, guid: 83fdc8643695ad7438a947e4bebb5694, type: 3}
+  - {fileID: -1078892499, guid: 83fdc8643695ad7438a947e4bebb5694, type: 3}
+  - {fileID: -764073341, guid: 83fdc8643695ad7438a947e4bebb5694, type: 3}
+  - {fileID: -2065316497, guid: 83fdc8643695ad7438a947e4bebb5694, type: 3}
+  - {fileID: -2085081766, guid: 83fdc8643695ad7438a947e4bebb5694, type: 3}
+  - {fileID: 2139930922, guid: 83fdc8643695ad7438a947e4bebb5694, type: 3}
+  - {fileID: -539418552, guid: 83fdc8643695ad7438a947e4bebb5694, type: 3}
+  - {fileID: -311575684, guid: 83fdc8643695ad7438a947e4bebb5694, type: 3}
+  - {fileID: -719468144, guid: 83fdc8643695ad7438a947e4bebb5694, type: 3}
+  - {fileID: -1792482289, guid: 83fdc8643695ad7438a947e4bebb5694, type: 3}
+  - {fileID: 1704083901, guid: 83fdc8643695ad7438a947e4bebb5694, type: 3}
+  - {fileID: -2115986308, guid: 83fdc8643695ad7438a947e4bebb5694, type: 3}
+  frameRate: 8
+  loop: 1
+  playOnEnable: 1
 --- !u!1 &1854329124
 GameObject:
   m_ObjectHideFlags: 0
