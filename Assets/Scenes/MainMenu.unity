@@ -746,8 +746,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11b472c6a9a9cca4293905cecebbfb7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalBgm: {fileID: 0}
-  battleBgm: {fileID: 0}
+  normalBgm: {fileID: 8300000, guid: 3947153105e08314b907824febde0f3c, type: 3}
+  battleBgm: {fileID: 8300000, guid: 5466e9f12da8ae24aaa000430f7e37ea, type: 3}
   uiClickSfx: {fileID: 8300000, guid: 9fc5bafef02d76244b0f42539f262bfc, type: 3}
   bgmSource: {fileID: 0}
   sfxSource: {fileID: 0}

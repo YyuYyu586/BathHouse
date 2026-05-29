@@ -145,6 +145,9 @@ public class MainMenuManager : MonoBehaviour
         if (IsButtonClicked(startButton, startButtonRect, eventCamera))
         {
             Debug.Log("MainMenu StartButton fallback click.");
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayClickSfx();
+
             StartGame();
             return;
         }
@@ -152,6 +155,9 @@ public class MainMenuManager : MonoBehaviour
         if (IsButtonClicked(quitButton, quitButtonRect, eventCamera))
         {
             Debug.Log("MainMenu QuitButton fallback click.");
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayClickSfx();
+
             QuitGame();
         }
     }
