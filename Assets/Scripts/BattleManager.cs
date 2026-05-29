@@ -50,7 +50,7 @@ public class BattleManager : MonoBehaviour
         new EnemyDayData(4, "清洁工鼠鼠 / 模糊的自我", 110, 10, 22),
         new EnemyDayData(5, "外卖员鼠鼠 / 厌倦的狂风", 130, 12, 26),
         new EnemyDayData(6, "大学生鼠鼠 / 迷茫的泡影", 160, 14, 32),
-        new EnemyDayData(7, "临近崩溃的主管 / 崩溃的外壳", 120, 14, 0)
+        new EnemyDayData(7, "临近崩溃的主管 / 崩溃的外壳", 240, 20, 0)
     };
     [SerializeField] private int defeatGoldRewardDivisor = 2;
 
@@ -113,8 +113,8 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private float day7InterludeScrollDuration = 10f;
     [SerializeField] private float day7InterludeStartY = -500f;
     [SerializeField] private float day7InterludeEndY = 500f;
-    [SerializeField] private float day7WeakenedPlayerDamageMultiplier = 2f;
-    [SerializeField] private float day7WeakenedEnemyAttackMultiplier = 0.5f;
+    [SerializeField] private float day7WeakenedPlayerDamageMultiplier = 1.3f;
+    [SerializeField] private float day7WeakenedEnemyAttackMultiplier = 0.8f;
 
     [Header("Damage Popup")]
     [SerializeField] private DamagePopup damagePopupPrefab;
@@ -228,6 +228,8 @@ public class BattleManager : MonoBehaviour
         attackSPRecover = 5;
         ultimateDamage = 80;
         ultimateSPCost = 40;
+        day7WeakenedPlayerDamageMultiplier = 1.3f;
+        day7WeakenedEnemyAttackMultiplier = 0.8f;
         Debug.Log("Applied demo combat tuning. maxPlayerHP=" + maxPlayerHP + ", maxPlayerSP=" + maxPlayerSP + ", attackDamage=" + attackDamage + ", attackSPRecover=" + attackSPRecover + ", ultimateDamage=" + ultimateDamage + ", ultimateSPCost=" + ultimateSPCost + ".");
     }
 
@@ -727,7 +729,7 @@ public class BattleManager : MonoBehaviour
             case 6:
                 return new EnemyDayData(6, "大学生鼠鼠 / 迷茫的泡影", 160, 14, 32);
             case 7:
-                return new EnemyDayData(7, "临近崩溃的主管 / 崩溃的外壳", 120, 14, 0);
+                return new EnemyDayData(7, "临近崩溃的主管 / 崩溃的外壳", 240, 20, 0);
             default:
                 return new EnemyDayData(day, "Day1兜底 / 泥巴怪", 30, 3, 0);
         }

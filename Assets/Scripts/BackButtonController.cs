@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class BackButtonController : MonoBehaviour
 {
     [SerializeField] private SavePanelController savePanelController;
+    [SerializeField] private ShopManager shopManager;
     [SerializeField] private Button backButton;
     private RectTransform rectTransform;
     private Canvas parentCanvas;
@@ -56,6 +57,9 @@ public class BackButtonController : MonoBehaviour
 
         if (savePanelController == null)
             savePanelController = FindSavePanelControllerInScene();
+
+        if (shopManager == null)
+            shopManager = FindObjectOfType<ShopManager>();
     }
 
     private void BindBackButton()
@@ -73,12 +77,27 @@ public class BackButtonController : MonoBehaviour
 
     public void OpenSavePanel()
     {
+        if (shopManager == null)
+            shopManager = FindObjectOfType<ShopManager>();
+
+        if (shopManager != null && shopManager.shopPanel != null && shopManager.shopPanel.activeSelf)
+        {
+            shopManager.CloseShop();
+            return;
+        }
+
         if (savePanelController == null)
             savePanelController = FindSavePanelControllerInScene();
 
         if (savePanelController == null)
         {
             Debug.LogWarning("BackButtonController could not find SavePanelController in scene " + SceneManager.GetActiveScene().name + ".");
+            return;
+        }
+
+        if (SavePanelController.IsPanelOpen)
+        {
+            savePanelController.ClosePanel();
             return;
         }
 

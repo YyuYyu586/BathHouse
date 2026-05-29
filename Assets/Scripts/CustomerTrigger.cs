@@ -20,6 +20,7 @@ public class CustomerTrigger : MonoBehaviour
     private bool playerNear = false;
     private bool hasTalked = false;
     private bool isDialoguePlaying = false;
+    private ShopManager shopManager;
     private Transform playerTransform;
     private Collider2D playerCollider;
     private Collider2D customerCollider;
@@ -28,6 +29,9 @@ public class CustomerTrigger : MonoBehaviour
     {
         if (bathhouseDayStoryController == null)
             bathhouseDayStoryController = FindObjectOfType<BathhouseDayStoryController>();
+
+        if (shopManager == null)
+            shopManager = FindObjectOfType<ShopManager>();
 
         FindPlayerForPhysicsLog();
         ConfigureCustomerCollider();
@@ -72,6 +76,9 @@ public class CustomerTrigger : MonoBehaviour
             ", exclamationActive = " + GetExclamationActiveState() + ".");
 
         if (!playerNear || hasTalked || isDialoguePlaying)
+            return;
+
+        if (ShouldBlockCustomerInteraction())
             return;
 
         if (dialogueManager == null)
@@ -236,6 +243,55 @@ public class CustomerTrigger : MonoBehaviour
     private string GetExclamationActiveState()
     {
         return exclamationMark != null ? exclamationMark.activeSelf.ToString() : "Missing";
+    }
+
+    private bool ShouldBlockCustomerInteraction()
+    {
+        if (SavePanelController.IsPanelOpen)
+        {
+            Debug.Log("CustomerTrigger skipped because SavePanel is open. customer = " + gameObject.name + ".");
+            return true;
+        }
+
+        if (IsShopPanelOpen())
+        {
+            Debug.Log("CustomerTrigger skipped because ShopPanel is open. customer = " + gameObject.name + ".");
+            return true;
+        }
+
+        if (ShopTrigger.IsPlayerInAnyShopRange)
+        {
+            Debug.Log("CustomerTrigger skipped because player is in shop range. customer = " + gameObject.name + ".");
+            return true;
+        }
+
+        if (IsDialoguePanelOpen())
+        {
+            Debug.Log("CustomerTrigger skipped because DialoguePanel is already open. customer = " + gameObject.name + ".");
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool IsShopPanelOpen()
+    {
+        if (shopManager == null)
+            shopManager = FindObjectOfType<ShopManager>();
+
+        return shopManager != null &&
+               shopManager.shopPanel != null &&
+               shopManager.shopPanel.activeSelf;
+    }
+
+    private bool IsDialoguePanelOpen()
+    {
+        if (dialogueManager == null)
+            dialogueManager = FindObjectOfType<DialogueManager>();
+
+        return dialogueManager != null &&
+               dialogueManager.dialoguePanel != null &&
+               dialogueManager.dialoguePanel.activeSelf;
     }
 
     private void FindPlayerForPhysicsLog()
