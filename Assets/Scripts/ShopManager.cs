@@ -47,25 +47,25 @@ public class ShopManager : MonoBehaviour
     public void SelectSoap()
     {
         selectedItem = "soap";
-        ShowDetail("肥皂\n价格:15 金币\n效果:战斗中恢复 30 HP。");
+        ShowDetail("肥皂\n价格:15 金币\n效果:战斗中按 H 使用，恢复 30 点 HP。");
     }
 
     public void SelectTea()
     {
         selectedItem = "tea";
-        ShowDetail("花茶\n价格:15 金币\n效果:战斗中恢复 20 SP。");
+        ShowDetail("花茶\n价格:15 金币\n效果:战斗中按 J 使用，恢复 20 点 SP。");
     }
 
     public void SelectWaterLadle()
     {
         selectedItem = "waterLadle";
-        ShowDetail("【质变】高级证书\n价格:60 金币\n被动效果:每天战斗结束后，自动恢复 40% HP 和 SP。");
+        ShowDetail("【质变】高级证书\n价格:60 金币\n说明:象征熟练搓澡工的道具，目前主要用于展示。");
     }
 
     public void SelectTowel()
     {
         selectedItem = "towel";
-        ShowDetail("【终极】黄金搓澡巾\n价格:100 金币\n决战道具:第七天 Boss 战中使用，可让 Boss 眩晕一回合。");
+        ShowDetail("【终极】黄金搓澡巾\n价格:100 金币\n说明:传说中的高级搓澡巾，最终战前可以购买作为通关纪念。");
     }
 
     public void ConfirmBuy()

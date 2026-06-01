@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class CustomerTrigger : MonoBehaviour
@@ -12,6 +13,7 @@ public class CustomerTrigger : MonoBehaviour
     [Header("State")]
     public GameObject exclamationMark;
     public GameObject combatTrigger;
+    public TextMeshProUGUI preparationHintText;
 
     [Header("Collision")]
     public float interactionDistance = 1.8f;
@@ -27,6 +29,8 @@ public class CustomerTrigger : MonoBehaviour
 
     private void Start()
     {
+        HidePreparationHint();
+
         if (bathhouseDayStoryController == null)
             bathhouseDayStoryController = FindObjectOfType<BathhouseDayStoryController>();
 
@@ -224,6 +228,8 @@ public class CustomerTrigger : MonoBehaviour
                 "CompleteCustomerInteraction. combatTrigger SetActive(true). currentDay = " + currentDay +
                 ", customer = " + customerName +
                 ", combatTriggerActive = " + combatTrigger.activeSelf + ".");
+
+            ShowPreparationHint();
         }
         else
         {
@@ -238,6 +244,29 @@ public class CustomerTrigger : MonoBehaviour
 
         gameObject.SetActive(false);
         Debug.Log("Customer GameObject SetActive(false). customer = " + customerName + ".");
+    }
+
+    private void ShowPreparationHint()
+    {
+        const string hint = "今天的客人已经准备好了。如果担心状态不好，可以先去前台买点道具，准备好了再去工作区开始接待吧。";
+
+        if (preparationHintText != null)
+        {
+            preparationHintText.text = hint;
+            preparationHintText.gameObject.SetActive(true);
+            Debug.Log("Preparation hint shown on UI. customer = " + gameObject.name + ".");
+            return;
+        }
+
+        Debug.Log("Preparation hint text is not assigned. Hint: " + hint);
+    }
+
+    private void HidePreparationHint()
+    {
+        if (preparationHintText != null)
+            preparationHintText.gameObject.SetActive(false);
+        else
+            Debug.Log("Preparation hint text is not assigned at Start. It will be skipped until assigned in Inspector.");
     }
 
     private string GetExclamationActiveState()

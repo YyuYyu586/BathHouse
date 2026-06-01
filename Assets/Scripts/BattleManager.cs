@@ -102,6 +102,10 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private Button polishButton;
     [SerializeField] private Button ultimateButton;
 
+    [Header("Item Buttons")]
+    public Button soapButton;
+    public Button teaButton;
+
     [Header("Victory")]
     [SerializeField] private GameObject victoryPanel;
 
@@ -158,10 +162,10 @@ public class BattleManager : MonoBehaviour
             return;
 
         if (Input.GetKeyDown(KeyCode.H))
-            TryUseSoap();
+            UseSoap();
 
         if (Input.GetKeyDown(KeyCode.J))
-            TryUseTea();
+            UseTea();
     }
 
     // Resets battle state and initializes every assigned UI field.
@@ -213,7 +217,7 @@ public class BattleManager : MonoBehaviour
 
         PlayEnemyIdleAnimation(GetEnemyIdleFramesForCurrentDay(), GetEnemySpriteForCurrentDay());
         RefreshActionButtonsForCurrentState("battle start");
-        SetPlayerMessage("选择一个行动。");
+        SetPlayerMessage("选择一个行动。提示：战斗中按 H 使用肥皂恢复 HP，按 J 使用花茶恢复 SP。");
         SetEnemyMessage("Day " + currentDay + ": " + currentEnemyName);
         RefreshAllUI();
         Debug.Log("Combat day setup. currentDay=" + currentDay + ", enemyName=" + currentEnemyName + ", enemyHP=" + maxEnemyHP + ", enemyAttack=" + enemyAttackDamage + ", rewardGold=" + currentEnemyGoldReward + ".");
@@ -389,7 +393,7 @@ public class BattleManager : MonoBehaviour
         currentEnemyHP = nextEnemyHP;
         RefreshEnemyUI();
         SetEnemyMessage(message);
-        SpawnDamagePopup(enemyDamagePopupPoint, damage.ToString(), enemyDamagePopupOffset);
+        SpawnDamagePopup(enemyDamagePopupPoint, "-" + damage, enemyDamagePopupOffset);
         LogBattleState("Enemy damaged");
 
         if (shouldTriggerDay7Interlude)
@@ -424,7 +428,7 @@ public class BattleManager : MonoBehaviour
         currentPlayerHP = Mathf.Max(0, currentPlayerHP - enemyAttackDamage);
         RefreshPlayerUI();
         SetPlayerMessage(currentEnemyName + "反击！你受到 " + enemyAttackDamage + " 点伤害。");
-        SpawnDamagePopup(playerDamagePopupPoint, enemyAttackDamage.ToString(), playerDamagePopupOffset);
+        SpawnDamagePopup(playerDamagePopupPoint, "-" + enemyAttackDamage + " HP", playerDamagePopupOffset);
         LogBattleState("Enemy attacked");
 
         if (currentPlayerHP <= 0)
@@ -635,7 +639,7 @@ public class BattleManager : MonoBehaviour
         return currentDay >= 4;
     }
 
-    private void TryUseSoap()
+    public void UseSoap()
     {
         if (!CanPlayerAct())
             return;
@@ -643,10 +647,18 @@ public class BattleManager : MonoBehaviour
         if (gameManager == null)
             gameManager = GameManager.EnsureInstance();
 
+        if (currentPlayerHP >= maxPlayerHP)
+        {
+            SetPlayerMessage("HP 已满，不需要使用肥皂。");
+            RefreshItemButtonsForCurrentState("soap blocked by full HP");
+            return;
+        }
+
         if (gameManager.soapCount <= 0)
         {
             SetPlayerMessage("没有肥皂了。");
             Debug.Log("Use soap failed. soapCount=0, playerHP=" + currentPlayerHP + "/" + maxPlayerHP + ".");
+            RefreshItemButtonsForCurrentState("soap blocked by count");
             return;
         }
 
@@ -654,11 +666,12 @@ public class BattleManager : MonoBehaviour
         currentPlayerHP = Mathf.Min(maxPlayerHP, currentPlayerHP + 30);
         SavePlayerState();
         RefreshPlayerUI();
+        RefreshItemButtonsForCurrentState("soap used");
         SetPlayerMessage("使用肥皂，恢复 30 HP。剩余肥皂：" + gameManager.soapCount);
         Debug.Log("Used soap. playerHP=" + currentPlayerHP + "/" + maxPlayerHP + ", soapCount=" + gameManager.soapCount + ".");
     }
 
-    private void TryUseTea()
+    public void UseTea()
     {
         if (!CanPlayerAct())
             return;
@@ -666,10 +679,18 @@ public class BattleManager : MonoBehaviour
         if (gameManager == null)
             gameManager = GameManager.EnsureInstance();
 
+        if (currentPlayerSP >= maxPlayerSP)
+        {
+            SetPlayerMessage("SP 已满，不需要使用花茶。");
+            RefreshItemButtonsForCurrentState("tea blocked by full SP");
+            return;
+        }
+
         if (gameManager.teaCount <= 0)
         {
             SetPlayerMessage("没有花茶了。");
             Debug.Log("Use tea failed. teaCount=0, playerSP=" + currentPlayerSP + "/" + maxPlayerSP + ".");
+            RefreshItemButtonsForCurrentState("tea blocked by count");
             return;
         }
 
@@ -677,6 +698,7 @@ public class BattleManager : MonoBehaviour
         currentPlayerSP = Mathf.Min(maxPlayerSP, currentPlayerSP + 20);
         SavePlayerState();
         RefreshPlayerUI();
+        RefreshItemButtonsForCurrentState("tea used");
         SetPlayerMessage("饮用花茶，恢复 20 SP。剩余花茶：" + gameManager.teaCount);
         Debug.Log("Used tea. playerSP=" + currentPlayerSP + "/" + maxPlayerSP + ", teaCount=" + gameManager.teaCount + ".");
     }
@@ -1029,6 +1051,8 @@ public class BattleManager : MonoBehaviour
         BindButton(blurButton, OnBlurButton);
         BindButton(polishButton, OnPolishButton);
         BindButton(ultimateButton, OnUltimateButton);
+        BindButton(soapButton, UseSoap);
+        BindButton(teaButton, UseTea);
     }
 
     private void ResolveButtonReferences()
@@ -1112,6 +1136,8 @@ public class BattleManager : MonoBehaviour
         ConfigureButton(blurButton);
         ConfigureButton(polishButton);
         ConfigureButton(ultimateButton);
+        ConfigureButton(soapButton);
+        ConfigureButton(teaButton);
     }
 
     private void ConfigureButton(Button button)
@@ -1141,6 +1167,12 @@ public class BattleManager : MonoBehaviour
         SetButtonInteractable(blurButton, interactable);
         SetButtonInteractable(polishButton, interactable);
         SetButtonInteractable(ultimateButton, interactable);
+
+        if (interactable)
+            RefreshItemButtonsForCurrentState("set all buttons interactable = true");
+        else
+            SetItemButtonsInteractable(false);
+
         LogButtonState("set all buttons interactable = " + interactable);
     }
 
@@ -1152,7 +1184,33 @@ public class BattleManager : MonoBehaviour
         SetButtonInteractable(blurButton, canAct && IsBlurUnlocked());
         SetButtonInteractable(polishButton, canAct && IsPolishUnlocked());
         SetButtonInteractable(ultimateButton, canAct && IsUltimateUnlockedForToday());
+        RefreshItemButtonsForCurrentState(reason);
         LogButtonState(reason);
+    }
+
+    private void RefreshItemButtonsForCurrentState(string reason)
+    {
+        bool canAct = !battleEnded && isPlayerTurn;
+
+        if (gameManager == null)
+            gameManager = GameManager.Instance;
+
+        int soapCount = gameManager != null ? gameManager.soapCount : 0;
+        int teaCount = gameManager != null ? gameManager.teaCount : 0;
+
+        SetButtonInteractable(soapButton, canAct && soapCount > 0 && currentPlayerHP < maxPlayerHP);
+        SetButtonInteractable(teaButton, canAct && teaCount > 0 && currentPlayerSP < maxPlayerSP);
+
+        Debug.Log(
+            "Item button state [" + reason + "] " +
+            "Soap=" + GetButtonState(soapButton) + " count=" + soapCount + ", " +
+            "Tea=" + GetButtonState(teaButton) + " count=" + teaCount + ".");
+    }
+
+    private void SetItemButtonsInteractable(bool interactable)
+    {
+        SetButtonInteractable(soapButton, interactable);
+        SetButtonInteractable(teaButton, interactable);
     }
 
     private void SetButtonInteractable(Button button, bool interactable)
@@ -1168,7 +1226,9 @@ public class BattleManager : MonoBehaviour
             "Attack=" + GetButtonState(attackButton) + ", " +
             "Blur=" + GetButtonState(blurButton) + ", " +
             "Polish=" + GetButtonState(polishButton) + ", " +
-            "Ultimate=" + GetButtonState(ultimateButton));
+            "Ultimate=" + GetButtonState(ultimateButton) + ", " +
+            "Soap=" + GetButtonState(soapButton) + ", " +
+            "Tea=" + GetButtonState(teaButton));
     }
 
     private string GetButtonState(Button button)
@@ -1222,6 +1282,8 @@ public class BattleManager : MonoBehaviour
         LogReference("blurButton", blurButton);
         LogReference("polishButton", polishButton);
         LogReference("ultimateButton", ultimateButton);
+        LogReference("soapButton", soapButton);
+        LogReference("teaButton", teaButton);
         LogReference("victoryPanel", victoryPanel);
         LogReference("day7InterludePanel", day7InterludePanel);
         LogReference("day7InterludeText", day7InterludeText);

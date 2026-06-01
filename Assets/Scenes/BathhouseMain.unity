@@ -1254,6 +1254,17 @@ Transform:
   - {fileID: 1335733638}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &275401036 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 887942081978331952, guid: a29edcf0f68193a4089b939bff1fccdb, type: 3}
+  m_PrefabInstance: {fileID: 1602493361}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &276009722
 GameObject:
   m_ObjectHideFlags: 0
@@ -2160,8 +2171,9 @@ MonoBehaviour:
     isLeftPortrait: 1
     text: "\u4F60\u662F\uFF1F"
     backgroundImage: {fileID: 837111553, guid: b7a6d275be4a7b144b1008cdd85232f0, type: 3}
-  exclamationMark: {fileID: 0}
+  exclamationMark: {fileID: 1889319512}
   combatTrigger: {fileID: 602178933}
+  preparationHintText: {fileID: 275401036}
   interactionDistance: 1.8
   forceCustomerColliderBlocksPlayer: 1
 --- !u!61 &346326818
@@ -2363,8 +2375,9 @@ MonoBehaviour:
     isLeftPortrait: 1
     text: "\u4F60\u662F\uFF1F"
     backgroundImage: {fileID: 837111553, guid: b7a6d275be4a7b144b1008cdd85232f0, type: 3}
-  exclamationMark: {fileID: 0}
+  exclamationMark: {fileID: 69113110}
   combatTrigger: {fileID: 602178933}
+  preparationHintText: {fileID: 275401036}
   interactionDistance: 1.8
   forceCustomerColliderBlocksPlayer: 1
 --- !u!61 &348963584
@@ -4452,7 +4465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79695866fe5e11f4e8971a102f6606c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentDay: 2
+  currentDay: 3
   maxDay: 7
   playerGold: 20
   playerHP: 100
@@ -4622,6 +4635,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   savePanelController: {fileID: 1986925026}
+  shopManager: {fileID: 0}
   backButton: {fileID: 715618092}
 --- !u!1 &751308946
 GameObject:
@@ -4920,8 +4934,9 @@ MonoBehaviour:
     isLeftPortrait: 1
     text: "\u4F60\u662F\uFF1F"
     backgroundImage: {fileID: 837111553, guid: b7a6d275be4a7b144b1008cdd85232f0, type: 3}
-  exclamationMark: {fileID: 0}
+  exclamationMark: {fileID: 846568824}
   combatTrigger: {fileID: 602178933}
+  preparationHintText: {fileID: 275401036}
   interactionDistance: 1.8
   forceCustomerColliderBlocksPlayer: 1
 --- !u!61 &798137962
@@ -6273,8 +6288,9 @@ MonoBehaviour:
   dialogueManager: {fileID: 622208148}
   bathhouseDayStoryController: {fileID: 0}
   lines: []
-  exclamationMark: {fileID: 0}
+  exclamationMark: {fileID: 14301552}
   combatTrigger: {fileID: 602178933}
+  preparationHintText: {fileID: 275401036}
   interactionDistance: 1.8
   forceCustomerColliderBlocksPlayer: 1
 --- !u!61 &1222357672
@@ -8454,6 +8470,50 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: b314963e3986e8d4198ed452b2fd6803, type: 3}
+    - target: {fileID: 887942081978331952, guid: a29edcf0f68193a4089b939bff1fccdb, type: 3}
+      propertyPath: m_text
+      value: "\u4ECA\u5929\u7684\u5BA2\u4EBA\u5DF2\u7ECF\u51C6\u5907\u597D\u4E86\u3002\u5982\u679C\u62C5\u5FC3\u72B6\u6001\u4E0D\u597D\uFF0C\u53EF\u4EE5\u5148\u53BB\u524D\u53F0\u4E70\u70B9\u9053\u5177\uFF0C\u51C6\u5907\u597D\u4E86\u518D\u53BB\u5DE5\u4F5C\u533A\u5F00\u59CB\u63A5\u5F85\u5427\u3002"
+      objectReference: {fileID: 0}
+    - target: {fileID: 887942081978331952, guid: a29edcf0f68193a4089b939bff1fccdb, type: 3}
+      propertyPath: m_margin.w
+      value: -161.09076
+      objectReference: {fileID: 0}
+    - target: {fileID: 887942081978331952, guid: a29edcf0f68193a4089b939bff1fccdb, type: 3}
+      propertyPath: m_margin.z
+      value: -1737.4785
+      objectReference: {fileID: 0}
+    - target: {fileID: 887942081978331952, guid: a29edcf0f68193a4089b939bff1fccdb, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: fb597f968f600644f8e498625747c66f, type: 2}
+    - target: {fileID: 887942081978331952, guid: a29edcf0f68193a4089b939bff1fccdb, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 887942081978331952, guid: a29edcf0f68193a4089b939bff1fccdb, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 887942081978331952, guid: a29edcf0f68193a4089b939bff1fccdb, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.0754717
+      objectReference: {fileID: 0}
+    - target: {fileID: 887942081978331952, guid: a29edcf0f68193a4089b939bff1fccdb, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -9151189292296192530, guid: fb597f968f600644f8e498625747c66f, type: 2}
+    - target: {fileID: 887942081978331952, guid: a29edcf0f68193a4089b939bff1fccdb, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278190099
+      objectReference: {fileID: 0}
+    - target: {fileID: 887942081978331952, guid: a29edcf0f68193a4089b939bff1fccdb, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1458590024541689373, guid: a29edcf0f68193a4089b939bff1fccdb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1731396288851640687, guid: a29edcf0f68193a4089b939bff1fccdb, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -8562,6 +8622,14 @@ PrefabInstance:
       propertyPath: coinText
       value: 
       objectReference: {fileID: 80598873}
+    - target: {fileID: 5475723493904447243, guid: a29edcf0f68193a4089b939bff1fccdb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -710
+      objectReference: {fileID: 0}
+    - target: {fileID: 5475723493904447243, guid: a29edcf0f68193a4089b939bff1fccdb, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 117
+      objectReference: {fileID: 0}
     - target: {fileID: 6710029590054511685, guid: a29edcf0f68193a4089b939bff1fccdb, type: 3}
       propertyPath: m_Name
       value: Daily_UI
@@ -8971,8 +9039,9 @@ MonoBehaviour:
     isLeftPortrait: 1
     text: "\u4F60\u662F\uFF1F"
     backgroundImage: {fileID: 837111553, guid: b7a6d275be4a7b144b1008cdd85232f0, type: 3}
-  exclamationMark: {fileID: 0}
+  exclamationMark: {fileID: 1549007648}
   combatTrigger: {fileID: 602178933}
+  preparationHintText: {fileID: 275401036}
   interactionDistance: 1.8
   forceCustomerColliderBlocksPlayer: 1
 --- !u!61 &1731938826
@@ -9280,8 +9349,9 @@ MonoBehaviour:
     isLeftPortrait: 1
     text: "\u4F60\u662F\uFF1F"
     backgroundImage: {fileID: 837111553, guid: b7a6d275be4a7b144b1008cdd85232f0, type: 3}
-  exclamationMark: {fileID: 0}
+  exclamationMark: {fileID: 27682665}
   combatTrigger: {fileID: 602178933}
+  preparationHintText: {fileID: 275401036}
   interactionDistance: 1.8
   forceCustomerColliderBlocksPlayer: 1
 --- !u!61 &1823683730
@@ -10068,6 +10138,10 @@ PrefabInstance:
     - target: {fileID: 3544445102083737901, guid: 1e6ff63d035755d4b96268eaa54b01e8, type: 3}
       propertyPath: m_Name
       value: SavePanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 3544445102083737901, guid: 1e6ff63d035755d4b96268eaa54b01e8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6074821044173600011, guid: 1e6ff63d035755d4b96268eaa54b01e8, type: 3}
       propertyPath: savePanel
