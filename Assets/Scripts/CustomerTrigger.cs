@@ -79,23 +79,34 @@ public class CustomerTrigger : MonoBehaviour
             ", interactionDistance = " + interactionDistance +
             ", exclamationActive = " + GetExclamationActiveState() + ".");
 
-        if (!playerNear || hasTalked || isDialoguePlaying)
-            return;
+        TryStartCustomerDialogue(false);
+    }
+
+    // Trailer helper only: starts the same customer dialogue path without requiring the player to stand in range.
+    public bool TrailerTryStartDialogue()
+    {
+        return TryStartCustomerDialogue(true);
+    }
+
+    private bool TryStartCustomerDialogue(bool ignorePlayerRange)
+    {
+        if ((!ignorePlayerRange && !playerNear) || hasTalked || isDialoguePlaying)
+            return false;
 
         if (ShouldBlockCustomerInteraction())
-            return;
+            return false;
 
         if (dialogueManager == null)
         {
             Debug.LogError("CustomerTrigger needs a DialogueManager reference.");
-            return;
+            return false;
         }
 
         DialogueLine[] dialogueLines = GetDialogueLinesForToday();
         if (dialogueLines == null || dialogueLines.Length == 0)
         {
             Debug.LogWarning("CustomerTrigger has no dialogue lines to play.");
-            return;
+            return false;
         }
 
         dialogueManager.RemoveDialogueEndListener(OnBeforeCombatDialogueEnd);
@@ -108,6 +119,7 @@ public class CustomerTrigger : MonoBehaviour
             ", exclamationMarkBound = " + (exclamationMark != null) +
             ", exclamationActiveBeforeDialogue = " + GetExclamationActiveState() + ".");
         dialogueManager.StartDialogue(dialogueLines);
+        return true;
     }
 
     private DialogueLine[] GetDialogueLinesForToday()

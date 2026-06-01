@@ -375,6 +375,13 @@ public class BattleManager : MonoBehaviour
         SceneManager.LoadScene("AfterCombatScene");
     }
 
+    // Trailer helper only: lets TrailerModeController show the existing victory flow without changing normal battle logic.
+    public void TrailerForceWinBattle()
+    {
+        Debug.Log("Trailer force win requested.");
+        WinBattle();
+    }
+
     private void BeginPlayerAction(string actionName)
     {
         isPlayerTurn = false;
