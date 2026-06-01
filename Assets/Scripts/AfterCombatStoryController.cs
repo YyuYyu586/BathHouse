@@ -17,6 +17,9 @@ public class AfterCombatStoryController : MonoBehaviour
     public TextMeshProUGUI transitionText;
     public Button continueButton;
 
+    [Header("Ending Credits")]
+    public EndingCreditsController endingCreditsController;
+
     private const string BathhouseSceneName = "BathhouseMain";
     private const string MainMenuSceneName = "MainMenu";
 
@@ -92,6 +95,7 @@ public class AfterCombatStoryController : MonoBehaviour
 
         if (dayTransitionPanel != null)
         {
+            UpdateContinueButtonText(gameManager.IsFinalDay ? "查看结局" : "进入下一天");
             dayTransitionPanel.SetActive(true);
             Debug.Log("Showing DayTransitionPanel. currentDay = " + currentDay + ", isFinalDay = " + gameManager.IsFinalDay + ".");
         }
@@ -125,7 +129,18 @@ public class AfterCombatStoryController : MonoBehaviour
 
         if (gameManager.IsFinalDay)
         {
-            Debug.Log("DayTransition Continue clicked. currentDay = " + gameManager.currentDay + ", next scene = " + MainMenuSceneName + ".");
+            Debug.Log("DayTransition Continue clicked on final day. currentDay = " + gameManager.currentDay + ".");
+
+            if (endingCreditsController != null)
+            {
+                if (dayTransitionPanel != null)
+                    dayTransitionPanel.SetActive(false);
+
+                endingCreditsController.PlayCredits();
+                return;
+            }
+
+            Debug.LogWarning("AfterCombatStoryController endingCreditsController is not assigned. Returning to MainMenu.");
             SceneManager.LoadScene(MainMenuSceneName);
             return;
         }
@@ -134,6 +149,21 @@ public class AfterCombatStoryController : MonoBehaviour
         gameManager.AdvanceDay();
         Debug.Log("DayTransition Continue clicked. Advanced from day " + previousDay + " to day " + gameManager.currentDay + ", next scene = " + BathhouseSceneName + ".");
         SceneManager.LoadScene(BathhouseSceneName);
+    }
+
+    private void UpdateContinueButtonText(string text)
+    {
+        if (continueButton == null)
+            return;
+
+        TextMeshProUGUI buttonText = continueButton.GetComponentInChildren<TextMeshProUGUI>(true);
+        if (buttonText == null)
+        {
+            Debug.LogWarning("AfterCombatStoryController could not find TMP text under continueButton.");
+            return;
+        }
+
+        buttonText.text = text;
     }
 
     private DialogueLine[] GetTodayDialogueLines()
