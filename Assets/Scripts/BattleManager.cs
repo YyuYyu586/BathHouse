@@ -307,11 +307,11 @@ public class BattleManager : MonoBehaviour
             return;
         }
 
-        BeginPlayerAction("搓澡巾连击");
+        BeginPlayerAction("珍珠浴球大冲洗");
         currentPlayerSP = Mathf.Max(0, currentPlayerSP - spCost);
-        SetPlayerMessage("搓澡巾连击！造成 " + damage + " 点伤害。");
+        SetPlayerMessage("珍珠浴球大冲洗发动！");
         RefreshPlayerUI();
-        DealDamageToEnemy(damage, "小福使用了搓澡巾连击，敌人受到了 " + damage + " 点伤害！");
+        StartCoroutine(PolishRoutine(damage));
     }
 
     // Blur is fixed to bubble eye. It unlocks on Day4 and does not stun yet.
@@ -404,6 +404,70 @@ public class BattleManager : MonoBehaviour
         isPlayerTurn = false;
         SetActionButtonsInteractable(false);
         LogBattleState("Player action: " + actionName);
+    }
+
+    private IEnumerator PolishRoutine(int totalDamage)
+    {
+        int hitCount = Random.Range(2, 4);
+        int baseHitDamage = totalDamage / hitCount;
+        int remainder = totalDamage % hitCount;
+
+        for (int i = 0; i < hitCount; i++)
+        {
+            if (currentEnemyHP <= 0)
+                break;
+
+            int hitDamage = baseHitDamage + (i == hitCount - 1 ? remainder : 0);
+            bool shouldTriggerDay7Interlude = ApplyPolishHit(hitDamage, i + 1, hitCount);
+
+            if (shouldTriggerDay7Interlude)
+            {
+                yield return new WaitForSeconds(0.2f);
+                StartCoroutine(Day7HalfHpInterludeRoutine());
+                yield break;
+            }
+
+            if (currentEnemyHP <= 0)
+                break;
+
+            if (i < hitCount - 1)
+                yield return new WaitForSeconds(0.2f);
+        }
+
+        if (currentEnemyHP <= 0)
+        {
+            WinBattle();
+            yield break;
+        }
+
+        if (HasReachedBathGodTurnLimit())
+        {
+            TriggerBathGodIntervention("Turn limit reached.");
+            yield break;
+        }
+
+        StartCoroutine(EnemyTurnRoutine());
+    }
+
+    private bool ApplyPolishHit(int hitDamage, int hitIndex, int hitCount)
+    {
+        int previousEnemyHP = currentEnemyHP;
+        int nextEnemyHP = Mathf.Max(0, currentEnemyHP - hitDamage);
+        bool shouldTriggerDay7Interlude = ShouldTriggerDay7HalfHpInterlude(nextEnemyHP);
+
+        if (shouldTriggerDay7Interlude && nextEnemyHP <= 0)
+            nextEnemyHP = 1;
+
+        currentEnemyHP = nextEnemyHP;
+        int appliedDamage = Mathf.Max(0, previousEnemyHP - currentEnemyHP);
+
+        RefreshEnemyUI();
+        SetEnemyMessage("连击 " + hitIndex + " / " + hitCount + "：敌人受到了 " + appliedDamage + " 点伤害！");
+        SpawnDamagePopup(enemyDamagePopupPoint, "-" + appliedDamage, enemyDamagePopupOffset);
+        PlayEnemyHitFeedback();
+        LogBattleState("Polish hit " + hitIndex + "/" + hitCount);
+
+        return shouldTriggerDay7Interlude;
     }
 
     private void DealDamageToEnemy(int damage, string message)
