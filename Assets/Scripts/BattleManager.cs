@@ -41,6 +41,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private int maxEnemyHP = 80;
     [SerializeField] private int enemyAttackDamage = 8;
     [SerializeField] private float enemyTurnDelay = 0.8f;
+    [SerializeField] private float playerDamageMessageDelay = 1.0f;
     [SerializeField] private float fillSmoothTime = 0.2f;
     [SerializeField] private EnemyDayData[] enemiesByDay =
     {
@@ -48,8 +49,8 @@ public class BattleManager : MonoBehaviour
         new EnemyDayData(2, "实习生鼠鼠 / 焦虑的泥巴", 70, 7, 15),
         new EnemyDayData(3, "主管鼠鼠 / 坚硬的外壳", 85, 8, 18),
         new EnemyDayData(4, "清洁工鼠鼠 / 模糊的自我", 110, 10, 22),
-        new EnemyDayData(5, "外卖员鼠鼠 / 厌倦的狂风", 130, 12, 26),
-        new EnemyDayData(6, "大学生鼠鼠 / 迷茫的泡影", 160, 14, 32),
+        new EnemyDayData(5, "外卖员鼠鼠 / 厌倦的狂风", 130, 14, 26),
+        new EnemyDayData(6, "大学生鼠鼠 / 迷茫的泡影", 160, 17, 32),
         new EnemyDayData(7, "临近崩溃的主管 / 崩溃的外壳", 240, 20, 0)
     };
     [SerializeField] private int defeatGoldRewardDivisor = 2;
@@ -125,6 +126,10 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private Vector2 playerDamagePopupOffset = new Vector2(0f, -18f);
     [SerializeField] private Vector2 enemyDamagePopupOffset = new Vector2(0f, -18f);
 
+    [Header("Hit Feedback")]
+    public HitFeedback enemyHitFeedback;
+    public HitFeedback playerHitFeedback;
+
     private int currentPlayerHP;
     private int currentPlayerSP;
     private int currentEnemyHP;
@@ -140,6 +145,11 @@ public class BattleManager : MonoBehaviour
     private bool isDay7InterludePlaying;
     private bool day7InterludeTriggered;
     private bool day7BossWeakened;
+    private bool warnedMissingItemGameManager;
+    private bool warnedMissingSoapButtonLabel;
+    private bool warnedMissingTeaButtonLabel;
+    private bool warnedMissingEnemyHitFeedback;
+    private bool warnedMissingPlayerHitFeedback;
     private int currentRound = 1;
     private Coroutine playerHPFillRoutine;
     private Coroutine playerSPFillRoutine;
@@ -217,11 +227,18 @@ public class BattleManager : MonoBehaviour
 
         PlayEnemyIdleAnimation(GetEnemyIdleFramesForCurrentDay(), GetEnemySpriteForCurrentDay());
         RefreshActionButtonsForCurrentState("battle start");
-        SetPlayerMessage("选择一个行动。提示：战斗中按 H 使用肥皂恢复 HP，按 J 使用花茶恢复 SP。");
+        SetPlayerMessage(BuildBattleStartMessage());
         SetEnemyMessage("Day " + currentDay + ": " + currentEnemyName);
         RefreshAllUI();
         Debug.Log("Combat day setup. currentDay=" + currentDay + ", enemyName=" + currentEnemyName + ", enemyHP=" + maxEnemyHP + ", enemyAttack=" + enemyAttackDamage + ", rewardGold=" + currentEnemyGoldReward + ".");
         LogBattleState("Battle started");
+    }
+
+    private string BuildBattleStartMessage()
+    {
+        return "选择一个行动。\n" +
+               "当前道具：肥皂 x" + GetSoapCount() + "，花茶 x" + GetTeaCount() + "。\n" +
+               "提示：可点击道具按钮，或按 H / J 使用。";
     }
 
     private void ApplyDemoCombatTuning()
@@ -260,7 +277,7 @@ public class BattleManager : MonoBehaviour
         currentPlayerSP = Mathf.Min(maxPlayerSP, currentPlayerSP + attackSPRecover);
         RefreshPlayerUI();
         SetPlayerMessage("普通搓澡！造成 " + damage + " 点伤害，回复 " + attackSPRecover + " SP。");
-        DealDamageToEnemy(damage, currentEnemyName + " -" + damage + " HP.");
+        DealDamageToEnemy(damage, "小福进行了普通搓澡，敌人受到了 " + damage + " 点伤害！");
     }
 
     // Polish is the fixed combo skill. Not enough SP does not spend the player turn.
@@ -294,7 +311,7 @@ public class BattleManager : MonoBehaviour
         currentPlayerSP = Mathf.Max(0, currentPlayerSP - spCost);
         SetPlayerMessage("搓澡巾连击！造成 " + damage + " 点伤害。");
         RefreshPlayerUI();
-        DealDamageToEnemy(damage, currentEnemyName + " -" + damage + " HP.");
+        DealDamageToEnemy(damage, "小福使用了搓澡巾连击，敌人受到了 " + damage + " 点伤害！");
     }
 
     // Blur is fixed to bubble eye. It unlocks on Day4 and does not stun yet.
@@ -332,7 +349,7 @@ public class BattleManager : MonoBehaviour
 
         SetPlayerMessage("泡泡迷人眼！造成 " + damage + " 点伤害，回复 " + heal + " HP。");
         RefreshPlayerUI();
-        DealDamageToEnemy(damage, currentEnemyName + " -" + damage + " HP.");
+        DealDamageToEnemy(damage, "泡泡迷人眼命中，敌人受到了 " + damage + " 点伤害！");
     }
 
     // Reserved for the future. Current version does not spend the turn.
@@ -365,7 +382,7 @@ public class BattleManager : MonoBehaviour
         currentPlayerSP = Mathf.Max(0, currentPlayerSP - ultimateSPCost);
         SetPlayerMessage("灵魂抛光！造成 " + damage + " 点伤害。");
         RefreshPlayerUI();
-        DealDamageToEnemy(damage, currentEnemyName + " -" + damage + " HP.");
+        DealDamageToEnemy(damage, "灵魂抛光发动，敌人受到了 " + damage + " 点伤害！");
     }
 
     // Optional hook for a Continue button inside VictoryPanel.
@@ -401,6 +418,7 @@ public class BattleManager : MonoBehaviour
         RefreshEnemyUI();
         SetEnemyMessage(message);
         SpawnDamagePopup(enemyDamagePopupPoint, "-" + damage, enemyDamagePopupOffset);
+        PlayEnemyHitFeedback();
         LogBattleState("Enemy damaged");
 
         if (shouldTriggerDay7Interlude)
@@ -436,6 +454,7 @@ public class BattleManager : MonoBehaviour
         RefreshPlayerUI();
         SetPlayerMessage(currentEnemyName + "反击！你受到 " + enemyAttackDamage + " 点伤害。");
         SpawnDamagePopup(playerDamagePopupPoint, "-" + enemyAttackDamage + " HP", playerDamagePopupOffset);
+        PlayPlayerHitFeedback();
         LogBattleState("Enemy attacked");
 
         if (currentPlayerHP <= 0)
@@ -443,6 +462,8 @@ public class BattleManager : MonoBehaviour
             TriggerBathGodIntervention("Player HP reached zero.");
             yield break;
         }
+
+        yield return new WaitForSeconds(playerDamageMessageDelay);
 
         currentRound++;
         isPlayerTurn = true;
@@ -754,9 +775,9 @@ public class BattleManager : MonoBehaviour
             case 4:
                 return new EnemyDayData(4, "清洁工鼠鼠 / 模糊的自我", 110, 10, 22);
             case 5:
-                return new EnemyDayData(5, "外卖员鼠鼠 / 厌倦的狂风", 130, 12, 26);
+                return new EnemyDayData(5, "外卖员鼠鼠 / 厌倦的狂风", 130, 14, 26);
             case 6:
-                return new EnemyDayData(6, "大学生鼠鼠 / 迷茫的泡影", 160, 14, 32);
+                return new EnemyDayData(6, "大学生鼠鼠 / 迷茫的泡影", 160, 17, 32);
             case 7:
                 return new EnemyDayData(7, "临近崩溃的主管 / 崩溃的外壳", 240, 20, 0);
             default:
@@ -1207,6 +1228,7 @@ public class BattleManager : MonoBehaviour
 
         SetButtonInteractable(soapButton, canAct && soapCount > 0 && currentPlayerHP < maxPlayerHP);
         SetButtonInteractable(teaButton, canAct && teaCount > 0 && currentPlayerSP < maxPlayerSP);
+        RefreshItemButtonLabels();
 
         Debug.Log(
             "Item button state [" + reason + "] " +
@@ -1214,10 +1236,71 @@ public class BattleManager : MonoBehaviour
             "Tea=" + GetButtonState(teaButton) + " count=" + teaCount + ".");
     }
 
+    private void RefreshItemButtonLabels()
+    {
+        SetItemButtonLabel(soapButton, "SoapButton", "肥皂 x" + GetSoapCount(), ref warnedMissingSoapButtonLabel);
+        SetItemButtonLabel(teaButton, "TeaButton", "花茶 x" + GetTeaCount(), ref warnedMissingTeaButtonLabel);
+    }
+
+    private void SetItemButtonLabel(Button button, string buttonName, string labelText, ref bool warnedMissingLabel)
+    {
+        if (button == null)
+        {
+            if (!warnedMissingLabel)
+            {
+                warnedMissingLabel = true;
+                Debug.LogWarning("BattleManager cannot update " + buttonName + " label because the button is not assigned.");
+            }
+
+            return;
+        }
+
+        TextMeshProUGUI label = button.GetComponentInChildren<TextMeshProUGUI>(true);
+        if (label == null)
+        {
+            if (!warnedMissingLabel)
+            {
+                warnedMissingLabel = true;
+                Debug.LogWarning("BattleManager could not find TextMeshProUGUI under " + buttonName + ".");
+            }
+
+            return;
+        }
+
+        label.text = labelText;
+    }
+
+    private int GetSoapCount()
+    {
+        GameManager manager = GetGameManagerForItemCounts();
+        return manager != null ? manager.soapCount : 0;
+    }
+
+    private int GetTeaCount()
+    {
+        GameManager manager = GetGameManagerForItemCounts();
+        return manager != null ? manager.teaCount : 0;
+    }
+
+    private GameManager GetGameManagerForItemCounts()
+    {
+        if (gameManager == null)
+            gameManager = GameManager.Instance;
+
+        if (gameManager == null && !warnedMissingItemGameManager)
+        {
+            warnedMissingItemGameManager = true;
+            Debug.LogWarning("BattleManager could not find GameManager while refreshing item counts.");
+        }
+
+        return gameManager;
+    }
+
     private void SetItemButtonsInteractable(bool interactable)
     {
         SetButtonInteractable(soapButton, interactable);
         SetButtonInteractable(teaButton, interactable);
+        RefreshItemButtonLabels();
     }
 
     private void SetButtonInteractable(Button button, bool interactable)
@@ -1244,6 +1327,36 @@ public class BattleManager : MonoBehaviour
             return "Missing";
 
         return button.interactable ? "Enabled" : "Disabled";
+    }
+
+    private void PlayEnemyHitFeedback()
+    {
+        if (enemyHitFeedback != null)
+        {
+            enemyHitFeedback.Play();
+            return;
+        }
+
+        if (!warnedMissingEnemyHitFeedback)
+        {
+            warnedMissingEnemyHitFeedback = true;
+            Debug.LogWarning("BattleManager enemyHitFeedback is not assigned. Enemy hit flash/shake will be skipped.");
+        }
+    }
+
+    private void PlayPlayerHitFeedback()
+    {
+        if (playerHitFeedback != null)
+        {
+            playerHitFeedback.Play();
+            return;
+        }
+
+        if (!warnedMissingPlayerHitFeedback)
+        {
+            warnedMissingPlayerHitFeedback = true;
+            Debug.LogWarning("BattleManager playerHitFeedback is not assigned. Player hit flash/shake will be skipped.");
+        }
     }
 
     private void ClearSelectedButton()

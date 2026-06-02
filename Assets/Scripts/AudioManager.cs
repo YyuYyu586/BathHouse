@@ -157,6 +157,9 @@ public class AudioManager : MonoBehaviour
         bgmSource.playOnAwake = false;
         bgmSource.loop = true;
 
+        sfxSource.volume = 1f;
+        sfxSource.mute = false;
+        sfxSource.spatialBlend = 0f;
         sfxSource.playOnAwake = false;
         sfxSource.loop = false;
     }

@@ -63,10 +63,36 @@ public class MainMenuManager : MonoBehaviour
         SceneManager.LoadScene("StoryScene");
     }
 
+    public void StartGameWithClickSound()
+    {
+        if (isLoadingScene)
+            return;
+
+        isLoadingScene = true;
+        StartCoroutine(StartGameWithClickSoundRoutine());
+    }
+
+    private System.Collections.IEnumerator StartGameWithClickSoundRoutine()
+    {
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayClickSfx();
+
+        yield return new WaitForSeconds(0.12f);
+
+        SavePanelController.ResetPanelState();
+        ResetMenuInputState();
+        Debug.Log("MainMenu StartGameWithClickSound clicked. Loading StoryScene.");
+        SceneManager.LoadScene("StoryScene");
+    }
+
     public void QuitGame()
     {
         Debug.Log("已经点击了退出游戏");
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
         Application.Quit();
+#endif
     }
 
     private RectTransform FindCloud(string cloudName)
@@ -93,8 +119,29 @@ public class MainMenuManager : MonoBehaviour
         if (quitButton == null)
             quitButton = FindButton("QuitButton");
 
-        BindButton(startButton, StartGame, "StartGame", "StartButton");
+        BindStartButton();
         BindButton(quitButton, QuitGame, "QuitGame", "QuitButton");
+    }
+
+    private void BindStartButton()
+    {
+        if (startButton == null)
+        {
+            Debug.LogWarning("MainMenuManager could not find StartButton.");
+            return;
+        }
+
+        startButton.enabled = true;
+        startButton.interactable = true;
+
+        if (HasPersistentListener(startButton, "StartGame") ||
+            HasPersistentListener(startButton, "StartGameWithClickSound"))
+        {
+            return;
+        }
+
+        startButton.onClick.RemoveListener(StartGameWithClickSound);
+        startButton.onClick.AddListener(StartGameWithClickSound);
     }
 
     private Button FindButton(string buttonName)
@@ -145,10 +192,7 @@ public class MainMenuManager : MonoBehaviour
         if (IsButtonClicked(startButton, startButtonRect, eventCamera))
         {
             Debug.Log("MainMenu StartButton fallback click.");
-            if (AudioManager.Instance != null)
-                AudioManager.Instance.PlayClickSfx();
-
-            StartGame();
+            StartGameWithClickSound();
             return;
         }
 
