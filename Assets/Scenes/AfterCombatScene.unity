@@ -2732,7 +2732,7 @@ MonoBehaviour:
       side: L
       portrait: {fileID: 21300000, guid: d1e45009b3af2f544aa17ff7502a591c, type: 3}
       isLeftPortrait: 1
-      text: "\u54CE...\u8FD9\u8BDD\u8BF4\u5F97\u6211\u5FC3\u91CC\u771F\u662F...\u4ECA\u5929\u771F\u662F\u8C22\u8C22\u4F60\u4E86\uFF0C\u5C0F\u5E08\u5085\u3002"
+      text: "\u54CE...\u8FD9\u8BDD\u8BF4\u5F97\u6211\u5FC3\u91CC\u771F\u662F...\u4ECA\u5929\u771F\u662F\u8C22\u8C22\u4F60\u4E86\uFF0C\u5C0F\u9F20\u9F20\u3002"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - textId: 111
       order: 18

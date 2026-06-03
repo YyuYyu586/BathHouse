@@ -145,6 +145,7 @@ public class BattleManager : MonoBehaviour
     private bool isDay7InterludePlaying;
     private bool day7InterludeTriggered;
     private bool day7BossWeakened;
+    private bool enemyStunned;
     private bool warnedMissingItemGameManager;
     private bool warnedMissingSoapButtonLabel;
     private bool warnedMissingTeaButtonLabel;
@@ -217,6 +218,7 @@ public class BattleManager : MonoBehaviour
         isDay7InterludePlaying = false;
         day7InterludeTriggered = false;
         day7BossWeakened = false;
+        enemyStunned = false;
         currentRound = 1;
 
         if (victoryPanel != null)
@@ -314,7 +316,7 @@ public class BattleManager : MonoBehaviour
         StartCoroutine(PolishRoutine(damage));
     }
 
-    // Blur is fixed to bubble eye. It unlocks on Day4 and does not stun yet.
+    // Blur is bubble eye: damage, heal, and make the enemy skip one action.
     public void OnBlurButton()
     {
         Debug.Log("Blur clicked");
@@ -346,8 +348,9 @@ public class BattleManager : MonoBehaviour
         currentPlayerSP = Mathf.Max(0, currentPlayerSP - spCost);
 
         currentPlayerHP = Mathf.Min(maxPlayerHP, currentPlayerHP + heal);
+        enemyStunned = true;
 
-        SetPlayerMessage("泡泡迷人眼！造成 " + damage + " 点伤害，回复 " + heal + " HP。");
+        SetPlayerMessage("泡泡迷人眼！造成 " + damage + " 点伤害，回复 " + heal + " HP，并让敌人跳过一次行动。");
         RefreshPlayerUI();
         DealDamageToEnemy(damage, "泡泡迷人眼命中，敌人受到了 " + damage + " 点伤害！");
     }
@@ -513,6 +516,20 @@ public class BattleManager : MonoBehaviour
         LogBattleState("Enemy turn started");
 
         yield return new WaitForSeconds(enemyTurnDelay);
+
+        if (enemyStunned)
+        {
+            enemyStunned = false;
+            SetEnemyMessage(currentEnemyName + "被泡泡迷住了，无法行动！");
+            yield return new WaitForSeconds(playerDamageMessageDelay);
+
+            currentRound++;
+            isPlayerTurn = true;
+            RefreshActionButtonsForCurrentState("enemy stunned");
+            SetPlayerMessage("敌人露出破绽，继续行动！");
+            LogBattleState("Enemy turn skipped by blur");
+            yield break;
+        }
 
         currentPlayerHP = Mathf.Max(0, currentPlayerHP - enemyAttackDamage);
         RefreshPlayerUI();

@@ -3809,6 +3809,7 @@ GameObject:
   - component: {fileID: 622208149}
   - component: {fileID: 622208148}
   - component: {fileID: 622208150}
+  - component: {fileID: 622208151}
   m_Layer: 0
   m_Name: _scripts
   m_TagString: Untagged
@@ -3997,10 +3998,100 @@ MonoBehaviour:
       isLeftPortrait: 1
       text: "\u53D1\u4EC0\u4E48\u5446\u5462\uFF1F\u6628\u5929\u7684\u63D0\u6210\u62FF\u7740\uFF0C\u53BB\u67DC\u53F0\u90A3\u8FB9\u641E\u70B9\u82B1\u8336\u559D\u559D\uFF0C\u770B\u4F60\u7D2F\u7684"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
-  - dayName: 
-    lines: []
-  - dayName: 
-    lines: []
+  - dayName: Day 4
+    lines:
+    - textId: 
+      order: 0
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: 
+      side: 
+      portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
+      isLeftPortrait: 1
+      text: "\u4F60\u8FD9\u51E0\u5929\u4E0B\u6765\u8D8A\u6765\u8D8A\u5F97\u5FC3\u5E94\u624B\u4E86\uFF0C\u7ED9\u4F60\uFF0C\u8FD9\u4E2A\u62FF\u53BB\u6413\u6CE1\u6CE1\u7279\u522B\u597D\u7528"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 
+      order: 0
+      speakerName: "\u6211\u662F\u65C1\u767D"
+      portraitSourceName: 
+      side: none
+      portrait: {fileID: 0}
+      isLeftPortrait: 0
+      text: "\u89E3\u9501\u4E86\u65B0\u6280\u80FD\uFF01\u3010\u7729\u6655\u3011\u6CE1\u6CE1\u8FF7\u4EBA\u773C"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+  - dayName: Day 5
+    lines:
+    - textId: 
+      order: 0
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: 
+      side: 
+      portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
+      isLeftPortrait: 1
+      text: "\u53C8\u662F\u4E00\u5929\uFF0C\u8BF6\uFF0C\u60F3\u5B66\u70B9\u65B0\u4E1C\u897F\u4E0D\uFF01"
+      backgroundImage: {fileID: 0}
+    - textId: 
+      order: 0
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: 
+      side: 
+      portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+      isLeftPortrait: 0
+      text: "\u4EC0\u4E48\u65B0\u4E1C\u897F\uFF1F"
+      backgroundImage: {fileID: 0}
+    - textId: 
+      order: 0
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: 
+      side: 
+      portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
+      isLeftPortrait: 1
+      text: "\u6211\u6BD5\u751F\u6240\u5B66\u7684\u5927\u6740\u5668\uFF01\uFF01"
+      backgroundImage: {fileID: 0}
+    - textId: 
+      order: 0
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: 
+      side: 
+      portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+      isLeftPortrait: 0
+      text: "\u6211\u8981\u5B66\uFF01"
+      backgroundImage: {fileID: 0}
+    - textId: 
+      order: 0
+      speakerName: "\u6211\u662F\u65C1\u767D"
+      portraitSourceName: 
+      side: 
+      portrait: {fileID: 0}
+      isLeftPortrait: 0
+      text: "\u5C0F\u798F\u5F88\u6709\u5929\u8D4B......"
+      backgroundImage: {fileID: 0}
+    - textId: 
+      order: 0
+      speakerName: "\u6211\u662F\u65C1\u767D"
+      portraitSourceName: 
+      side: 
+      portrait: {fileID: 0}
+      isLeftPortrait: 0
+      text: "\u975E\u5E38\u5FEB\u7684\u5C31\u638C\u63E1\u4E86\u6280\u80FD\u3010\u7EC8\u7ED3\u3011\u7075\u9B42\u629B\u5149\uFF01\uFF01"
+      backgroundImage: {fileID: 0}
+    - textId: 
+      order: 0
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: 
+      side: 
+      portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+      isLeftPortrait: 0
+      text: "\u5929\u54EA\u8FD9\u662F\u4EC0\u4E48\uFF01\u8FD9\u795E\u5947\u7684\u80A5\u7682\uFF0C\u8FD9\u6837\u8FD0\u7528\u80FD\u53D1\u6325\u5982\u6B64\u5F3A\u5927\u7684\u6548\u679C\uFF01\uFF01"
+      backgroundImage: {fileID: 0}
+    - textId: 
+      order: 0
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: 
+      side: 
+      portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
+      isLeftPortrait: 1
+      text: "\u54FC\u54FC\uFF0C\u597D\u597D\u7528\uFF0C\u8FD8\u597D\u4F60\u8FD9\u4E48\u5FEB\u5C31\u5B66\u4F1A\u4E86\uFF0C\u4E0A\u4E00\u4E2A\u6211\u6559\u7684\u5B66\u4E0D\u4F1A\u7684\u4EBA\u5DF2\u7ECF\u88AB\u6211\u6413\u6210\u9F20\u9F20\u7403\u4E86\uFF01"
+      backgroundImage: {fileID: 0}
   - dayName: 
     lines: []
   - dayName: Day 7
@@ -4200,7 +4291,7 @@ MonoBehaviour:
       portraitSourceName: 
       side: 
       portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
-      isLeftPortrait: 0
+      isLeftPortrait: 1
       text: "\u5B83\u73B0\u5728\u5C31\u50CF\u6478\u4E0D\u7740\u6293\u4E0D\u7740\u7684\u6CE1\u6CE1\uFF0C\u6240\u4EE5\u4F60\u770B\u4E0D\u6E05\u3002"
       backgroundImage: {fileID: 0}
     - textId: 103
@@ -4209,7 +4300,7 @@ MonoBehaviour:
       portraitSourceName: 
       side: 
       portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
-      isLeftPortrait: 0
+      isLeftPortrait: 1
       text: "\u9488\u5BF9\u8FD9\u6837\u7684\u987E\u5BA2\u591A\u4F7F\u7528\u5EF6\u7F13\u5BF9\u65B9\u884C\u52A8\u7684\u6280\u80FD\uFF0C\u8BB0\u4F4F\uFF01\uFF01"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - textId: 104
@@ -4452,6 +4543,29 @@ MonoBehaviour:
       isLeftPortrait: 1
       text: "\u7CDF\u4E86\uFF01\u8FD9\u5B59\u5B50\uFF0C\u5B83\u8EAB\u4E0A\u7684\u5916\u58F3\u5728\u8FC5\u901F\u6210\u957F\uFF0C\u5FEB\u628A\u8001\u5A18\u7684\u62DB\u724C\u641E\u57AE\u4E86\uFF01\u5FEB\u963B\u6B62\u4ED6\uFF01"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+--- !u!114 &622208151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622208147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79695866fe5e11f4e8971a102f6606c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentDay: 5
+  maxDay: 7
+  playerGold: 20
+  playerHP: 100
+  playerSP: 50
+  waterLadleCount: 0
+  soapCount: 0
+  teaCount: 0
+  towelCount: 0
+  hasWaterLadle: 0
+  hasGoldenTowel: 0
 --- !u!1 &628705836
 GameObject:
   m_ObjectHideFlags: 0
