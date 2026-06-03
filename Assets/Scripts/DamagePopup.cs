@@ -1,22 +1,25 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 // Small UI popup that floats upward and destroys itself.
 public class DamagePopup : MonoBehaviour
 {
     public float lifetime = 1.4f;
     public float floatDistance = 90f;
-    public float minimumFontSize = 64f;
+    public float minimumFontSize = 72f;
     public float minimumScale = 1.15f;
 
     private RectTransform rectTransform;
     private TextMeshProUGUI textComponent;
+    private Shadow shadow;
 
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         textComponent = GetComponent<TextMeshProUGUI>();
+        EnsureTextEffects();
     }
 
     public void SetText(string text)
@@ -24,6 +27,7 @@ public class DamagePopup : MonoBehaviour
         if (textComponent == null)
             textComponent = GetComponent<TextMeshProUGUI>();
 
+        EnsureTextEffects();
         textComponent.text = text;
     }
 
@@ -61,10 +65,11 @@ public class DamagePopup : MonoBehaviour
         if (textComponent == null)
             textComponent = GetComponent<TextMeshProUGUI>();
 
+        EnsureTextEffects();
         transform.SetAsLastSibling();
 
-        lifetime = Mathf.Max(lifetime, 1.4f);
-        floatDistance = Mathf.Max(floatDistance, 90f);
+        lifetime = Mathf.Max(lifetime, 1.6f);
+        floatDistance = Mathf.Max(floatDistance, 110f);
 
         if (rectTransform != null)
         {
@@ -76,6 +81,26 @@ public class DamagePopup : MonoBehaviour
             textComponent.fontSize = minimumFontSize;
 
         StartCoroutine(PlayRoutine());
+    }
+
+    private void EnsureTextEffects()
+    {
+        if (textComponent != null)
+        {
+            textComponent.fontStyle |= FontStyles.Bold;
+            textComponent.outlineWidth = Mathf.Max(textComponent.outlineWidth, 0.2f);
+            textComponent.outlineColor = Color.black;
+        }
+
+        if (shadow == null)
+            shadow = GetComponent<Shadow>();
+
+        if (shadow == null)
+            shadow = gameObject.AddComponent<Shadow>();
+
+        shadow.effectColor = new Color(0f, 0f, 0f, 0.65f);
+        shadow.effectDistance = new Vector2(2f, -2f);
+        shadow.useGraphicAlpha = true;
     }
 
     private IEnumerator PlayRoutine()
@@ -92,7 +117,7 @@ public class DamagePopup : MonoBehaviour
             rectTransform.anchoredPosition = Vector2.Lerp(start, end, t);
 
             Color color = textComponent.color;
-            color.a = 1f - t;
+            color.a = t < 0.4f ? 1f : 1f - Mathf.Clamp01((t - 0.4f) / 0.6f);
             textComponent.color = color;
 
             yield return null;

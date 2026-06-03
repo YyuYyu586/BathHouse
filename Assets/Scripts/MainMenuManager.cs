@@ -8,6 +8,7 @@ public class MainMenuManager : MonoBehaviour
     [Header("Buttons")]
     [SerializeField] private Button startButton;
     [SerializeField] private Button quitButton;
+    [SerializeField] private Button continueButton;
     private RectTransform startButtonRect;
     private RectTransform quitButtonRect;
     private Canvas parentCanvas;
@@ -24,6 +25,7 @@ public class MainMenuManager : MonoBehaviour
         SavePanelController.ResetPanelState();
         ResetMenuInputState();
         EnsureButtonBindings();
+        RefreshContinueButtonState();
         EnsureClickFallbackReferences();
 
         // 如果 Inspector 没有手动拖引用，就按名字自动找到 MainMenu 里的云。
@@ -42,6 +44,7 @@ public class MainMenuManager : MonoBehaviour
     {
         ResetMenuInputState();
         EnsureButtonBindings();
+        RefreshContinueButtonState();
         EnsureClickFallbackReferences();
     }
 
@@ -59,6 +62,7 @@ public class MainMenuManager : MonoBehaviour
         isLoadingScene = true;
         SavePanelController.ResetPanelState();
         ResetMenuInputState();
+        GameManager.EnsureInstance().ResetGame();
         Debug.Log("MainMenu StartGame clicked. Loading StoryScene.");
         SceneManager.LoadScene("StoryScene");
     }
@@ -81,8 +85,32 @@ public class MainMenuManager : MonoBehaviour
 
         SavePanelController.ResetPanelState();
         ResetMenuInputState();
+        GameManager.EnsureInstance().ResetGame();
         Debug.Log("MainMenu StartGameWithClickSound clicked. Loading StoryScene.");
         SceneManager.LoadScene("StoryScene");
+    }
+
+    public void ContinueGame()
+    {
+        if (isLoadingScene)
+            return;
+
+        if (!SavePanelController.HasSavedGame())
+        {
+            Debug.LogWarning("MainMenu ContinueGame clicked, but no saved game exists.");
+            RefreshContinueButtonState();
+            return;
+        }
+
+        GameManager gameManager = GameManager.EnsureInstance();
+        if (!SavePanelController.LoadSavedGame(gameManager))
+            return;
+
+        isLoadingScene = true;
+        SavePanelController.ResetPanelState();
+        ResetMenuInputState();
+        Debug.Log("MainMenu ContinueGame clicked. Loading BathhouseMain.");
+        SceneManager.LoadScene("BathhouseMain");
     }
 
     public void QuitGame()
@@ -120,7 +148,37 @@ public class MainMenuManager : MonoBehaviour
             quitButton = FindButton("QuitButton");
 
         BindStartButton();
+        BindContinueButton();
         BindButton(quitButton, QuitGame, "QuitGame", "QuitButton");
+    }
+
+    private void BindContinueButton()
+    {
+        if (continueButton == null)
+            continueButton = FindButton("ContinueButton");
+
+        if (continueButton == null)
+        {
+            Debug.LogWarning("MainMenuManager could not find ContinueButton.");
+            return;
+        }
+
+        if (!HasPersistentListener(continueButton, "ContinueGame"))
+        {
+            continueButton.onClick.RemoveListener(ContinueGame);
+            continueButton.onClick.AddListener(ContinueGame);
+        }
+    }
+
+    private void RefreshContinueButtonState()
+    {
+        if (continueButton == null)
+            return;
+
+        bool hasSave = SavePanelController.HasSavedGame();
+        continueButton.gameObject.SetActive(hasSave);
+        continueButton.enabled = hasSave;
+        continueButton.interactable = hasSave;
     }
 
     private void BindStartButton()

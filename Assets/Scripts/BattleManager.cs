@@ -517,7 +517,7 @@ public class BattleManager : MonoBehaviour
         currentPlayerHP = Mathf.Max(0, currentPlayerHP - enemyAttackDamage);
         RefreshPlayerUI();
         SetPlayerMessage(currentEnemyName + "反击！你受到 " + enemyAttackDamage + " 点伤害。");
-        SpawnDamagePopup(playerDamagePopupPoint, "-" + enemyAttackDamage + " HP", playerDamagePopupOffset);
+        SpawnDamagePopup(playerDamagePopupPoint, "-" + enemyAttackDamage, playerDamagePopupOffset);
         PlayPlayerHitFeedback();
         LogBattleState("Enemy attacked");
 
@@ -577,7 +577,7 @@ public class BattleManager : MonoBehaviour
         {
             SetPlayerMessage("搓澡之神降临！先把这层崩溃的外壳洗掉！");
             SetEnemyMessage(reason);
-            SpawnDamagePopup(enemyDamagePopupPoint, "999", enemyDamagePopupOffset);
+            SpawnDamagePopup(enemyDamagePopupPoint, "-999", enemyDamagePopupOffset);
             yield return new WaitForSeconds(0.8f);
 
             currentPlayerHP = Mathf.Max(1, currentPlayerHP);
@@ -617,7 +617,7 @@ public class BattleManager : MonoBehaviour
         {
             SetPlayerMessage("搓澡之神降临！今天也不能卡在这里！");
             SetEnemyMessage(reason);
-            SpawnDamagePopup(enemyDamagePopupPoint, "999", enemyDamagePopupOffset);
+            SpawnDamagePopup(enemyDamagePopupPoint, "-999", enemyDamagePopupOffset);
             yield return new WaitForSeconds(0.6f);
         }
 

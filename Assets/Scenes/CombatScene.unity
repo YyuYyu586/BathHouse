@@ -926,8 +926,8 @@ MonoBehaviour:
   damagePopupPrefab: {fileID: 4875413417841535176, guid: 72a59718d5a13d0448a67f0e1db3827f, type: 3}
   playerDamagePopupOffset: {x: 0, y: -18}
   enemyDamagePopupOffset: {x: 0, y: -18}
-  enemyHitFeedback: {fileID: 343826277}
-  playerHitFeedback: {fileID: 2101508067}
+  enemyHitFeedback: {fileID: 2101508067}
+  playerHitFeedback: {fileID: 343826277}
 --- !u!4 &209039713
 Transform:
   m_ObjectHideFlags: 0

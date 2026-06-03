@@ -6,6 +6,10 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
 
+    private const string BgmVolumeKey = "BGMVolume";
+    private const string SfxVolumeKey = "SFXVolume";
+    private const float DefaultVolume = 0.8f;
+
     [Header("Clips")]
     [SerializeField] private AudioClip normalBgm;
     [SerializeField] private AudioClip battleBgm;
@@ -18,6 +22,10 @@ public class AudioManager : MonoBehaviour
     private bool warnedMissingNormalBgm;
     private bool warnedMissingBattleBgm;
     private bool warnedMissingClickSfx;
+    private bool warnedMissingBgmSource;
+    private bool warnedMissingSfxSource;
+    private float bgmVolume = DefaultVolume;
+    private float sfxVolume = DefaultVolume;
 
     private void Awake()
     {
@@ -29,6 +37,7 @@ public class AudioManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        LoadSavedVolumes();
         EnsureAudioSources();
     }
 
@@ -70,6 +79,47 @@ public class AudioManager : MonoBehaviour
         sfxSource.PlayOneShot(uiClickSfx);
     }
 
+    public void PlayUIClickSFX()
+    {
+        PlayClickSfx();
+    }
+
+    public void PlayNormalBGM()
+    {
+        PlayBgm(normalBgm, "normalBgm");
+    }
+
+    public void PlayBattleBGM()
+    {
+        PlayBgm(battleBgm, "battleBgm");
+    }
+
+    public float GetBGMVolume()
+    {
+        return bgmVolume;
+    }
+
+    public float GetSFXVolume()
+    {
+        return sfxVolume;
+    }
+
+    public void SetBGMVolume(float value)
+    {
+        bgmVolume = Mathf.Clamp01(value);
+        PlayerPrefs.SetFloat(BgmVolumeKey, bgmVolume);
+        PlayerPrefs.Save();
+        ApplyVolumes();
+    }
+
+    public void SetSFXVolume(float value)
+    {
+        sfxVolume = Mathf.Clamp01(value);
+        PlayerPrefs.SetFloat(SfxVolumeKey, sfxVolume);
+        PlayerPrefs.Save();
+        ApplyVolumes();
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         PlayBgmForScene(scene.name);
@@ -83,6 +133,26 @@ public class AudioManager : MonoBehaviour
         if (targetClip == null)
         {
             WarnMissingBgmForScene(sceneName);
+            if (bgmSource.isPlaying)
+                bgmSource.Stop();
+
+            bgmSource.clip = null;
+            return;
+        }
+
+        if (bgmSource.clip == targetClip && bgmSource.isPlaying)
+            return;
+
+        PlayBgm(targetClip, sceneName);
+    }
+
+    private void PlayBgm(AudioClip targetClip, string sourceName)
+    {
+        EnsureAudioSources();
+
+        if (targetClip == null)
+        {
+            Debug.LogWarning("AudioManager " + sourceName + " is not assigned. BGM will not play.");
             if (bgmSource.isPlaying)
                 bgmSource.Stop();
 
@@ -144,23 +214,57 @@ public class AudioManager : MonoBehaviour
         AudioSource[] sources = GetComponents<AudioSource>();
 
         if (bgmSource == null)
+        {
+            if (sources.Length == 0 && !warnedMissingBgmSource)
+            {
+                warnedMissingBgmSource = true;
+                Debug.LogWarning("AudioManager bgmSource is not assigned. A new AudioSource will be added.");
+            }
+
             bgmSource = sources.Length > 0 ? sources[0] : gameObject.AddComponent<AudioSource>();
+        }
 
         if (sfxSource == null)
         {
             if (sources.Length > 1)
+            {
                 sfxSource = sources[1];
+            }
             else
+            {
+                if (!warnedMissingSfxSource)
+                {
+                    warnedMissingSfxSource = true;
+                    Debug.LogWarning("AudioManager sfxSource is not assigned. A new AudioSource will be added.");
+                }
+
                 sfxSource = gameObject.AddComponent<AudioSource>();
+            }
         }
 
         bgmSource.playOnAwake = false;
         bgmSource.loop = true;
 
-        sfxSource.volume = 1f;
         sfxSource.mute = false;
         sfxSource.spatialBlend = 0f;
         sfxSource.playOnAwake = false;
         sfxSource.loop = false;
+
+        ApplyVolumes();
+    }
+
+    private void LoadSavedVolumes()
+    {
+        bgmVolume = Mathf.Clamp01(PlayerPrefs.GetFloat(BgmVolumeKey, DefaultVolume));
+        sfxVolume = Mathf.Clamp01(PlayerPrefs.GetFloat(SfxVolumeKey, DefaultVolume));
+    }
+
+    private void ApplyVolumes()
+    {
+        if (bgmSource != null)
+            bgmSource.volume = bgmVolume;
+
+        if (sfxSource != null)
+            sfxSource.volume = sfxVolume;
     }
 }

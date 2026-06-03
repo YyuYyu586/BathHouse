@@ -7,6 +7,17 @@ using TMPro;
 
 public class SavePanelController : MonoBehaviour
 {
+    public const string CurrentDayKey = "currentDay";
+    public const string PlayerGoldKey = "playerGold";
+    public const string PlayerHPKey = "playerHP";
+    public const string PlayerSPKey = "playerSP";
+    public const string SoapCountKey = "soapCount";
+    public const string TeaCountKey = "teaCount";
+    public const string WaterLadleCountKey = "waterLadleCount";
+    public const string TowelCountKey = "towelCount";
+    public const string HasWaterLadleKey = "hasWaterLadle";
+    public const string HasGoldenTowelKey = "hasGoldenTowel";
+
     public static bool IsPanelOpen { get; private set; }
 
     [Header("Panel")]
@@ -43,6 +54,48 @@ public class SavePanelController : MonoBehaviour
         IsPanelOpen = false;
         Time.timeScale = 1f;
         Debug.Log("SavePanel static state reset.");
+    }
+
+    public static bool HasSavedGame()
+    {
+        return PlayerPrefs.HasKey(CurrentDayKey);
+    }
+
+    public static bool LoadSavedGame(GameManager gameManager)
+    {
+        if (gameManager == null)
+        {
+            Debug.LogWarning("SavePanelController could not load saved game because GameManager is missing.");
+            return false;
+        }
+
+        if (!HasSavedGame())
+        {
+            Debug.LogWarning("SavePanelController could not load saved game because no save data exists.");
+            return false;
+        }
+
+        gameManager.currentDay = Mathf.Clamp(PlayerPrefs.GetInt(CurrentDayKey, gameManager.currentDay), 1, gameManager.maxDay);
+        gameManager.playerGold = PlayerPrefs.GetInt(PlayerGoldKey, gameManager.playerGold);
+        gameManager.playerHP = PlayerPrefs.GetInt(PlayerHPKey, gameManager.playerHP);
+        gameManager.playerSP = PlayerPrefs.GetInt(PlayerSPKey, gameManager.playerSP);
+        gameManager.soapCount = PlayerPrefs.GetInt(SoapCountKey, gameManager.soapCount);
+        gameManager.teaCount = PlayerPrefs.GetInt(TeaCountKey, gameManager.teaCount);
+        gameManager.waterLadleCount = PlayerPrefs.GetInt(WaterLadleCountKey, gameManager.waterLadleCount);
+        gameManager.towelCount = PlayerPrefs.GetInt(TowelCountKey, gameManager.towelCount);
+        gameManager.hasWaterLadle = PlayerPrefs.GetInt(HasWaterLadleKey, gameManager.hasWaterLadle ? 1 : 0) == 1;
+        gameManager.hasGoldenTowel = PlayerPrefs.GetInt(HasGoldenTowelKey, gameManager.hasGoldenTowel ? 1 : 0) == 1;
+
+        Debug.Log("Game loaded. currentDay=" + gameManager.currentDay +
+                  ", gold=" + gameManager.playerGold +
+                  ", hp=" + gameManager.playerHP +
+                  ", sp=" + gameManager.playerSP +
+                  ", soap=" + gameManager.soapCount +
+                  ", tea=" + gameManager.teaCount +
+                  ", hasWaterLadle=" + gameManager.hasWaterLadle +
+                  ", hasGoldenTowel=" + gameManager.hasGoldenTowel + ".");
+
+        return true;
     }
 
     private void Update()
@@ -91,16 +144,16 @@ public class SavePanelController : MonoBehaviour
     {
         GameManager gameManager = GameManager.EnsureInstance();
 
-        PlayerPrefs.SetInt("currentDay", gameManager.currentDay);
-        PlayerPrefs.SetInt("playerGold", gameManager.playerGold);
-        PlayerPrefs.SetInt("playerHP", gameManager.playerHP);
-        PlayerPrefs.SetInt("playerSP", gameManager.playerSP);
-        PlayerPrefs.SetInt("soapCount", gameManager.soapCount);
-        PlayerPrefs.SetInt("teaCount", gameManager.teaCount);
-        PlayerPrefs.SetInt("waterLadleCount", gameManager.waterLadleCount);
-        PlayerPrefs.SetInt("towelCount", gameManager.towelCount);
-        PlayerPrefs.SetInt("hasWaterLadle", gameManager.hasWaterLadle ? 1 : 0);
-        PlayerPrefs.SetInt("hasGoldenTowel", gameManager.hasGoldenTowel ? 1 : 0);
+        PlayerPrefs.SetInt(CurrentDayKey, gameManager.currentDay);
+        PlayerPrefs.SetInt(PlayerGoldKey, gameManager.playerGold);
+        PlayerPrefs.SetInt(PlayerHPKey, gameManager.playerHP);
+        PlayerPrefs.SetInt(PlayerSPKey, gameManager.playerSP);
+        PlayerPrefs.SetInt(SoapCountKey, gameManager.soapCount);
+        PlayerPrefs.SetInt(TeaCountKey, gameManager.teaCount);
+        PlayerPrefs.SetInt(WaterLadleCountKey, gameManager.waterLadleCount);
+        PlayerPrefs.SetInt(TowelCountKey, gameManager.towelCount);
+        PlayerPrefs.SetInt(HasWaterLadleKey, gameManager.hasWaterLadle ? 1 : 0);
+        PlayerPrefs.SetInt(HasGoldenTowelKey, gameManager.hasGoldenTowel ? 1 : 0);
         PlayerPrefs.Save();
 
         Debug.Log("Game saved. currentDay=" + gameManager.currentDay +
@@ -233,16 +286,16 @@ public class SavePanelController : MonoBehaviour
 
     private void ClearSavedGame()
     {
-        PlayerPrefs.DeleteKey("currentDay");
-        PlayerPrefs.DeleteKey("playerGold");
-        PlayerPrefs.DeleteKey("playerHP");
-        PlayerPrefs.DeleteKey("playerSP");
-        PlayerPrefs.DeleteKey("soapCount");
-        PlayerPrefs.DeleteKey("teaCount");
-        PlayerPrefs.DeleteKey("waterLadleCount");
-        PlayerPrefs.DeleteKey("towelCount");
-        PlayerPrefs.DeleteKey("hasWaterLadle");
-        PlayerPrefs.DeleteKey("hasGoldenTowel");
+        PlayerPrefs.DeleteKey(CurrentDayKey);
+        PlayerPrefs.DeleteKey(PlayerGoldKey);
+        PlayerPrefs.DeleteKey(PlayerHPKey);
+        PlayerPrefs.DeleteKey(PlayerSPKey);
+        PlayerPrefs.DeleteKey(SoapCountKey);
+        PlayerPrefs.DeleteKey(TeaCountKey);
+        PlayerPrefs.DeleteKey(WaterLadleCountKey);
+        PlayerPrefs.DeleteKey(TowelCountKey);
+        PlayerPrefs.DeleteKey(HasWaterLadleKey);
+        PlayerPrefs.DeleteKey(HasGoldenTowelKey);
         PlayerPrefs.Save();
         Debug.Log("Saved game PlayerPrefs cleared for restart.");
     }
