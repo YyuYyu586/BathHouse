@@ -1720,7 +1720,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1116819132
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1949,7 +1949,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 649, y: -238}
+  m_AnchoredPosition: {x: 683, y: -238}
   m_SizeDelta: {x: 500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1550094723
@@ -2696,7 +2696,7 @@ MonoBehaviour:
       side: R
       portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
       isLeftPortrait: 0
-      text: "\u53D4\uFF0C\u60A8\u522B\u7BA1\u5916\u5934\u90A3\u4E9B\u4E0D\u957F\u773C\u7684\u4EBA\u600E\u4E48\u770B\u3002"
+      text: "\u9F20\u9F20\uFF0C\u60A8\u522B\u7BA1\u5916\u5934\u90A3\u4E9B\u4E0D\u957F\u773C\u7684\u4EBA\u600E\u4E48\u770B\u3002"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - textId: 107
       order: 14
@@ -2712,7 +2712,7 @@ MonoBehaviour:
       speakerName: "\u5C0F\u798F"
       portraitSourceName: 
       side: 
-      portrait: {fileID: 0}
+      portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
       isLeftPortrait: 0
       text: "\u6211\u77E5\u9053\u8FD9\u9644\u8FD1\u6709\u5927\u5B66\uFF0C\u6240\u4EE5\u521A\u597D\u4E5F\u6709\u5730\u644A\uFF0C\u90A3\u4E00\u7247\u6700\u96BE\u6E05\u7406\u4E86\u5427......"
       backgroundImage: {fileID: 0}
@@ -2786,7 +2786,7 @@ MonoBehaviour:
       side: L
       portrait: {fileID: 21300000, guid: d1e45009b3af2f544aa17ff7502a591c, type: 3}
       isLeftPortrait: 1
-      text: "\uFF08\u4ED6\u63E1\u7740\u90A3\u676F\u8336\uFF0C\u5FC3\u91CC\u611F\u5230\u65E0\u6BD4\u6E29\u6696\u3002\uFF09"
+      text: "\uFF08\u5B83\u63E1\u7740\u90A3\u676F\u8336\uFF0C\u5FC3\u91CC\u611F\u5230\u65E0\u6BD4\u6E29\u6696\u3002\uFF09"
       backgroundImage: {fileID: 21300000, guid: 25660153abcce604d9a149d68b422020, type: 3}
   - dayName: Day 5
     lines:
@@ -2857,9 +2857,9 @@ MonoBehaviour:
       order: 17
       speakerName: "\u5C0F\u798F"
       portraitSourceName: lihui_waimaiyuan
-      side: L
-      portrait: {fileID: 21300000, guid: dd933d8af58c5ab49868a4204b8cec24, type: 3}
-      isLeftPortrait: 1
+      side: R
+      portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+      isLeftPortrait: 0
       text: "\u597D\uFF0C\u6C38\u8FDC\u4E0D\u8981\u653E\u5F03\uFF0C\u4F46\u4E5F\u4E0D\u8981\u5FD8\u8BB0\u4F11\u606F"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - textId: 134
@@ -2929,10 +2929,10 @@ MonoBehaviour:
       order: 25
       speakerName: "\u5916\u5356\u5458\u9F20"
       portraitSourceName: lihui_waimaiyuan
-      side: R
+      side: L
       portrait: {fileID: 21300000, guid: dd933d8af58c5ab49868a4204b8cec24, type: 3}
-      isLeftPortrait: 0
-      text: "\u8001\u677F\uFF0C\u8C22\u4E86\uFF0C\u4E0D\u7528\u627E\u4E86\uFF01\uFF08\u6211\u4EEC\u90FD\u5728\u7528\u529B\u5730\u6D3B\u7740~\uFF09"
+      isLeftPortrait: 1
+      text: "\u8001\u677F\uFF0C\u8C22\u4E86\uFF0C\u4E0D\u7528\u627E\u4E86\uFF01"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - textId: 142
       order: 26
@@ -3072,7 +3072,7 @@ MonoBehaviour:
       side: L
       portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
       isLeftPortrait: 1
-      text: "\u8FD9\u6837\u7684\u5F3A\u5927\u7684\u4E1C\u897F\u6211\u8FD8\u662F\u7B2C\u4E00\u6B21\u89C1....."
+      text: "\u8FD9\u6837\u7684\u5F3A\u5927\u7684\u4E1C\u897F\u6211\u8FD8\u662F\u7B2C\u4E00\u6B21\u89C1.....\u8C8C\u4F3C\u662F\u8FD9\u9644\u8FD1\u7684\u8D1F\u9762\u60C5\u7EEA\u90FD\u6C47\u96C6\u5230\u5B83\u4E00\u4EBA\u8EAB\u4E0A\u4E86"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - textId: 175
       order: 10
@@ -3081,7 +3081,7 @@ MonoBehaviour:
       side: L
       portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
       isLeftPortrait: 1
-      text: "\u4E0D\u8FC7\u8FD8\u597D\u4F60\u6CA1\u4E8B......"
+      text: "\u624D\u51FA\u73B0\u8FD9\u6837\u7684\u4E1C\u897F\uFF0C\u4E0D\u8FC7\u8FD8\u597D\u4F60\u6CA1\u4E8B......"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - textId: 176
       order: 10

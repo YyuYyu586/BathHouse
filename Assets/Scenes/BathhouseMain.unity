@@ -1429,7 +1429,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 697, y: 100}
+  m_AnchoredPosition: {x: 750, y: 93}
   m_SizeDelta: {x: 500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &291696656
@@ -1452,7 +1452,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9dd247752bf53b44bb26469a85071715, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -4199,7 +4199,7 @@ MonoBehaviour:
       speakerName: "\u91D1\u5AC2"
       portraitSourceName: 
       side: 
-      portrait: {fileID: 0}
+      portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
       isLeftPortrait: 0
       text: "\u5B83\u73B0\u5728\u5C31\u50CF\u6478\u4E0D\u7740\u6293\u4E0D\u7740\u7684\u6CE1\u6CE1\uFF0C\u6240\u4EE5\u4F60\u770B\u4E0D\u6E05\u3002"
       backgroundImage: {fileID: 0}
@@ -4208,10 +4208,10 @@ MonoBehaviour:
       speakerName: "\u91D1\u5AC2"
       portraitSourceName: 
       side: 
-      portrait: {fileID: 0}
+      portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
       isLeftPortrait: 0
-      text: "\u9488\u5BF9\u8FD9\u6837\u7684\u987E\u5BA2\u591A\u4F7F\u7528\u5EF6\u7F13\u5BF9\u65B9\u884C\u52A8\u7684\u6280\u80FD\uFF08blur\uFF09\uFF0C\u8BB0\u4F4F\uFF01\uFF01"
-      backgroundImage: {fileID: 0}
+      text: "\u9488\u5BF9\u8FD9\u6837\u7684\u987E\u5BA2\u591A\u4F7F\u7528\u5EF6\u7F13\u5BF9\u65B9\u884C\u52A8\u7684\u6280\u80FD\uFF0C\u8BB0\u4F4F\uFF01\uFF01"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - textId: 104
       order: 11
       speakerName: "\u5C0F\u798F"
@@ -4284,7 +4284,7 @@ MonoBehaviour:
       side: L
       portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
       isLeftPortrait: 1
-      text: "\u5BF9\u4ED8\u8FD9\u79CD\u654C\u4EBA\u591A\u4F7F\u7528\u7729\u6655\u6280\u80FD\uFF0C\u9632\u6B62\u5BF9\u65B9\u5728\u4E00\u56DE\u5408\u5185\u653B\u51FB\u4F60\u591A\u6B21"
+      text: "\u5BF9\u4ED8\u8FD9\u79CD\u654C\u4EBA\u4E5F\u53EF\u4EE5\u4F7F\u7528\u7729\u6655\u6280\u80FD\uFF0C\u9632\u6B62\u5BF9\u65B9\u5728\u4E00\u56DE\u5408\u5185\u653B\u51FB\u4F60\u591A\u6B21"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - textId: 124
       order: 8
@@ -4346,9 +4346,9 @@ MonoBehaviour:
       order: 5
       speakerName: "\u5C0F\u798F"
       portraitSourceName: Jinsao_portrait
-      side: L
-      portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
-      isLeftPortrait: 1
+      side: R
+      portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+      isLeftPortrait: 0
       text: "\uFF08OMG\u4EFF\u4F5B\u770B\u89C1\u4E86\u5F53\u5E74\u7684\u81EA\u5DF1\uFF0C\u90A3\u4E9B\u5927\u5768\u5927\u5768\u7684\u6CE1\u6CE1\u662F\u4EC0\u4E48\uFF01\uFF1F\uFF09"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - textId: 151
@@ -4423,7 +4423,7 @@ MonoBehaviour:
       side: R
       portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
       isLeftPortrait: 0
-      text: "\u4ED6\u80CC\u4E0A\u7684\u7D2B\u7816\u5728\u75AF\u72C2\u589E\u751F\uFF0C\u8FD9\u662F\u6512\u4E86\u591A\u4E45\u7684\u6028\u6C14\u554A\uFF1F\uFF01"
+      text: "\u4ED6\u80CC\u4E0A\u7684\u4E1C\u897F\u5728\u75AF\u72C2\u589E\u751F\uFF0C\u8FD9\u662F......\u554A\uFF1F\uFF01"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - textId: 170
       order: 7
@@ -4450,7 +4450,7 @@ MonoBehaviour:
       side: L
       portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
       isLeftPortrait: 1
-      text: "\u7CDF\u4E86\uFF01\u8FD9\u5B59\u5B50\uFF0C\u6028\u6C14\u5FEB\u628A\u8001\u5A18\u7684\u62DB\u724C\u718F\u9ED1\u4E86\uFF01\u5FEB\u963B\u6B62\u4ED6\uFF01"
+      text: "\u7CDF\u4E86\uFF01\u8FD9\u5B59\u5B50\uFF0C\u5B83\u8EAB\u4E0A\u7684\u5916\u58F3\u5728\u8FC5\u901F\u6210\u957F\uFF0C\u5FEB\u628A\u8001\u5A18\u7684\u62DB\u724C\u641E\u57AE\u4E86\uFF01\u5FEB\u963B\u6B62\u4ED6\uFF01"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
 --- !u!1 &628705836
 GameObject:

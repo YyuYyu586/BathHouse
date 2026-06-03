@@ -1234,8 +1234,19 @@ MonoBehaviour:
   normalBgm: {fileID: 8300000, guid: 3947153105e08314b907824febde0f3c, type: 3}
   battleBgm: {fileID: 8300000, guid: 5466e9f12da8ae24aaa000430f7e37ea, type: 3}
   uiClickSfx: {fileID: 8300000, guid: 9fc5bafef02d76244b0f42539f262bfc, type: 3}
+  dialogueVoiceClips:
+  - {fileID: 8300000, guid: bf761df576f43e34482564b8e0a69e2f, type: 3}
+  - {fileID: 8300000, guid: b0898da11ebd1224b82b48d44281d541, type: 3}
+  - {fileID: 8300000, guid: 6a9b2f54717a3f64580d1e7a8e5fb278, type: 3}
+  - {fileID: 8300000, guid: 6fffc0e78547eab4fb7d8e087a614393, type: 3}
+  - {fileID: 8300000, guid: 2d8a2e90418730b46be7dedcd3f15bdd, type: 3}
+  - {fileID: 8300000, guid: e4cff513cc192db45a2c3b46cca6bdf9, type: 3}
+  - {fileID: 8300000, guid: 975c3056ab3ec8e4b947c7c0c06401b8, type: 3}
+  - {fileID: 8300000, guid: bb3f4cc564e41a145a11b04a21f386c3, type: 3}
+  dialogueVoiceMaxDuration: 0.6
   bgmSource: {fileID: 0}
   sfxSource: {fileID: 0}
+  dialogueVoiceSource: {fileID: 0}
 --- !u!1 &913965793
 GameObject:
   m_ObjectHideFlags: 0

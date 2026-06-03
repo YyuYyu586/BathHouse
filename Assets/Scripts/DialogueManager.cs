@@ -184,6 +184,15 @@ public class DialogueManager : MonoBehaviour
         LogCurrentLine(line);
 
         StopAllCoroutines();
+        string speaker = line.speakerName?.Trim();
+        if (!string.IsNullOrWhiteSpace(line.text) &&
+            !string.IsNullOrWhiteSpace(speaker) &&
+            speaker != "我是旁白" &&
+            AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayRandomDialogueVoice();
+        }
+
         StartCoroutine(TypeText(line.text));
     }
 

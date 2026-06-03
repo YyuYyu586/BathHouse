@@ -14,18 +14,25 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip normalBgm;
     [SerializeField] private AudioClip battleBgm;
     [SerializeField] private AudioClip uiClickSfx;
+    [SerializeField] private AudioClip[] dialogueVoiceClips;
+    [SerializeField] private float dialogueVoiceMaxDuration = 1.2f;
 
     [Header("Sources")]
     [SerializeField] private AudioSource bgmSource;
     [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioSource dialogueVoiceSource;
 
     private bool warnedMissingNormalBgm;
     private bool warnedMissingBattleBgm;
     private bool warnedMissingClickSfx;
+    private bool warnedMissingDialogueVoiceClips;
     private bool warnedMissingBgmSource;
     private bool warnedMissingSfxSource;
+    private bool warnedMissingDialogueVoiceSource;
     private float bgmVolume = DefaultVolume;
     private float sfxVolume = DefaultVolume;
+    private int lastDialogueVoiceClipIndex = -1;
+    private Coroutine stopDialogueVoiceRoutine;
 
     private void Awake()
     {
@@ -82,6 +89,34 @@ public class AudioManager : MonoBehaviour
     public void PlayUIClickSFX()
     {
         PlayClickSfx();
+    }
+
+    public void PlayRandomDialogueVoice()
+    {
+        if (dialogueVoiceClips == null || dialogueVoiceClips.Length == 0)
+        {
+            if (!warnedMissingDialogueVoiceClips)
+            {
+                warnedMissingDialogueVoiceClips = true;
+                Debug.LogWarning("AudioManager dialogueVoiceClips is empty. Dialogue voice will not play.");
+            }
+
+            return;
+        }
+
+        int clipIndex = GetRandomDialogueVoiceClipIndex();
+        if (clipIndex < 0)
+            return;
+
+        EnsureAudioSources();
+        StopDialogueVoicePlayback();
+        AudioClip clip = dialogueVoiceClips[clipIndex];
+        dialogueVoiceSource.PlayOneShot(clip);
+        lastDialogueVoiceClipIndex = clipIndex;
+
+        float stopDelay = Mathf.Min(Mathf.Max(0f, dialogueVoiceMaxDuration), clip.length);
+        if (stopDelay > 0f)
+            stopDialogueVoiceRoutine = StartCoroutine(StopDialogueVoiceAfterDelay(stopDelay));
     }
 
     public void PlayNormalBGM()
@@ -242,6 +277,24 @@ public class AudioManager : MonoBehaviour
             }
         }
 
+        if (dialogueVoiceSource == null)
+        {
+            if (sources.Length > 2)
+            {
+                dialogueVoiceSource = sources[2];
+            }
+            else
+            {
+                if (!warnedMissingDialogueVoiceSource)
+                {
+                    warnedMissingDialogueVoiceSource = true;
+                    Debug.LogWarning("AudioManager dialogueVoiceSource is not assigned. A new AudioSource will be added.");
+                }
+
+                dialogueVoiceSource = gameObject.AddComponent<AudioSource>();
+            }
+        }
+
         bgmSource.playOnAwake = false;
         bgmSource.loop = true;
 
@@ -250,7 +303,88 @@ public class AudioManager : MonoBehaviour
         sfxSource.playOnAwake = false;
         sfxSource.loop = false;
 
+        dialogueVoiceSource.mute = false;
+        dialogueVoiceSource.spatialBlend = 0f;
+        dialogueVoiceSource.playOnAwake = false;
+        dialogueVoiceSource.loop = false;
+
         ApplyVolumes();
+    }
+
+    private int GetRandomDialogueVoiceClipIndex()
+    {
+        int validClipCount = 0;
+        for (int i = 0; i < dialogueVoiceClips.Length; i++)
+        {
+            if (dialogueVoiceClips[i] != null)
+                validClipCount++;
+        }
+
+        if (validClipCount == 0)
+        {
+            if (!warnedMissingDialogueVoiceClips)
+            {
+                warnedMissingDialogueVoiceClips = true;
+                Debug.LogWarning("AudioManager dialogueVoiceClips contains no valid clips. Dialogue voice will not play.");
+            }
+
+            return -1;
+        }
+
+        int selectableClipCount = validClipCount > 1 && IsValidDialogueVoiceClipIndex(lastDialogueVoiceClipIndex)
+            ? validClipCount - 1
+            : validClipCount;
+
+        int selectedValidClip = Random.Range(0, selectableClipCount);
+        int selectedIndex = -1;
+
+        for (int i = 0; i < dialogueVoiceClips.Length; i++)
+        {
+            if (dialogueVoiceClips[i] == null)
+                continue;
+
+            if (selectableClipCount < validClipCount && i == lastDialogueVoiceClipIndex)
+                continue;
+
+            if (selectedValidClip == 0)
+            {
+                selectedIndex = i;
+                break;
+            }
+
+            selectedValidClip--;
+        }
+
+        return selectedIndex;
+    }
+
+    private bool IsValidDialogueVoiceClipIndex(int clipIndex)
+    {
+        return clipIndex >= 0 &&
+               clipIndex < dialogueVoiceClips.Length &&
+               dialogueVoiceClips[clipIndex] != null;
+    }
+
+    private void StopDialogueVoicePlayback()
+    {
+        if (stopDialogueVoiceRoutine != null)
+        {
+            StopCoroutine(stopDialogueVoiceRoutine);
+            stopDialogueVoiceRoutine = null;
+        }
+
+        if (dialogueVoiceSource != null)
+            dialogueVoiceSource.Stop();
+    }
+
+    private System.Collections.IEnumerator StopDialogueVoiceAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (dialogueVoiceSource != null && dialogueVoiceSource.isPlaying)
+            dialogueVoiceSource.Stop();
+
+        stopDialogueVoiceRoutine = null;
     }
 
     private void LoadSavedVolumes()
@@ -266,5 +400,8 @@ public class AudioManager : MonoBehaviour
 
         if (sfxSource != null)
             sfxSource.volume = sfxVolume;
+
+        if (dialogueVoiceSource != null)
+            dialogueVoiceSource.volume = sfxVolume;
     }
 }
