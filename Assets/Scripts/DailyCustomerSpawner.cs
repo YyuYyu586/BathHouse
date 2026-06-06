@@ -5,69 +5,103 @@ public class DailyCustomerSpawner : MonoBehaviour
     [Header("Customers are Day2 through Day7 in order.")]
     public GameObject[] customers;
 
+    [Header("DLC Customers are Day1 through Day3 in order.")]
+    public GameObject[] dlcCustomers;
+
     private void Start()
     {
         GameManager gameManager = GameManager.EnsureInstance();
         int currentDay = gameManager.currentDay;
+        bool isDiabetesDLC = gameManager.currentGameMode == GameMode.DiabetesDLC;
 
-        Debug.Log("DailyCustomerSpawner Start. currentDay = " + currentDay + ", customers count = " + GetCustomerCount() + ".");
+        Debug.Log(
+            "DailyCustomerSpawner Start. mode = " + gameManager.currentGameMode +
+            ", currentDay = " + currentDay +
+            ", customers count = " + GetCustomerCount(customers) +
+            ", dlcCustomers count = " + GetCustomerCount(dlcCustomers) + ".");
 
         SetAllCustomersInactive();
 
-        int customerIndex = currentDay - 2;
-        if (customerIndex < 0 || customerIndex >= GetCustomerCount())
+        if (isDiabetesDLC)
         {
-            Debug.LogWarning("DailyCustomerSpawner found no customer for currentDay = " + currentDay + ". Expected Day2-Day7, calculated customerIndex = " + customerIndex + ".");
-            LogCustomerStates();
+            SelectCustomerForDay(dlcCustomers, currentDay - 1, currentDay, "DiabetesDLC Day1-Day3");
             return;
         }
 
-        GameObject activeCustomer = customers[customerIndex];
+        SelectCustomerForDay(customers, currentDay - 2, currentDay, "MainStory Day2-Day7");
+    }
+
+    private void SelectCustomerForDay(GameObject[] customerArray, int customerIndex, int currentDay, string label)
+    {
+        if (customerIndex < 0 || customerIndex >= GetCustomerCount(customerArray))
+        {
+            Debug.LogWarning(
+                "DailyCustomerSpawner found no customer for currentDay = " + currentDay +
+                ". Expected " + label +
+                ", calculated customerIndex = " + customerIndex + ".");
+            LogCustomerStates(customerArray, label);
+            return;
+        }
+
+        GameObject activeCustomer = customerArray[customerIndex];
         if (activeCustomer == null)
         {
-            Debug.LogWarning("DailyCustomerSpawner customer slot is empty. currentDay = " + currentDay + ", customerIndex = " + customerIndex + ".");
-            LogCustomerStates();
+            Debug.LogWarning(
+                "DailyCustomerSpawner customer slot is empty. currentDay = " + currentDay +
+                ", customerIndex = " + customerIndex +
+                ", group = " + label + ".");
+            LogCustomerStates(customerArray, label);
             return;
         }
 
         activeCustomer.SetActive(true);
-        Debug.Log("DailyCustomerSpawner selected customer. currentDay = " + currentDay + ", customerIndex = " + customerIndex + ", activeCustomer = " + activeCustomer.name + ".");
+        Debug.Log(
+            "DailyCustomerSpawner selected customer. currentDay = " + currentDay +
+            ", customerIndex = " + customerIndex +
+            ", group = " + label +
+            ", activeCustomer = " + activeCustomer.name + ".");
         LogActiveCustomerTrigger(currentDay, activeCustomer);
         LogCustomerVisuals(activeCustomer);
-        LogCustomerStates();
+        LogCustomerStates(customerArray, label);
     }
 
     private void SetAllCustomersInactive()
     {
-        if (customers == null)
+        SetCustomersInactive(customers);
+        SetCustomersInactive(dlcCustomers);
+    }
+
+    private void SetCustomersInactive(GameObject[] customerArray)
+    {
+        if (customerArray == null)
             return;
 
-        for (int i = 0; i < customers.Length; i++)
+        for (int i = 0; i < customerArray.Length; i++)
         {
-            if (customers[i] != null)
-                customers[i].SetActive(false);
+            if (customerArray[i] != null)
+                customerArray[i].SetActive(false);
         }
     }
 
-    private int GetCustomerCount()
+    private int GetCustomerCount(GameObject[] customerArray)
     {
-        return customers != null ? customers.Length : 0;
+        return customerArray != null ? customerArray.Length : 0;
     }
 
-    private void LogCustomerStates()
+    private void LogCustomerStates(GameObject[] customerArray, string label)
     {
-        if (customers == null)
+        if (customerArray == null)
         {
-            Debug.LogWarning("DailyCustomerSpawner customers array is null.");
+            Debug.LogWarning("DailyCustomerSpawner " + label + " customers array is null.");
             return;
         }
 
-        for (int i = 0; i < customers.Length; i++)
+        for (int i = 0; i < customerArray.Length; i++)
         {
-            GameObject customer = customers[i];
+            GameObject customer = customerArray[i];
             string customerName = customer != null ? customer.name : "None";
             string activeState = customer != null ? customer.activeSelf.ToString() : "Missing";
-            Debug.Log("DailyCustomerSpawner customer state. element=" + i + ", customer=" + customerName + ", activeSelf=" + activeState + ".");
+            Debug.Log("DailyCustomerSpawner customer state. group=" + label + ", element=" + i + ", customer=" + customerName + ", activeSelf=" + activeState + ".");
         }
     }
 

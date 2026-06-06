@@ -130,6 +130,32 @@ public class CustomerTrigger : MonoBehaviour
             int currentDay = gameManager.currentDay;
             int index = currentDay - 1;
 
+            if (gameManager.currentGameMode == GameMode.DiabetesDLC)
+            {
+                if (currentDay < 1 || currentDay > 3)
+                {
+                    Debug.LogWarning("DLC BeforeCombat day " + currentDay + " is outside supported range Day1-Day3. Falling back to CustomerTrigger.lines.");
+                    return GetFallbackDialogueLines();
+                }
+
+                if (bathhouseDayStoryController.dlcBeforeCombatDialogues != null &&
+                    index >= 0 &&
+                    index < bathhouseDayStoryController.dlcBeforeCombatDialogues.Length &&
+                    bathhouseDayStoryController.dlcBeforeCombatDialogues[index] != null &&
+                    bathhouseDayStoryController.dlcBeforeCombatDialogues[index].lines != null &&
+                    bathhouseDayStoryController.dlcBeforeCombatDialogues[index].lines.Length > 0)
+                {
+                    DialogueLine[] todayLines = bathhouseDayStoryController.dlcBeforeCombatDialogues[index].lines;
+                    int linesCount = todayLines.Length;
+                    Debug.Log("Using DLC BeforeCombat dialogue. currentDay = " + currentDay + ", beforeCombatIndex = " + index + ", lines = " + linesCount + ".");
+                    LogBeforeCombatLines(currentDay, index, todayLines);
+                    return todayLines;
+                }
+
+                Debug.LogWarning("No DLC BeforeCombat dialogue found. currentDay = " + currentDay + ", beforeCombatIndex = " + index + ". Falling back to CustomerTrigger.lines without using main story dialogue.");
+                return GetFallbackDialogueLines();
+            }
+
             if (bathhouseDayStoryController.beforeCombatDialogues != null &&
                 index >= 0 &&
                 index < bathhouseDayStoryController.beforeCombatDialogues.Length &&
@@ -151,6 +177,11 @@ public class CustomerTrigger : MonoBehaviour
             Debug.LogWarning("CustomerTrigger has no BathhouseDayStoryController reference. Falling back to CustomerTrigger.lines.");
         }
 
+        return GetFallbackDialogueLines();
+    }
+
+    private DialogueLine[] GetFallbackDialogueLines()
+    {
         if (lines != null && lines.Length > 0)
         {
             Debug.LogWarning("Using fallback CustomerTrigger.lines. lines = " + lines.Length + ".");

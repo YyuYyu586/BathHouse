@@ -98,6 +98,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private Sprite day7BossSprite;
     [FormerlySerializedAs("day7Phase2Sprite")]
     [SerializeField] private Sprite day7BossWeakenedSprite;
+    [SerializeField] private Sprite[] dlcEnemySprites = new Sprite[3];
 
     [Header("Enemy Idle Animation Frames")]
     [SerializeField] private Sprite[] day2EnemyIdleFrames;
@@ -247,7 +248,7 @@ public class BattleManager : MonoBehaviour
             bathGodEffect.SetActive(false);
 
         ClearBattleLog();
-        PlayEnemyIdleAnimation(GetEnemyIdleFramesForCurrentDay(), GetEnemySpriteForCurrentDay());
+        ApplyEnemyVisualForCurrentDay();
         RefreshActionButtonsForCurrentState("battle start");
         SetPlayerMessage(BuildBattleStartMessage());
         SetEnemyMessage("选择行动。");
@@ -791,22 +792,56 @@ public class BattleManager : MonoBehaviour
 
     private bool IsAttackUnlocked()
     {
+        if (IsDiabetesDLCMode())
+            return true;
+
         return currentDay >= 2;
     }
 
     private bool IsUltimateUnlockedForToday()
     {
+        if (ShouldUnlockAllDLCSkills())
+            return true;
+
+        if (IsDiabetesDLCMode())
+            return currentDay >= 3;
+
         return currentDay >= 5;
     }
 
     private bool IsPolishUnlocked()
     {
+        if (ShouldUnlockAllDLCSkills())
+            return true;
+
+        if (IsDiabetesDLCMode())
+            return currentDay >= 2;
+
         return currentDay >= 2;
     }
 
     private bool IsBlurUnlocked()
     {
+        if (ShouldUnlockAllDLCSkills())
+            return true;
+
+        if (IsDiabetesDLCMode())
+            return currentDay >= 3;
+
         return currentDay >= 4;
+    }
+
+    private bool IsDiabetesDLCMode()
+    {
+        if (gameManager == null)
+            gameManager = GameManager.Instance;
+
+        return gameManager != null && gameManager.currentGameMode == GameMode.DiabetesDLC;
+    }
+
+    private bool ShouldUnlockAllDLCSkills()
+    {
+        return IsDiabetesDLCMode() && gameManager.dlcUnlockAllSkills;
     }
 
     public void UseSoap()
@@ -900,8 +935,27 @@ public class BattleManager : MonoBehaviour
 
     private EnemyDayData GetEnemyForDay(int day)
     {
+        if (gameManager != null && gameManager.currentGameMode == GameMode.DiabetesDLC)
+            return GetDiabetesDLCEnemyForDay(day);
+
         // Use code-defined data so old serialized Inspector values cannot block the demo loop.
         return GetDefaultEnemyForDay(day);
+    }
+
+    private EnemyDayData GetDiabetesDLCEnemyForDay(int day)
+    {
+        switch (day)
+        {
+            case 1:
+                return new EnemyDayData(1, "纸团", 70, 7, 15);
+            case 2:
+                return new EnemyDayData(2, "疑问的雾", 85, 8, 18);
+            case 3:
+                return new EnemyDayData(3, "杂乱的线结", 110, 10, 22);
+        }
+
+        Debug.LogWarning("No Diabetes DLC enemy configured for day " + day + ". Using safe DLC fallback enemy instead of main story data.");
+        return new EnemyDayData(day, "纸团", 70, 7, 15);
     }
 
     private EnemyDayData GetDefaultEnemyForDay(int day)
@@ -1091,6 +1145,52 @@ public class BattleManager : MonoBehaviour
             default:
                 return null;
         }
+    }
+
+    private void ApplyEnemyVisualForCurrentDay()
+    {
+        if (TryApplyDlcEnemyVisual())
+            return;
+
+        PlayEnemyIdleAnimation(GetEnemyIdleFramesForCurrentDay(), GetEnemySpriteForCurrentDay());
+    }
+
+    private bool TryApplyDlcEnemyVisual()
+    {
+        if (!IsDiabetesDLCMode())
+            return false;
+
+        int index = currentDay - 1;
+        if (index < 0 || index >= 3)
+        {
+            Debug.LogWarning("DLC enemy sprite day " + currentDay + " is outside supported range Day1-Day3. Using default enemy visual.");
+            return false;
+        }
+
+        if (dlcEnemySprites == null || index >= dlcEnemySprites.Length || dlcEnemySprites[index] == null)
+        {
+            Debug.LogWarning("DLC enemy sprite is not assigned for day " + currentDay + ". Using default enemy visual.");
+            return false;
+        }
+
+        Sprite dlcSprite = dlcEnemySprites[index];
+        if (enemyImage != null)
+            enemyImage.enabled = true;
+
+        if (enemyAnimationPlayer != null)
+        {
+            if (enemyAnimationPlayer.targetImage == null && enemyImage != null)
+                enemyAnimationPlayer.targetImage = enemyImage;
+
+            enemyAnimationPlayer.StopAndShow(dlcSprite);
+        }
+        else
+        {
+            ApplyEnemySprite(dlcSprite);
+        }
+
+        Debug.Log("DLC enemy sprite applied. currentDay=" + currentDay + ", sprite=" + dlcSprite.name + ".");
+        return true;
     }
 
     private void PlayEnemyIdleAnimation(Sprite[] idleFrames, Sprite fallbackSprite)

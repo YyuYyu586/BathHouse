@@ -15,7 +15,7 @@ public class CombatTrigger : MonoBehaviour
         {
             GameManager gameManager = GameManager.EnsureInstance();
 
-            if (blockDayOneCombat && gameManager.currentDay <= 1)
+            if (gameManager.currentGameMode == GameMode.MainStory && blockDayOneCombat && gameManager.currentDay <= 1)
             {
                 Debug.Log("Day 1 is story only. Advancing to Day 2 combat for the demo loop.");
                 gameManager.AdvanceDay();

@@ -12,6 +12,9 @@ public class AfterCombatStoryController : MonoBehaviour
     [Header("Seven Days Post-Combat Dialogue")]
     public DailyDialogue[] afterCombatDialogues = new DailyDialogue[7];
 
+    [Header("DLC Post-Combat Dialogue")]
+    public DailyDialogue[] dlcAfterCombatDialogues = new DailyDialogue[3];
+
     [Header("Day Transition")]
     public GameObject dayTransitionPanel;
     public TextMeshProUGUI transitionText;
@@ -46,7 +49,7 @@ public class AfterCombatStoryController : MonoBehaviour
 
         DialogueLine[] todayLines = GetTodayDialogueLines();
         int linesCount = todayLines != null ? todayLines.Length : 0;
-        Debug.Log("AfterCombatScene currentDay = " + gameManager.currentDay + ", index = " + GetTodayIndex() + ", lines = " + linesCount + ".");
+        Debug.Log("AfterCombatScene currentDay = " + gameManager.currentDay + ", mode = " + gameManager.currentGameMode + ", index = " + GetTodayIndex() + ", lines = " + linesCount + ".");
 
         if (todayLines == null || todayLines.Length == 0)
         {
@@ -168,6 +171,12 @@ public class AfterCombatStoryController : MonoBehaviour
 
     private DialogueLine[] GetTodayDialogueLines()
     {
+        if (gameManager == null)
+            gameManager = GameManager.EnsureInstance();
+
+        if (gameManager.currentGameMode == GameMode.DiabetesDLC)
+            return GetTodayDLCDialogueLines();
+
         int index = GetTodayIndex();
 
         if (afterCombatDialogues != null &&
@@ -180,6 +189,30 @@ public class AfterCombatStoryController : MonoBehaviour
             return afterCombatDialogues[index].lines;
         }
 
+        return null;
+    }
+
+    private DialogueLine[] GetTodayDLCDialogueLines()
+    {
+        int currentDay = gameManager.currentDay;
+        if (currentDay < 1 || currentDay > 3)
+        {
+            Debug.LogWarning("DLC after-combat day " + currentDay + " is outside supported range Day1-Day3. Skipping without using main story dialogue.");
+            return null;
+        }
+
+        int index = currentDay - 1;
+        if (dlcAfterCombatDialogues != null &&
+            index >= 0 &&
+            index < dlcAfterCombatDialogues.Length &&
+            dlcAfterCombatDialogues[index] != null &&
+            dlcAfterCombatDialogues[index].lines != null &&
+            dlcAfterCombatDialogues[index].lines.Length > 0)
+        {
+            return dlcAfterCombatDialogues[index].lines;
+        }
+
+        Debug.LogWarning("No DLC after-combat dialogue found for day " + currentDay + " at element " + index + ". Showing DayTransitionPanel without using main story dialogue.");
         return null;
     }
 
