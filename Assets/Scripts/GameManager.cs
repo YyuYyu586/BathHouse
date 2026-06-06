@@ -1,13 +1,22 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum GameMode
+{
+    MainStory,
+    DiabetesDLC
+}
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
     [Header("Game Progress")]
+    public GameMode currentGameMode = GameMode.MainStory;
     public int currentDay = 1;
     public int maxDay = 7;
+    public bool dlcPlayerHasPlayedMainStory = false;
+    public bool dlcUnlockAllSkills = false;
 
     [Header("Player Data")]
     public int playerGold = 20;
@@ -87,6 +96,25 @@ public class GameManager : MonoBehaviour
         towelCount = 0;
         hasWaterLadle = false;
         hasGoldenTowel = false;
+    }
+
+    public void StartMainStory()
+    {
+        currentGameMode = GameMode.MainStory;
+        dlcPlayerHasPlayedMainStory = false;
+        dlcUnlockAllSkills = false;
+        maxDay = 7;
+        ResetGame();
+    }
+
+    public void StartDiabetesDLC(bool hasPlayedMainStory)
+    {
+        currentGameMode = GameMode.DiabetesDLC;
+        dlcPlayerHasPlayedMainStory = hasPlayedMainStory;
+        dlcUnlockAllSkills = hasPlayedMainStory;
+        maxDay = 3;
+        ResetGame();
+        currentDay = 1;
     }
 
     public void GoNextDay()

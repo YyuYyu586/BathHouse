@@ -5,6 +5,11 @@ using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour
 {
+    [Header("Panels")]
+    [SerializeField] private GameObject mainPanel;
+    [SerializeField] private GameObject modeSelectPanel;
+    [SerializeField] private GameObject dlcExperiencePanel;
+
     [Header("Buttons")]
     [SerializeField] private Button startButton;
     [SerializeField] private Button quitButton;
@@ -27,6 +32,7 @@ public class MainMenuManager : MonoBehaviour
         EnsureButtonBindings();
         RefreshContinueButtonState();
         EnsureClickFallbackReferences();
+        BackToMainPanel();
 
         // 如果 Inspector 没有手动拖引用，就按名字自动找到 MainMenu 里的云。
         if (clouds == null || clouds.Length == 0)
@@ -46,6 +52,7 @@ public class MainMenuManager : MonoBehaviour
         EnsureButtonBindings();
         RefreshContinueButtonState();
         EnsureClickFallbackReferences();
+        BackToMainPanel();
     }
 
     private void Update()
@@ -59,12 +66,7 @@ public class MainMenuManager : MonoBehaviour
         if (isLoadingScene)
             return;
 
-        isLoadingScene = true;
-        SavePanelController.ResetPanelState();
-        ResetMenuInputState();
-        GameManager.EnsureInstance().ResetGame();
-        Debug.Log("MainMenu StartGame clicked. Loading StoryScene.");
-        SceneManager.LoadScene("StoryScene");
+        OpenModeSelectPanel();
     }
 
     public void StartGameWithClickSound()
@@ -72,7 +74,6 @@ public class MainMenuManager : MonoBehaviour
         if (isLoadingScene)
             return;
 
-        isLoadingScene = true;
         StartCoroutine(StartGameWithClickSoundRoutine());
     }
 
@@ -83,11 +84,55 @@ public class MainMenuManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.12f);
 
+        OpenModeSelectPanel();
+    }
+
+    public void OpenModeSelectPanel()
+    {
         SavePanelController.ResetPanelState();
         ResetMenuInputState();
-        GameManager.EnsureInstance().ResetGame();
-        Debug.Log("MainMenu StartGameWithClickSound clicked. Loading StoryScene.");
+        SetPanelActive(mainPanel, false);
+        SetPanelActive(modeSelectPanel, true);
+        SetPanelActive(dlcExperiencePanel, false);
+        Debug.Log("MainMenu opened mode select panel.");
+    }
+
+    public void BackToMainPanel()
+    {
+        SetPanelActive(mainPanel, true);
+        SetPanelActive(modeSelectPanel, false);
+        SetPanelActive(dlcExperiencePanel, false);
+    }
+
+    public void ChooseMainStory()
+    {
+        if (isLoadingScene)
+            return;
+
+        isLoadingScene = true;
+        SavePanelController.ResetPanelState();
+        ResetMenuInputState();
+        GameManager.EnsureInstance().StartMainStory();
+        Debug.Log("MainMenu selected MainStory. Loading StoryScene.");
         SceneManager.LoadScene("StoryScene");
+    }
+
+    public void OpenDLCExperiencePanel()
+    {
+        SetPanelActive(mainPanel, false);
+        SetPanelActive(modeSelectPanel, false);
+        SetPanelActive(dlcExperiencePanel, true);
+        Debug.Log("MainMenu opened DLC experience panel.");
+    }
+
+    public void ChooseDLCPlayedMainStory()
+    {
+        StartDiabetesDLC(true);
+    }
+
+    public void ChooseDLCFirstTime()
+    {
+        StartDiabetesDLC(false);
     }
 
     public void ContinueGame()
@@ -121,6 +166,25 @@ public class MainMenuManager : MonoBehaviour
 #else
         Application.Quit();
 #endif
+    }
+
+    private void StartDiabetesDLC(bool hasPlayedMainStory)
+    {
+        if (isLoadingScene)
+            return;
+
+        isLoadingScene = true;
+        SavePanelController.ResetPanelState();
+        ResetMenuInputState();
+        GameManager.EnsureInstance().StartDiabetesDLC(hasPlayedMainStory);
+        Debug.Log("MainMenu selected DiabetesDLC. hasPlayedMainStory=" + hasPlayedMainStory + ". Loading StoryScene.");
+        SceneManager.LoadScene("StoryScene");
+    }
+
+    private void SetPanelActive(GameObject panel, bool active)
+    {
+        if (panel != null)
+            panel.SetActive(active);
     }
 
     private RectTransform FindCloud(string cloudName)

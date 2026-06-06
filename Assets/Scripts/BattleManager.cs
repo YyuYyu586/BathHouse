@@ -76,6 +76,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI playerBattleMessageText;
     [SerializeField] private TextMeshProUGUI battleLogText;
     [SerializeField] private int maxBattleLogLines = 5;
+    [SerializeField] private float battleLogLineDelay = 0.75f;
     [SerializeField] private RectTransform playerDamagePopupPoint;
 
     [Header("Enemy UI")]
@@ -165,6 +166,8 @@ public class BattleManager : MonoBehaviour
     private bool warnedMissingPlayerHitFeedback;
     private int currentRound = 1;
     private readonly List<string> battleLogLines = new List<string>();
+    private readonly Queue<string> battleLogQueue = new Queue<string>();
+    private Coroutine battleLogRoutine;
     private Coroutine playerHPFillRoutine;
     private Coroutine playerSPFillRoutine;
     private Coroutine enemyHPFillRoutine;
@@ -247,7 +250,7 @@ public class BattleManager : MonoBehaviour
         PlayEnemyIdleAnimation(GetEnemyIdleFramesForCurrentDay(), GetEnemySpriteForCurrentDay());
         RefreshActionButtonsForCurrentState("battle start");
         SetPlayerMessage(BuildBattleStartMessage());
-        SetEnemyMessage("Day " + currentDay + ": " + currentEnemyName);
+        SetEnemyMessage("选择行动。");
         RefreshAllUI();
         Debug.Log("Combat day setup. currentDay=" + currentDay + ", enemyName=" + currentEnemyName + ", enemyHP=" + maxEnemyHP + ", enemyAttack=" + enemyAttackDamage + ", rewardGold=" + currentEnemyGoldReward + ".");
         LogBattleState("Battle started");
@@ -255,9 +258,8 @@ public class BattleManager : MonoBehaviour
 
     private string BuildBattleStartMessage()
     {
-        return "选择一个行动。\n" +
-               "当前道具：肥皂 x" + GetSoapCount() + "，花茶 x" + GetTeaCount() + "。\n" +
-               "提示：可点击道具按钮，或按 H / J 使用。";
+        return "Day " + currentDay + " 战斗开始！\n" +
+               currentEnemyName + " 出现了！";
     }
 
     private void ApplyDemoCombatTuning()
@@ -1191,7 +1193,7 @@ public class BattleManager : MonoBehaviour
     {
         if (battleLogText != null)
         {
-            AddBattleLog(message);
+            EnqueueBattleLog(message);
             Debug.Log("BattleLog Player: " + message);
             return;
         }
@@ -1211,7 +1213,7 @@ public class BattleManager : MonoBehaviour
     {
         if (battleLogText != null)
         {
-            AddBattleLog(message);
+            EnqueueBattleLog(message);
             Debug.Log("BattleLog Enemy: " + message);
             return;
         }
@@ -1225,6 +1227,34 @@ public class BattleManager : MonoBehaviour
         {
             Debug.LogWarning("enemyBattleMessageText is not assigned.");
         }
+    }
+
+    private void EnqueueBattleLog(string message)
+    {
+        if (string.IsNullOrEmpty(message))
+            return;
+
+        string[] lines = message.Split('\n');
+        for (int i = 0; i < lines.Length; i++)
+        {
+            string line = lines[i].Trim();
+            if (!string.IsNullOrEmpty(line))
+                battleLogQueue.Enqueue(line);
+        }
+
+        if (battleLogRoutine == null)
+            battleLogRoutine = StartCoroutine(PlayBattleLogQueue());
+    }
+
+    private IEnumerator PlayBattleLogQueue()
+    {
+        while (battleLogQueue.Count > 0)
+        {
+            AddBattleLog(battleLogQueue.Dequeue());
+            yield return new WaitForSeconds(Mathf.Max(0f, battleLogLineDelay));
+        }
+
+        battleLogRoutine = null;
     }
 
     private void AddBattleLog(string message)
@@ -1244,6 +1274,13 @@ public class BattleManager : MonoBehaviour
     private void ClearBattleLog()
     {
         battleLogLines.Clear();
+        battleLogQueue.Clear();
+
+        if (battleLogRoutine != null)
+        {
+            StopCoroutine(battleLogRoutine);
+            battleLogRoutine = null;
+        }
 
         if (battleLogText != null)
             battleLogText.text = "";
