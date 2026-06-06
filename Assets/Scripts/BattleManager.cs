@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -58,12 +59,23 @@ public class BattleManager : MonoBehaviour
     [Header("Failsafe")]
     [SerializeField] private int bathGodTurnLimit = 8;
 
+    [Header("Bath God Effect")]
+    [SerializeField] private GameObject bathGodEffect;
+    [SerializeField] private Image bathGodImage;
+    [SerializeField] private Sprite[] bathGodFrames;
+    [SerializeField] private float bathGodFrameRate = 8f;
+    [SerializeField] private Animator bathGodAnimator;
+    [SerializeField] private float bathGodEffectDuration = 3f;
+    [SerializeField] private string bathGodAnimationStateName = "";
+
     [Header("Player UI")]
     [SerializeField] private Image hpFillImage;
     [SerializeField] private Image spFillImage;
     [SerializeField] private TextMeshProUGUI playerHPText;
     [SerializeField] private TextMeshProUGUI playerSPText;
     [SerializeField] private TextMeshProUGUI playerBattleMessageText;
+    [SerializeField] private TextMeshProUGUI battleLogText;
+    [SerializeField] private int maxBattleLogLines = 5;
     [SerializeField] private RectTransform playerDamagePopupPoint;
 
     [Header("Enemy UI")]
@@ -152,6 +164,7 @@ public class BattleManager : MonoBehaviour
     private bool warnedMissingEnemyHitFeedback;
     private bool warnedMissingPlayerHitFeedback;
     private int currentRound = 1;
+    private readonly List<string> battleLogLines = new List<string>();
     private Coroutine playerHPFillRoutine;
     private Coroutine playerSPFillRoutine;
     private Coroutine enemyHPFillRoutine;
@@ -227,6 +240,10 @@ public class BattleManager : MonoBehaviour
         if (day7InterludePanel != null)
             day7InterludePanel.SetActive(false);
 
+        if (bathGodEffect != null)
+            bathGodEffect.SetActive(false);
+
+        ClearBattleLog();
         PlayEnemyIdleAnimation(GetEnemyIdleFramesForCurrentDay(), GetEnemySpriteForCurrentDay());
         RefreshActionButtonsForCurrentState("battle start");
         SetPlayerMessage(BuildBattleStartMessage());
@@ -577,7 +594,7 @@ public class BattleManager : MonoBehaviour
 
     private void TriggerBathGodIntervention(string reason)
     {
-        if (battleEnded || isChangingDay7Phase)
+        if (battleEnded || isChangingDay7Phase || bathGodIntervened)
             return;
 
         StartCoroutine(BathGodInterventionRoutine(reason));
@@ -595,7 +612,7 @@ public class BattleManager : MonoBehaviour
             SetPlayerMessage("搓澡之神降临！先把这层崩溃的外壳洗掉！");
             SetEnemyMessage(reason);
             SpawnDamagePopup(enemyDamagePopupPoint, "-999", enemyDamagePopupOffset);
-            yield return new WaitForSeconds(0.8f);
+            yield return StartCoroutine(PlayBathGodEffectRoutine());
 
             currentPlayerHP = Mathf.Max(1, currentPlayerHP);
             currentEnemyHP = 0;
@@ -611,7 +628,7 @@ public class BattleManager : MonoBehaviour
         {
             SetPlayerMessage("你已经很努力了……但你不是一个人在战斗。");
             SetEnemyMessage(reason);
-            yield return new WaitForSeconds(1.2f);
+            yield return StartCoroutine(PlayBathGodEffectRoutine());
             SetPlayerMessage("全员意志支撑着你，最终 Boss 露出了破绽。");
 
             currentPlayerHP = Mathf.Min(maxPlayerHP, Mathf.Max(1, currentPlayerHP) + Mathf.CeilToInt(maxPlayerHP * 0.5f));
@@ -635,7 +652,7 @@ public class BattleManager : MonoBehaviour
             SetPlayerMessage("搓澡之神降临！今天也不能卡在这里！");
             SetEnemyMessage(reason);
             SpawnDamagePopup(enemyDamagePopupPoint, "-999", enemyDamagePopupOffset);
-            yield return new WaitForSeconds(0.6f);
+            yield return StartCoroutine(PlayBathGodEffectRoutine());
         }
 
         currentPlayerHP = Mathf.Max(1, currentPlayerHP);
@@ -658,6 +675,48 @@ public class BattleManager : MonoBehaviour
 
         if (victoryPanel != null)
             victoryPanel.SetActive(true);
+    }
+
+    private IEnumerator PlayBathGodEffectRoutine()
+    {
+        if (bathGodEffect != null)
+            bathGodEffect.SetActive(true);
+
+        if (bathGodImage == null && bathGodEffect != null)
+            bathGodImage = bathGodEffect.GetComponent<Image>();
+
+        float elapsed = 0f;
+        float duration = Mathf.Max(0f, bathGodEffectDuration);
+        bool canPlayFrames = bathGodImage != null && bathGodFrames != null && bathGodFrames.Length > 0;
+
+        if (canPlayFrames)
+        {
+            float frameDelay = 1f / Mathf.Max(0.01f, bathGodFrameRate);
+
+            for (int i = 0; i < bathGodFrames.Length; i++)
+            {
+                if (bathGodFrames[i] != null)
+                    bathGodImage.sprite = bathGodFrames[i];
+
+                yield return new WaitForSeconds(frameDelay);
+                elapsed += frameDelay;
+            }
+
+            float remainingDuration = duration - elapsed;
+            if (remainingDuration > 0f)
+                yield return new WaitForSeconds(remainingDuration);
+        }
+        else
+        {
+            if (bathGodAnimator != null && !string.IsNullOrEmpty(bathGodAnimationStateName))
+                bathGodAnimator.Play(bathGodAnimationStateName, 0, 0f);
+
+            if (duration > 0f)
+                yield return new WaitForSeconds(duration);
+        }
+
+        if (bathGodEffect != null)
+            bathGodEffect.SetActive(false);
     }
 
     private bool CanPlayerAct()
@@ -1130,6 +1189,13 @@ public class BattleManager : MonoBehaviour
 
     private void SetPlayerMessage(string message)
     {
+        if (battleLogText != null)
+        {
+            AddBattleLog(message);
+            Debug.Log("BattleLog Player: " + message);
+            return;
+        }
+
         if (playerBattleMessageText != null)
         {
             playerBattleMessageText.text = message;
@@ -1143,6 +1209,13 @@ public class BattleManager : MonoBehaviour
 
     private void SetEnemyMessage(string message)
     {
+        if (battleLogText != null)
+        {
+            AddBattleLog(message);
+            Debug.Log("BattleLog Enemy: " + message);
+            return;
+        }
+
         if (enemyBattleMessageText != null)
         {
             enemyBattleMessageText.text = message;
@@ -1152,6 +1225,34 @@ public class BattleManager : MonoBehaviour
         {
             Debug.LogWarning("enemyBattleMessageText is not assigned.");
         }
+    }
+
+    private void AddBattleLog(string message)
+    {
+        if (string.IsNullOrEmpty(message) || battleLogText == null)
+            return;
+
+        battleLogLines.Add(message);
+
+        int safeMaxLines = Mathf.Max(1, maxBattleLogLines);
+        while (battleLogLines.Count > safeMaxLines)
+            battleLogLines.RemoveAt(0);
+
+        RefreshBattleLogText();
+    }
+
+    private void ClearBattleLog()
+    {
+        battleLogLines.Clear();
+
+        if (battleLogText != null)
+            battleLogText.text = "";
+    }
+
+    private void RefreshBattleLogText()
+    {
+        if (battleLogText != null)
+            battleLogText.text = string.Join("\n", battleLogLines);
     }
 
     private void BindButtonEvents()
