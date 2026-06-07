@@ -711,6 +711,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   endingCreditsPanel: {fileID: 653773393}
   creditsText: {fileID: 894651862}
+  mainStoryCreditsText: 
+  diabetesDlcCreditsText: "\u9F20\u9F20\u5927\u6FA1\u5802\n\u7CD6\u5C3F\u75C5\u7279\u522B\u6D3B\u52A8\n\n\n\u7CD6\u5C3F\u75C5\u4E0D\u662F\u4E00\u53E5\u201C\u8981\u81EA\u5F8B\u201D\u5C31\u80FD\u89E3\u51B3\u7684\u4E8B\u3002\n\n\u5B83\u5173\u4E4E\u8EAB\u4F53\uFF0C\n\u4E5F\u5173\u4E4E\u6BCF\u5929\u7684\u9009\u62E9\u3001\u62C5\u5FC3\u3001\u75B2\u60EB\u548C\u575A\u6301\u3002\n\n\u6D4B\u8840\u7CD6\u4E0D\u662F\u5BA1\u5224\uFF0C\n\u800C\u662F\u4E00\u79CD\u63D0\u9192\uFF1A\n\u63D0\u9192\u6211\u4EEC\u66F4\u4E86\u89E3\u81EA\u5DF1\u7684\u8EAB\u4F53\uFF0C\n\u4E5F\u63D0\u9192\u6211\u4EEC\u53EF\u4EE5\u6162\u6162\u5B66\u4E60\u7167\u987E\u81EA\u5DF1\u3002\n\n\u611F\u5230\u5BB3\u6015\u3001\u6CAE\u4E27\u3001\u56F0\u60D1\uFF0C\n\u5E76\u4E0D\u4EE3\u8868\u4F60\u505A\u5F97\u4E0D\u597D\u3002\n\n\u771F\u6B63\u91CD\u8981\u7684\uFF0C\n\u4E0D\u662F\u4E00\u6B21\u5C31\u53D8\u5F97\u5B8C\u7F8E\uFF0C\n\u800C\u662F\u5728\u7406\u89E3\u548C\u652F\u6301\u4E2D\uFF0C\n\u4E00\u70B9\u4E00\u70B9\u627E\u56DE\u751F\u6D3B\u7684\u8282\u594F\u3002\n\n\u613F\u6BCF\u4E00\u53EA\u4E0D\u5B89\u7684\u9F20\u9F20\uFF0C\n\u90FD\u80FD\u88AB\u6E29\u67D4\u5730\u542C\u89C1\u3002\n\n\u613F\u6BCF\u4E00\u6B21\u7406\u89E3\uFF0C\n\u90FD\u80FD\u8BA9\u6C89\u91CD\u7684\u5FC3\u8F7B\u4E00\u70B9\u3002"
   scrollSpeed: 80
   startY: -500
   endY: 700
@@ -3493,7 +3495,7 @@ MonoBehaviour:
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - textId: 77
       order: 77
-      speakerName: "\u6211\u662F\u65C1\u767D"
+      speakerName: "\u65C1\u767D"
       portraitSourceName: none
       side: L
       portrait: {fileID: 0}
@@ -3502,7 +3504,7 @@ MonoBehaviour:
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - textId: 78
       order: 78
-      speakerName: "\u6211\u662F\u65C1\u767D"
+      speakerName: "\u65C1\u767D"
       portraitSourceName: none
       side: L
       portrait: {fileID: 0}
@@ -3511,7 +3513,7 @@ MonoBehaviour:
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - textId: 79
       order: 79
-      speakerName: "\u7CFB\u7EDF"
+      speakerName: "\u65C1\u767D"
       portraitSourceName: none
       side: L
       portrait: {fileID: 0}
@@ -3711,7 +3713,7 @@ MonoBehaviour:
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - textId: 138
       order: 138
-      speakerName: "\u6211\u662F\u65C1\u767D"
+      speakerName: "\u65C1\u767D"
       portraitSourceName: none
       side: L
       portrait: {fileID: 0}
@@ -3720,7 +3722,7 @@ MonoBehaviour:
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - textId: 139
       order: 139
-      speakerName: "\u6211\u662F\u65C1\u767D"
+      speakerName: "\u65C1\u767D"
       portraitSourceName: none
       side: L
       portrait: {fileID: 0}
@@ -3729,7 +3731,7 @@ MonoBehaviour:
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - textId: 140
       order: 140
-      speakerName: "\u7CFB\u7EDF"
+      speakerName: "\u65C1\u767D"
       portraitSourceName: none
       side: L
       portrait: {fileID: 0}
@@ -3875,7 +3877,7 @@ MonoBehaviour:
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - textId: 193
       order: 193
-      speakerName: "\u6211\u662F\u65C1\u767D"
+      speakerName: "\u65C1\u767D"
       portraitSourceName: none
       side: L
       portrait: {fileID: 0}
@@ -3884,7 +3886,7 @@ MonoBehaviour:
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - textId: 194
       order: 194
-      speakerName: "\u6211\u662F\u65C1\u767D"
+      speakerName: "\u65C1\u767D"
       portraitSourceName: none
       side: L
       portrait: {fileID: 0}
@@ -3893,7 +3895,7 @@ MonoBehaviour:
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - textId: 195
       order: 195
-      speakerName: "\u6211\u662F\u65C1\u767D"
+      speakerName: "\u65C1\u767D"
       portraitSourceName: none
       side: L
       portrait: {fileID: 0}
@@ -3902,7 +3904,7 @@ MonoBehaviour:
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - textId: 196
       order: 196
-      speakerName: "\u7CFB\u7EDF"
+      speakerName: "\u65C1\u767D"
       portraitSourceName: none
       side: L
       portrait: {fileID: 0}

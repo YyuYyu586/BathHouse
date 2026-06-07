@@ -3,7 +3,7 @@
 81,Intro,2,81,小福,新工具？是什么？,BathHouse,XiaoFu,R
 82,Intro,2,82,金嫂,珍珠浴球，用起来可有劲。,BathHouse,Jinsao_portrait,L
 83,Intro,2,83,小福,！谢谢老板,BathHouse,XiaoFu,R
-84,Intro,2,84,我是旁白,获得了【珍珠浴球】——解锁技能【珍珠浴球大冲洗】！战斗中按钮显示为【连击】。,BathHouse,none,L
+84,Intro,2,84,旁白,获得了【珍珠浴球】——解锁技能【珍珠浴球大冲洗】！战斗中按钮显示为【连击】。,BathHouse,none,L
 85,BeforeCombat,2,85,小福,欢迎光临！,BathHouse,XiaoFu,R
 86,BeforeCombat,2,86,医生鼠,……你好。,BathHouse,DoctorHamsternormal,L
 87,BeforeCombat,2,87,小福,第一次来吗？,BathHouse,XiaoFu,R
@@ -32,8 +32,8 @@
 110,BeforeCombat,2,110,医生鼠,这些事情......堆在一起，我觉得自己喘不过气。,BathHouse,DoctorHamstertired,L
 111,BeforeCombat,2,111,小福,（它看起来快喘不过气了……）,BathHouse,XiaoFu,R
 112,BeforeCombat,2,112,医生鼠,什么？,BathHouse,DoctorHamsternormal,L
-113,BeforeCombat,2,113,系统,澡堂的雾气忽然变浓了......,BathHouse,none,L
-114,BeforeCombat,2,114,系统,雾气里传出细碎的声音——“医生，我是不是完了？”“你再跟我说一遍……”“我是不是没救了？”,BathHouse,none,L
+113,BeforeCombat,2,113,旁白,澡堂的雾气忽然变浓了......,BathHouse,none,L
+114,BeforeCombat,2,114,旁白,雾气里传出细碎的声音——“医生，我是不是完了？”“你再跟我说一遍……”“我是不是没救了？”,BathHouse,none,L
 115,BeforeCombat,2,115,小福,（不好……那些雾气聚起来了！）,BathHouse,XiaoFu,R
 116,BeforeCombat,2,116,小福,顾客顾客，我们现在进去吧，东西已经备好了！,BathHouse,none,R
 117,AfterCombat,2,117,医生鼠,"呼……刚才,感觉自己飘在天上。",BathHouse,DoctorHamsternormal,L
@@ -57,6 +57,6 @@
 135,AfterCombat,2,135,医生鼠,但我可以让自己，别再那么紧绷了。,BathHouse,DoctorHamsterhappy,L
 136,AfterCombat,2,136,医生鼠,谢谢你，小福。也谢谢你，金嫂。,BathHouse,DoctorHamsterhappy,L
 137,AfterCombat,2,137,小福,明天也欢迎你来泡澡哦！,BathHouse,XiaoFu,R
-138,AfterCombat,2,138,我是旁白,【小贴士】内分泌科医生除了看诊，还要回复大量在线咨询。调查研究显示，约77%的医生因患者沟通需求过载而感到不堪重负。,BathHouse,none,L
-139,AfterCombat,2,139,我是旁白,近半数医生也会因随时待命的沟通压力而身心俱疲。所以，医生鼠需要的可能不只是更专业的医疗知识，还有偶尔“放下手机”的权利。,BathHouse,none,L
-140,AfterCombat,2,140,系统,【第二天 · 结束】,BathHouse,none,L
+138,AfterCombat,2,138,旁白,【小贴士】内分泌科医生除了看诊，还要回复大量在线咨询。调查研究显示，约77%的医生因患者沟通需求过载而感到不堪重负。,BathHouse,none,L
+139,AfterCombat,2,139,旁白,近半数医生也会因随时待命的沟通压力而身心俱疲。所以，医生鼠需要的可能不只是更专业的医疗知识，还有偶尔“放下手机”的权利。,BathHouse,none,L
+140,AfterCombat,2,140,旁白,【第二天 · 结束】,BathHouse,none,L

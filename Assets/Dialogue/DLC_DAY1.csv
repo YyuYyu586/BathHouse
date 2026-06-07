@@ -1,10 +1,10 @@
 ﻿Text_ID,StoryType,Day,Order,Speaker Name,Text,Background Image,Portrait,Side
-1,Intro,1,1,我是旁白,你好，我是旁白，让我来为你介绍基本操作！,BathHouse,none,L
-2,Intro,1,2,我是旁白,首先，按 WASD 进行移动，这个你肯定知道的！,BathHouse,none,L
-3,Intro,1,3,我是旁白,接着是如何接待顾客：靠近顾客后按 F 键即可。,BathHouse,none,L
+1,Intro,1,1,旁白,你好，我是旁白，让我来为你介绍基本操作！,BathHouse,none,L
+2,Intro,1,2,旁白,首先，按 WASD 进行移动，这个你肯定知道的！,BathHouse,none,L
+3,Intro,1,3,旁白,接着是如何接待顾客：靠近顾客后按 F 键即可。,BathHouse,none,L
 4,Intro,1,4,金嫂,还有！（挤走旁白）听我说，场景里的物件也可以按 F 键触发对话！,BathHouse,Jinsao_portrait,L
 5,Intro,1,5,金嫂,现在先给你这个！,BathHouse,Jinsao_portrait,L
-6,Intro,1,6,我是旁白,获得了【高级搓澡巾】——解锁技能【只是单纯地搓】！,BathHouse,none,L
+6,Intro,1,6,旁白,获得了【高级搓澡巾】——解锁技能【只是单纯地搓】！,BathHouse,none,L
 7,Intro,1,7,金嫂,WASD 上下左右移动，其余澡堂大厅里的内容按 F 键就可以了，其它没啥了。,BathHouse,Jinsao_portrait,L
 8,Intro,1,8,金嫂,给我好好记住，干了这么一段时间还不会，我真要把你塞进池子里洗洗脑袋啰！,BathHouse,Jinsao_portrait,L
 9,Intro,1,9,小福,放心放心，我记得的。,BathHouse,XiaoFu,R
@@ -50,8 +50,8 @@
 49,BeforeCombat,1,49,家属鼠,万一它明明可以好一点，是我没照顾好。,BathHouse,FamilyCareHamstercry,L
 50,BeforeCombat,1,50,小福,哎哟，别先把自己绕进去了。先和我去汤池吧，东西已经准备好了！,BathHouse,XiaoFu,R
 51,BeforeCombat,1,51,家属鼠,好……,BathHouse,FamilyCareHamsternormal,L
-52,BeforeCombat,1,52,我是旁白,（手机屏幕亮了一下，空气中浮出细小的字迹。）,BathHouse,none,L
-53,BeforeCombat,1,53,我是旁白,“能不能吃……” “要不要提醒……” “血糖高怎么办……” “家属怎么照顾……”,BathHouse,none,L
+52,BeforeCombat,1,52,旁白,（手机屏幕亮了一下，空气中浮出细小的字迹。）,BathHouse,none,L
+53,BeforeCombat,1,53,旁白,“能不能吃……” “要不要提醒……” “血糖高怎么办……” “家属怎么照顾……”,BathHouse,none,L
 54,BeforeCombat,1,54,小福,（不好，得快点了！）,BathHouse,XiaoFu,R
 55,AfterCombat,1,55,家属鼠,呼……刚才好像做了一个很长的梦……,BathHouse,FamilyCareHamsternormal,L
 56,AfterCombat,1,56,小福,梦到什么了？,BathHouse,XiaoFu,R
@@ -75,6 +75,6 @@
 74,AfterCombat,1,74,金嫂,那就从今天开始吧。,BathHouse,Jinsao_portrait,L
 75,AfterCombat,1,75,家属鼠,谢谢你们。我先回去了。,BathHouse,FamilyCareHamsterhappy,L
 76,AfterCombat,1,76,小福,欢迎下次再来！,BathHouse,XiaoFu,R
-77,AfterCombat,1,77,我是旁白,【小贴士】糖尿病不只影响患者，也会牵动身边照顾它的家人。研究发现，近半数照顾者认为照顾经历影响了自己的情绪健康。,BathHouse,none,L
-78,AfterCombat,1,78,我是旁白,所以，家属鼠需要的不只是更多饮食表和注意事项。有时候，先问一句“今天想不想一起吃饭”，也是一种很重要的陪伴。,BathHouse,none,L
-79,AfterCombat,1,79,系统,【第一天 · 结束】,BathHouse,none,L
+77,AfterCombat,1,77,旁白,【小贴士】糖尿病不只影响患者，也会牵动身边照顾它的家人。研究发现，近半数照顾者认为照顾经历影响了自己的情绪健康。,BathHouse,none,L
+78,AfterCombat,1,78,旁白,所以，家属鼠需要的不只是更多饮食表和注意事项。有时候，先问一句“今天想不想一起吃饭”，也是一种很重要的陪伴。,BathHouse,none,L
+79,AfterCombat,1,79,旁白,【第一天 · 结束】,BathHouse,none,L

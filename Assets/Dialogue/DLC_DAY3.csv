@@ -3,7 +3,7 @@
 142,Intro,3,142,小福,……老板进新货了吗？,BathHouse,XiaoFu,R
 143,Intro,3,143,金嫂,广告写什么灵魂抛光，洁净啥的。不知道有没有那么好用，今天你可以试试。,BathHouse,Jinsao_portrait,L
 144,Intro,3,144,小福,我会小心用的！,BathHouse,XiaoFu,R
-145,Intro,3,145,我是旁白,获得了【高级肥皂】——解锁技能【灵魂抛光】！战斗中按钮显示为【终结】。,BathHouse,none,L
+145,Intro,3,145,旁白,获得了【高级肥皂】——解锁技能【灵魂抛光】！战斗中按钮显示为【终结】。,BathHouse,none,L
 146,BeforeCombat,3,146,小福,欢迎光临！今天你是第一位哦哦哦哦！！,BathHouse,XiaoFu,R
 147,BeforeCombat,3,147,新确诊鼠鼠,……你好。,BathHouse,PatientHamsternormal,L
 148,BeforeCombat,3,148,小福,第一次来吗？,BathHouse,XiaoFu,R
@@ -31,11 +31,11 @@
 170,BeforeCombat,3,170,金嫂,脚都进门了，心还在门口站着呢。,BathHouse,Jinsao_portrait,L
 171,BeforeCombat,3,171,新确诊鼠鼠,……嗯。一边想弄明白，一边不想面对。,BathHouse,PatientHamstersad,L
 172,BeforeCombat,3,172,新确诊鼠鼠,我怕控制不好，怕别人的眼光，怕有一天……自己撑不住。,BathHouse,PatientHamstersad,L
-173,BeforeCombat,3,173,系统,这只鼠鼠的负面情绪已经清晰的展现在了你的眼前。,BathHouse,none,L
-174,BeforeCombat,3,174,系统,一团细细密密的东西慢慢浮了出来。,BathHouse,none,L
-175,BeforeCombat,3,175,系统,加油呀！！,BathHouse,none,L
+173,BeforeCombat,3,173,旁白,这只鼠鼠的负面情绪已经清晰的展现在了你的眼前。,BathHouse,none,L
+174,BeforeCombat,3,174,旁白,一团细细密密的东西慢慢浮了出来。,BathHouse,none,L
+175,BeforeCombat,3,175,旁白,加油呀！！,BathHouse,none,L
 176,BeforeCombat,3,176,小福,（那是……）,BathHouse,XiaoFu,R
-177,BeforeCombat,3,177,系统,这是你将要面对的，在工作日的最后出现的敌人！,BathHouse,none,L
+177,BeforeCombat,3,177,旁白,这是你将要面对的，在工作日的最后出现的敌人！,BathHouse,none,L
 178,AfterCombat,3,178,新确诊鼠鼠,呼……刚才好像做了一个很长的梦。,BathHouse,PatientHamsternormal,L
 179,AfterCombat,3,179,小福,梦到什么了？,BathHouse,XiaoFu,R
 180,AfterCombat,3,180,新确诊鼠鼠,好多线……缠在一起。后来好像有人帮我松了松。,BathHouse,PatientHamsternormal,L
@@ -51,7 +51,7 @@
 190,AfterCombat,3,190,金嫂,（笑了笑）这就对了。,BathHouse,Jinsao_portrait,L
 191,AfterCombat,3,191,新确诊鼠鼠,谢谢你，小福。谢谢你，金嫂。,BathHouse,PatientHamsterhappy,L
 192,AfterCombat,3,192,小福,随时欢迎你来。,BathHouse,XiaoFu,R
-193,AfterCombat,3,193,我是旁白,【小贴士】刚确诊糖尿病时，感到震惊、害怕、低落，甚至一时不想面对，都是很常见的反应。,BathHouse,none,L
-194,AfterCombat,3,194,我是旁白,相关资料显示，糖尿病患者更容易经历抑郁情绪和糖尿病相关心理困扰。适应不是一夜之间完成的。,BathHouse,none,L
-195,AfterCombat,3,195,我是旁白,就像杂乱的线结不需要一下子全解开，学会和身体的新变化一起生活，也可以从喝完眼前这杯茶开始。,BathHouse,none,L
-196,AfterCombat,3,196,系统,【第三天 · 结束】,BathHouse,none,L
+193,AfterCombat,3,193,旁白,【小贴士】刚确诊糖尿病时，感到震惊、害怕、低落，甚至一时不想面对，都是很常见的反应。,BathHouse,none,L
+194,AfterCombat,3,194,旁白,相关资料显示，糖尿病患者更容易经历抑郁情绪和糖尿病相关心理困扰。适应不是一夜之间完成的。,BathHouse,none,L
+195,AfterCombat,3,195,旁白,就像杂乱的线结不需要一下子全解开，学会和身体的新变化一起生活，也可以从喝完眼前这杯茶开始。,BathHouse,none,L
+196,AfterCombat,3,196,旁白,【第三天 · 结束】,BathHouse,none,L

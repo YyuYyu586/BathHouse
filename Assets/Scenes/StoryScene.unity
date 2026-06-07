@@ -1074,9 +1074,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f5d924d7c8541314a8a95fbd54653427, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -1657,7 +1657,7 @@ MonoBehaviour:
   dlcOpeningLines:
   - textId: 1
     order: 1
-    speakerName: "\u6211\u662F\u65C1\u767D"
+    speakerName: "\u65C1\u767D"
     portraitSourceName: none
     side: L
     portrait: {fileID: 0}
@@ -1666,7 +1666,7 @@ MonoBehaviour:
     backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
   - textId: 2
     order: 2
-    speakerName: "\u6211\u662F\u65C1\u767D"
+    speakerName: "\u65C1\u767D"
     portraitSourceName: none
     side: L
     portrait: {fileID: 0}
@@ -1675,7 +1675,7 @@ MonoBehaviour:
     backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
   - textId: 3
     order: 3
-    speakerName: "\u6211\u662F\u65C1\u767D"
+    speakerName: "\u65C1\u767D"
     portraitSourceName: none
     side: L
     portrait: {fileID: 0}
@@ -1704,7 +1704,7 @@ MonoBehaviour:
     backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
   - textId: 6
     order: 6
-    speakerName: "\u6211\u662F\u65C1\u767D"
+    speakerName: "\u65C1\u767D"
     portraitSourceName: none
     side: L
     portrait: {fileID: 0}
