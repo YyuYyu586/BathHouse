@@ -704,6 +704,7 @@ GameObject:
   m_Component:
   - component: {fileID: 209039713}
   - component: {fileID: 209039712}
+  - component: {fileID: 209039714}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -813,6 +814,10 @@ MonoBehaviour:
   day6EnemySprite: {fileID: 0}
   day7BossSprite: {fileID: 0}
   day7BossWeakenedSprite: {fileID: 0}
+  dlcEnemySprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   day2EnemyIdleFrames:
   - {fileID: -1609513239, guid: 90d384637b797424b800b924ed205612, type: 3}
   - {fileID: -998434474, guid: 90d384637b797424b800b924ed205612, type: 3}
@@ -968,6 +973,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &209039714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 209039711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79695866fe5e11f4e8971a102f6606c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentGameMode: 1
+  currentDay: 3
+  maxDay: 7
+  dlcPlayerHasPlayedMainStory: 0
+  dlcUnlockAllSkills: 0
+  playerGold: 20
+  playerHP: 100
+  playerSP: 50
+  waterLadleCount: 0
+  soapCount: 0
+  teaCount: 0
+  towelCount: 0
+  hasWaterLadle: 0
+  hasGoldenTowel: 0
 --- !u!1 &221936913
 GameObject:
   m_ObjectHideFlags: 0

@@ -947,11 +947,11 @@ public class BattleManager : MonoBehaviour
         switch (day)
         {
             case 1:
-                return new EnemyDayData(1, "纸团", 70, 7, 15);
+                return new EnemyDayData(1, "纸团", 70, 6, 15);
             case 2:
-                return new EnemyDayData(2, "疑问的雾", 85, 8, 18);
+                return new EnemyDayData(2, "疑问的雾", 100, 8, 18);
             case 3:
-                return new EnemyDayData(3, "杂乱的线结", 110, 10, 22);
+                return new EnemyDayData(3, "杂乱的线结", 170, 12, 22);
         }
 
         Debug.LogWarning("No Diabetes DLC enemy configured for day " + day + ". Using safe DLC fallback enemy instead of main story data.");
