@@ -159,6 +159,7 @@ RectTransform:
   - {fileID: 1550094722}
   - {fileID: 551051952}
   - {fileID: 1397982151590994302}
+  - {fileID: 1869047217}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1050,8 +1051,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 622, y: -234}
-  m_SizeDelta: {x: 400, y: 500}
+  m_AnchoredPosition: {x: 655, y: -236}
+  m_SizeDelta: {x: 500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1550094723
 MonoBehaviour:
@@ -1073,7 +1074,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1227,12 +1228,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1869047214}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -960, y: -540, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 76601347}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2123385961
 GameObject:
@@ -1653,6 +1654,91 @@ MonoBehaviour:
     isLeftPortrait: 1
     text: "\u591C\u98CE\u8FD8\u662F\u51B7\u7684\uFF0C\u4F46\u8EAB\u4E0A\u90A3\u4E9B\u8BA9\u5B83\u611F\u5230\u6C89\u91CD\u7684\u9ED1\u6CE5\uFF0C\u786E\u5B9E\u4E0D\u89C1\u4E86\u3002"
     backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+  dlcOpeningLines:
+  - textId: 1
+    order: 1
+    speakerName: "\u6211\u662F\u65C1\u767D"
+    portraitSourceName: none
+    side: L
+    portrait: {fileID: 0}
+    isLeftPortrait: 1
+    text: "\u4F60\u597D\uFF0C\u6211\u662F\u65C1\u767D\uFF0C\u8BA9\u6211\u6765\u4E3A\u4F60\u4ECB\u7ECD\u57FA\u672C\u64CD\u4F5C\uFF01"
+    backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+  - textId: 2
+    order: 2
+    speakerName: "\u6211\u662F\u65C1\u767D"
+    portraitSourceName: none
+    side: L
+    portrait: {fileID: 0}
+    isLeftPortrait: 1
+    text: "\u9996\u5148\uFF0C\u6309 WASD \u8FDB\u884C\u79FB\u52A8\uFF0C\u8FD9\u4E2A\u4F60\u80AF\u5B9A\u77E5\u9053\u7684\uFF01"
+    backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+  - textId: 3
+    order: 3
+    speakerName: "\u6211\u662F\u65C1\u767D"
+    portraitSourceName: none
+    side: L
+    portrait: {fileID: 0}
+    isLeftPortrait: 1
+    text: "\u63A5\u7740\u662F\u5982\u4F55\u63A5\u5F85\u987E\u5BA2\uFF1A\u9760\u8FD1\u987E\u5BA2\u540E\u6309
+      F \u952E\u5373\u53EF\u3002"
+    backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+  - textId: 4
+    order: 4
+    speakerName: "\u91D1\u5AC2"
+    portraitSourceName: Jinsao_portrait
+    side: L
+    portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
+    isLeftPortrait: 1
+    text: "\u8FD8\u6709\uFF01\uFF08\u6324\u8D70\u65C1\u767D\uFF09\u542C\u6211\u8BF4\uFF0C\u573A\u666F\u91CC\u7684\u7269\u4EF6\u4E5F\u53EF\u4EE5\u6309
+      F \u952E\u89E6\u53D1\u5BF9\u8BDD\uFF01"
+    backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+  - textId: 5
+    order: 5
+    speakerName: "\u91D1\u5AC2"
+    portraitSourceName: Jinsao_portrait
+    side: L
+    portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
+    isLeftPortrait: 1
+    text: "\u73B0\u5728\u5148\u7ED9\u4F60\u8FD9\u4E2A\uFF01"
+    backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+  - textId: 6
+    order: 6
+    speakerName: "\u6211\u662F\u65C1\u767D"
+    portraitSourceName: none
+    side: L
+    portrait: {fileID: 0}
+    isLeftPortrait: 1
+    text: "\u83B7\u5F97\u4E86\u3010\u9AD8\u7EA7\u6413\u6FA1\u5DFE\u3011\u2014\u2014\u89E3\u9501\u6280\u80FD\u3010\u53EA\u662F\u5355\u7EAF\u5730\u6413\u3011\uFF01"
+    backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+  - textId: 7
+    order: 7
+    speakerName: "\u91D1\u5AC2"
+    portraitSourceName: Jinsao_portrait
+    side: L
+    portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
+    isLeftPortrait: 1
+    text: "WASD \u4E0A\u4E0B\u5DE6\u53F3\u79FB\u52A8\uFF0C\u5176\u4F59\u6FA1\u5802\u5927\u5385\u91CC\u7684\u5185\u5BB9\u6309
+      F \u952E\u5C31\u53EF\u4EE5\u4E86\uFF0C\u5176\u5B83\u6CA1\u5565\u4E86\u3002"
+    backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+  - textId: 8
+    order: 8
+    speakerName: "\u91D1\u5AC2"
+    portraitSourceName: Jinsao_portrait
+    side: L
+    portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
+    isLeftPortrait: 1
+    text: "\u7ED9\u6211\u597D\u597D\u8BB0\u4F4F\uFF0C\u5E72\u4E86\u8FD9\u4E48\u4E00\u6BB5\u65F6\u95F4\u8FD8\u4E0D\u4F1A\uFF0C\u6211\u771F\u8981\u628A\u4F60\u585E\u8FDB\u6C60\u5B50\u91CC\u6D17\u6D17\u8111\u888B\u5570\uFF01"
+    backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+  - textId: 9
+    order: 9
+    speakerName: "\u5C0F\u798F"
+    portraitSourceName: XiaoFu
+    side: R
+    portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+    isLeftPortrait: 0
+    text: "\u653E\u5FC3\u653E\u5FC3\uFF0C\u6211\u8BB0\u5F97\u7684\u3002"
+    backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
 --- !u!4 &2123385963
 Transform:
   m_ObjectHideFlags: 0
@@ -1871,6 +1957,5 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 956497819}
-  - {fileID: 1869047217}
   - {fileID: 76601347}
   - {fileID: 2123385963}

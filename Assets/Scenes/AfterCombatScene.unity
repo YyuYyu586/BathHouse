@@ -3290,6 +3290,625 @@ MonoBehaviour:
       isLeftPortrait: 0
       text: "\u9F20\u9F20\u5927\u6FA1\u5802\uFF0C\u4ECA\u65E5\u63D0\u524D\u6253\u70CA\uFF01"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+  dlcAfterCombatDialogues:
+  - dayName: DLC Day 1 AfterCombat
+    lines:
+    - textId: 55
+      order: 55
+      speakerName: "\u5BB6\u5C5E\u9F20"
+      portraitSourceName: FamilyCareHamsternormal
+      side: L
+      portrait: {fileID: 21300000, guid: 14b63b62895ec884a8bcc97ccd3045db, type: 3}
+      isLeftPortrait: 1
+      text: "\u547C\u2026\u2026\u521A\u624D\u597D\u50CF\u505A\u4E86\u4E00\u4E2A\u5F88\u957F\u7684\u68A6\u2026\u2026"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 56
+      order: 56
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: XiaoFu
+      side: R
+      portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+      isLeftPortrait: 0
+      text: "\u68A6\u5230\u4EC0\u4E48\u4E86\uFF1F"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 57
+      order: 57
+      speakerName: "\u5BB6\u5C5E\u9F20"
+      portraitSourceName: FamilyCareHamsternormal
+      side: L
+      portrait: {fileID: 21300000, guid: 14b63b62895ec884a8bcc97ccd3045db, type: 3}
+      isLeftPortrait: 1
+      text: "\u8BB0\u4E0D\u592A\u6E05\u4E86\u2026\u2026\u597D\u50CF\u6709\u5F88\u591A\u4E1C\u897F\u98DE\u6765\u98DE\u53BB\u7684\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 58
+      order: 58
+      speakerName: "\u5BB6\u5C5E\u9F20"
+      portraitSourceName: FamilyCareHamsternormal
+      side: L
+      portrait: {fileID: 21300000, guid: 14b63b62895ec884a8bcc97ccd3045db, type: 3}
+      isLeftPortrait: 1
+      text: "\u4E0A\u9762\u5199\u7740\u597D\u591A\u6570\u5B57\u3001\u95EE\u9898\uFF0C\u8FD8\u6709\u6211\u6CA1\u60F3\u5B8C\u7684\u201C\u4E07\u4E00\u201D\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 59
+      order: 59
+      speakerName: "\u5BB6\u5C5E\u9F20"
+      portraitSourceName: FamilyCareHamsternormal
+      side: L
+      portrait: {fileID: 21300000, guid: 14b63b62895ec884a8bcc97ccd3045db, type: 3}
+      isLeftPortrait: 1
+      text: "\u53EF\u662F\u540E\u6765\uFF0C\u5B83\u4EEC\u6162\u6162\u6563\u5F00\u4E86\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 60
+      order: 60
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: Jinsao_portrait
+      side: L
+      portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
+      isLeftPortrait: 1
+      text: "\u6FA1\u5802\u561B\uFF0C\u6C34\u4E00\u70ED\uFF0C\u80AF\u5B9A\u80FD\u8212\u670D\u4E0B\u6765\u7684\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 61
+      order: 61
+      speakerName: "\u5BB6\u5C5E\u9F20"
+      portraitSourceName: FamilyCareHamsternormal
+      side: L
+      portrait: {fileID: 21300000, guid: 14b63b62895ec884a8bcc97ccd3045db, type: 3}
+      isLeftPortrait: 1
+      text: "\u2026\u2026\u55EF\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 62
+      order: 62
+      speakerName: "\u5BB6\u5C5E\u9F20"
+      portraitSourceName: FamilyCareHamsternormal
+      side: L
+      portrait: {fileID: 21300000, guid: 14b63b62895ec884a8bcc97ccd3045db, type: 3}
+      isLeftPortrait: 1
+      text: "\u6211\u8FD8\u662F\u4F1A\u62C5\u5FC3\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 63
+      order: 63
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: XiaoFu
+      side: R
+      portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+      isLeftPortrait: 0
+      text: "\u55EF\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 64
+      order: 64
+      speakerName: "\u5BB6\u5C5E\u9F20"
+      portraitSourceName: FamilyCareHamsterhappy
+      side: L
+      portrait: {fileID: 21300000, guid: fc84668e2f44d524690a06a65babdfca, type: 3}
+      isLeftPortrait: 1
+      text: "\u4F46\u6211\u4ECA\u665A\u56DE\u53BB\uFF0C\u4E0D\u60F3\u5148\u95EE\u5B83\u8840\u7CD6\u4E86\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 65
+      order: 65
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: XiaoFu
+      side: R
+      portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+      isLeftPortrait: 0
+      text: "\u90A3\u4F60\u60F3\u5148\u95EE\u4EC0\u4E48\uFF1F"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 66
+      order: 66
+      speakerName: "\u5BB6\u5C5E\u9F20"
+      portraitSourceName: FamilyCareHamsterhappy
+      side: L
+      portrait: {fileID: 21300000, guid: fc84668e2f44d524690a06a65babdfca, type: 3}
+      isLeftPortrait: 1
+      text: "\u6211\u60F3\u5148\u95EE\u5B83\uFF0C\u4ECA\u5929\u60F3\u4E0D\u60F3\u4E00\u8D77\u5403\u996D\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 67
+      order: 67
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: Jinsao_portrait
+      side: L
+      portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
+      isLeftPortrait: 1
+      text: "\u8FD9\u5C31\u5BF9\u4E86\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 68
+      order: 68
+      speakerName: "\u5BB6\u5C5E\u9F20"
+      portraitSourceName: FamilyCareHamsternormal
+      side: L
+      portrait: {fileID: 21300000, guid: 14b63b62895ec884a8bcc97ccd3045db, type: 3}
+      isLeftPortrait: 1
+      text: "\u8D44\u6599\u6211\u8FD8\u662F\u4F1A\u770B\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 69
+      order: 69
+      speakerName: "\u5BB6\u5C5E\u9F20"
+      portraitSourceName: FamilyCareHamsterhappy
+      side: L
+      portrait: {fileID: 21300000, guid: fc84668e2f44d524690a06a65babdfca, type: 3}
+      isLeftPortrait: 1
+      text: "\u4F46\u6211\u4E0D\u60F3\u628A\u6BCF\u4E00\u987F\u996D\uFF0C\u90FD\u641E\u6210\u4E00\u573A\u4E25\u8083\u7684\u68C0\u67E5......"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 70
+      order: 70
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: XiaoFu
+      side: R
+      portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+      isLeftPortrait: 0
+      text: "\u5B83\u542C\u5230\u4F60\u8FD9\u4E48\u8BF4\uFF0C\u5E94\u8BE5\u4F1A\u5F88\u5F00\u5FC3\u7684\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 71
+      order: 71
+      speakerName: "\u5BB6\u5C5E\u9F20"
+      portraitSourceName: FamilyCareHamsterhappy
+      side: L
+      portrait: {fileID: 21300000, guid: fc84668e2f44d524690a06a65babdfca, type: 3}
+      isLeftPortrait: 1
+      text: "\uFF08\u7B11\u4E86\u7B11\uFF09\u4E5F\u8BB8\u5427\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 72
+      order: 72
+      speakerName: "\u5BB6\u5C5E\u9F20"
+      portraitSourceName: FamilyCareHamsternormal
+      side: L
+      portrait: {fileID: 21300000, guid: 14b63b62895ec884a8bcc97ccd3045db, type: 3}
+      isLeftPortrait: 1
+      text: "\u6211\u4E0D\u80FD\u66FF\u5B83\u8FC7\u65E5\u5B50\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 73
+      order: 73
+      speakerName: "\u5BB6\u5C5E\u9F20"
+      portraitSourceName: FamilyCareHamsterhappy
+      side: L
+      portrait: {fileID: 21300000, guid: fc84668e2f44d524690a06a65babdfca, type: 3}
+      isLeftPortrait: 1
+      text: "\u4F46\u6211\u53EF\u4EE5\u966A\u5B83\uFF0C\u628A\u4ECA\u5929\u8FC7\u5F97\u6CA1\u90A3\u4E48\u7D27\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 74
+      order: 74
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: Jinsao_portrait
+      side: L
+      portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
+      isLeftPortrait: 1
+      text: "\u90A3\u5C31\u4ECE\u4ECA\u5929\u5F00\u59CB\u5427\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 75
+      order: 75
+      speakerName: "\u5BB6\u5C5E\u9F20"
+      portraitSourceName: FamilyCareHamsterhappy
+      side: L
+      portrait: {fileID: 21300000, guid: fc84668e2f44d524690a06a65babdfca, type: 3}
+      isLeftPortrait: 1
+      text: "\u8C22\u8C22\u4F60\u4EEC\u3002\u6211\u5148\u56DE\u53BB\u4E86\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 76
+      order: 76
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: XiaoFu
+      side: R
+      portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+      isLeftPortrait: 0
+      text: "\u6B22\u8FCE\u4E0B\u6B21\u518D\u6765\uFF01"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 77
+      order: 77
+      speakerName: "\u6211\u662F\u65C1\u767D"
+      portraitSourceName: none
+      side: L
+      portrait: {fileID: 0}
+      isLeftPortrait: 1
+      text: "\u3010\u5C0F\u8D34\u58EB\u3011\u7CD6\u5C3F\u75C5\u4E0D\u53EA\u5F71\u54CD\u60A3\u8005\uFF0C\u4E5F\u4F1A\u7275\u52A8\u8EAB\u8FB9\u7167\u987E\u5B83\u7684\u5BB6\u4EBA\u3002\u7814\u7A76\u53D1\u73B0\uFF0C\u8FD1\u534A\u6570\u7167\u987E\u8005\u8BA4\u4E3A\u7167\u987E\u7ECF\u5386\u5F71\u54CD\u4E86\u81EA\u5DF1\u7684\u60C5\u7EEA\u5065\u5EB7\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 78
+      order: 78
+      speakerName: "\u6211\u662F\u65C1\u767D"
+      portraitSourceName: none
+      side: L
+      portrait: {fileID: 0}
+      isLeftPortrait: 1
+      text: "\u6240\u4EE5\uFF0C\u5BB6\u5C5E\u9F20\u9700\u8981\u7684\u4E0D\u53EA\u662F\u66F4\u591A\u996E\u98DF\u8868\u548C\u6CE8\u610F\u4E8B\u9879\u3002\u6709\u65F6\u5019\uFF0C\u5148\u95EE\u4E00\u53E5\u201C\u4ECA\u5929\u60F3\u4E0D\u60F3\u4E00\u8D77\u5403\u996D\u201D\uFF0C\u4E5F\u662F\u4E00\u79CD\u5F88\u91CD\u8981\u7684\u966A\u4F34\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 79
+      order: 79
+      speakerName: "\u7CFB\u7EDF"
+      portraitSourceName: none
+      side: L
+      portrait: {fileID: 0}
+      isLeftPortrait: 1
+      text: "\u3010\u7B2C\u4E00\u5929 \xB7 \u7ED3\u675F\u3011"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+  - dayName: DLC Day 2 AfterCombat
+    lines:
+    - textId: 117
+      order: 117
+      speakerName: "\u533B\u751F\u9F20"
+      portraitSourceName: DoctorHamsternormal
+      side: L
+      portrait: {fileID: 21300000, guid: 998d5c91f8fc33b4ab45685bba683718, type: 3}
+      isLeftPortrait: 1
+      text: "\u547C\u2026\u2026\u521A\u624D,\u611F\u89C9\u81EA\u5DF1\u98D8\u5728\u5929\u4E0A\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 118
+      order: 118
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: XiaoFu
+      side: R
+      portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+      isLeftPortrait: 0
+      text: "\u53D8\u6210\u4E91\u4E86\u5417\u54C8\u54C8\uFF1F"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 119
+      order: 119
+      speakerName: "\u533B\u751F\u9F20"
+      portraitSourceName: DoctorHamsternormal
+      side: L
+      portrait: {fileID: 21300000, guid: 998d5c91f8fc33b4ab45685bba683718, type: 3}
+      isLeftPortrait: 1
+      text: "\u8BB0\u4E0D\u592A\u6E05\u2026\u2026\u540E\u6765\u6162\u6162\u770B\u4E0D\u6E05\u4E86\uFF0C\u611F\u89C9\u81EA\u5DF1\u98D8\u6765\u98D8\u53BB\u7684\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 120
+      order: 120
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: Jinsao_portrait
+      side: L
+      portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
+      isLeftPortrait: 1
+      text: "\u6211\u4EEC\u8FD9\u513F\u80FD\u505A\u7684\u5C31\u662F\u8BA9\u4F60\u653E\u4E0B\u538B\u529B\uFF0C\u6E05\u9192\u6E05\u9192\u81EA\u5DF1\u7684\u5934\u8111\uFF0C\u6EE1\u610F\u6B22\u8FCE\u518D\u6765\uFF01"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 121
+      order: 121
+      speakerName: "\u533B\u751F\u9F20"
+      portraitSourceName: DoctorHamsternormal
+      side: L
+      portrait: {fileID: 21300000, guid: 998d5c91f8fc33b4ab45685bba683718, type: 3}
+      isLeftPortrait: 1
+      text: "\u2026\u2026\u55EF\u3002\u53EF\u6211\u8FD8\u662F\u4F1A\u62C5\u5FC3\u90A3\u4E9B\u60A3\u8005\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 122
+      order: 122
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: XiaoFu
+      side: R
+      portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+      isLeftPortrait: 0
+      text: "\u55EF\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 123
+      order: 123
+      speakerName: "\u533B\u751F\u9F20"
+      portraitSourceName: DoctorHamsterhappy
+      side: L
+      portrait: {fileID: 21300000, guid: 228fc5ffde736f8479b4926d721bc864, type: 3}
+      isLeftPortrait: 1
+      text: "\u4F46\u4ECA\u665A\u2026\u2026\u6211\u60F3\u5148\u653E\u4E00\u653E\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 124
+      order: 124
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: Jinsao_portrait
+      side: L
+      portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
+      isLeftPortrait: 1
+      text: "\u75C5\u4EBA\u53C8\u4E0D\u4F1A\u81EA\u5DF1\u8DD1\u4E86\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 125
+      order: 125
+      speakerName: "\u533B\u751F\u9F20"
+      portraitSourceName: DoctorHamsterhappy
+      side: L
+      portrait: {fileID: 21300000, guid: 228fc5ffde736f8479b4926d721bc864, type: 3}
+      isLeftPortrait: 1
+      text: "\uFF08\u7B11\u4E86\u7B11\uFF09\u4E5F\u662F\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 126
+      order: 126
+      speakerName: "\u533B\u751F\u9F20"
+      portraitSourceName: DoctorHamsternormal
+      side: L
+      portrait: {fileID: 21300000, guid: 998d5c91f8fc33b4ab45685bba683718, type: 3}
+      isLeftPortrait: 1
+      text: "\u6211\u4EE5\u524D\u603B\u89C9\u5F97\uFF0C\u591A\u89E3\u7B54\u4E00\u4E9B\uFF0C\u5C31\u7B97\u591A\u8D1F\u8D23\u4E00\u70B9\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 127
+      order: 127
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: XiaoFu
+      side: R
+      portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+      isLeftPortrait: 0
+      text: "\u4F60\u5DF2\u7ECF\u5F88\u8D1F\u8D23\u4E86\uFF01"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 128
+      order: 128
+      speakerName: "\u533B\u751F\u9F20"
+      portraitSourceName: DoctorHamsternormal
+      side: L
+      portrait: {fileID: 21300000, guid: 998d5c91f8fc33b4ab45685bba683718, type: 3}
+      isLeftPortrait: 1
+      text: "\u53EF\u6709\u65F6\u5019\u2026\u2026\u6211\u597D\u50CF\u53EA\u662F\u6015\u505C\u4E0B\u6765\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 129
+      order: 129
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: XiaoFu
+      side: R
+      portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+      isLeftPortrait: 0
+      text: "\u6015\u4E00\u505C\u4E0B\u6765\uFF0C\u5C31\u89C9\u5F97\u81EA\u5DF1\u505A\u5F97\u4E0D\u591F\uFF1F"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 130
+      order: 130
+      speakerName: "\u533B\u751F\u9F20"
+      portraitSourceName: DoctorHamsternormal
+      side: L
+      portrait: {fileID: 21300000, guid: 998d5c91f8fc33b4ab45685bba683718, type: 3}
+      isLeftPortrait: 1
+      text: "\u2026\u2026\u55EF\u3002\u53EF\u80FD\u662F\u5427\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 131
+      order: 131
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: Jinsao_portrait
+      side: L
+      portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
+      isLeftPortrait: 1
+      text: "\u4F60\u505A\u5F97\u591F\u591A\u4E86\uFF0C\u5C0F\u798F\u4E5F\u8BF4\u4F60\u5F88\u6709\u8D23\u4EFB\u5FC3\uFF0C\u4E0D\u8FC7\u660E\u5929\u8FD8\u8981\u4E0A\u73ED\u5462\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 132
+      order: 132
+      speakerName: "\u533B\u751F\u9F20"
+      portraitSourceName: DoctorHamsterhappy
+      side: L
+      portrait: {fileID: 21300000, guid: 228fc5ffde736f8479b4926d721bc864, type: 3}
+      isLeftPortrait: 1
+      text: "\u2026\u2026\u55EF\u3002\u90A3\u6211\u4ECA\u665A\uFF0C\u5148\u7761\u4E2A\u597D\u89C9\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 133
+      order: 133
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: XiaoFu
+      side: R
+      portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+      isLeftPortrait: 0
+      text: "\u8FD9\u6837\u660E\u5929\u624D\u6709\u529B\u6C14\u597D\u597D\u8BF4\u8BDD\u5440\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 134
+      order: 134
+      speakerName: "\u533B\u751F\u9F20"
+      portraitSourceName: DoctorHamsternormal
+      side: L
+      portrait: {fileID: 21300000, guid: 998d5c91f8fc33b4ab45685bba683718, type: 3}
+      isLeftPortrait: 1
+      text: "\u6211\u4E0D\u80FD\u66FF\u6240\u6709\u60A3\u8005\u8FC7\u65E5\u5B50\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 135
+      order: 135
+      speakerName: "\u533B\u751F\u9F20"
+      portraitSourceName: DoctorHamsterhappy
+      side: L
+      portrait: {fileID: 21300000, guid: 228fc5ffde736f8479b4926d721bc864, type: 3}
+      isLeftPortrait: 1
+      text: "\u4F46\u6211\u53EF\u4EE5\u8BA9\u81EA\u5DF1\uFF0C\u522B\u518D\u90A3\u4E48\u7D27\u7EF7\u4E86\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 136
+      order: 136
+      speakerName: "\u533B\u751F\u9F20"
+      portraitSourceName: DoctorHamsterhappy
+      side: L
+      portrait: {fileID: 21300000, guid: 228fc5ffde736f8479b4926d721bc864, type: 3}
+      isLeftPortrait: 1
+      text: "\u8C22\u8C22\u4F60\uFF0C\u5C0F\u798F\u3002\u4E5F\u8C22\u8C22\u4F60\uFF0C\u91D1\u5AC2\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 137
+      order: 137
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: XiaoFu
+      side: R
+      portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+      isLeftPortrait: 0
+      text: "\u660E\u5929\u4E5F\u6B22\u8FCE\u4F60\u6765\u6CE1\u6FA1\u54E6\uFF01"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 138
+      order: 138
+      speakerName: "\u6211\u662F\u65C1\u767D"
+      portraitSourceName: none
+      side: L
+      portrait: {fileID: 0}
+      isLeftPortrait: 1
+      text: "\u3010\u5C0F\u8D34\u58EB\u3011\u5185\u5206\u6CCC\u79D1\u533B\u751F\u9664\u4E86\u770B\u8BCA\uFF0C\u8FD8\u8981\u56DE\u590D\u5927\u91CF\u5728\u7EBF\u54A8\u8BE2\u3002\u8C03\u67E5\u7814\u7A76\u663E\u793A\uFF0C\u7EA677%\u7684\u533B\u751F\u56E0\u60A3\u8005\u6C9F\u901A\u9700\u6C42\u8FC7\u8F7D\u800C\u611F\u5230\u4E0D\u582A\u91CD\u8D1F\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 139
+      order: 139
+      speakerName: "\u6211\u662F\u65C1\u767D"
+      portraitSourceName: none
+      side: L
+      portrait: {fileID: 0}
+      isLeftPortrait: 1
+      text: "\u8FD1\u534A\u6570\u533B\u751F\u4E5F\u4F1A\u56E0\u968F\u65F6\u5F85\u547D\u7684\u6C9F\u901A\u538B\u529B\u800C\u8EAB\u5FC3\u4FF1\u75B2\u3002\u6240\u4EE5\uFF0C\u533B\u751F\u9F20\u9700\u8981\u7684\u53EF\u80FD\u4E0D\u53EA\u662F\u66F4\u4E13\u4E1A\u7684\u533B\u7597\u77E5\u8BC6\uFF0C\u8FD8\u6709\u5076\u5C14\u201C\u653E\u4E0B\u624B\u673A\u201D\u7684\u6743\u5229\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 140
+      order: 140
+      speakerName: "\u7CFB\u7EDF"
+      portraitSourceName: none
+      side: L
+      portrait: {fileID: 0}
+      isLeftPortrait: 1
+      text: "\u3010\u7B2C\u4E8C\u5929 \xB7 \u7ED3\u675F\u3011"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+  - dayName: DLC Day 3 AfterCombat
+    lines:
+    - textId: 178
+      order: 178
+      speakerName: "\u65B0\u786E\u8BCA\u9F20\u9F20"
+      portraitSourceName: PatientHamsternormal
+      side: L
+      portrait: {fileID: 21300000, guid: 219b2427e1be8c84b9309127cc82f094, type: 3}
+      isLeftPortrait: 1
+      text: "\u547C\u2026\u2026\u521A\u624D\u597D\u50CF\u505A\u4E86\u4E00\u4E2A\u5F88\u957F\u7684\u68A6\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 179
+      order: 179
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: XiaoFu
+      side: R
+      portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+      isLeftPortrait: 0
+      text: "\u68A6\u5230\u4EC0\u4E48\u4E86\uFF1F"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 180
+      order: 180
+      speakerName: "\u65B0\u786E\u8BCA\u9F20\u9F20"
+      portraitSourceName: PatientHamsternormal
+      side: L
+      portrait: {fileID: 21300000, guid: 219b2427e1be8c84b9309127cc82f094, type: 3}
+      isLeftPortrait: 1
+      text: "\u597D\u591A\u7EBF\u2026\u2026\u7F20\u5728\u4E00\u8D77\u3002\u540E\u6765\u597D\u50CF\u6709\u4EBA\u5E2E\u6211\u677E\u4E86\u677E\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 181
+      order: 181
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: Jinsao_portrait
+      side: L
+      portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
+      isLeftPortrait: 1
+      text: "\u677E\u4E86\u4E00\u70B9\u5C31\u597D\u3002\u4E0D\u7528\u4E00\u4E0B\u5B50\u5168\u89E3\u5F00\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 182
+      order: 182
+      speakerName: "\u65B0\u786E\u8BCA\u9F20\u9F20"
+      portraitSourceName: PatientHamsternormal
+      side: L
+      portrait: {fileID: 21300000, guid: 219b2427e1be8c84b9309127cc82f094, type: 3}
+      isLeftPortrait: 1
+      text: "\u2026\u2026\u55EF\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 183
+      order: 183
+      speakerName: "\u65B0\u786E\u8BCA\u9F20\u9F20"
+      portraitSourceName: PatientHamsternormal
+      side: L
+      portrait: {fileID: 21300000, guid: 219b2427e1be8c84b9309127cc82f094, type: 3}
+      isLeftPortrait: 1
+      text: "\u6211\u8FD8\u662F\u6015\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 184
+      order: 184
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: XiaoFu
+      side: R
+      portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+      isLeftPortrait: 0
+      text: "\u55EF\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 185
+      order: 185
+      speakerName: "\u65B0\u786E\u8BCA\u9F20\u9F20"
+      portraitSourceName: PatientHamsternormal
+      side: L
+      portrait: {fileID: 21300000, guid: 219b2427e1be8c84b9309127cc82f094, type: 3}
+      isLeftPortrait: 1
+      text: "\u4F46\u597D\u50CF\u2026\u2026\u6CA1\u6709\u90A3\u4E48\u7D27\u4E86\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 186
+      order: 186
+      speakerName: "\u65B0\u786E\u8BCA\u9F20\u9F20"
+      portraitSourceName: PatientHamsterhappy
+      side: L
+      portrait: {fileID: 21300000, guid: fd37612f18cff454eb229788a3c555a4, type: 3}
+      isLeftPortrait: 1
+      text: "\u6211\u77E5\u9053\uFF0C\u6709\u4E9B\u4E60\u60EF\u4E0D\u80FD\u5B8C\u5168\u50CF\u4EE5\u524D\u90A3\u6837\u4E86\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 187
+      order: 187
+      speakerName: "\u65B0\u786E\u8BCA\u9F20\u9F20"
+      portraitSourceName: PatientHamsterhappy
+      side: L
+      portrait: {fileID: 21300000, guid: fd37612f18cff454eb229788a3c555a4, type: 3}
+      isLeftPortrait: 1
+      text: "\u53EF\u662F\u2026\u2026\u6211\u4E5F\u4E0D\u60F3\u4EE5\u540E\u6BCF\u4E00\u5929\uFF0C\u90FD\u53EA\u56F4\u7740\u8840\u7CD6\u8F6C\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 188
+      order: 188
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: XiaoFu
+      side: R
+      portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+      isLeftPortrait: 0
+      text: "\u90A3\u4F60\u60F3\u6D3B\u6210\u4EC0\u4E48\u6837\uFF1F"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 189
+      order: 189
+      speakerName: "\u65B0\u786E\u8BCA\u9F20\u9F20"
+      portraitSourceName: PatientHamsterhappy
+      side: L
+      portrait: {fileID: 21300000, guid: fd37612f18cff454eb229788a3c555a4, type: 3}
+      isLeftPortrait: 1
+      text: "\uFF08\u60F3\u4E86\u4E00\u4F1A\u513F\uFF09\u2026\u2026\u5148\u628A\u8FD9\u4E2A\u8336\u559D\u5B8C\u5427\u3002\u51C9\u4E86\u5C31\u4E0D\u597D\u559D\u4E86\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 190
+      order: 190
+      speakerName: "\u91D1\u5AC2"
+      portraitSourceName: Jinsao_portrait
+      side: L
+      portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
+      isLeftPortrait: 1
+      text: "\uFF08\u7B11\u4E86\u7B11\uFF09\u8FD9\u5C31\u5BF9\u4E86\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 191
+      order: 191
+      speakerName: "\u65B0\u786E\u8BCA\u9F20\u9F20"
+      portraitSourceName: PatientHamsterhappy
+      side: L
+      portrait: {fileID: 21300000, guid: fd37612f18cff454eb229788a3c555a4, type: 3}
+      isLeftPortrait: 1
+      text: "\u8C22\u8C22\u4F60\uFF0C\u5C0F\u798F\u3002\u8C22\u8C22\u4F60\uFF0C\u91D1\u5AC2\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 192
+      order: 192
+      speakerName: "\u5C0F\u798F"
+      portraitSourceName: XiaoFu
+      side: R
+      portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
+      isLeftPortrait: 0
+      text: "\u968F\u65F6\u6B22\u8FCE\u4F60\u6765\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 193
+      order: 193
+      speakerName: "\u6211\u662F\u65C1\u767D"
+      portraitSourceName: none
+      side: L
+      portrait: {fileID: 0}
+      isLeftPortrait: 1
+      text: "\u3010\u5C0F\u8D34\u58EB\u3011\u521A\u786E\u8BCA\u7CD6\u5C3F\u75C5\u65F6\uFF0C\u611F\u5230\u9707\u60CA\u3001\u5BB3\u6015\u3001\u4F4E\u843D\uFF0C\u751A\u81F3\u4E00\u65F6\u4E0D\u60F3\u9762\u5BF9\uFF0C\u90FD\u662F\u5F88\u5E38\u89C1\u7684\u53CD\u5E94\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 194
+      order: 194
+      speakerName: "\u6211\u662F\u65C1\u767D"
+      portraitSourceName: none
+      side: L
+      portrait: {fileID: 0}
+      isLeftPortrait: 1
+      text: "\u76F8\u5173\u8D44\u6599\u663E\u793A\uFF0C\u7CD6\u5C3F\u75C5\u60A3\u8005\u66F4\u5BB9\u6613\u7ECF\u5386\u6291\u90C1\u60C5\u7EEA\u548C\u7CD6\u5C3F\u75C5\u76F8\u5173\u5FC3\u7406\u56F0\u6270\u3002\u9002\u5E94\u4E0D\u662F\u4E00\u591C\u4E4B\u95F4\u5B8C\u6210\u7684\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 195
+      order: 195
+      speakerName: "\u6211\u662F\u65C1\u767D"
+      portraitSourceName: none
+      side: L
+      portrait: {fileID: 0}
+      isLeftPortrait: 1
+      text: "\u5C31\u50CF\u6742\u4E71\u7684\u7EBF\u7ED3\u4E0D\u9700\u8981\u4E00\u4E0B\u5B50\u5168\u89E3\u5F00\uFF0C\u5B66\u4F1A\u548C\u8EAB\u4F53\u7684\u65B0\u53D8\u5316\u4E00\u8D77\u751F\u6D3B\uFF0C\u4E5F\u53EF\u4EE5\u4ECE\u559D\u5B8C\u773C\u524D\u8FD9\u676F\u8336\u5F00\u59CB\u3002"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+    - textId: 196
+      order: 196
+      speakerName: "\u7CFB\u7EDF"
+      portraitSourceName: none
+      side: L
+      portrait: {fileID: 0}
+      isLeftPortrait: 1
+      text: "\u3010\u7B2C\u4E09\u5929 \xB7 \u7ED3\u675F\u3011"
+      backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
   dayTransitionPanel: {fileID: 1116819131}
   transitionText: {fileID: 0}
   continueButton: {fileID: 413150628}

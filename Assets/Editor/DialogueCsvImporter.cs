@@ -34,6 +34,13 @@ public static class DialogueCsvImporter
         "Assets/Dialogue/DAY7.csv"
     };
 
+    private static readonly string[] DiabetesDlcCsvPaths =
+    {
+        "Assets/Dialogue/DLC_DAY1.csv",
+        "Assets/Dialogue/DLC_DAY2.csv",
+        "Assets/Dialogue/DLC_DAY3.csv"
+    };
+
     [MenuItem("Tools/Dialogue/Import Day1 Intro CSV")]
     public static void ImportDay1IntroCsv()
     {
@@ -247,6 +254,132 @@ public static class DialogueCsvImporter
         Debug.Log(BuildBathhouseIntroImportSummary(fileStats, importedByDay, totalSkippedBeforeCombat, totalSkippedAfterCombat, missingSprites, controller));
     }
 
+    [MenuItem("Tools/Dialogue/Import Diabetes DLC CSVs")]
+    public static void ImportDiabetesDlcCsvs()
+    {
+        HashSet<string> missingSprites = new HashSet<string>();
+        StringBuilder summary = new StringBuilder();
+        summary.AppendLine("Diabetes DLC CSV import complete.");
+
+        ImportDiabetesDlcOpening(summary, missingSprites);
+        ImportDiabetesDlcBathhouseDialogues(summary, missingSprites);
+        ImportDiabetesDlcAfterCombatDialogues(summary, missingSprites);
+
+        AssetDatabase.Refresh();
+        summary.AppendLine("Missing sprites: " + FormatMissingSprites(missingSprites));
+        Debug.Log(summary.ToString());
+    }
+
+    private static void ImportDiabetesDlcOpening(StringBuilder summary, HashSet<string> missingSprites)
+    {
+        StorySceneController controller = GetStorySceneController();
+        if (controller == null)
+        {
+            Debug.LogError("Diabetes DLC CSV import failed: StorySceneController was not found in StoryScene.");
+            summary.AppendLine("StorySceneController missing. DLC opening was not imported.");
+            return;
+        }
+
+        if (!TryReadStoryTypeLines(DiabetesDlcCsvPaths[0], "Intro", 1, out ImportResult result))
+        {
+            summary.AppendLine("DLC Day 1 Intro skipped because CSV was missing.");
+            return;
+        }
+
+        AddMissingSprites(missingSprites, result.missingSprites);
+        controller.dlcOpeningLines = result.lines.ToArray();
+        EditorUtility.SetDirty(controller);
+        EditorSceneManager.MarkSceneDirty(controller.gameObject.scene);
+        EditorSceneManager.SaveScene(controller.gameObject.scene);
+
+        summary.AppendLine("StorySceneController.dlcOpeningLines imported from DLC_DAY1.csv Intro: " + result.lines.Count + " lines.");
+    }
+
+    private static void ImportDiabetesDlcBathhouseDialogues(StringBuilder summary, HashSet<string> missingSprites)
+    {
+        BathhouseDayStoryController controller = GetBathhouseDayStoryController();
+        if (controller == null)
+        {
+            Debug.LogError("Diabetes DLC CSV import failed: BathhouseDayStoryController was not found in BathhouseMain.");
+            summary.AppendLine("BathhouseDayStoryController missing. DLC Bathhouse/BeforeCombat dialogue was not imported.");
+            return;
+        }
+
+        EnsureDlcBathhouseArrays(controller);
+
+        for (int day = 1; day <= DiabetesDlcCsvPaths.Length; day++)
+        {
+            string csvPath = DiabetesDlcCsvPaths[day - 1];
+            int index = day - 1;
+
+            if (TryReadStoryTypeLines(csvPath, "BeforeCombat", day, out ImportResult beforeCombatResult))
+            {
+                AddMissingSprites(missingSprites, beforeCombatResult.missingSprites);
+                controller.dlcBeforeCombatDialogues[index] = CreateDailyDialogue("DLC Day " + day + " BeforeCombat", beforeCombatResult.lines);
+                summary.AppendLine("BathhouseDayStoryController.dlcBeforeCombatDialogues[" + index + "] imported from DLC_DAY" + day + ".csv BeforeCombat: " + beforeCombatResult.lines.Count + " lines.");
+            }
+            else
+            {
+                summary.AppendLine("DLC Day " + day + " BeforeCombat skipped because CSV was missing.");
+            }
+
+            if (day == 1)
+                continue;
+
+            if (TryReadStoryTypeLines(csvPath, "Intro", day, out ImportResult introResult))
+            {
+                AddMissingSprites(missingSprites, introResult.missingSprites);
+                controller.dlcBathhouseIntroDialogues[index] = CreateDailyDialogue("DLC Day " + day + " BathhouseIntro", introResult.lines);
+                summary.AppendLine("BathhouseDayStoryController.dlcBathhouseIntroDialogues[" + index + "] imported from DLC_DAY" + day + ".csv Intro: " + introResult.lines.Count + " lines.");
+            }
+            else
+            {
+                summary.AppendLine("DLC Day " + day + " Bathhouse Intro skipped because CSV was missing.");
+            }
+        }
+
+        if (controller.dialogueManager == null)
+            controller.dialogueManager = UnityEngine.Object.FindObjectOfType<DialogueManager>(true);
+
+        EditorUtility.SetDirty(controller);
+        EditorSceneManager.MarkSceneDirty(controller.gameObject.scene);
+        EditorSceneManager.SaveScene(controller.gameObject.scene);
+    }
+
+    private static void ImportDiabetesDlcAfterCombatDialogues(StringBuilder summary, HashSet<string> missingSprites)
+    {
+        AfterCombatStoryController controller = GetAfterCombatStoryController();
+        if (controller == null)
+        {
+            Debug.LogError("Diabetes DLC CSV import failed: AfterCombatStoryController was not found in AfterCombatScene.");
+            summary.AppendLine("AfterCombatStoryController missing. DLC AfterCombat dialogue was not imported.");
+            return;
+        }
+
+        EnsureDlcAfterCombatArray(controller);
+
+        for (int day = 1; day <= DiabetesDlcCsvPaths.Length; day++)
+        {
+            string csvPath = DiabetesDlcCsvPaths[day - 1];
+            int index = day - 1;
+
+            if (TryReadStoryTypeLines(csvPath, "AfterCombat", day, out ImportResult result))
+            {
+                AddMissingSprites(missingSprites, result.missingSprites);
+                controller.dlcAfterCombatDialogues[index] = CreateDailyDialogue("DLC Day " + day + " AfterCombat", result.lines);
+                summary.AppendLine("AfterCombatStoryController.dlcAfterCombatDialogues[" + index + "] imported from DLC_DAY" + day + ".csv AfterCombat: " + result.lines.Count + " lines.");
+            }
+            else
+            {
+                summary.AppendLine("DLC Day " + day + " AfterCombat skipped because CSV was missing.");
+            }
+        }
+
+        EditorUtility.SetDirty(controller);
+        EditorSceneManager.MarkSceneDirty(controller.gameObject.scene);
+        EditorSceneManager.SaveScene(controller.gameObject.scene);
+    }
+
     private static string GetDay1CsvPath()
     {
         Directory.CreateDirectory("Assets/Dialogue");
@@ -265,6 +398,20 @@ public static class DialogueCsvImporter
             return absolutePath.Substring(projectPath.Length + 1);
 
         return absolutePath;
+    }
+
+    private static bool TryReadStoryTypeLines(string csvPath, string targetStoryType, int targetDay, out ImportResult result)
+    {
+        result = new ImportResult();
+
+        if (!File.Exists(csvPath))
+        {
+            Debug.LogWarning("Diabetes DLC CSV import: file not found: " + csvPath);
+            return false;
+        }
+
+        result = ReadStoryTypeLines(csvPath, targetStoryType, targetDay);
+        return true;
     }
 
     private static ImportResult ReadStoryTypeLines(string csvPath, string targetStoryType, int targetDay)
@@ -615,6 +762,47 @@ public static class DialogueCsvImporter
 
         for (int i = 0; i < existing.Length && i < controller.bathhouseIntroDialogues.Length; i++)
             controller.bathhouseIntroDialogues[i] = existing[i];
+    }
+
+    private static void EnsureDlcBathhouseArrays(BathhouseDayStoryController controller)
+    {
+        controller.dlcBathhouseIntroDialogues = EnsureDailyDialogueArraySize(controller.dlcBathhouseIntroDialogues, 3);
+        controller.dlcBeforeCombatDialogues = EnsureDailyDialogueArraySize(controller.dlcBeforeCombatDialogues, 3);
+    }
+
+    private static void EnsureDlcAfterCombatArray(AfterCombatStoryController controller)
+    {
+        controller.dlcAfterCombatDialogues = EnsureDailyDialogueArraySize(controller.dlcAfterCombatDialogues, 3);
+    }
+
+    private static DailyDialogue[] EnsureDailyDialogueArraySize(DailyDialogue[] existing, int minLength)
+    {
+        if (existing != null && existing.Length >= minLength)
+            return existing;
+
+        DailyDialogue[] expanded = new DailyDialogue[minLength];
+        if (existing == null)
+            return expanded;
+
+        for (int i = 0; i < existing.Length && i < expanded.Length; i++)
+            expanded[i] = existing[i];
+
+        return expanded;
+    }
+
+    private static DailyDialogue CreateDailyDialogue(string dayName, List<DialogueLine> lines)
+    {
+        return new DailyDialogue
+        {
+            dayName = dayName,
+            lines = lines.ToArray()
+        };
+    }
+
+    private static void AddMissingSprites(HashSet<string> target, HashSet<string> source)
+    {
+        foreach (string spriteName in source)
+            target.Add(spriteName);
     }
 
     private static DialogueLine CreateDialogueLine(

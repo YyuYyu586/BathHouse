@@ -9,6 +9,31 @@ public class EndingCreditsController : MonoBehaviour
     public GameObject endingCreditsPanel;
     public TextMeshProUGUI creditsText;
 
+    [Header("Credits Text")]
+    [TextArea(8, 20)]
+    public string mainStoryCreditsText;
+    [TextArea(8, 20)]
+    public string diabetesDlcCreditsText =
+        "鼠鼠大澡堂\n" +
+        "糖尿病特别活动\n\n\n" +
+        "糖尿病不是一句“要自律”就能解决的事。\n\n" +
+        "它关乎身体，\n" +
+        "也关乎每天的选择、担心、疲惫和坚持。\n\n" +
+        "测血糖不是审判，\n" +
+        "而是一种提醒：\n" +
+        "提醒我们更了解自己的身体，\n" +
+        "也提醒我们可以慢慢学习照顾自己。\n\n" +
+        "感到害怕、沮丧、困惑，\n" +
+        "并不代表你做得不好。\n\n" +
+        "真正重要的，\n" +
+        "不是一次就变得完美，\n" +
+        "而是在理解和支持中，\n" +
+        "一点一点找回生活的节奏。\n\n" +
+        "愿每一只不安的鼠鼠，\n" +
+        "都能被温柔地听见。\n\n" +
+        "愿每一次理解，\n" +
+        "都能让沉重的心轻一点。";
+
     [Header("Scroll")]
     public float scrollSpeed = 60f;
     public float startY = -500f;
@@ -62,6 +87,7 @@ public class EndingCreditsController : MonoBehaviour
         isPlaying = true;
         endingCreditsPanel.SetActive(true);
         creditsText.gameObject.SetActive(true);
+        ApplyCreditsTextForCurrentMode();
 
         RectTransform textRect = creditsText.rectTransform;
         Vector2 position = textRect.anchoredPosition;
@@ -69,6 +95,17 @@ public class EndingCreditsController : MonoBehaviour
         textRect.anchoredPosition = position;
 
         creditsRoutine = StartCoroutine(PlayCreditsRoutine(textRect));
+    }
+
+    private void ApplyCreditsTextForCurrentMode()
+    {
+        GameManager gm = GameManager.EnsureInstance();
+        string selectedText = gm.currentGameMode == GameMode.DiabetesDLC
+            ? diabetesDlcCreditsText
+            : mainStoryCreditsText;
+
+        if (!string.IsNullOrWhiteSpace(selectedText))
+            creditsText.text = selectedText;
     }
 
     private IEnumerator PlayCreditsRoutine(RectTransform textRect)

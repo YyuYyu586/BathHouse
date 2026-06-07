@@ -1,0 +1,80 @@
+﻿Text_ID,StoryType,Day,Order,Speaker Name,Text,Background Image,Portrait,Side
+1,Intro,1,1,我是旁白,你好，我是旁白，让我来为你介绍基本操作！,BathHouse,none,L
+2,Intro,1,2,我是旁白,首先，按 WASD 进行移动，这个你肯定知道的！,BathHouse,none,L
+3,Intro,1,3,我是旁白,接着是如何接待顾客：靠近顾客后按 F 键即可。,BathHouse,none,L
+4,Intro,1,4,金嫂,还有！（挤走旁白）听我说，场景里的物件也可以按 F 键触发对话！,BathHouse,Jinsao_portrait,L
+5,Intro,1,5,金嫂,现在先给你这个！,BathHouse,Jinsao_portrait,L
+6,Intro,1,6,我是旁白,获得了【高级搓澡巾】——解锁技能【只是单纯地搓】！,BathHouse,none,L
+7,Intro,1,7,金嫂,WASD 上下左右移动，其余澡堂大厅里的内容按 F 键就可以了，其它没啥了。,BathHouse,Jinsao_portrait,L
+8,Intro,1,8,金嫂,给我好好记住，干了这么一段时间还不会，我真要把你塞进池子里洗洗脑袋啰！,BathHouse,Jinsao_portrait,L
+9,Intro,1,9,小福,放心放心，我记得的。,BathHouse,XiaoFu,R
+10,BeforeCombat,1,10,小福,欢迎光临鼠鼠大澡堂！,BathHouse,XiaoFu,R
+11,BeforeCombat,1,11,家属鼠,啊……你好。,BathHouse,FamilyCareHamsternormal,L
+12,BeforeCombat,1,12,小福,第一次来吗？,BathHouse,XiaoFu,R
+13,BeforeCombat,1,13,家属鼠,嗯。有人说这里很适合放松，我刚好也刷到你们在 X 音做宣传。,BathHouse,FamilyCareHamsternormal,L
+14,BeforeCombat,1,14,金嫂,啊太好了哈哈，放心吧，它可是我们这儿的金牌搓澡工！,BathHouse,Jinsao_portrait,L
+15,BeforeCombat,1,15,小福,哈哈，谬赞谬赞……,BathHouse,XiaoFu,R
+16,BeforeCombat,1,16,小福,你最近睡不好吗？,BathHouse,XiaoFu,R
+17,BeforeCombat,1,17,小福,（它好像真的很紧张……）,BathHouse,XiaoFu,R
+18,BeforeCombat,1,18,家属鼠,也不是……就是一闭眼，就想起我妈的检查单。,BathHouse,FamilyCareHamsternormal,L
+19,BeforeCombat,1,19,小福,检查单？,BathHouse,XiaoFu,R
+20,BeforeCombat,1,20,家属鼠,其实不是我生病。是我妈前阵子查出来血糖不太好。,BathHouse,FamilyCareHamstercry,L
+21,BeforeCombat,1,21,家属鼠,医生说要长期注意，饮食、运动、复查，都要慢慢来。,BathHouse,FamilyCareHamstercry,L
+22,BeforeCombat,1,22,家属鼠,我妈倒是还笑我，说“你怎么比我还紧张”。,BathHouse,FamilyCareHamstercry,L
+23,BeforeCombat,1,23,小福,给你纸巾……,BathHouse,XiaoFu,R
+24,BeforeCombat,1,24,家属鼠,谢谢。,BathHouse,FamilyCareHamstercry,L
+25,BeforeCombat,1,25,小福,你妈妈现在怎么样了？,BathHouse,XiaoFu,R
+26,BeforeCombat,1,26,家属鼠,它还好。就是……我们俩现在吃饭变得很奇怪。,BathHouse,FamilyCareHamstercry,L
+27,BeforeCombat,1,27,小福,奇怪？,BathHouse,XiaoFu,R
+28,BeforeCombat,1,28,家属鼠,以前我妈做红烧肉，我只会说“好香”。,BathHouse,FamilyCareHamsternormal,L
+29,BeforeCombat,1,29,家属鼠,现在它一端上来，我脑子里先冒出来的是：这个能吃吗？会不会太油？,BathHouse,FamilyCareHamsternormal,L
+30,BeforeCombat,1,30,家属鼠,有一次它夹了一块肉，刚放进碗里，又自己放回去了。,BathHouse,FamilyCareHamsternormal,L
+31,BeforeCombat,1,31,家属鼠,它还笑着问我：“这个是不是不行？”,BathHouse,FamilyCareHamsternormal,L
+32,BeforeCombat,1,32,家属鼠,我当时不知道怎么回答。,BathHouse,FamilyCareHamsternormal,L
+33,BeforeCombat,1,33,家属鼠,说“不行”像是在管它，说“没事”我又怕自己不负责。,BathHouse,FamilyCareHamsternormal,L
+34,BeforeCombat,1,34,金嫂,你夹那块肉了吗？,BathHouse,Jinsao_portrait,L
+35,BeforeCombat,1,35,家属鼠,啊？……没有。我当时愣住了。,BathHouse,FamilyCareHamsternormal,L
+36,BeforeCombat,1,36,小福,那最近呢？,BathHouse,XiaoFu,R
+37,BeforeCombat,1,37,家属鼠,我这几天一直在搜。,BathHouse,FamilyCareHamsternormal,L
+38,BeforeCombat,1,38,家属鼠,糖尿病能不能吃水果，能不能喝粥，能不能吃红烧肉，饭后走多久比较好。,BathHouse,FamilyCareHamsternormal,L
+39,BeforeCombat,1,39,家属鼠,一开始我以为查清楚就安心了。,BathHouse,FamilyCareHamsternormal,L
+40,BeforeCombat,1,40,家属鼠,可是越查越烦。,BathHouse,FamilyCareHamstercry,L
+41,BeforeCombat,1,41,家属鼠,每个答案后面都跟着一个“但是”。,BathHouse,FamilyCareHamstercry,L
+42,BeforeCombat,1,42,家属鼠,而且每条相关帖子后面都有很多回复，越看越觉得自己哪里都没做好。,BathHouse,FamilyCareHamstercry,L
+43,BeforeCombat,1,43,金嫂,你查的不是红烧肉，也不是饮食。,BathHouse,Jinsao_portrait,L
+44,BeforeCombat,1,44,家属鼠,……那我查的是什么？,BathHouse,FamilyCareHamsternormal,L
+45,BeforeCombat,1,45,金嫂,你查的是“万一”。,BathHouse,Jinsao_portrait,L
+46,BeforeCombat,1,46,家属鼠,……,BathHouse,FamilyCareHamsternormal,L
+47,BeforeCombat,1,47,家属鼠,对，我怕……万一。,BathHouse,FamilyCareHamstercry,L
+48,BeforeCombat,1,48,家属鼠,万一我没提醒，万一它没注意，万一下次检查更糟。,BathHouse,FamilyCareHamstercry,L
+49,BeforeCombat,1,49,家属鼠,万一它明明可以好一点，是我没照顾好。,BathHouse,FamilyCareHamstercry,L
+50,BeforeCombat,1,50,小福,哎哟，别先把自己绕进去了。先和我去汤池吧，东西已经准备好了！,BathHouse,XiaoFu,R
+51,BeforeCombat,1,51,家属鼠,好……,BathHouse,FamilyCareHamsternormal,L
+52,BeforeCombat,1,52,我是旁白,（手机屏幕亮了一下，空气中浮出细小的字迹。）,BathHouse,none,L
+53,BeforeCombat,1,53,我是旁白,“能不能吃……” “要不要提醒……” “血糖高怎么办……” “家属怎么照顾……”,BathHouse,none,L
+54,BeforeCombat,1,54,小福,（不好，得快点了！）,BathHouse,XiaoFu,R
+55,AfterCombat,1,55,家属鼠,呼……刚才好像做了一个很长的梦……,BathHouse,FamilyCareHamsternormal,L
+56,AfterCombat,1,56,小福,梦到什么了？,BathHouse,XiaoFu,R
+57,AfterCombat,1,57,家属鼠,记不太清了……好像有很多东西飞来飞去的。,BathHouse,FamilyCareHamsternormal,L
+58,AfterCombat,1,58,家属鼠,上面写着好多数字、问题，还有我没想完的“万一”。,BathHouse,FamilyCareHamsternormal,L
+59,AfterCombat,1,59,家属鼠,可是后来，它们慢慢散开了。,BathHouse,FamilyCareHamsternormal,L
+60,AfterCombat,1,60,金嫂,澡堂嘛，水一热，肯定能舒服下来的。,BathHouse,Jinsao_portrait,L
+61,AfterCombat,1,61,家属鼠,……嗯。,BathHouse,FamilyCareHamsternormal,L
+62,AfterCombat,1,62,家属鼠,我还是会担心。,BathHouse,FamilyCareHamsternormal,L
+63,AfterCombat,1,63,小福,嗯。,BathHouse,XiaoFu,R
+64,AfterCombat,1,64,家属鼠,但我今晚回去，不想先问它血糖了。,BathHouse,FamilyCareHamsterhappy,L
+65,AfterCombat,1,65,小福,那你想先问什么？,BathHouse,XiaoFu,R
+66,AfterCombat,1,66,家属鼠,我想先问它，今天想不想一起吃饭。,BathHouse,FamilyCareHamsterhappy,L
+67,AfterCombat,1,67,金嫂,这就对了。,BathHouse,Jinsao_portrait,L
+68,AfterCombat,1,68,家属鼠,资料我还是会看。,BathHouse,FamilyCareHamsternormal,L
+69,AfterCombat,1,69,家属鼠,但我不想把每一顿饭，都搞成一场严肃的检查......,BathHouse,FamilyCareHamsterhappy,L
+70,AfterCombat,1,70,小福,它听到你这么说，应该会很开心的。,BathHouse,XiaoFu,R
+71,AfterCombat,1,71,家属鼠,（笑了笑）也许吧。,BathHouse,FamilyCareHamsterhappy,L
+72,AfterCombat,1,72,家属鼠,我不能替它过日子。,BathHouse,FamilyCareHamsternormal,L
+73,AfterCombat,1,73,家属鼠,但我可以陪它，把今天过得没那么紧。,BathHouse,FamilyCareHamsterhappy,L
+74,AfterCombat,1,74,金嫂,那就从今天开始吧。,BathHouse,Jinsao_portrait,L
+75,AfterCombat,1,75,家属鼠,谢谢你们。我先回去了。,BathHouse,FamilyCareHamsterhappy,L
+76,AfterCombat,1,76,小福,欢迎下次再来！,BathHouse,XiaoFu,R
+77,AfterCombat,1,77,我是旁白,【小贴士】糖尿病不只影响患者，也会牵动身边照顾它的家人。研究发现，近半数照顾者认为照顾经历影响了自己的情绪健康。,BathHouse,none,L
+78,AfterCombat,1,78,我是旁白,所以，家属鼠需要的不只是更多饮食表和注意事项。有时候，先问一句“今天想不想一起吃饭”，也是一种很重要的陪伴。,BathHouse,none,L
+79,AfterCombat,1,79,系统,【第一天 · 结束】,BathHouse,none,L
