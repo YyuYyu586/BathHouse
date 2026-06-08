@@ -86,6 +86,7 @@ public class GameManager : MonoBehaviour
     // Resets persistent data when starting a new run from MainMenu.
     public void ResetGame()
     {
+        BathhouseDayStoryController.ResetPlayedBathhouseIntroDays();
         currentDay = 1;
         playerGold = 20;
         playerHP = 100;
