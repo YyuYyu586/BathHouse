@@ -76,7 +76,17 @@ public class DialogueManager : MonoBehaviour
         if (dialoguePanel == null || !dialoguePanel.activeSelf)
             return;
 
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.F))
+        bool fPressed = Input.GetKeyDown(KeyCode.F);
+        bool mousePressed = Input.GetMouseButtonDown(0);
+
+        if (fPressed)
+        {
+            Debug.Log("[DIALOGUE] F pressed, isDialogueActive=" + (dialoguePanel != null && dialoguePanel.activeSelf) +
+                      ", SavePanelController.IsPanelOpen=" + SavePanelController.IsPanelOpen +
+                      ", Time.timeScale=" + Time.timeScale + ".");
+        }
+
+        if (mousePressed || fPressed)
         {
             ContinueDialogue();
         }
