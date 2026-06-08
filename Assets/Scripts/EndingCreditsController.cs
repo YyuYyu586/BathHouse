@@ -16,28 +16,28 @@ public class EndingCreditsController : MonoBehaviour
     public string diabetesDlcCreditsText =
         "鼠鼠大澡堂\n" +
         "糖尿病特别活动\n\n\n" +
-        "糖尿病不是一句“要自律”就能解决的事。\n\n" +
-        "它关乎身体，\n" +
-        "也关乎每天的选择、担心、疲惫和坚持。\n\n" +
-        "测血糖不是审判，\n" +
-        "而是一种提醒：\n" +
-        "提醒我们更了解自己的身体，\n" +
-        "也提醒我们可以慢慢学习照顾自己。\n\n" +
-        "感到害怕、沮丧、困惑，\n" +
-        "并不代表你做得不好。\n\n" +
-        "真正重要的，\n" +
-        "不是一次就变得完美，\n" +
-        "而是在理解和支持中，\n" +
-        "一点一点找回生活的节奏。\n\n" +
-        "愿每一只不安的鼠鼠，\n" +
-        "都能被温柔地听见。\n\n" +
-        "愿每一次理解，\n" +
-        "都能让沉重的心轻一点。";
+        "三天的特别活动结束了。\n\n" +
+        "这一次，你面对的并不是糖尿病本身，\n" +
+        "而是围绕它出现的担心、误解、疲惫和不安。\n" +
+        "鼠们不该被责备，\n" +
+        "也不该被一句“你要自律”轻轻带过。\n\n" +
+        "照顾身体是一件长期的事。\n\n" +
+        "理解血糖、学习记录、寻求帮助，\n" +
+        "都不是失败的证明，\n" +
+        "而是慢慢把生活重新握回手里的方式。\n\n" +
+        "愿每一只正在适应变化的鼠鼠，\n" +
+        "都能被认真听见。\n\n" +
+        "愿每一次解释、陪伴和理解，\n" +
+        "都能让心里的雾散开一点。\n\n\n" +
+        "感谢游玩\n" +
+        "糖尿病特别活动\n\n" +
+        "THE END";
 
     [Header("Scroll")]
     public float scrollSpeed = 60f;
     public float startY = -500f;
     public float endY = 700f;
+    [SerializeField] private float dlcExtraScrollPadding = 300f;
 
     [Header("Scene")]
     public string mainMenuSceneName = "MainMenu";
@@ -88,13 +88,14 @@ public class EndingCreditsController : MonoBehaviour
         endingCreditsPanel.SetActive(true);
         creditsText.gameObject.SetActive(true);
         ApplyCreditsTextForCurrentMode();
+        float actualEndY = GetCreditsEndYForCurrentMode();
 
         RectTransform textRect = creditsText.rectTransform;
         Vector2 position = textRect.anchoredPosition;
         position.y = startY;
         textRect.anchoredPosition = position;
 
-        creditsRoutine = StartCoroutine(PlayCreditsRoutine(textRect));
+        creditsRoutine = StartCoroutine(PlayCreditsRoutine(textRect, actualEndY));
     }
 
     private void ApplyCreditsTextForCurrentMode()
@@ -108,9 +109,20 @@ public class EndingCreditsController : MonoBehaviour
             creditsText.text = selectedText;
     }
 
-    private IEnumerator PlayCreditsRoutine(RectTransform textRect)
+    private float GetCreditsEndYForCurrentMode()
     {
-        float distance = Mathf.Abs(endY - startY);
+        GameManager gm = GameManager.EnsureInstance();
+        if (gm.currentGameMode != GameMode.DiabetesDLC)
+            return endY;
+
+        creditsText.ForceMeshUpdate();
+        float dlcEndY = startY + creditsText.preferredHeight + dlcExtraScrollPadding;
+        return Mathf.Max(endY, dlcEndY);
+    }
+
+    private IEnumerator PlayCreditsRoutine(RectTransform textRect, float actualEndY)
+    {
+        float distance = Mathf.Abs(actualEndY - startY);
         float duration = Mathf.Max(0.1f, distance / Mathf.Max(1f, scrollSpeed));
         float elapsed = 0f;
 
@@ -119,7 +131,7 @@ public class EndingCreditsController : MonoBehaviour
             elapsed += Time.deltaTime;
             float t = Mathf.Clamp01(elapsed / duration);
             Vector2 position = textRect.anchoredPosition;
-            position.y = Mathf.Lerp(startY, endY, t);
+            position.y = Mathf.Lerp(startY, actualEndY, t);
             textRect.anchoredPosition = position;
             yield return null;
         }
