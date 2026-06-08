@@ -757,7 +757,9 @@ public class BattleManager : MonoBehaviour
         yield return Day7InterludeRoutine();
 
         ApplyDay7BossWeakening();
+        battleEnded = false;
         isChangingDay7Phase = false;
+        isDay7InterludePlaying = false;
         isPlayerTurn = true;
         PlayEnemyIdleAnimation(GetEnemyIdleFramesForCurrentDay(), GetEnemySpriteForCurrentDay());
         RefreshAllUI();
@@ -1011,6 +1013,7 @@ public class BattleManager : MonoBehaviour
         isDay7Phase2 = true;
         battleEnded = false;
         isChangingDay7Phase = false;
+        isDay7InterludePlaying = false;
         isPlayerTurn = true;
 
         PlayEnemyIdleAnimation(day7BossWeakenedIdleFrames, day7BossWeakenedSprite);

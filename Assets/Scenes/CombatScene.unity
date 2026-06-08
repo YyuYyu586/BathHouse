@@ -985,8 +985,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79695866fe5e11f4e8971a102f6606c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentGameMode: 1
-  currentDay: 3
+  currentGameMode: 0
+  currentDay: 7
   maxDay: 7
   dlcPlayerHasPlayedMainStory: 0
   dlcUnlockAllSkills: 0
