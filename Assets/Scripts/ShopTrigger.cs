@@ -30,24 +30,13 @@ public class ShopTrigger : MonoBehaviour
     {
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.F))
         {
-            Debug.Log("[SHOP] F pressed, object name=" + gameObject.name +
-                      ", playerInRange=" + isPlayerInRange +
-                      ", IsPlayerInAnyShopRange=" + IsPlayerInAnyShopRange +
-                      ", SavePanelController.IsPanelOpen=" + SavePanelController.IsPanelOpen +
-                      ", Time.timeScale=" + Time.timeScale + ".");
-
             if (SavePanelController.IsPanelOpen || IsDialoguePanelOpen() || IsShopPanelOpen())
             {
-                Debug.Log("[SHOP] blocked before open, object name=" + gameObject.name +
-                          ", SavePanelController.IsPanelOpen=" + SavePanelController.IsPanelOpen +
-                          ", dialoguePanelOpen=" + IsDialoguePanelOpen() +
-                          ", shopPanelOpen=" + IsShopPanelOpen() + ".");
                 return;
             }
 
             if (shopManager != null)
             {
-                Debug.Log("[SHOP] Open shop, object name=" + gameObject.name + ".");
                 shopManager.OpenShop();
             }
             else

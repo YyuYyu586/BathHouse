@@ -104,14 +104,12 @@ public class SavePanelController : MonoBehaviour
 
         if (savePanel != null && savePanel.activeSelf && Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("[SAVE] Escape detected, IsPanelOpen=" + IsPanelOpen + ", Time.timeScale=" + Time.timeScale + ".");
             ClosePanel();
         }
     }
 
     public void OpenPanel()
     {
-        Debug.Log("[SAVE] OpenPanel called, caller stack=" + System.Environment.StackTrace + ", IsPanelOpen=" + IsPanelOpen + ", Time.timeScale=" + Time.timeScale + ".");
         EnsurePanelReference();
 
         if (savePanel == null)
@@ -132,7 +130,6 @@ public class SavePanelController : MonoBehaviour
 
     public void ClosePanel()
     {
-        Debug.Log("[SAVE] ClosePanel called, IsPanelOpen=" + IsPanelOpen + ", Time.timeScale=" + Time.timeScale + ".");
         EnsurePanelReference();
 
         if (savePanel != null)

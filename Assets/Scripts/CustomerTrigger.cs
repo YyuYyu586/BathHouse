@@ -71,12 +71,6 @@ public class CustomerTrigger : MonoBehaviour
         if (!Input.GetKeyDown(KeyCode.F))
             return;
 
-        Debug.Log("[CUSTOMER] F pressed, object name=" + gameObject.name +
-                  ", playerInRange=" + playerNear +
-                  ", hasTalked=" + hasTalked +
-                  ", SavePanelController.IsPanelOpen=" + SavePanelController.IsPanelOpen +
-                  ", Time.timeScale=" + Time.timeScale + ".");
-
         Debug.Log(
             "CustomerTrigger F pressed. customer = " + gameObject.name +
             ", playerNear = " + playerNear +
@@ -98,11 +92,6 @@ public class CustomerTrigger : MonoBehaviour
     {
         if ((!ignorePlayerRange && !playerNear) || hasTalked || isDialoguePlaying)
         {
-            Debug.Log("[CUSTOMER] blocked before dialogue, object name=" + gameObject.name +
-                      ", ignorePlayerRange=" + ignorePlayerRange +
-                      ", playerInRange=" + playerNear +
-                      ", hasTalked=" + hasTalked +
-                      ", isDialoguePlaying=" + isDialoguePlaying + ".");
             return false;
         }
 
@@ -111,7 +100,6 @@ public class CustomerTrigger : MonoBehaviour
 
         if (dialogueManager == null)
         {
-            Debug.Log("[CUSTOMER] blocked because DialogueManager is null, object name=" + gameObject.name + ".");
             Debug.LogError("CustomerTrigger needs a DialogueManager reference.");
             return false;
         }
@@ -119,7 +107,6 @@ public class CustomerTrigger : MonoBehaviour
         DialogueLine[] dialogueLines = GetDialogueLinesForToday();
         if (dialogueLines == null || dialogueLines.Length == 0)
         {
-            Debug.Log("[CUSTOMER] blocked because dialogue lines are empty, object name=" + gameObject.name + ".");
             Debug.LogWarning("CustomerTrigger has no dialogue lines to play.");
             return false;
         }
@@ -133,7 +120,6 @@ public class CustomerTrigger : MonoBehaviour
             ", beforeCombatStarted = true" +
             ", exclamationMarkBound = " + (exclamationMark != null) +
             ", exclamationActiveBeforeDialogue = " + GetExclamationActiveState() + ".");
-        Debug.Log("[CUSTOMER] Start dialogue, object name=" + gameObject.name + ".");
         dialogueManager.StartDialogue(dialogueLines);
         return true;
     }
@@ -337,28 +323,24 @@ public class CustomerTrigger : MonoBehaviour
     {
         if (SavePanelController.IsPanelOpen)
         {
-            Debug.Log("[CUSTOMER] blocked because SavePanel is open, object name=" + gameObject.name + ".");
             Debug.Log("CustomerTrigger skipped because SavePanel is open. customer = " + gameObject.name + ".");
             return true;
         }
 
         if (IsShopPanelOpen())
         {
-            Debug.Log("[CUSTOMER] blocked because shop panel is open, object name=" + gameObject.name + ".");
             Debug.Log("CustomerTrigger skipped because ShopPanel is open. customer = " + gameObject.name + ".");
             return true;
         }
 
         if (ShopTrigger.IsPlayerInAnyShopRange)
         {
-            Debug.Log("[CUSTOMER] blocked because shop range, object name=" + gameObject.name + ".");
             Debug.Log("CustomerTrigger skipped because player is in shop range. customer = " + gameObject.name + ".");
             return true;
         }
 
         if (IsDialoguePanelOpen())
         {
-            Debug.Log("[CUSTOMER] blocked because dialogue is already open, object name=" + gameObject.name + ".");
             Debug.Log("CustomerTrigger skipped because DialoguePanel is already open. customer = " + gameObject.name + ".");
             return true;
         }

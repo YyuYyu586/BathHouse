@@ -31,11 +31,6 @@ public class InteractableObject : MonoBehaviour
         if (!Input.GetKeyDown(KeyCode.F))
             return;
 
-        Debug.Log("[INTERACTABLE] F pressed, object name=" + objectName +
-                  ", playerInRange=" + canInteract +
-                  ", SavePanelController.IsPanelOpen=" + SavePanelController.IsPanelOpen +
-                  ", Time.timeScale=" + Time.timeScale + ".");
-
         Debug.Log(
             "[InteractableObject] F pressed. objectName=" + objectName +
             ", gameObject=" + gameObject.name +
@@ -64,7 +59,6 @@ public class InteractableObject : MonoBehaviour
             return;
         }
 
-        Debug.Log("[INTERACTABLE] Start interact, object name=" + objectName + ", gameObject=" + gameObject.name + ".");
         StartInspectionDialogue();
     }
 
