@@ -16,6 +16,11 @@ public class BathhouseDayStoryController : MonoBehaviour
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void ResetPlayedDays()
     {
+        ResetPlayedBathhouseIntroDays();
+    }
+
+    public static void ResetPlayedBathhouseIntroDays()
+    {
         playedBathhouseIntroDays.Clear();
     }
 

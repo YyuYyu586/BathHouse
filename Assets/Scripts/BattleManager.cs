@@ -569,7 +569,6 @@ public class BattleManager : MonoBehaviour
         currentRound++;
         isPlayerTurn = true;
         RefreshActionButtonsForCurrentState("player turn restored");
-        SetPlayerMessage("选择一个行动。");
         LogBattleState("Player turn started");
     }
 

@@ -4269,6 +4269,7 @@ GameObject:
   - component: {fileID: 622208149}
   - component: {fileID: 622208148}
   - component: {fileID: 622208150}
+  - component: {fileID: 622208152}
   m_Layer: 0
   m_Name: _scripts
   m_TagString: Untagged
@@ -4880,7 +4881,7 @@ MonoBehaviour:
       portraitSourceName: 
       side: R
       portrait: {fileID: 21300000, guid: 02d879efdb84dea4d8e52fcb5ef01b27, type: 3}
-      isLeftPortrait: 0
+      isLeftPortrait: 1
       text: "\u4F60\u597D\uFF0C\u8BF7\u95EE\u53EF\u4EE5\u5E26\u6211\u7684\u5E73\u677F\u8FDB\u53BB\u4E0D\uFF1F\u6211\u5F97\u628A\u8FD9\u4E2A\u6155\u8BFE\u5237\u5B8C..."
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - textId: 149
@@ -6089,6 +6090,26 @@ MonoBehaviour:
       isLeftPortrait: 1
       text: "\u8FD9\u662F\u4F60\u5C06\u8981\u9762\u5BF9\u7684\uFF0C\u5728\u5DE5\u4F5C\u65E5\u7684\u6700\u540E\u51FA\u73B0\u7684\u654C\u4EBA\uFF01"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
+--- !u!114 &622208152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622208147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11b472c6a9a9cca4293905cecebbfb7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalBgm: {fileID: 0}
+  battleBgm: {fileID: 0}
+  uiClickSfx: {fileID: 0}
+  dialogueVoiceClips: []
+  dialogueVoiceMaxDuration: 1.2
+  bgmSource: {fileID: 0}
+  sfxSource: {fileID: 0}
+  dialogueVoiceSource: {fileID: 0}
 --- !u!1 &628705836
 GameObject:
   m_ObjectHideFlags: 0
