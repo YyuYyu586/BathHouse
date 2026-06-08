@@ -38,7 +38,6 @@ public class EndingCreditsController : MonoBehaviour
     public float scrollSpeed = 60f;
     public float startY = -500f;
     public float endY = 700f;
-    [SerializeField] private float extraScrollPadding = 800f;
 
     [Header("Scene")]
     public string mainMenuSceneName = "MainMenu";
@@ -89,15 +88,13 @@ public class EndingCreditsController : MonoBehaviour
         endingCreditsPanel.SetActive(true);
         creditsText.gameObject.SetActive(true);
         ApplyCreditsTextForCurrentMode();
-        creditsText.ForceMeshUpdate();
-        float actualEndY = CalculateActualEndY();
 
         RectTransform textRect = creditsText.rectTransform;
         Vector2 position = textRect.anchoredPosition;
         position.y = startY;
         textRect.anchoredPosition = position;
 
-        creditsRoutine = StartCoroutine(PlayCreditsRoutine(textRect, actualEndY));
+        creditsRoutine = StartCoroutine(PlayCreditsRoutine(textRect));
     }
 
     private void ApplyCreditsTextForCurrentMode()
@@ -111,15 +108,9 @@ public class EndingCreditsController : MonoBehaviour
             creditsText.text = selectedText;
     }
 
-    private float CalculateActualEndY()
+    private IEnumerator PlayCreditsRoutine(RectTransform textRect)
     {
-        float dynamicEndY = startY + creditsText.preferredHeight + extraScrollPadding;
-        return Mathf.Max(endY, dynamicEndY);
-    }
-
-    private IEnumerator PlayCreditsRoutine(RectTransform textRect, float actualEndY)
-    {
-        float distance = Mathf.Abs(actualEndY - startY);
+        float distance = Mathf.Abs(endY - startY);
         float duration = Mathf.Max(0.1f, distance / Mathf.Max(1f, scrollSpeed));
         float elapsed = 0f;
 
@@ -128,7 +119,7 @@ public class EndingCreditsController : MonoBehaviour
             elapsed += Time.deltaTime;
             float t = Mathf.Clamp01(elapsed / duration);
             Vector2 position = textRect.anchoredPosition;
-            position.y = Mathf.Lerp(startY, actualEndY, t);
+            position.y = Mathf.Lerp(startY, endY, t);
             textRect.anchoredPosition = position;
             yield return null;
         }
