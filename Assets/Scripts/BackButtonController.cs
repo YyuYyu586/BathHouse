@@ -72,7 +72,6 @@ public class BackButtonController : MonoBehaviour
 
         backButton.onClick.RemoveListener(OpenSavePanel);
         backButton.onClick.AddListener(OpenSavePanel);
-        Debug.Log("BackButtonController bound BackButton on " + gameObject.name + ".");
     }
 
     public void OpenSavePanel()

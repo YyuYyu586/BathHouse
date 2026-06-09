@@ -49,7 +49,6 @@ public class AfterCombatStoryController : MonoBehaviour
 
         DialogueLine[] todayLines = GetTodayDialogueLines();
         int linesCount = todayLines != null ? todayLines.Length : 0;
-        Debug.Log("AfterCombatScene currentDay = " + gameManager.currentDay + ", mode = " + gameManager.currentGameMode + ", index = " + GetTodayIndex() + ", lines = " + linesCount + ".");
 
         if (todayLines == null || todayLines.Length == 0)
         {
@@ -100,7 +99,6 @@ public class AfterCombatStoryController : MonoBehaviour
         {
             UpdateContinueButtonText(gameManager.IsFinalDay ? "查看结局" : "进入下一天");
             dayTransitionPanel.SetActive(true);
-            Debug.Log("Showing DayTransitionPanel. currentDay = " + currentDay + ", isFinalDay = " + gameManager.IsFinalDay + ".");
         }
         else
         {
@@ -132,8 +130,6 @@ public class AfterCombatStoryController : MonoBehaviour
 
         if (gameManager.IsFinalDay)
         {
-            Debug.Log("DayTransition Continue clicked on final day. currentDay = " + gameManager.currentDay + ".");
-
             if (endingCreditsController != null)
             {
                 if (dayTransitionPanel != null)
@@ -150,7 +146,6 @@ public class AfterCombatStoryController : MonoBehaviour
 
         int previousDay = gameManager.currentDay;
         gameManager.AdvanceDay();
-        Debug.Log("DayTransition Continue clicked. Advanced from day " + previousDay + " to day " + gameManager.currentDay + ", next scene = " + BathhouseSceneName + ".");
         SceneManager.LoadScene(BathhouseSceneName);
     }
 

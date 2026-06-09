@@ -94,7 +94,6 @@ public class MainMenuManager : MonoBehaviour
         SetPanelActive(mainPanel, false);
         SetPanelActive(modeSelectPanel, true);
         SetPanelActive(dlcExperiencePanel, false);
-        Debug.Log("MainMenu opened mode select panel.");
     }
 
     public void BackToMainPanel()
@@ -113,7 +112,6 @@ public class MainMenuManager : MonoBehaviour
         SavePanelController.ResetPanelState();
         ResetMenuInputState();
         GameManager.EnsureInstance().StartMainStory();
-        Debug.Log("MainMenu selected MainStory. Loading StoryScene.");
         SceneManager.LoadScene("StoryScene");
     }
 
@@ -122,7 +120,6 @@ public class MainMenuManager : MonoBehaviour
         SetPanelActive(mainPanel, false);
         SetPanelActive(modeSelectPanel, false);
         SetPanelActive(dlcExperiencePanel, true);
-        Debug.Log("MainMenu opened DLC experience panel.");
     }
 
     public void ChooseDLCPlayedMainStory()
@@ -154,13 +151,11 @@ public class MainMenuManager : MonoBehaviour
         isLoadingScene = true;
         SavePanelController.ResetPanelState();
         ResetMenuInputState();
-        Debug.Log("MainMenu ContinueGame clicked. Loading BathhouseMain.");
         SceneManager.LoadScene("BathhouseMain");
     }
 
     public void QuitGame()
     {
-        Debug.Log("已经点击了退出游戏");
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
@@ -177,7 +172,6 @@ public class MainMenuManager : MonoBehaviour
         SavePanelController.ResetPanelState();
         ResetMenuInputState();
         GameManager.EnsureInstance().StartDiabetesDLC(hasPlayedMainStory);
-        Debug.Log("MainMenu selected DiabetesDLC. hasPlayedMainStory=" + hasPlayedMainStory + ". Loading StoryScene.");
         SceneManager.LoadScene("StoryScene");
     }
 
@@ -313,14 +307,12 @@ public class MainMenuManager : MonoBehaviour
 
         if (IsButtonClicked(startButton, startButtonRect, eventCamera))
         {
-            Debug.Log("MainMenu StartButton fallback click.");
             StartGameWithClickSound();
             return;
         }
 
         if (IsButtonClicked(quitButton, quitButtonRect, eventCamera))
         {
-            Debug.Log("MainMenu QuitButton fallback click.");
             if (AudioManager.Instance != null)
                 AudioManager.Instance.PlayClickSfx();
 

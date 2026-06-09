@@ -53,7 +53,6 @@ public class SavePanelController : MonoBehaviour
     {
         IsPanelOpen = false;
         Time.timeScale = 1f;
-        Debug.Log("SavePanel static state reset.");
     }
 
     public static bool HasSavedGame()
@@ -86,15 +85,6 @@ public class SavePanelController : MonoBehaviour
         gameManager.hasWaterLadle = PlayerPrefs.GetInt(HasWaterLadleKey, gameManager.hasWaterLadle ? 1 : 0) == 1;
         gameManager.hasGoldenTowel = PlayerPrefs.GetInt(HasGoldenTowelKey, gameManager.hasGoldenTowel ? 1 : 0) == 1;
 
-        Debug.Log("Game loaded. currentDay=" + gameManager.currentDay +
-                  ", gold=" + gameManager.playerGold +
-                  ", hp=" + gameManager.playerHP +
-                  ", sp=" + gameManager.playerSP +
-                  ", soap=" + gameManager.soapCount +
-                  ", tea=" + gameManager.teaCount +
-                  ", hasWaterLadle=" + gameManager.hasWaterLadle +
-                  ", hasGoldenTowel=" + gameManager.hasGoldenTowel + ".");
-
         return true;
     }
 
@@ -124,8 +114,6 @@ public class SavePanelController : MonoBehaviour
 
         if (pauseGameWhenOpen)
             Time.timeScale = 0f;
-
-        Debug.Log("SavePanel opened.");
     }
 
     public void ClosePanel()
@@ -139,7 +127,6 @@ public class SavePanelController : MonoBehaviour
             Time.timeScale = previousTimeScale <= 0f ? 1f : previousTimeScale;
 
         IsPanelOpen = false;
-        Debug.Log("SavePanel closed.");
     }
 
     public void SaveGame()
@@ -157,15 +144,6 @@ public class SavePanelController : MonoBehaviour
         PlayerPrefs.SetInt(HasWaterLadleKey, gameManager.hasWaterLadle ? 1 : 0);
         PlayerPrefs.SetInt(HasGoldenTowelKey, gameManager.hasGoldenTowel ? 1 : 0);
         PlayerPrefs.Save();
-
-        Debug.Log("Game saved. currentDay=" + gameManager.currentDay +
-                  ", gold=" + gameManager.playerGold +
-                  ", hp=" + gameManager.playerHP +
-                  ", sp=" + gameManager.playerSP +
-                  ", soap=" + gameManager.soapCount +
-                  ", tea=" + gameManager.teaCount +
-                  ", hasCertificate=" + gameManager.hasWaterLadle +
-                  ", hasGoldenTowel=" + gameManager.hasGoldenTowel + ".");
     }
 
     public void RestartGame()
@@ -176,14 +154,12 @@ public class SavePanelController : MonoBehaviour
 
         PrepareForSceneChange();
 
-        Debug.Log("Game restarted. Loading scene: " + restartSceneName);
         SceneManager.LoadScene(restartSceneName);
     }
 
     public void BackToMainMenu()
     {
         PrepareForSceneChange();
-        Debug.Log("BackToMenu button clicked. Loading scene: " + mainMenuSceneName);
         SceneManager.LoadScene(mainMenuSceneName);
     }
 
@@ -194,7 +170,6 @@ public class SavePanelController : MonoBehaviour
 
     public void OpenSettings()
     {
-        Debug.Log("Settings not implemented yet.");
     }
 
     private void EnsurePanelReference()
@@ -299,7 +274,6 @@ public class SavePanelController : MonoBehaviour
         PlayerPrefs.DeleteKey(HasWaterLadleKey);
         PlayerPrefs.DeleteKey(HasGoldenTowelKey);
         PlayerPrefs.Save();
-        Debug.Log("Saved game PlayerPrefs cleared for restart.");
     }
 
     private void BindButton(Button button, UnityEngine.Events.UnityAction action, string fieldName, bool warnIfMissing = true)
@@ -316,8 +290,6 @@ public class SavePanelController : MonoBehaviour
 
         if (!HasPersistentListener(button, action.Method.Name))
             button.onClick.AddListener(action);
-
-        Debug.Log("SavePanelController bound " + fieldName + " to " + button.name + ".");
     }
 
     private bool HasPersistentListener(Button button, string methodName)
