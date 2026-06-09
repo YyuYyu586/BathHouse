@@ -173,6 +173,46 @@ public class BattleManager : MonoBehaviour
     private Coroutine playerSPFillRoutine;
     private Coroutine enemyHPFillRoutine;
 
+    private string BuildBattleDebugState()
+    {
+        string mode = gameManager != null ? gameManager.currentGameMode.ToString() : "NoGameManager";
+        return "currentDay=" + currentDay +
+               ", currentGameMode=" + mode +
+               ", enemyName=" + currentEnemyName +
+               ", enemyHP=" + currentEnemyHP +
+               ", enemyMaxHP=" + maxEnemyHP +
+               ", battleEnded=" + battleEnded +
+               ", isPlayerTurn=" + isPlayerTurn +
+               ", isChangingDay7Phase=" + isChangingDay7Phase +
+               ", isDay7InterludePlaying=" + isDay7InterludePlaying +
+               ", playerSP=" + currentPlayerSP + ".";
+    }
+
+    private void LogDay7LockState(string message)
+    {
+        Debug.Log("[DAY7_LOCK] " + message + ", " + BuildBattleDebugState());
+    }
+
+    private void LogDay7HalfState(string message)
+    {
+        Debug.Log("[DAY7_HALF] " + message + ", " + BuildBattleDebugState());
+    }
+
+    private void LogDay7Phase2State(string message)
+    {
+        Debug.Log("[DAY7_PHASE2] " + message + ", " + BuildBattleDebugState());
+    }
+
+    private void LogPlayerActionEnd(string action)
+    {
+        Debug.Log("[PLAYER_ACTION_END] action=" + action + ", " + BuildBattleDebugState());
+    }
+
+    private void LogEnemyTurnState(string message)
+    {
+        Debug.Log("[ENEMY_TURN] " + message + ", " + BuildBattleDebugState());
+    }
+
     private void Start()
     {
         Debug.Log("BattleManager Start");
@@ -299,6 +339,7 @@ public class BattleManager : MonoBehaviour
         currentPlayerSP = Mathf.Min(maxPlayerSP, currentPlayerSP + attackSPRecover);
         RefreshPlayerUI();
         SetPlayerMessage("普通搓澡！造成 " + damage + " 点伤害，回复 " + attackSPRecover + " SP。");
+        LogPlayerActionEnd("Attack");
         DealDamageToEnemy(damage, "小福进行了普通搓澡，敌人受到了 " + damage + " 点伤害！");
     }
 
@@ -372,6 +413,7 @@ public class BattleManager : MonoBehaviour
 
         SetPlayerMessage("泡泡迷人眼！造成 " + damage + " 点伤害，回复 " + heal + " HP，并让敌人跳过一次行动。");
         RefreshPlayerUI();
+        LogPlayerActionEnd("Blur");
         DealDamageToEnemy(damage, "泡泡迷人眼命中，敌人受到了 " + damage + " 点伤害！");
     }
 
@@ -405,6 +447,7 @@ public class BattleManager : MonoBehaviour
         currentPlayerSP = Mathf.Max(0, currentPlayerSP - ultimateSPCost);
         SetPlayerMessage("灵魂抛光！造成 " + damage + " 点伤害。");
         RefreshPlayerUI();
+        LogPlayerActionEnd("Ultimate");
         DealDamageToEnemy(damage, "灵魂抛光发动，敌人受到了 " + damage + " 点伤害！");
     }
 
@@ -446,7 +489,7 @@ public class BattleManager : MonoBehaviour
             if (shouldTriggerDay7Interlude)
             {
                 yield return new WaitForSeconds(0.2f);
-                StartCoroutine(Day7HalfHpInterludeRoutine());
+                yield return Day7HalfHpInterludeRoutine();
                 yield break;
             }
 
@@ -469,6 +512,7 @@ public class BattleManager : MonoBehaviour
             yield break;
         }
 
+        LogPlayerActionEnd("Polish");
         StartCoroutine(EnemyTurnRoutine());
     }
 
@@ -526,11 +570,13 @@ public class BattleManager : MonoBehaviour
             return;
         }
 
+        LogPlayerActionEnd("DirectDamage");
         StartCoroutine(EnemyTurnRoutine());
     }
 
     private IEnumerator EnemyTurnRoutine()
     {
+        LogEnemyTurnState("start");
         isPlayerTurn = false;
         SetActionButtonsInteractable(false);
         LogBattleState("Enemy turn started");
@@ -547,6 +593,7 @@ public class BattleManager : MonoBehaviour
             isPlayerTurn = true;
             RefreshActionButtonsForCurrentState("enemy stunned");
             SetPlayerMessage("敌人露出破绽，继续行动！");
+            LogEnemyTurnState("restore player turn");
             LogBattleState("Enemy turn skipped by blur");
             yield break;
         }
@@ -569,6 +616,7 @@ public class BattleManager : MonoBehaviour
         currentRound++;
         isPlayerTurn = true;
         RefreshActionButtonsForCurrentState("player turn restored");
+        LogEnemyTurnState("restore player turn");
         LogBattleState("Player turn started");
     }
 
@@ -607,7 +655,9 @@ public class BattleManager : MonoBehaviour
         battleEnded = true;
         isPlayerTurn = false;
         bathGodIntervened = true;
+        LogDay7LockState("disable buttons at BathGodInterventionRoutine before");
         SetActionButtonsInteractable(false);
+        LogDay7LockState("disable buttons at BathGodInterventionRoutine after");
 
         if (ShouldEnterDay7Phase2())
         {
@@ -745,28 +795,49 @@ public class BattleManager : MonoBehaviour
 
     private IEnumerator Day7HalfHpInterludeRoutine()
     {
+        LogDay7HalfState("start");
         if (isChangingDay7Phase)
+        {
+            RestorePlayerTurnAfterDay7Transition("day7 half hp interlude skipped because phase is already changing");
             yield break;
+        }
 
         day7InterludeTriggered = true;
         isChangingDay7Phase = true;
         isPlayerTurn = false;
+        LogDay7LockState("disable buttons at Day7HalfHpInterludeRoutine before");
         SetActionButtonsInteractable(false);
+        LogDay7LockState("disable buttons at Day7HalfHpInterludeRoutine after");
         SetEnemyMessage(currentEnemyName + "的气势开始动摇。");
 
+        LogDay7HalfState("before dialogue");
         yield return Day7InterludeRoutine();
+        LogDay7HalfState("after dialogue");
 
         ApplyDay7BossWeakening();
+        LogDay7HalfState("before restore");
+        PlayEnemyIdleAnimation(GetEnemyIdleFramesForCurrentDay(), GetEnemySpriteForCurrentDay());
+        SetPlayerMessage("大家的意志支撑着你。继续战斗！");
+        SetEnemyMessage(currentEnemyName + "进入虚弱状态。");
+        RestorePlayerTurnAfterDay7Transition("day7 half hp interlude complete");
+        LogDay7HalfState("after restore");
+        LogBattleState("Day7 half HP interlude finished");
+    }
+
+    private void RestorePlayerTurnAfterDay7Transition(string reason)
+    {
+        if (battleEnded || currentEnemyHP <= 0)
+        {
+            RefreshActionButtonsForCurrentState(reason + " skipped because battle ended");
+            return;
+        }
+
         battleEnded = false;
         isChangingDay7Phase = false;
         isDay7InterludePlaying = false;
         isPlayerTurn = true;
-        PlayEnemyIdleAnimation(GetEnemyIdleFramesForCurrentDay(), GetEnemySpriteForCurrentDay());
         RefreshAllUI();
-        SetPlayerMessage("大家的意志支撑着你。继续战斗！");
-        SetEnemyMessage(currentEnemyName + "进入虚弱状态。");
-        RefreshActionButtonsForCurrentState("day7 boss weakened");
-        LogBattleState("Day7 half HP interlude finished");
+        RefreshActionButtonsForCurrentState(reason);
     }
 
     private void ApplyDay7BossWeakening()
@@ -994,12 +1065,18 @@ public class BattleManager : MonoBehaviour
 
     private IEnumerator SwitchToDay7Phase2Routine()
     {
+        LogDay7Phase2State("start");
         if (isChangingDay7Phase)
+        {
+            RestorePlayerTurnAfterDay7Transition("day7 phase2 skipped because phase is already changing");
             yield break;
+        }
 
         isChangingDay7Phase = true;
         isPlayerTurn = false;
+        LogDay7LockState("disable buttons at SwitchToDay7Phase2Routine before");
         SetActionButtonsInteractable(false);
+        LogDay7LockState("disable buttons at SwitchToDay7Phase2Routine after");
 
         yield return Day7InterludeRoutine();
 
@@ -1011,15 +1088,13 @@ public class BattleManager : MonoBehaviour
         currentEnemyHP = maxEnemyHP;
         currentRound = 1;
         isDay7Phase2 = true;
-        battleEnded = false;
-        isChangingDay7Phase = false;
-        isDay7InterludePlaying = false;
-        isPlayerTurn = true;
+        LogDay7Phase2State("after enemy reset");
+        LogDay7Phase2State("before restore");
 
         PlayEnemyIdleAnimation(day7BossWeakenedIdleFrames, day7BossWeakenedSprite);
-        RefreshAllUI();
         SetEnemyMessage("Day 7 Phase 2: " + currentEnemyName);
-        RefreshActionButtonsForCurrentState("day7 phase2 started");
+        RestorePlayerTurnAfterDay7Transition("day7 phase2 complete");
+        LogDay7Phase2State("after restore");
         Debug.Log("Day7 phase changed to phase2. enemyName=" + currentEnemyName + ", enemyHP=" + maxEnemyHP + ", enemyAttack=" + enemyAttackDamage + ", rewardGold=" + currentEnemyGoldReward + ".");
         LogBattleState("Day7 phase2 started");
     }
@@ -1027,7 +1102,9 @@ public class BattleManager : MonoBehaviour
     private IEnumerator Day7InterludeRoutine()
     {
         isDay7InterludePlaying = true;
+        LogDay7LockState("disable buttons at Day7InterludeRoutine before");
         SetActionButtonsInteractable(false);
+        LogDay7LockState("disable buttons at Day7InterludeRoutine after");
 
         string interludeText =
             "小福，你这几天真的很努力了。\n" +
@@ -1509,6 +1586,9 @@ public class BattleManager : MonoBehaviour
 
     private void SetActionButtonsInteractable(bool interactable)
     {
+        Debug.Log("[BATTLE_BUTTONS] SetActionButtonsInteractable(" + interactable + "), " + BuildBattleDebugState() +
+                  "\nStackTrace:\n" + System.Environment.StackTrace);
+
         if (!interactable)
             ClearSelectedButton();
 
@@ -1527,6 +1607,27 @@ public class BattleManager : MonoBehaviour
 
     private void RefreshActionButtonsForCurrentState(string reason)
     {
+        bool debugCanAct = !battleEnded && isPlayerTurn;
+        bool debugAttackUnlocked = IsAttackUnlocked();
+        bool debugPolishUnlocked = IsPolishUnlocked();
+        bool debugBlurUnlocked = IsBlurUnlocked();
+        bool debugUltimateUnlocked = IsUltimateUnlockedForToday();
+        bool debugAttackInteractable = debugCanAct && debugAttackUnlocked;
+        bool debugPolishInteractable = debugCanAct && debugPolishUnlocked;
+        bool debugBlurInteractable = debugCanAct && debugBlurUnlocked;
+        bool debugUltimateInteractable = debugCanAct && debugUltimateUnlocked;
+
+        Debug.Log("[BATTLE_BUTTONS] Refresh reason=" + reason + ", " + BuildBattleDebugState() +
+                  " canAct=" + debugCanAct +
+                  ", AttackUnlocked=" + debugAttackUnlocked +
+                  ", PolishUnlocked=" + debugPolishUnlocked +
+                  ", BlurUnlocked=" + debugBlurUnlocked +
+                  ", UltimateUnlocked=" + debugUltimateUnlocked +
+                  ", AttackShouldInteract=" + debugAttackInteractable +
+                  ", PolishShouldInteract=" + debugPolishInteractable +
+                  ", BlurShouldInteract=" + debugBlurInteractable +
+                  ", UltimateShouldInteract=" + debugUltimateInteractable + ".");
+
         bool canAct = !battleEnded && isPlayerTurn;
 
         SetButtonInteractable(attackButton, canAct && IsAttackUnlocked());

@@ -58,8 +58,7 @@ public class EndingCreditsController : MonoBehaviour
             return;
 
         if (Input.GetKeyDown(KeyCode.Space) ||
-            Input.GetKeyDown(KeyCode.Return) ||
-            Input.GetMouseButtonDown(0))
+            Input.GetKeyDown(KeyCode.Return))
         {
             ReturnToMainMenu();
         }
