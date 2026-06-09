@@ -14,12 +14,6 @@ public class DailyCustomerSpawner : MonoBehaviour
         int currentDay = gameManager.currentDay;
         bool isDiabetesDLC = gameManager.currentGameMode == GameMode.DiabetesDLC;
 
-        Debug.Log(
-            "DailyCustomerSpawner Start. mode = " + gameManager.currentGameMode +
-            ", currentDay = " + currentDay +
-            ", customers count = " + GetCustomerCount(customers) +
-            ", dlcCustomers count = " + GetCustomerCount(dlcCustomers) + ".");
-
         SetAllCustomersInactive();
 
         if (isDiabetesDLC)
@@ -55,11 +49,6 @@ public class DailyCustomerSpawner : MonoBehaviour
         }
 
         activeCustomer.SetActive(true);
-        Debug.Log(
-            "DailyCustomerSpawner selected customer. currentDay = " + currentDay +
-            ", customerIndex = " + customerIndex +
-            ", group = " + label +
-            ", activeCustomer = " + activeCustomer.name + ".");
         LogActiveCustomerTrigger(currentDay, activeCustomer);
         LogCustomerVisuals(activeCustomer);
         LogCustomerStates(customerArray, label);
@@ -101,7 +90,6 @@ public class DailyCustomerSpawner : MonoBehaviour
             GameObject customer = customerArray[i];
             string customerName = customer != null ? customer.name : "None";
             string activeState = customer != null ? customer.activeSelf.ToString() : "Missing";
-            Debug.Log("DailyCustomerSpawner customer state. group=" + label + ", element=" + i + ", customer=" + customerName + ", activeSelf=" + activeState + ".");
         }
     }
 
@@ -117,7 +105,6 @@ public class DailyCustomerSpawner : MonoBehaviour
         {
             Sprite sprite = renderers[i].sprite;
             string spriteName = sprite != null ? sprite.name : "None";
-            Debug.Log("DailyCustomerSpawner active customer SpriteRenderer. activeCustomer=" + customer.name + ", renderer=" + renderers[i].name + ", sprite=" + spriteName + ".");
         }
 
         Animator[] animators = customer.GetComponentsInChildren<Animator>(true);
@@ -125,7 +112,6 @@ public class DailyCustomerSpawner : MonoBehaviour
         {
             RuntimeAnimatorController controller = animators[i].runtimeAnimatorController;
             string controllerName = controller != null ? controller.name : "None";
-            Debug.Log("DailyCustomerSpawner active customer Animator. activeCustomer=" + customer.name + ", animator=" + animators[i].name + ", controller=" + controllerName + ".");
         }
     }
 
@@ -141,14 +127,6 @@ public class DailyCustomerSpawner : MonoBehaviour
         GameObject exclamationMark = customerTrigger.exclamationMark;
         string exclamationName = exclamationMark != null ? exclamationMark.name : "None";
         string exclamationActive = exclamationMark != null ? exclamationMark.activeSelf.ToString() : "Missing";
-
-        Debug.Log(
-            "DailyCustomerSpawner active customer trigger. currentDay = " + currentDay +
-            ", activeCustomer = " + activeCustomer.name +
-            ", triggerObject = " + customerTrigger.gameObject.name +
-            ", exclamationMarkBound = " + (exclamationMark != null) +
-            ", exclamationMark = " + exclamationName +
-            ", exclamationActive = " + exclamationActive + ".");
 
         if (exclamationMark == null)
             Debug.LogWarning("CustomerTrigger missing exclamationMark reference. customer = " + customerTrigger.gameObject.name + ".");

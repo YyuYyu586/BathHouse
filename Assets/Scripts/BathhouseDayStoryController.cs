@@ -33,11 +33,8 @@ public class BathhouseDayStoryController : MonoBehaviour
 
     private void TryPlayTodayBathhouseIntro()
     {
-        Debug.Log("BathhouseDayStoryController checking BathhouseIntro dialogue.");
-
         GameManager gameManager = GameManager.EnsureInstance();
         int currentDay = gameManager.currentDay;
-        Debug.Log("Current day: " + currentDay);
 
         if (gameManager.currentGameMode == GameMode.DiabetesDLC)
         {
@@ -47,13 +44,11 @@ public class BathhouseDayStoryController : MonoBehaviour
 
         if (currentDay <= 1 || currentDay > 7)
         {
-            Debug.Log("Day " + currentDay + " has no BathhouseIntro dialogue. Skipping.");
             return;
         }
 
         if (playedBathhouseIntroDays.Contains(currentDay))
         {
-            Debug.Log("BathhouseIntro already played for day " + currentDay + ".");
             return;
         }
 
@@ -64,7 +59,6 @@ public class BathhouseDayStoryController : MonoBehaviour
         }
 
         int index = currentDay - 1;
-        Debug.Log("Reading bathhouseIntroDialogues element " + index + " for currentDay " + currentDay + ".");
 
         if (bathhouseIntroDialogues == null ||
             index < 0 ||
@@ -78,7 +72,6 @@ public class BathhouseDayStoryController : MonoBehaviour
         }
 
         playedBathhouseIntroDays.Add(currentDay);
-        Debug.Log("Starting BathhouseIntro dialogue for day " + currentDay + ", lines: " + bathhouseIntroDialogues[index].lines.Length);
         dialogueManager.StartDialogue(bathhouseIntroDialogues[index].lines);
     }
 
@@ -92,7 +85,6 @@ public class BathhouseDayStoryController : MonoBehaviour
 
         if (playedBathhouseIntroDays.Contains(currentDay))
         {
-            Debug.Log("DLC BathhouseIntro already played for day " + currentDay + ".");
             return;
         }
 
@@ -115,7 +107,6 @@ public class BathhouseDayStoryController : MonoBehaviour
         }
 
         playedBathhouseIntroDays.Add(currentDay);
-        Debug.Log("Starting DLC BathhouseIntro dialogue for day " + currentDay + ", lines: " + dlcBathhouseIntroDialogues[index].lines.Length);
         dialogueManager.StartDialogue(dlcBathhouseIntroDialogues[index].lines);
     }
 
