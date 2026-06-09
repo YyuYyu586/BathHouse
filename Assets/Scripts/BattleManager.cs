@@ -189,7 +189,6 @@ public class BattleManager : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("BattleManager Start");
         LogInspectorReferences();
         ResolveButtonReferences();
         ResolveEnemyAnimationPlayer();
@@ -271,7 +270,6 @@ public class BattleManager : MonoBehaviour
         SetPlayerMessage(BuildBattleStartMessage());
         SetEnemyMessage("选择行动。");
         RefreshAllUI();
-        Debug.Log("Combat day setup. currentDay=" + currentDay + ", enemyName=" + currentEnemyName + ", enemyHP=" + maxEnemyHP + ", enemyAttack=" + enemyAttackDamage + ", rewardGold=" + currentEnemyGoldReward + ".");
         LogBattleState("Battle started");
     }
 
@@ -291,7 +289,6 @@ public class BattleManager : MonoBehaviour
         ultimateSPCost = 40;
         day7WeakenedPlayerDamageMultiplier = 1.3f;
         day7WeakenedEnemyAttackMultiplier = 0.8f;
-        Debug.Log("Applied demo combat tuning. maxPlayerHP=" + maxPlayerHP + ", maxPlayerSP=" + maxPlayerSP + ", attackDamage=" + attackDamage + ", attackSPRecover=" + attackSPRecover + ", ultimateDamage=" + ultimateDamage + ", ultimateSPCost=" + ultimateSPCost + ".");
     }
 
     #endregion
@@ -301,8 +298,6 @@ public class BattleManager : MonoBehaviour
     // Attack is the basic no-cost player action.
     public void OnAttackButton()
     {
-        Debug.Log("Attack clicked");
-
         if (!CanPlayerAct())
             return;
 
@@ -331,8 +326,6 @@ public class BattleManager : MonoBehaviour
     // Polish is the fixed combo skill. Not enough SP does not spend the player turn.
     public void OnPolishButton()
     {
-        Debug.Log("Polish clicked");
-
         if (!CanPlayerAct())
             return;
 
@@ -365,8 +358,6 @@ public class BattleManager : MonoBehaviour
     // Blur is bubble eye: damage, heal, and make the enemy skip one action.
     public void OnBlurButton()
     {
-        Debug.Log("Blur clicked");
-
         if (!CanPlayerAct())
             return;
 
@@ -404,8 +395,6 @@ public class BattleManager : MonoBehaviour
     // Reserved for the future. Current version does not spend the turn.
     public void OnUltimateButton()
     {
-        Debug.Log("Ultimate clicked");
-
         if (!CanPlayerAct())
             return;
 
@@ -441,14 +430,12 @@ public class BattleManager : MonoBehaviour
     // Optional hook for a Continue button inside VictoryPanel.
     public void OnVictoryContinueButton()
     {
-        Debug.Log("Victory Continue clicked. Loading AfterCombatScene.");
         SceneManager.LoadScene("AfterCombatScene");
     }
 
     // Trailer helper only: lets TrailerModeController show the existing victory flow without changing normal battle logic.
     public void TrailerForceWinBattle()
     {
-        Debug.Log("Trailer force win requested.");
         WinBattle();
     }
 
@@ -629,7 +616,6 @@ public class BattleManager : MonoBehaviour
             SetPlayerMessage("最终战胜利！点击 Continue 进入战后剧情。");
         else
             SetPlayerMessage("净化成功！获得 " + gainedGold + " 金币。点击 Continue 进入战后剧情。");
-        Debug.Log("Battle won. gainedGold=" + gainedGold + ". VictoryPanel will show. Continue loads AfterCombatScene.");
         LogBattleState("Battle won");
 
         if (victoryPanel != null)
@@ -718,7 +704,6 @@ public class BattleManager : MonoBehaviour
             SetPlayerMessage("最终战胜利！点击 Continue 进入战后剧情。");
         else
             SetPlayerMessage("搓澡之神帮你完成了净化，但今天状态很差，金币奖励减少。获得 " + gainedGold + " 金币。");
-        Debug.Log("Bath god reduced reward. originalGold=" + currentEnemyGoldReward + ", gainedGold=" + gainedGold + ", divisor=" + defeatGoldRewardDivisor + ".");
         LogBattleState("Bath god intervention: " + reason);
 
         if (victoryPanel != null)
@@ -838,7 +823,6 @@ public class BattleManager : MonoBehaviour
 
         day7BossWeakened = true;
         enemyAttackDamage = Mathf.Max(1, Mathf.RoundToInt(enemyAttackDamage * Mathf.Max(0.01f, day7WeakenedEnemyAttackMultiplier)));
-        Debug.Log("Day7 boss weakened. playerDamageMultiplier=" + day7WeakenedPlayerDamageMultiplier + ", enemyAttackDamage=" + enemyAttackDamage + ".");
     }
 
     #endregion
@@ -931,7 +915,6 @@ public class BattleManager : MonoBehaviour
         if (gameManager.soapCount <= 0)
         {
             SetPlayerMessage("没有肥皂了。");
-            Debug.Log("Use soap failed. soapCount=0, playerHP=" + currentPlayerHP + "/" + maxPlayerHP + ".");
             RefreshItemButtonsForCurrentState("soap blocked by count");
             return;
         }
@@ -942,7 +925,6 @@ public class BattleManager : MonoBehaviour
         RefreshPlayerUI();
         RefreshItemButtonsForCurrentState("soap used");
         SetPlayerMessage("使用肥皂，恢复 30 HP。剩余肥皂：" + gameManager.soapCount);
-        Debug.Log("Used soap. playerHP=" + currentPlayerHP + "/" + maxPlayerHP + ", soapCount=" + gameManager.soapCount + ".");
     }
 
     public void UseTea()
@@ -963,7 +945,6 @@ public class BattleManager : MonoBehaviour
         if (gameManager.teaCount <= 0)
         {
             SetPlayerMessage("没有花茶了。");
-            Debug.Log("Use tea failed. teaCount=0, playerSP=" + currentPlayerSP + "/" + maxPlayerSP + ".");
             RefreshItemButtonsForCurrentState("tea blocked by count");
             return;
         }
@@ -974,7 +955,6 @@ public class BattleManager : MonoBehaviour
         RefreshPlayerUI();
         RefreshItemButtonsForCurrentState("tea used");
         SetPlayerMessage("饮用花茶，恢复 20 SP。剩余花茶：" + gameManager.teaCount);
-        Debug.Log("Used tea. playerSP=" + currentPlayerSP + "/" + maxPlayerSP + ", teaCount=" + gameManager.teaCount + ".");
     }
 
     private void SavePlayerState()
@@ -993,12 +973,10 @@ public class BattleManager : MonoBehaviour
 
         if (amount <= 0)
         {
-            Debug.Log("Battle reward gold: 0. Current gold: " + gameManager.playerGold);
             return 0;
         }
 
         gameManager.playerGold += amount;
-        Debug.Log("Battle reward gold: " + amount + ". Current gold: " + gameManager.playerGold);
         return amount;
     }
 
@@ -1094,7 +1072,6 @@ public class BattleManager : MonoBehaviour
         PlayEnemyIdleAnimation(day7BossWeakenedIdleFrames, day7BossWeakenedSprite);
         SetEnemyMessage("Day 7 Phase 2: " + currentEnemyName);
         RestorePlayerTurnAfterDay7Transition("day7 phase2 complete");
-        Debug.Log("Day7 phase changed to phase2. enemyName=" + currentEnemyName + ", enemyHP=" + maxEnemyHP + ", enemyAttack=" + enemyAttackDamage + ", rewardGold=" + currentEnemyGoldReward + ".");
         LogBattleState("Day7 phase2 started");
     }
 
@@ -1158,7 +1135,6 @@ public class BattleManager : MonoBehaviour
             yield return new WaitForSeconds(Mathf.Max(1f, day7InterludeScrollDuration));
         }
 
-        Debug.Log("Day7 interlude scroll finished.");
         yield return new WaitForSeconds(0.5f);
 
         if (day7InterludeContinueButton != null)
@@ -1168,7 +1144,6 @@ public class BattleManager : MonoBehaviour
             day7InterludePanel.SetActive(false);
 
         isDay7InterludePlaying = false;
-        Debug.Log("Day7 interlude finished.");
     }
 
     #endregion
@@ -1269,7 +1244,6 @@ public class BattleManager : MonoBehaviour
             ApplyEnemySprite(dlcSprite);
         }
 
-        Debug.Log("DLC enemy sprite applied. currentDay=" + currentDay + ", sprite=" + dlcSprite.name + ".");
         return true;
     }
 
@@ -1286,7 +1260,6 @@ public class BattleManager : MonoBehaviour
             enemyAnimationPlayer.targetImage = enemyImage;
 
         enemyAnimationPlayer.Play(idleFrames, fallbackSprite);
-        Debug.Log("Enemy idle animation requested. currentDay=" + currentDay + ", isDay7Phase2=" + isDay7Phase2 + ", frames=" + (idleFrames != null ? idleFrames.Length : 0) + ".");
     }
 
     private void ApplyEnemySprite(Sprite sprite)
@@ -1304,14 +1277,10 @@ public class BattleManager : MonoBehaviour
         }
 
         enemyImage.sprite = sprite;
-        Debug.Log("Enemy sprite applied. currentDay=" + currentDay + ", isDay7Phase2=" + isDay7Phase2 + ", sprite=" + sprite.name + ".");
     }
 
     private void RefreshPlayerUI()
     {
-        Debug.Log("Player HP: " + currentPlayerHP + " / " + maxPlayerHP);
-        Debug.Log("Player SP: " + currentPlayerSP + " / " + maxPlayerSP);
-
         playerHPFillRoutine = SetFillAmount(hpFillImage, currentPlayerHP, maxPlayerHP, playerHPFillRoutine, "hpFillImage");
         playerSPFillRoutine = SetFillAmount(spFillImage, currentPlayerSP, maxPlayerSP, playerSPFillRoutine, "spFillImage");
 
@@ -1324,8 +1293,6 @@ public class BattleManager : MonoBehaviour
 
     private void RefreshEnemyUI()
     {
-        Debug.Log("Enemy HP: " + currentEnemyHP + " / " + maxEnemyHP);
-
         enemyHPFillRoutine = SetFillAmount(enemyHPFillImage, currentEnemyHP, maxEnemyHP, enemyHPFillRoutine, "enemyHPFillImage");
 
         if (enemyHPText != null)
@@ -1378,14 +1345,12 @@ public class BattleManager : MonoBehaviour
         if (battleLogText != null)
         {
             EnqueueBattleLog(message);
-            Debug.Log("BattleLog Player: " + message);
             return;
         }
 
         if (playerBattleMessageText != null)
         {
             playerBattleMessageText.text = message;
-            Debug.Log("PlayerBattleMessageText: " + message);
         }
         else
         {
@@ -1398,14 +1363,12 @@ public class BattleManager : MonoBehaviour
         if (battleLogText != null)
         {
             EnqueueBattleLog(message);
-            Debug.Log("BattleLog Enemy: " + message);
             return;
         }
 
         if (enemyBattleMessageText != null)
         {
             enemyBattleMessageText.text = message;
-            Debug.Log("EnemyBattleMessageText: " + message);
         }
         else
         {
@@ -1517,8 +1480,6 @@ public class BattleManager : MonoBehaviour
 
         if (enemyAnimationPlayer == null)
             Debug.LogWarning("enemyAnimationPlayer is not assigned. Enemy idle animation will fall back to static sprites.");
-        else
-            Debug.Log("enemyAnimationPlayer assigned: " + enemyAnimationPlayer.name);
     }
 
     private Button FindButtonByNames(params string[] objectNames)
@@ -1637,10 +1598,6 @@ public class BattleManager : MonoBehaviour
         SetButtonInteractable(teaButton, canAct && teaCount > 0 && currentPlayerSP < maxPlayerSP);
         RefreshItemButtonLabels();
 
-        Debug.Log(
-            "Item button state [" + reason + "] " +
-            "Soap=" + GetButtonState(soapButton) + " count=" + soapCount + ", " +
-            "Tea=" + GetButtonState(teaButton) + " count=" + teaCount + ".");
     }
 
     private void RefreshItemButtonLabels()
@@ -1718,14 +1675,6 @@ public class BattleManager : MonoBehaviour
 
     private void LogButtonState(string reason)
     {
-        Debug.Log(
-            "Button state [" + reason + "] " +
-            "Attack=" + GetButtonState(attackButton) + ", " +
-            "Blur=" + GetButtonState(blurButton) + ", " +
-            "Polish=" + GetButtonState(polishButton) + ", " +
-            "Ultimate=" + GetButtonState(ultimateButton) + ", " +
-            "Soap=" + GetButtonState(soapButton) + ", " +
-            "Tea=" + GetButtonState(teaButton));
     }
 
     private string GetButtonState(Button button)
@@ -1834,23 +1783,10 @@ public class BattleManager : MonoBehaviour
     {
         if (reference == null)
             Debug.LogWarning(fieldName + " is not assigned.");
-        else
-            Debug.Log(fieldName + " assigned: " + reference.name);
     }
 
     private void LogBattleState(string context)
     {
-        Debug.Log(
-            "Battle state [" + context + "] " +
-            "round=" + currentRound + ", " +
-            "currentDay=" + currentDay + ", " +
-            "enemyName=" + currentEnemyName + ", " +
-            "enemyAttack=" + enemyAttackDamage + ", " +
-            "playerTurn=" + isPlayerTurn + ", " +
-            "playerHP=" + currentPlayerHP + "/" + maxPlayerHP + ", " +
-            "playerSP=" + currentPlayerSP + "/" + maxPlayerSP + ", " +
-            "enemyHP=" + currentEnemyHP + "/" + maxEnemyHP + ", " +
-            "bathGodIntervened=" + bathGodIntervened);
     }
 
     private void CheckFillImage(string fieldName, Image image)

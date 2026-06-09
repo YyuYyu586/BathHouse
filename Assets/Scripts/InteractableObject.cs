@@ -31,13 +31,6 @@ public class InteractableObject : MonoBehaviour
         if (!Input.GetKeyDown(KeyCode.F))
             return;
 
-        Debug.Log(
-            "[InteractableObject] F pressed. objectName=" + objectName +
-            ", gameObject=" + gameObject.name +
-            ", canInteract=" + canInteract +
-            ", isCurrent=" + (currentInteractable == this) +
-            ", isInspecting=" + isInspecting + ".");
-
         if (!canInteract || currentInteractable != this || isInspecting)
             return;
 
@@ -55,7 +48,6 @@ public class InteractableObject : MonoBehaviour
 
         if (dialogueManager.dialoguePanel != null && dialogueManager.dialoguePanel.activeSelf)
         {
-            Debug.Log("InteractableObject skipped because DialogueManager is already open. object = " + gameObject.name + ".");
             return;
         }
 
@@ -99,7 +91,6 @@ public class InteractableObject : MonoBehaviour
         if (currentInteractable == this)
         {
             currentInteractable = null;
-            Debug.Log("[InteractableObject] currentInteractable cleared by trigger exit. objectName=" + objectName + ", gameObject=" + gameObject.name + ".");
 
             if (!isInspecting)
                 SetPressPromptVisible(false);
@@ -128,12 +119,6 @@ public class InteractableObject : MonoBehaviour
         dialogueManager.RemoveDialogueEndListener(OnInspectionDialogueEnd);
         dialogueManager.AddDialogueEndListener(OnInspectionDialogueEnd);
 
-        Debug.Log(
-            "[InteractableObject] starting inspection dialogue. objectName=" + objectName +
-            ", gameObject=" + gameObject.name +
-            ", inspectPreview=" + preview +
-            ", calledDialogueManager=true.");
-
         dialogueManager.StartDialogue(new[] { line });
     }
 
@@ -143,7 +128,6 @@ public class InteractableObject : MonoBehaviour
             dialogueManager.RemoveDialogueEndListener(OnInspectionDialogueEnd);
 
         isInspecting = false;
-        Debug.Log("[InteractableObject] inspection dialogue ended. objectName=" + objectName + ", gameObject=" + gameObject.name + ", canInteract=" + canInteract + ".");
 
         if (canInteract && currentInteractable == this)
             SetPressPromptVisible(true);
@@ -155,7 +139,6 @@ public class InteractableObject : MonoBehaviour
         {
             currentInteractable = null;
             SetPressPromptVisible(false);
-            Debug.Log("[InteractableObject] currentInteractable cleared by disable. objectName=" + objectName + ", gameObject=" + gameObject.name + ".");
         }
     }
 
@@ -165,10 +148,6 @@ public class InteractableObject : MonoBehaviour
         {
             string previousName = currentInteractable != null ? currentInteractable.gameObject.name : "None";
             currentInteractable = this;
-            Debug.Log(
-                "[InteractableObject] currentInteractable set. previous=" + previousName +
-                ", objectName=" + objectName +
-                ", gameObject=" + gameObject.name + ".");
         }
 
         SetPressPromptVisible(true);
@@ -178,18 +157,11 @@ public class InteractableObject : MonoBehaviour
     {
         if (visible && currentInteractable != this)
         {
-            Debug.Log(
-                "[InteractableObject] skipped pressPrompt SetActive(true) because this is not current. objectName=" + objectName +
-                ", gameObject=" + gameObject.name + ".");
             return;
         }
 
         if (!visible && currentInteractable != null && currentInteractable != this)
         {
-            Debug.Log(
-                "[InteractableObject] skipped pressPrompt SetActive(false) because another object is current. objectName=" + objectName +
-                ", gameObject=" + gameObject.name +
-                ", current=" + currentInteractable.gameObject.name + ".");
             return;
         }
 
@@ -209,25 +181,10 @@ public class InteractableObject : MonoBehaviour
             promptText.text = interactPrompt;
 
         pressPrompt.SetActive(visible);
-        Debug.Log(
-            "[InteractableObject] pressPrompt SetActive(" + visible + "). objectName=" + objectName +
-            ", gameObject=" + gameObject.name +
-            ", canInteract=" + canInteract +
-            ", isCurrent=" + (currentInteractable == this) + ".");
     }
 
     private void LogTriggerEvent(string eventName, Collider2D other, bool foundPlayer)
     {
-        Debug.Log(
-            "[InteractableObject] " + eventName +
-            ". objectName=" + objectName +
-            ", gameObject=" + gameObject.name +
-            ", other.name=" + other.name +
-            ", other.tag=" + other.tag +
-            ", other.layer=" + LayerMask.LayerToName(other.gameObject.layer) +
-            ", foundPlayer=" + foundPlayer +
-            ", canInteract=" + canInteract +
-            ", isCurrent=" + (currentInteractable == this) + ".");
     }
 
     private void ValidateSetup()
@@ -247,14 +204,6 @@ public class InteractableObject : MonoBehaviour
         string currentColliderIsTrigger = triggerCollider != null ? triggerCollider.isTrigger.ToString() : "Missing";
         string parentColliderExists = (parentCollider != null).ToString();
         string parentColliderIsTrigger = parentCollider != null ? parentCollider.isTrigger.ToString() : "Missing";
-
-        Debug.Log(
-            "[InteractableObject] collider setup. objectName=" + objectName +
-            ", gameObject=" + gameObject.name +
-            ", currentColliderIsTrigger=" + currentColliderIsTrigger +
-            ", hasParentCollider2D=" + parentColliderExists +
-            ", parentColliderIsTrigger=" + parentColliderIsTrigger +
-            ", pressPromptBound=" + (pressPrompt != null) + ".");
 
         if (triggerCollider == null || !triggerCollider.isTrigger)
         {

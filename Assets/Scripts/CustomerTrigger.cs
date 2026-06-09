@@ -42,15 +42,9 @@ public class CustomerTrigger : MonoBehaviour
 
         GameManager gameManager = GameManager.EnsureInstance();
         int currentDay = gameManager != null ? gameManager.currentDay : -1;
-        Debug.Log(
-            "CustomerTrigger Start. currentDay = " + currentDay +
-            ", customer = " + gameObject.name +
-            ", exclamationMarkBound = " + (exclamationMark != null) + ".");
-
         if (exclamationMark != null)
         {
             exclamationMark.SetActive(true);
-            Debug.Log("CustomerTrigger exclamation initialized. customer = " + gameObject.name + ", exclamationActive = " + exclamationMark.activeSelf + ".");
         }
         else
         {
@@ -60,7 +54,6 @@ public class CustomerTrigger : MonoBehaviour
         if (combatTrigger != null)
         {
             combatTrigger.SetActive(false);
-            Debug.Log("CustomerTrigger combatTrigger initialized. customer = " + gameObject.name + ", combatTriggerActive = " + combatTrigger.activeSelf + ".");
         }
     }
 
@@ -70,14 +63,6 @@ public class CustomerTrigger : MonoBehaviour
 
         if (!Input.GetKeyDown(KeyCode.F))
             return;
-
-        Debug.Log(
-            "CustomerTrigger F pressed. customer = " + gameObject.name +
-            ", playerNear = " + playerNear +
-            ", hasTalked = " + hasTalked +
-            ", isDialoguePlaying = " + isDialoguePlaying +
-            ", interactionDistance = " + interactionDistance +
-            ", exclamationActive = " + GetExclamationActiveState() + ".");
 
         TryStartCustomerDialogue(false);
     }
@@ -114,12 +99,6 @@ public class CustomerTrigger : MonoBehaviour
         dialogueManager.RemoveDialogueEndListener(OnBeforeCombatDialogueEnd);
         dialogueManager.AddDialogueEndListener(OnBeforeCombatDialogueEnd);
         isDialoguePlaying = true;
-        Debug.Log(
-            "BeforeCombat dialogue starting. currentDay = " + GameManager.EnsureInstance().currentDay +
-            ", customer = " + gameObject.name +
-            ", beforeCombatStarted = true" +
-            ", exclamationMarkBound = " + (exclamationMark != null) +
-            ", exclamationActiveBeforeDialogue = " + GetExclamationActiveState() + ".");
         dialogueManager.StartDialogue(dialogueLines);
         return true;
     }
@@ -149,7 +128,6 @@ public class CustomerTrigger : MonoBehaviour
                 {
                     DialogueLine[] todayLines = bathhouseDayStoryController.dlcBeforeCombatDialogues[index].lines;
                     int linesCount = todayLines.Length;
-                    Debug.Log("Using DLC BeforeCombat dialogue. currentDay = " + currentDay + ", beforeCombatIndex = " + index + ", lines = " + linesCount + ".");
                     LogBeforeCombatLines(currentDay, index, todayLines);
                     return todayLines;
                 }
@@ -167,7 +145,6 @@ public class CustomerTrigger : MonoBehaviour
             {
                 DialogueLine[] todayLines = bathhouseDayStoryController.beforeCombatDialogues[index].lines;
                 int linesCount = todayLines.Length;
-                Debug.Log("Using CSV BeforeCombat dialogue. currentDay = " + currentDay + ", beforeCombatIndex = " + index + ", lines = " + linesCount + ".");
                 LogBeforeCombatLines(currentDay, index, todayLines);
                 return todayLines;
             }
@@ -206,17 +183,6 @@ public class CustomerTrigger : MonoBehaviour
             }
 
             string portraitName = line.portrait != null ? line.portrait.name : "None";
-            Debug.Log(
-                "BeforeCombat line loaded: currentDay=" + currentDay +
-                ", beforeCombatIndex=" + dialogueIndex +
-                ", lineIndex=" + i +
-                ", lineOrder=" + line.order +
-                ", textId=" + line.textId +
-                ", speakerName=" + line.speakerName +
-                ", portraitSource=" + line.portraitSourceName +
-                ", portraitSprite=" + portraitName +
-                ", isLeftPortrait=" + line.isLeftPortrait +
-                ", side=" + line.side + ".");
 
             if (!string.IsNullOrWhiteSpace(line.portraitSourceName) &&
                 line.portraitSourceName.ToLowerInvariant() != "none" &&
@@ -238,7 +204,6 @@ public class CustomerTrigger : MonoBehaviour
         if (dialogueManager != null)
             dialogueManager.RemoveDialogueEndListener(OnBeforeCombatDialogueEnd);
 
-        Debug.Log("CustomerTrigger OnDialogueEnd triggered. customer = " + gameObject.name + ".");
         CompleteCustomerInteraction();
     }
 
@@ -255,11 +220,6 @@ public class CustomerTrigger : MonoBehaviour
         if (exclamationMark != null)
         {
             exclamationMark.SetActive(false);
-            Debug.Log(
-                "CompleteCustomerInteraction. ExclamationMark SetActive(false). currentDay = " + currentDay +
-                ", customer = " + customerName +
-                ", exclamationActiveBefore = " + exclamationBefore +
-                ", exclamationActiveAfterDialogue = " + exclamationMark.activeSelf + ".");
         }
         else
         {
@@ -269,10 +229,6 @@ public class CustomerTrigger : MonoBehaviour
         if (combatTrigger != null)
         {
             combatTrigger.SetActive(true);
-            Debug.Log(
-                "CompleteCustomerInteraction. combatTrigger SetActive(true). currentDay = " + currentDay +
-                ", customer = " + customerName +
-                ", combatTriggerActive = " + combatTrigger.activeSelf + ".");
 
             ShowPreparationHint();
         }
@@ -281,14 +237,7 @@ public class CustomerTrigger : MonoBehaviour
             Debug.LogWarning("CompleteCustomerInteraction missing combatTrigger reference. customer = " + customerName + ".");
         }
 
-        Debug.Log(
-            "CompleteCustomerInteraction finished. currentDay = " + currentDay +
-            ", customer = " + customerName +
-            ", hasTalked = " + hasTalked +
-            ", customerWillSetActiveFalse = true.");
-
         gameObject.SetActive(false);
-        Debug.Log("Customer GameObject SetActive(false). customer = " + customerName + ".");
     }
 
     private void ShowPreparationHint()
@@ -299,19 +248,14 @@ public class CustomerTrigger : MonoBehaviour
         {
             preparationHintText.text = hint;
             preparationHintText.gameObject.SetActive(true);
-            Debug.Log("Preparation hint shown on UI. customer = " + gameObject.name + ".");
             return;
         }
-
-        Debug.Log("Preparation hint text is not assigned. Hint: " + hint);
     }
 
     private void HidePreparationHint()
     {
         if (preparationHintText != null)
             preparationHintText.gameObject.SetActive(false);
-        else
-            Debug.Log("Preparation hint text is not assigned at Start. It will be skipped until assigned in Inspector.");
     }
 
     private string GetExclamationActiveState()
@@ -323,25 +267,21 @@ public class CustomerTrigger : MonoBehaviour
     {
         if (SavePanelController.IsPanelOpen)
         {
-            Debug.Log("CustomerTrigger skipped because SavePanel is open. customer = " + gameObject.name + ".");
             return true;
         }
 
         if (IsShopPanelOpen())
         {
-            Debug.Log("CustomerTrigger skipped because ShopPanel is open. customer = " + gameObject.name + ".");
             return true;
         }
 
         if (ShopTrigger.IsPlayerInAnyShopRange)
         {
-            Debug.Log("CustomerTrigger skipped because player is in shop range. customer = " + gameObject.name + ".");
             return true;
         }
 
         if (IsDialoguePanelOpen())
         {
-            Debug.Log("CustomerTrigger skipped because DialoguePanel is already open. customer = " + gameObject.name + ".");
             return true;
         }
 
@@ -381,13 +321,6 @@ public class CustomerTrigger : MonoBehaviour
         Rigidbody2D playerRigidbody = player.GetComponent<Rigidbody2D>();
         playerCollider = player.GetComponent<Collider2D>();
 
-        Debug.Log(
-            "CustomerTrigger player physics check. customer = " + gameObject.name +
-            ", player = " + player.name +
-            ", playerRigidbody2DExists = " + (playerRigidbody != null) +
-            ", playerCollider2DExists = " + (playerCollider != null) +
-            ", playerLayer = " + LayerMask.LayerToName(player.layer) + ".");
-
         if (playerRigidbody == null)
             Debug.LogWarning("Player needs a Rigidbody2D for customer blocking. customer = " + gameObject.name + ".");
 
@@ -405,19 +338,10 @@ public class CustomerTrigger : MonoBehaviour
         }
 
         bool wasTrigger = customerCollider.isTrigger;
-        Debug.Log(
-            "CustomerTrigger customer collider check. customer = " + gameObject.name +
-            ", customerCollider2DExists = true" +
-            ", customerColliderIsTrigger = " + wasTrigger +
-            ", customerLayer = " + LayerMask.LayerToName(gameObject.layer) + ".");
 
         if (forceCustomerColliderBlocksPlayer && customerCollider.isTrigger)
         {
             customerCollider.isTrigger = false;
-            Debug.Log(
-                "CustomerTrigger set customer Collider2D IsTrigger to false for blocking. customer = " + gameObject.name +
-                ", wasTrigger = " + wasTrigger +
-                ", isTriggerNow = " + customerCollider.isTrigger + ".");
         }
     }
 
@@ -432,11 +356,6 @@ public class CustomerTrigger : MonoBehaviour
         if (playerNear != isNearByDistance)
         {
             playerNear = isNearByDistance;
-            Debug.Log(
-                "CustomerTrigger distance interaction state changed. customer = " + gameObject.name +
-                ", playerNear = " + playerNear +
-                ", distance = " + distance +
-                ", interactionDistance = " + interactionDistance + ".");
         }
     }
 
@@ -454,12 +373,6 @@ public class CustomerTrigger : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         bool isPlayer = collision.collider.CompareTag("Player");
-        Debug.Log(
-            "CustomerTrigger OnCollisionEnter2D. customer = " + gameObject.name +
-            ", other = " + collision.collider.name +
-            ", isPlayer = " + isPlayer +
-            ", customerLayer = " + LayerMask.LayerToName(gameObject.layer) +
-            ", otherLayer = " + LayerMask.LayerToName(collision.collider.gameObject.layer) + ".");
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -471,12 +384,6 @@ public class CustomerTrigger : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         bool isPlayer = other.CompareTag("Player");
-        Debug.Log(
-            "CustomerTrigger OnTriggerEnter2D. customer = " + gameObject.name +
-            ", other = " + other.name +
-            ", isPlayer = " + isPlayer +
-            ", customerLayer = " + LayerMask.LayerToName(gameObject.layer) +
-            ", otherLayer = " + LayerMask.LayerToName(other.gameObject.layer) + ".");
 
         if (isPlayer)
             playerNear = true;
@@ -484,8 +391,6 @@ public class CustomerTrigger : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        Debug.Log("CustomerTrigger touching: " + other.name);
-
         if (other.CompareTag("Player"))
             playerNear = true;
     }
@@ -495,7 +400,6 @@ public class CustomerTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerNear = false;
-            Debug.Log("Player left CustomerTrigger range.");
         }
     }
 }
