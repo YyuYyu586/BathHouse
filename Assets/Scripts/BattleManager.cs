@@ -11,6 +11,8 @@ using UnityEngine.UI;
 // All main UI objects should already exist in the scene and be assigned in the Inspector.
 public class BattleManager : MonoBehaviour
 {
+    #region Nested Types
+
     [System.Serializable]
     private class EnemyDayData
     {
@@ -29,6 +31,10 @@ public class BattleManager : MonoBehaviour
             this.goldReward = goldReward;
         }
     }
+
+    #endregion
+
+    #region Serialized Fields
 
     [Header("Player Stats")]
     [SerializeField] private int maxPlayerHP = 100;
@@ -144,6 +150,10 @@ public class BattleManager : MonoBehaviour
     public HitFeedback enemyHitFeedback;
     public HitFeedback playerHitFeedback;
 
+    #endregion
+
+    #region Runtime State
+
     private int currentPlayerHP;
     private int currentPlayerSP;
     private int currentEnemyHP;
@@ -173,6 +183,10 @@ public class BattleManager : MonoBehaviour
     private Coroutine playerSPFillRoutine;
     private Coroutine enemyHPFillRoutine;
 
+    #endregion
+
+    #region Unity Lifecycle
+
     private void Start()
     {
         Debug.Log("BattleManager Start");
@@ -195,6 +209,10 @@ public class BattleManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.J))
             UseTea();
     }
+
+    #endregion
+
+    #region Battle Setup
 
     // Resets battle state and initializes every assigned UI field.
     private void StartBattle()
@@ -276,6 +294,10 @@ public class BattleManager : MonoBehaviour
         Debug.Log("Applied demo combat tuning. maxPlayerHP=" + maxPlayerHP + ", maxPlayerSP=" + maxPlayerSP + ", attackDamage=" + attackDamage + ", attackSPRecover=" + attackSPRecover + ", ultimateDamage=" + ultimateDamage + ", ultimateSPCost=" + ultimateSPCost + ".");
     }
 
+    #endregion
+
+    #region Player Actions
+
     // Attack is the basic no-cost player action.
     public void OnAttackButton()
     {
@@ -301,6 +323,10 @@ public class BattleManager : MonoBehaviour
         SetPlayerMessage("普通搓澡！造成 " + damage + " 点伤害，回复 " + attackSPRecover + " SP。");
         DealDamageToEnemy(damage, "小福进行了普通搓澡，敌人受到了 " + damage + " 点伤害！");
     }
+
+    #endregion
+
+    #region Skill Actions
 
     // Polish is the fixed combo skill. Not enough SP does not spend the player turn.
     public void OnPolishButton()
@@ -408,6 +434,10 @@ public class BattleManager : MonoBehaviour
         DealDamageToEnemy(damage, "灵魂抛光发动，敌人受到了 " + damage + " 点伤害！");
     }
 
+    #endregion
+
+    #region Victory and Scene Flow
+
     // Optional hook for a Continue button inside VictoryPanel.
     public void OnVictoryContinueButton()
     {
@@ -421,6 +451,10 @@ public class BattleManager : MonoBehaviour
         Debug.Log("Trailer force win requested.");
         WinBattle();
     }
+
+    #endregion
+
+    #region Damage and HP
 
     private void BeginPlayerAction(string actionName)
     {
@@ -529,6 +563,10 @@ public class BattleManager : MonoBehaviour
         StartCoroutine(EnemyTurnRoutine());
     }
 
+    #endregion
+
+    #region Enemy Turn
+
     private IEnumerator EnemyTurnRoutine()
     {
         isPlayerTurn = false;
@@ -572,6 +610,10 @@ public class BattleManager : MonoBehaviour
         LogBattleState("Player turn started");
     }
 
+    #endregion
+
+    #region Victory and Scene Flow
+
     private void WinBattle()
     {
         if (battleEnded)
@@ -593,6 +635,10 @@ public class BattleManager : MonoBehaviour
         if (victoryPanel != null)
             victoryPanel.SetActive(true);
     }
+
+    #endregion
+
+    #region Day7 Boss
 
     private void TriggerBathGodIntervention(string reason)
     {
@@ -795,6 +841,10 @@ public class BattleManager : MonoBehaviour
         Debug.Log("Day7 boss weakened. playerDamageMultiplier=" + day7WeakenedPlayerDamageMultiplier + ", enemyAttackDamage=" + enemyAttackDamage + ".");
     }
 
+    #endregion
+
+    #region Skill Unlocks
+
     private bool HasReachedBathGodTurnLimit()
     {
         return bathGodTurnLimit > 0 && currentRound >= bathGodTurnLimit;
@@ -858,6 +908,10 @@ public class BattleManager : MonoBehaviour
     {
         return IsDiabetesDLCMode() && gameManager.dlcUnlockAllSkills;
     }
+
+    #endregion
+
+    #region Items
 
     public void UseSoap()
     {
@@ -948,6 +1002,10 @@ public class BattleManager : MonoBehaviour
         return amount;
     }
 
+    #endregion
+
+    #region DLC Battle
+
     private EnemyDayData GetEnemyForDay(int day)
     {
         if (gameManager != null && gameManager.currentGameMode == GameMode.DiabetesDLC)
@@ -1005,6 +1063,10 @@ public class BattleManager : MonoBehaviour
     {
         return false;
     }
+
+    #endregion
+
+    #region Day7 Boss
 
     private IEnumerator SwitchToDay7Phase2Routine()
     {
@@ -1108,6 +1170,10 @@ public class BattleManager : MonoBehaviour
         isDay7InterludePlaying = false;
         Debug.Log("Day7 interlude finished.");
     }
+
+    #endregion
+
+    #region UI Refresh
 
     private void RefreshAllUI()
     {
@@ -1303,6 +1369,10 @@ public class BattleManager : MonoBehaviour
         fillImage.fillAmount = targetFill;
     }
 
+    #endregion
+
+    #region Messages and Feedback
+
     private void SetPlayerMessage(string message)
     {
         if (battleLogText != null)
@@ -1405,6 +1475,10 @@ public class BattleManager : MonoBehaviour
         if (battleLogText != null)
             battleLogText.text = string.Join("\n", battleLogLines);
     }
+
+    #endregion
+
+    #region UI Binding and Buttons
 
     private void BindButtonEvents()
     {
@@ -1662,6 +1736,10 @@ public class BattleManager : MonoBehaviour
         return button.interactable ? "Enabled" : "Disabled";
     }
 
+    #endregion
+
+    #region Messages and Feedback
+
     private void PlayEnemyHitFeedback()
     {
         if (enemyHitFeedback != null)
@@ -1718,6 +1796,10 @@ public class BattleManager : MonoBehaviour
         popup.SetText(text);
         popup.Play();
     }
+
+    #endregion
+
+    #region Helpers
 
     private void LogInspectorReferences()
     {
@@ -1779,4 +1861,6 @@ public class BattleManager : MonoBehaviour
         if (image.type != Image.Type.Filled)
             Debug.LogWarning(fieldName + " is assigned, but Image Type is not Filled. Set Image Type = Filled, Fill Method = Horizontal, Fill Origin = Left.");
     }
+
+    #endregion
 }
