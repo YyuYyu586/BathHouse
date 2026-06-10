@@ -3329,6 +3329,7 @@ MonoBehaviour:
   startButton: {fileID: 1414114491}
   quitButton: {fileID: 1850871337}
   continueButton: {fileID: 1021204550}
+  dlcPlayedMainStoryButton: {fileID: 0}
   clouds: []
   cloudSpeeds:
   - 18

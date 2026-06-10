@@ -74,6 +74,8 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private Animator bathGodAnimator;
     [SerializeField] private float bathGodEffectDuration = 3f;
     [SerializeField] private string bathGodAnimationStateName = "";
+    [SerializeField] private TextMeshProUGUI bathGodTitleLeftText;
+    [SerializeField] private TextMeshProUGUI bathGodTitleRightText;
 
     [Header("Player UI")]
     [SerializeField] private Image hpFillImage;
@@ -176,6 +178,7 @@ public class BattleManager : MonoBehaviour
     private bool warnedMissingTeaButtonLabel;
     private bool warnedMissingEnemyHitFeedback;
     private bool warnedMissingPlayerHitFeedback;
+    private bool warnedMissingBathGodTitleText;
     private int currentRound = 1;
     private readonly List<string> battleLogLines = new List<string>();
     private readonly Queue<string> battleLogQueue = new Queue<string>();
@@ -266,6 +269,7 @@ public class BattleManager : MonoBehaviour
         if (bathGodEffect != null)
             bathGodEffect.SetActive(false);
 
+        HideBathGodTitle();
         ClearBattleLog();
         ApplyEnemyVisualForCurrentDay();
         RefreshActionButtonsForCurrentState("battle start");
@@ -729,6 +733,8 @@ public class BattleManager : MonoBehaviour
         if (bathGodEffect != null)
             bathGodEffect.SetActive(true);
 
+        ShowBathGodTitle();
+
         if (bathGodImage == null && bathGodEffect != null)
             bathGodImage = bathGodEffect.GetComponent<Image>();
 
@@ -762,8 +768,46 @@ public class BattleManager : MonoBehaviour
                 yield return new WaitForSeconds(duration);
         }
 
+        HideBathGodTitle();
+
         if (bathGodEffect != null)
             bathGodEffect.SetActive(false);
+    }
+
+    private void ShowBathGodTitle()
+    {
+        bool hasBothTitleTexts = bathGodTitleLeftText != null && bathGodTitleRightText != null;
+        if (!hasBothTitleTexts)
+        {
+            if (!warnedMissingBathGodTitleText)
+            {
+                Debug.LogWarning("BattleManager bath god title TextMeshProUGUI references are not fully assigned.");
+                warnedMissingBathGodTitleText = true;
+            }
+
+            return;
+        }
+
+        bathGodTitleLeftText.text = "搓澡之神";
+        bathGodTitleLeftText.gameObject.SetActive(true);
+
+        bathGodTitleRightText.text = "降临！";
+        bathGodTitleRightText.gameObject.SetActive(true);
+    }
+
+    private void HideBathGodTitle()
+    {
+        if (bathGodTitleLeftText != null)
+        {
+            bathGodTitleLeftText.text = "";
+            bathGodTitleLeftText.gameObject.SetActive(false);
+        }
+
+        if (bathGodTitleRightText != null)
+        {
+            bathGodTitleRightText.text = "";
+            bathGodTitleRightText.gameObject.SetActive(false);
+        }
     }
 
     private IEnumerator PlayBathGodArrivalLogRoutine()

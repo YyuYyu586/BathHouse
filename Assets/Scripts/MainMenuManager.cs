@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+using TMPro;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -14,6 +15,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private Button startButton;
     [SerializeField] private Button quitButton;
     [SerializeField] private Button continueButton;
+    [SerializeField] private Button dlcPlayedMainStoryButton;
     private RectTransform startButtonRect;
     private RectTransform quitButtonRect;
     private Canvas parentCanvas;
@@ -30,6 +32,7 @@ public class MainMenuManager : MonoBehaviour
         SavePanelController.ResetPanelState();
         ResetMenuInputState();
         EnsureButtonBindings();
+        DisableDlcPlayedMainStoryButton();
         RefreshContinueButtonState();
         EnsureClickFallbackReferences();
         BackToMainPanel();
@@ -50,6 +53,7 @@ public class MainMenuManager : MonoBehaviour
     {
         ResetMenuInputState();
         EnsureButtonBindings();
+        DisableDlcPlayedMainStoryButton();
         RefreshContinueButtonState();
         EnsureClickFallbackReferences();
         BackToMainPanel();
@@ -120,6 +124,7 @@ public class MainMenuManager : MonoBehaviour
         SetPanelActive(mainPanel, false);
         SetPanelActive(modeSelectPanel, false);
         SetPanelActive(dlcExperiencePanel, true);
+        DisableDlcPlayedMainStoryButton();
     }
 
     public void ChooseDLCPlayedMainStory()
@@ -210,6 +215,31 @@ public class MainMenuManager : MonoBehaviour
         BindButton(quitButton, QuitGame, "QuitGame", "QuitButton");
     }
 
+    private void DisableDlcPlayedMainStoryButton()
+    {
+        if (dlcPlayedMainStoryButton == null)
+            dlcPlayedMainStoryButton = FindButtonIncludingInactive("PlayedMainStoryButton");
+
+        if (dlcPlayedMainStoryButton == null)
+        {
+            Debug.LogWarning("MainMenuManager could not find PlayedMainStoryButton.");
+            return;
+        }
+
+        dlcPlayedMainStoryButton.interactable = false;
+
+        TextMeshProUGUI label = dlcPlayedMainStoryButton.GetComponentInChildren<TextMeshProUGUI>(true);
+        if (label != null)
+        {
+            label.text = "我玩过正篇（暂未开放）";
+            label.color = new Color32(130, 130, 130, 255);
+        }
+        else
+        {
+            Debug.LogWarning("MainMenuManager could not find TextMeshProUGUI under PlayedMainStoryButton.");
+        }
+    }
+
     private void BindContinueButton()
     {
         if (continueButton == null)
@@ -264,6 +294,19 @@ public class MainMenuManager : MonoBehaviour
     {
         GameObject buttonObject = GameObject.Find(buttonName);
         return buttonObject != null ? buttonObject.GetComponent<Button>() : null;
+    }
+
+    private Button FindButtonIncludingInactive(string buttonName)
+    {
+        Button[] buttons = FindObjectsOfType<Button>(true);
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            Button button = buttons[i];
+            if (button != null && button.gameObject.name == buttonName)
+                return button;
+        }
+
+        return null;
     }
 
     private void BindButton(Button button, UnityEngine.Events.UnityAction action, string methodName, string buttonName)
