@@ -20,6 +20,7 @@ public class ShopManager : MonoBehaviour
 
     private void Start()
     {
+        ConfigureRichText();
         ApplyP0Prices();
         BindBackButtons();
         CloseShop();
@@ -175,6 +176,15 @@ public class ShopManager : MonoBehaviour
     {
         if (detailText != null)
             detailText.text = text;
+    }
+
+    private void ConfigureRichText()
+    {
+        if (messageText != null)
+            messageText.richText = true;
+
+        if (detailText != null)
+            detailText.richText = true;
     }
 
     private void PausePlayer(bool shouldPause)

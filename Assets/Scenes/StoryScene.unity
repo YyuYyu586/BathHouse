@@ -1671,7 +1671,7 @@ MonoBehaviour:
     side: L
     portrait: {fileID: 0}
     isLeftPortrait: 1
-    text: "\u9996\u5148\uFF0C\u6309 WASD \u8FDB\u884C\u79FB\u52A8\uFF0C\u8FD9\u4E2A\u4F60\u80AF\u5B9A\u77E5\u9053\u7684\uFF01"
+    text: "\u9996\u5148\uFF0C<color=#FF5555>\u6309 WASD \u8FDB\u884C\u79FB\u52A8</color>\uFF0C\uFF0C\u8FD9\u4E2A\u4F60\u80AF\u5B9A\u77E5\u9053\u7684\uFF01"
     backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
   - textId: 3
     order: 3
@@ -1680,8 +1680,8 @@ MonoBehaviour:
     side: L
     portrait: {fileID: 0}
     isLeftPortrait: 1
-    text: "\u63A5\u7740\u662F\u5982\u4F55\u63A5\u5F85\u987E\u5BA2\uFF1A\u9760\u8FD1\u987E\u5BA2\u540E\u6309
-      F \u952E\u5373\u53EF\u3002"
+    text: "\u63A5\u7740\u662F\u5982\u4F55\u63A5\u5F85\u987E\u5BA2\uFF1A<color=#FF5555>\u9760\u8FD1\u987E\u5BA2\u540E\u6309
+      F \u952E</color>\uFF0C\u5373\u53EF\u3002"
     backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
   - textId: 4
     order: 4
@@ -1690,8 +1690,8 @@ MonoBehaviour:
     side: L
     portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
     isLeftPortrait: 1
-    text: "\u8FD8\u6709\uFF01\uFF08\u6324\u8D70\u65C1\u767D\uFF09\u542C\u6211\u8BF4\uFF0C\u573A\u666F\u91CC\u7684\u7269\u4EF6\u4E5F\u53EF\u4EE5\u6309
-      F \u952E\u89E6\u53D1\u5BF9\u8BDD\uFF01"
+    text: "\u8FD8\u6709\uFF01\uFF08\u6324\u8D70\u65C1\u767D\uFF09\u542C\u6211\u8BF4\uFF0C<color=#FF5555>\u573A\u666F\u91CC\u7684\u7269\u4EF6\u4E5F\u53EF\u4EE5\u6309
+      F \u952E\u89E6\u53D1\u5BF9\u8BDD\uFF01</color>"
     backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
   - textId: 5
     order: 5
@@ -1709,7 +1709,7 @@ MonoBehaviour:
     side: L
     portrait: {fileID: 0}
     isLeftPortrait: 1
-    text: "\u83B7\u5F97\u4E86\u3010\u9AD8\u7EA7\u6413\u6FA1\u5DFE\u3011\u2014\u2014\u89E3\u9501\u6280\u80FD\u3010\u53EA\u662F\u5355\u7EAF\u5730\u6413\u3011\uFF01"
+    text: "<color=#000466>\u83B7\u5F97\u4E86\u3010\u9AD8\u7EA7\u6413\u6FA1\u5DFE\u3011\u2014\u2014\u89E3\u9501\u6280\u80FD\u3010\u53EA\u662F\u5355\u7EAF\u5730\u6413\u3011\uFF01</color>"
     backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
   - textId: 7
     order: 7
@@ -1718,8 +1718,8 @@ MonoBehaviour:
     side: L
     portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
     isLeftPortrait: 1
-    text: "WASD \u4E0A\u4E0B\u5DE6\u53F3\u79FB\u52A8\uFF0C\u5176\u4F59\u6FA1\u5802\u5927\u5385\u91CC\u7684\u5185\u5BB9\u6309
-      F \u952E\u5C31\u53EF\u4EE5\u4E86\uFF0C\u5176\u5B83\u6CA1\u5565\u4E86\u3002"
+    text: "<color=#FF5555>WASD \u4E0A\u4E0B\u5DE6\u53F3\u79FB\u52A8\uFF0C\u5176\u4F59\u6FA1\u5802\u5927\u5385\u91CC\u7684\u5185\u5BB9\u6309
+      F \u952E\u5C31\u53EF\u4EE5\u4E86\uFF0C\u5176\u5B83\u6CA1\u5565\u4E86\u3002</color>"
     backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
   - textId: 8
     order: 8
@@ -1737,7 +1737,7 @@ MonoBehaviour:
     side: R
     portrait: {fileID: 21300000, guid: a06ba5c8fd04bef4a879a17fcf320943, type: 3}
     isLeftPortrait: 1
-    text: "\u96BE\u5F97\u89C1\u5230\u50CF\u4F60\u8FD9\u6837\u6709\u5929\u8D4B\u7684\uFF0C\u4F60\u7684\u773C\u775B\u80FD\u770B\u5230\u7684\u53EF\u6BD4\u6211\u4E4B\u524D\u5E26\u7684\u5F92\u5F1F\u591A\uFF0C\u8BF4\u4E0D\u5B9A\u8FDE\u6413\u6FA1\u4E4B\u795E\u4E5F\u4F1A\u5BF9\u4F60\u6295\u4E0B\u6CE8\u89C6\uFF1F"
+    text: "\u96BE\u5F97\u89C1\u5230\u50CF\u4F60\u8FD9\u6837\u6709\u5929\u8D4B\u7684\uFF0C\u4F60\u7684\u773C\u775B\u80FD\u770B\u5230\u7684\u53EF\u6BD4\u6211\u4E4B\u524D\u5E26\u7684\u5F92\u5F1F\u591A\uFF0C\u8BF4\u4E0D\u5B9A\u8FDE<color=#FF5555>\u6413\u6FA1\u4E4B\u795E</color>\u4E5F\u4F1A\u5BF9\u4F60\u6295\u4E0B\u6CE8\u89C6\uFF1F"
     backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
   - textId: 11
     order: 10
@@ -1755,7 +1755,7 @@ MonoBehaviour:
     side: R
     portrait: {fileID: 0}
     isLeftPortrait: 0
-    text: "\u6216\u8BB8\u771F\u5982\u91D1\u5AC2\u6240\u8BF4\uFF0C\u5C31\u8FDE\u6413\u6FA1\u4E4B\u795E\u90FD\u770B\u5230\u4E86\u4F60......"
+    text: "\u6216\u8BB8\u771F\u5982\u91D1\u5AC2\u6240\u8BF4\uFF0C\u5C31\u8FDE<color=#FF5555>\u6413\u6FA1\u4E4B\u795E</color>\u90FD\u770B\u5230\u4E86\u4F60......"
     backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
   - textId: 14
     order: 12
@@ -1764,7 +1764,7 @@ MonoBehaviour:
     side: R
     portrait: {fileID: 0}
     isLeftPortrait: 0
-    text: "\u6218\u6597\u65F6\u529B\u4E0D\u4ECE\u5FC3\u7684\u65F6\u5019\uFF0C\u8BF4\u4E0D\u5B9A\u771F\u53EF\u4EE5\u89C1\u5230\u6413\u6FA1\u4E4B\u795E......"
+    text: "<color=#FF5555>\u6218\u6597\u65F6\u529B\u4E0D\u4ECE\u5FC3</color>\u7684\u65F6\u5019\uFF0C\u8BF4\u4E0D\u5B9A\u771F\u53EF\u4EE5\u89C1\u5230\u6413\u6FA1\u4E4B\u795E......"
     backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
   - textId: 14
     order: 12
@@ -1782,7 +1782,7 @@ MonoBehaviour:
     side: R
     portrait: {fileID: 0}
     isLeftPortrait: 0
-    text: "\u3010\u6413\u6FA1\u4E4B\u795E\u3011\u6218\u6597\u65F6HP\u8FC7\u4F4E\u4F1A\u5F97\u5230\u6413\u6FA1\u4E4B\u795E\u7684\u5E2E\u52A9\uFF01"
+    text: "<color=#FF5555>\u3010\u6413\u6FA1\u4E4B\u795E\u3011\u6218\u6597\u65F6HP\u8FC7\u4F4E\u4F1A\u5F97\u5230\u6413\u6FA1\u4E4B\u795E\u7684\u5E2E\u52A9\uFF01</color>"
     backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
 --- !u!4 &2123385963
 Transform:

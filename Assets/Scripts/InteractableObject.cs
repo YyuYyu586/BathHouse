@@ -178,7 +178,10 @@ public class InteractableObject : MonoBehaviour
 
         TextMeshProUGUI promptText = pressPrompt.GetComponentInChildren<TextMeshProUGUI>(true);
         if (promptText != null)
+        {
+            promptText.richText = true;
             promptText.text = interactPrompt;
+        }
 
         pressPrompt.SetActive(visible);
     }

@@ -62,6 +62,7 @@ public class DialogueManager : MonoBehaviour
 
     private void Start()
     {
+        ConfigureRichText();
         HidePortraits();
 
         if (dialoguePanel != null)
@@ -241,16 +242,39 @@ public class DialogueManager : MonoBehaviour
             dialogueText.text = "";
 
         string safeText = text ?? "";
-
-        foreach (char letter in safeText)
+        int index = 0;
+        while (index < safeText.Length)
         {
-            if (dialogueText != null)
-                dialogueText.text += letter;
+            if (safeText[index] == '<')
+            {
+                int tagEndIndex = safeText.IndexOf('>', index);
+                if (tagEndIndex >= index)
+                {
+                    if (dialogueText != null)
+                        dialogueText.text += safeText.Substring(index, tagEndIndex - index + 1);
 
+                    index = tagEndIndex + 1;
+                    continue;
+                }
+            }
+
+            if (dialogueText != null)
+                dialogueText.text += safeText[index];
+
+            index++;
             yield return new WaitForSeconds(typingSpeed);
         }
 
         isTyping = false;
+    }
+
+    private void ConfigureRichText()
+    {
+        if (nameText != null)
+            nameText.richText = true;
+
+        if (dialogueText != null)
+            dialogueText.richText = true;
     }
 
     private void LogCurrentLine(DialogueLine line)

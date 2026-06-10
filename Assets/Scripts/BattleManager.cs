@@ -48,6 +48,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private int maxEnemyHP = 80;
     [SerializeField] private int enemyAttackDamage = 8;
     [SerializeField] private float enemyTurnDelay = 0.8f;
+    [SerializeField] private float enemyCounterAttackDelay = 0.4f;
     [SerializeField] private float playerDamageMessageDelay = 1.0f;
     [SerializeField] private float fillSmoothTime = 0.2f;
     [SerializeField] private EnemyDayData[] enemiesByDay =
@@ -190,6 +191,7 @@ public class BattleManager : MonoBehaviour
     private void Start()
     {
         LogInspectorReferences();
+        ConfigureRichText();
         ResolveButtonReferences();
         ResolveEnemyAnimationPlayer();
         BindButtonEvents();
@@ -562,6 +564,9 @@ public class BattleManager : MonoBehaviour
 
         yield return new WaitForSeconds(enemyTurnDelay);
 
+        if (battleEnded)
+            yield break;
+
         if (enemyStunned)
         {
             enemyStunned = false;
@@ -575,6 +580,12 @@ public class BattleManager : MonoBehaviour
             LogBattleState("Enemy turn skipped by blur");
             yield break;
         }
+
+        SetEnemyMessage(currentEnemyName + "准备反击……");
+        yield return new WaitForSeconds(Mathf.Max(0f, enemyCounterAttackDelay));
+
+        if (battleEnded)
+            yield break;
 
         currentPlayerHP = Mathf.Max(0, currentPlayerHP - enemyAttackDamage);
         RefreshPlayerUI();
@@ -643,6 +654,7 @@ public class BattleManager : MonoBehaviour
 
         if (ShouldEnterDay7Phase2())
         {
+            yield return StartCoroutine(PlayBathGodArrivalLogRoutine());
             SetPlayerMessage("搓澡之神降临！先把这层崩溃的外壳洗掉！");
             SetEnemyMessage(reason);
             SpawnDamagePopup(enemyDamagePopupPoint, "-999", enemyDamagePopupOffset);
@@ -660,6 +672,7 @@ public class BattleManager : MonoBehaviour
 
         if (currentDay >= 7)
         {
+            yield return StartCoroutine(PlayBathGodArrivalLogRoutine());
             SetPlayerMessage("你已经很努力了……但你不是一个人在战斗。");
             SetEnemyMessage(reason);
             yield return StartCoroutine(PlayBathGodEffectRoutine());
@@ -683,6 +696,7 @@ public class BattleManager : MonoBehaviour
         }
         else
         {
+            yield return StartCoroutine(PlayBathGodArrivalLogRoutine());
             SetPlayerMessage("搓澡之神降临！今天也不能卡在这里！");
             SetEnemyMessage(reason);
             SpawnDamagePopup(enemyDamagePopupPoint, "-999", enemyDamagePopupOffset);
@@ -750,6 +764,12 @@ public class BattleManager : MonoBehaviour
 
         if (bathGodEffect != null)
             bathGodEffect.SetActive(false);
+    }
+
+    private IEnumerator PlayBathGodArrivalLogRoutine()
+    {
+        SetPlayerMessage("小福已经很努力了……\n澡堂里积累的善意回应了她。\n搓澡之神降临了！");
+        yield return new WaitForSeconds(Mathf.Max(0.5f, battleLogLineDelay));
     }
 
     private bool CanPlayerAct()
@@ -923,6 +943,7 @@ public class BattleManager : MonoBehaviour
         currentPlayerHP = Mathf.Min(maxPlayerHP, currentPlayerHP + 30);
         SavePlayerState();
         RefreshPlayerUI();
+        SpawnDamagePopup(playerDamagePopupPoint, "+30 HP", playerDamagePopupOffset);
         RefreshItemButtonsForCurrentState("soap used");
         SetPlayerMessage("使用肥皂，恢复 30 HP。剩余肥皂：" + gameManager.soapCount);
     }
@@ -953,6 +974,7 @@ public class BattleManager : MonoBehaviour
         currentPlayerSP = Mathf.Min(maxPlayerSP, currentPlayerSP + 20);
         SavePlayerState();
         RefreshPlayerUI();
+        SpawnDamagePopup(playerDamagePopupPoint, "+20 SP", playerDamagePopupOffset);
         RefreshItemButtonsForCurrentState("tea used");
         SetPlayerMessage("饮用花茶，恢复 20 SP。剩余花茶：" + gameManager.teaCount);
     }
@@ -1777,6 +1799,18 @@ public class BattleManager : MonoBehaviour
         CheckFillImage("hpFillImage", hpFillImage);
         CheckFillImage("spFillImage", spFillImage);
         CheckFillImage("enemyHPFillImage", enemyHPFillImage);
+    }
+
+    private void ConfigureRichText()
+    {
+        if (playerBattleMessageText != null)
+            playerBattleMessageText.richText = true;
+
+        if (battleLogText != null)
+            battleLogText.richText = true;
+
+        if (enemyBattleMessageText != null)
+            enemyBattleMessageText.richText = true;
     }
 
     private void LogReference(string fieldName, Object reference)

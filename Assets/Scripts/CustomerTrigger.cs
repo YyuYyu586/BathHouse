@@ -29,6 +29,9 @@ public class CustomerTrigger : MonoBehaviour
 
     private void Start()
     {
+        if (preparationHintText != null)
+            preparationHintText.richText = true;
+
         HidePreparationHint();
 
         if (bathhouseDayStoryController == null)
