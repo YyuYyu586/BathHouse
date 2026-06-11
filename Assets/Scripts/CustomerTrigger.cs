@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class CustomerTrigger : MonoBehaviour
 {
+    public static event System.Action<CustomerTrigger> CustomerInteractionCompleted;
+
     [Header("Dialogue")]
     public DialogueManager dialogueManager;
     public BathhouseDayStoryController bathhouseDayStoryController;
@@ -26,6 +28,8 @@ public class CustomerTrigger : MonoBehaviour
     private Transform playerTransform;
     private Collider2D playerCollider;
     private Collider2D customerCollider;
+
+    public bool HasTalked => hasTalked;
 
     private void Start()
     {
@@ -241,6 +245,7 @@ public class CustomerTrigger : MonoBehaviour
         }
 
         gameObject.SetActive(false);
+        CustomerInteractionCompleted?.Invoke(this);
     }
 
     private void ShowPreparationHint()
