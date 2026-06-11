@@ -271,8 +271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tooltipManager: {fileID: 720426484}
   tooltipTitle: 
-  tooltipDescription: "\u73CD\u73E0\u6D74\u7403\u5927\u51B2\u6D17 / \u6D88\u8017
-    SP\uFF0C\u9020\u6210\u591A\u6B21\u4F24\u5BB3\u3002"
+  tooltipDescription: "消耗15点SP，造成25点总伤害，分2-3段命中。"
   hoverDelay: 0.5
 --- !u!1 &81266526
 GameObject:
@@ -1408,8 +1407,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tooltipManager: {fileID: 720426484}
   tooltipTitle: 
-  tooltipDescription: "\u6CE1\u6CE1\u8FF7\u4EBA\u773C / \u6D88\u8017 SP\uFF0C\u9020\u6210\u4F24\u5BB3\u5E76\u56DE\u590D\u5C11\u91CF
-    HP\u3002"
+  tooltipDescription: "消耗20点SP，造成15点伤害，回复15点HP，使敌人跳过一次行动。"
   hoverDelay: 0.5
 --- !u!1 &293720856
 GameObject:
@@ -3246,8 +3244,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tooltipManager: {fileID: 720426484}
   tooltipTitle: 
-  tooltipDescription: "\u53EA\u662F\u5355\u7EAF\u5730\u6413 / \u57FA\u7840\u653B\u51FB\u3002\u9020\u6210\u5C11\u91CF\u4F24\u5BB3\uFF0C\u5E76\u6062\u590D\u5C11\u91CF
-    SP\u3002"
+  tooltipDescription: "造成10点伤害，回复5点SP。"
   hoverDelay: 0.5
 --- !u!114 &998121156
 MonoBehaviour:
@@ -5091,7 +5088,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tooltipManager: {fileID: 720426484}
   tooltipTitle: 
-  tooltipDescription: "\u7075\u9B42\u629B\u5149 / \u6D88\u8017\u5927\u91CF SP\uFF0C\u9020\u6210\u9AD8\u989D\u4F24\u5BB3\u3002"
+  tooltipDescription: "消耗40点SP，造成80点伤害。"
   hoverDelay: 0.5
 --- !u!1 &2101508062
 GameObject:

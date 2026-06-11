@@ -23,25 +23,38 @@ public class TutorialGuideController : MonoBehaviour
         Completed
     }
 
-    private const string MissionDayTitle = "DAY 2 试营业";
-
-    private const string InitialQuestText =
+    private const string BeginnerInitialMissionText =
         "新手任务\n" +
         "◆靠近顾客，按F接待\n" +
         "◇使用WASD移动\n" +
-        "◇战斗前可去商店购买道具\n" +
+        "◇战斗前可去柜台购买道具\n" +
         "◇部分物件可按F调查";
 
-    private const string AfterCustomerQuestText =
+    private const string BeginnerAfterCustomerMissionText =
         "新手任务\n" +
         "✓已接待顾客\n" +
-        "◆前往蓝色地毯，按F开始战斗\n\n" +
+        "◆前往蓝色地毯，按F开始战斗\n" +
         "可选准备\n" +
-        "◇去商店购买肥皂或花茶\n" +
+        "◇去柜台购买肥皂或花茶\n" +
+        "◇调查澡堂里的物件";
+
+    private const string RegularInitialMissionText =
+        "今日目标\n" +
+        "◆接待今天的顾客\n" +
+        "◇战斗前可去柜台购买道具\n" +
+        "◇部分物件可按F调查";
+
+    private const string RegularAfterCustomerMissionText =
+        "今日目标\n" +
+        "✓已接待今天的顾客\n" +
+        "◆前往蓝色地毯，按F开始战斗\n" +
+        "可选准备\n" +
+        "◇去柜台购买肥皂或花茶\n" +
         "◇调查澡堂里的物件";
 
     private TutorialState state = TutorialState.None;
-    private bool isMainStoryDay2;
+    private bool shouldRunMissionFrame;
+    private bool warnedMissingMissionReferences;
 
     private void OnEnable()
     {
@@ -57,16 +70,15 @@ public class TutorialGuideController : MonoBehaviour
 
     private void Start()
     {
-        ResolveOptionalPanelReferences();
         InitializeForCurrentDay();
     }
 
     private void Update()
     {
-        if (!isMainStoryDay2)
+        if (!shouldRunMissionFrame)
             return;
 
-        if (!IsMainStoryDay2())
+        if (!ShouldShowMissionFrameForCurrentDay())
         {
             HideQuestPanel();
             enabled = false;
@@ -78,12 +90,18 @@ public class TutorialGuideController : MonoBehaviour
 
     private void InitializeForCurrentDay()
     {
-        isMainStoryDay2 = IsMainStoryDay2();
+        shouldRunMissionFrame = ShouldShowMissionFrameForCurrentDay();
 
-        if (!isMainStoryDay2)
+        if (!shouldRunMissionFrame)
         {
             HideQuestPanel();
             enabled = false;
+            return;
+        }
+
+        if (!HasRequiredMissionReferences())
+        {
+            HideQuestPanel();
             return;
         }
 
@@ -92,10 +110,48 @@ public class TutorialGuideController : MonoBehaviour
         RefreshQuestPanelVisibility();
     }
 
-    private bool IsMainStoryDay2()
+    private bool ShouldShowMissionFrameForCurrentDay()
     {
         GameManager gameManager = GameManager.Instance != null ? GameManager.Instance : GameManager.EnsureInstance();
-        return gameManager.currentGameMode == GameMode.MainStory && gameManager.currentDay == 2;
+
+        if (gameManager.currentGameMode == GameMode.MainStory)
+            return gameManager.currentDay >= 2 && gameManager.currentDay <= 7;
+
+        if (gameManager.currentGameMode == GameMode.DiabetesDLC)
+            return gameManager.currentDay >= 1 && gameManager.currentDay <= 3;
+
+        return false;
+    }
+
+    private bool IsBeginnerGuideDay()
+    {
+        GameManager gameManager = GameManager.Instance != null ? GameManager.Instance : GameManager.EnsureInstance();
+
+        return (gameManager.currentGameMode == GameMode.MainStory && gameManager.currentDay == 2) ||
+               (gameManager.currentGameMode == GameMode.DiabetesDLC && gameManager.currentDay == 1);
+    }
+
+    private string GetMissionDayTitle()
+    {
+        GameManager gameManager = GameManager.Instance != null ? GameManager.Instance : GameManager.EnsureInstance();
+
+        if (gameManager.currentGameMode == GameMode.DiabetesDLC)
+            return "特别活动 DAY " + gameManager.currentDay;
+
+        if (gameManager.currentDay == 2)
+            return "DAY 2 试营业";
+
+        return "DAY " + gameManager.currentDay;
+    }
+
+    private string GetInitialMissionText()
+    {
+        return IsBeginnerGuideDay() ? BeginnerInitialMissionText : RegularInitialMissionText;
+    }
+
+    private string GetAfterCustomerMissionText()
+    {
+        return IsBeginnerGuideDay() ? BeginnerAfterCustomerMissionText : RegularAfterCustomerMissionText;
     }
 
     private bool HasCompletedCustomerInteraction()
@@ -113,7 +169,10 @@ public class TutorialGuideController : MonoBehaviour
 
     private void OnCustomerInteractionCompleted(CustomerTrigger customerTrigger)
     {
-        if (!isMainStoryDay2 || !IsMainStoryDay2() || state == TutorialState.Completed)
+        if (!shouldRunMissionFrame || !ShouldShowMissionFrameForCurrentDay() || state == TutorialState.Completed)
+            return;
+
+        if (!HasRequiredMissionReferences())
             return;
 
         state = TutorialState.WaitingForCombat;
@@ -123,7 +182,7 @@ public class TutorialGuideController : MonoBehaviour
 
     private void OnCombatTriggered(CombatTrigger combatTrigger)
     {
-        if (!isMainStoryDay2 || !IsMainStoryDay2())
+        if (!shouldRunMissionFrame || !ShouldShowMissionFrameForCurrentDay())
             return;
 
         state = TutorialState.Completed;
@@ -132,19 +191,19 @@ public class TutorialGuideController : MonoBehaviour
 
     private void UpdateQuestText()
     {
-        if (missionText == null)
+        if (!HasRequiredMissionReferences())
             return;
 
         if (missionDayText != null)
-            missionDayText.text = MissionDayTitle;
+            missionDayText.text = GetMissionDayTitle();
 
         if (state == TutorialState.WaitingForCustomer)
         {
-            missionText.text = InitialQuestText;
+            missionText.text = GetInitialMissionText();
         }
         else if (state == TutorialState.WaitingForCombat)
         {
-            missionText.text = AfterCustomerQuestText;
+            missionText.text = GetAfterCustomerMissionText();
         }
     }
 
@@ -161,41 +220,55 @@ public class TutorialGuideController : MonoBehaviour
 
     private bool ShouldTemporarilyHideQuestPanel()
     {
-        ResolveOptionalPanelReferences();
-
         if (SavePanelController.IsPanelOpen)
             return true;
 
-        if (dialoguePanel != null && dialoguePanel.activeInHierarchy)
+        if (IsBlockingPanelOpen(dialoguePanel))
             return true;
 
-        if (shopPanel != null && shopPanel.activeInHierarchy)
+        if (IsBlockingPanelOpen(shopPanel))
             return true;
 
         return false;
     }
 
-    private void ResolveOptionalPanelReferences()
+    private bool IsBlockingPanelOpen(GameObject panel)
     {
-        if (dialoguePanel == null)
+        if (panel == null)
+            return false;
+
+        if (missionFrame != null &&
+            (panel == missionFrame || panel.transform.IsChildOf(missionFrame.transform)))
         {
-            DialogueManager dialogueManager = FindObjectOfType<DialogueManager>();
-            if (dialogueManager != null)
-                dialoguePanel = dialogueManager.dialoguePanel;
+            return false;
         }
 
-        if (shopPanel == null)
+        return panel.activeInHierarchy;
+    }
+
+    private bool HasRequiredMissionReferences()
+    {
+        if (missionFrame != null && missionText != null)
+            return true;
+
+        if (!warnedMissingMissionReferences)
         {
-            ShopManager shopManager = FindObjectOfType<ShopManager>();
-            if (shopManager != null)
-                shopPanel = shopManager.shopPanel;
+            Debug.LogWarning("TutorialGuideController needs missionFrame and missionText references.");
+            warnedMissingMissionReferences = true;
         }
+
+        return false;
     }
 
     private void SetQuestPanelVisible(bool visible)
     {
-        if (missionFrame != null)
-            missionFrame.SetActive(visible);
+        if (missionFrame == null)
+            return;
+
+        if (missionFrame.activeSelf == visible)
+            return;
+
+        missionFrame.SetActive(visible);
     }
 
     private void HideQuestPanel()

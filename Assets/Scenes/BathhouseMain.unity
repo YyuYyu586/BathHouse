@@ -7192,6 +7192,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1534773067}
   m_SourcePrefab: {fileID: 100100000, guid: 2f83e84da3af9c84184d2bee02e3ff3a, type: 3}
+--- !u!1 &852788962 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9126980597296457988, guid: 2f83e84da3af9c84184d2bee02e3ff3a, type: 3}
+  m_PrefabInstance: {fileID: 852788961}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &927233916
 GameObject:
   m_ObjectHideFlags: 0
@@ -12504,8 +12509,8 @@ MonoBehaviour:
   missionFrame: {fileID: 583362106}
   missionText: {fileID: 1602493364}
   missionDayText: {fileID: 1602493366}
-  dialoguePanel: {fileID: 0}
-  shopPanel: {fileID: 1534773062}
+  dialoguePanel: {fileID: 1500222994}
+  shopPanel: {fileID: 852788962}
 --- !u!4 &2018387400
 Transform:
   m_ObjectHideFlags: 0
