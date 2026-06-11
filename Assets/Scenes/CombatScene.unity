@@ -271,7 +271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tooltipManager: {fileID: 720426484}
   tooltipTitle: 
-  tooltipDescription: "消耗15点SP，造成25点总伤害，分2-3段命中。"
+  tooltipDescription: "\u6D88\u801715\u70B9SP\uFF0C\u9020\u621025\u70B9\u603B\u4F24\u5BB3\uFF0C\u52062-3\u6BB5\u547D\u4E2D\u3002"
   hoverDelay: 0.5
 --- !u!1 &81266526
 GameObject:
@@ -913,6 +913,7 @@ GameObject:
   m_Component:
   - component: {fileID: 209039713}
   - component: {fileID: 209039712}
+  - component: {fileID: 209039714}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -1184,6 +1185,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &209039714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 209039711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79695866fe5e11f4e8971a102f6606c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentGameMode: 1
+  currentDay: 3
+  maxDay: 7
+  dlcPlayerHasPlayedMainStory: 0
+  dlcUnlockAllSkills: 0
+  playerGold: 20
+  playerHP: 100
+  playerSP: 50
+  waterLadleCount: 0
+  soapCount: 0
+  teaCount: 0
+  towelCount: 0
+  hasWaterLadle: 0
+  hasGoldenTowel: 0
 --- !u!1 &221936913
 GameObject:
   m_ObjectHideFlags: 0
@@ -1407,7 +1434,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tooltipManager: {fileID: 720426484}
   tooltipTitle: 
-  tooltipDescription: "消耗20点SP，造成15点伤害，回复15点HP，使敌人跳过一次行动。"
+  tooltipDescription: "\u6D88\u801720\u70B9SP\uFF0C\u9020\u621015\u70B9\u4F24\u5BB3\uFF0C\u56DE\u590D15\u70B9HP\uFF0C\u4F7F\u654C\u4EBA\u8DF3\u8FC7\u4E00\u6B21\u884C\u52A8\u3002"
   hoverDelay: 0.5
 --- !u!1 &293720856
 GameObject:
@@ -3244,7 +3271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tooltipManager: {fileID: 720426484}
   tooltipTitle: 
-  tooltipDescription: "造成10点伤害，回复5点SP。"
+  tooltipDescription: "\u9020\u621010\u70B9\u4F24\u5BB3\uFF0C\u56DE\u590D5\u70B9SP\u3002"
   hoverDelay: 0.5
 --- !u!114 &998121156
 MonoBehaviour:
@@ -5088,7 +5115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tooltipManager: {fileID: 720426484}
   tooltipTitle: 
-  tooltipDescription: "消耗40点SP，造成80点伤害。"
+  tooltipDescription: "\u6D88\u801740\u70B9SP\uFF0C\u9020\u621080\u70B9\u4F24\u5BB3\u3002"
   hoverDelay: 0.5
 --- !u!1 &2101508062
 GameObject:
