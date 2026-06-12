@@ -74,7 +74,7 @@ public class PurchaseFeedbackPanelController : MonoBehaviour
 
     private System.Collections.IEnumerator HideAfterDelay()
     {
-        yield return new WaitForSeconds(Mathf.Max(0f, hideDelay));
+        yield return new WaitForSecondsRealtime(Mathf.Max(0f, hideDelay));
         hideRoutine = null;
         Hide();
     }

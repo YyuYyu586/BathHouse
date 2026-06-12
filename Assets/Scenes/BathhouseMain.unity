@@ -210,7 +210,7 @@ MonoBehaviour:
     backgroundImage: {fileID: 837111553, guid: b7a6d275be4a7b144b1008cdd85232f0, type: 3}
   exclamationMark: {fileID: 963784053}
   combatTrigger: {fileID: 602178933}
-  preparationHintText: {fileID: 275401036}
+  preparationHintText: {fileID: 0}
   interactionDistance: 1.8
   forceCustomerColliderBlocksPlayer: 1
 --- !u!61 &5054380
@@ -650,7 +650,7 @@ MonoBehaviour:
     backgroundImage: {fileID: 837111553, guid: b7a6d275be4a7b144b1008cdd85232f0, type: 3}
   exclamationMark: {fileID: 15045954}
   combatTrigger: {fileID: 602178933}
-  preparationHintText: {fileID: 275401036}
+  preparationHintText: {fileID: 0}
   interactionDistance: 1.8
   forceCustomerColliderBlocksPlayer: 1
 --- !u!61 &55301505
@@ -1714,17 +1714,6 @@ Transform:
   - {fileID: 1335733638}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &275401036 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 887942081978331952, guid: a29edcf0f68193a4089b939bff1fccdb, type: 3}
-  m_PrefabInstance: {fileID: 1602493361}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &276009722
 GameObject:
   m_ObjectHideFlags: 0
@@ -2633,7 +2622,7 @@ MonoBehaviour:
     backgroundImage: {fileID: 837111553, guid: b7a6d275be4a7b144b1008cdd85232f0, type: 3}
   exclamationMark: {fileID: 1889319512}
   combatTrigger: {fileID: 602178933}
-  preparationHintText: {fileID: 275401036}
+  preparationHintText: {fileID: 0}
   interactionDistance: 1.8
   forceCustomerColliderBlocksPlayer: 1
 --- !u!61 &346326818
@@ -2837,7 +2826,7 @@ MonoBehaviour:
     backgroundImage: {fileID: 837111553, guid: b7a6d275be4a7b144b1008cdd85232f0, type: 3}
   exclamationMark: {fileID: 69113110}
   combatTrigger: {fileID: 602178933}
-  preparationHintText: {fileID: 275401036}
+  preparationHintText: {fileID: 0}
   interactionDistance: 1.8
   forceCustomerColliderBlocksPlayer: 1
 --- !u!61 &348963584
@@ -5771,7 +5760,7 @@ MonoBehaviour:
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - textId: 113
       order: 113
-      speakerName: "\u7CFB\u7EDF"
+      speakerName: "\u6211\u662F\u65C1\u767D"
       portraitSourceName: none
       side: L
       portrait: {fileID: 0}
@@ -5780,7 +5769,7 @@ MonoBehaviour:
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - textId: 114
       order: 114
-      speakerName: "\u7CFB\u7EDF"
+      speakerName: "\u6211\u662F\u65C1\u767D"
       portraitSourceName: none
       side: L
       portrait: {fileID: 0}
@@ -5801,7 +5790,7 @@ MonoBehaviour:
       speakerName: "\u5C0F\u798F"
       portraitSourceName: none
       side: R
-      portrait: {fileID: 0}
+      portrait: {fileID: 21300000, guid: ed4e5cfa213d7eb40bc58c908eb575a0, type: 3}
       isLeftPortrait: 0
       text: "\u987E\u5BA2\u987E\u5BA2\uFF0C\u6211\u4EEC\u73B0\u5728\u8FDB\u53BB\u5427\uFF0C\u4E1C\u897F\u5DF2\u7ECF\u5907\u597D\u4E86\uFF01"
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
@@ -6052,7 +6041,7 @@ MonoBehaviour:
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - textId: 173
       order: 173
-      speakerName: "\u7CFB\u7EDF"
+      speakerName: "\u6211\u662F\u65C1\u767D"
       portraitSourceName: none
       side: L
       portrait: {fileID: 0}
@@ -6061,7 +6050,7 @@ MonoBehaviour:
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - textId: 174
       order: 174
-      speakerName: "\u7CFB\u7EDF"
+      speakerName: "\u6211\u662F\u65C1\u767D"
       portraitSourceName: none
       side: L
       portrait: {fileID: 0}
@@ -6070,7 +6059,7 @@ MonoBehaviour:
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - textId: 175
       order: 175
-      speakerName: "\u7CFB\u7EDF"
+      speakerName: "\u6211\u662F\u65C1\u767D"
       portraitSourceName: none
       side: L
       portrait: {fileID: 0}
@@ -6088,7 +6077,7 @@ MonoBehaviour:
       backgroundImage: {fileID: 21300000, guid: a29cf2768c2215f4b9c2b86fafc9670f, type: 3}
     - textId: 177
       order: 177
-      speakerName: "\u7CFB\u7EDF"
+      speakerName: "\u6211\u662F\u65C1\u767D"
       portraitSourceName: none
       side: L
       portrait: {fileID: 0}
@@ -6431,6 +6420,16 @@ MonoBehaviour:
   goldText: {fileID: 1422014725}
   messageText: {fileID: 464718493}
   detailText: {fileID: 534613135}
+  purchaseFeedback: {fileID: 0}
+  soapIcon: {fileID: 0}
+  teaIcon: {fileID: 0}
+  waterLadleIcon: {fileID: 0}
+  towelIcon: {fileID: 0}
+  soapPriceText: {fileID: 0}
+  teaPriceText: {fileID: 0}
+  waterLadlePriceText: {fileID: 0}
+  towelPriceText: {fileID: 0}
+  unaffordablePriceColor: {r: 1, g: 0, b: 0, a: 1}
   soapPrice: 10
   teaPrice: 10
   waterLadlePrice: 60
@@ -6651,7 +6650,7 @@ MonoBehaviour:
     backgroundImage: {fileID: 837111553, guid: b7a6d275be4a7b144b1008cdd85232f0, type: 3}
   exclamationMark: {fileID: 846568824}
   combatTrigger: {fileID: 602178933}
-  preparationHintText: {fileID: 275401036}
+  preparationHintText: {fileID: 0}
   interactionDistance: 1.8
   forceCustomerColliderBlocksPlayer: 1
 --- !u!61 &798137962
@@ -7991,7 +7990,7 @@ MonoBehaviour:
     backgroundImage: {fileID: 837111553, guid: b7a6d275be4a7b144b1008cdd85232f0, type: 3}
   exclamationMark: {fileID: 737827300}
   combatTrigger: {fileID: 602178933}
-  preparationHintText: {fileID: 275401036}
+  preparationHintText: {fileID: 0}
   interactionDistance: 1.8
   forceCustomerColliderBlocksPlayer: 1
 --- !u!61 &1126347632
@@ -8359,7 +8358,7 @@ MonoBehaviour:
   lines: []
   exclamationMark: {fileID: 14301552}
   combatTrigger: {fileID: 602178933}
-  preparationHintText: {fileID: 275401036}
+  preparationHintText: {fileID: 0}
   interactionDistance: 1.8
   forceCustomerColliderBlocksPlayer: 1
 --- !u!61 &1222357672
@@ -11160,7 +11159,7 @@ MonoBehaviour:
     backgroundImage: {fileID: 837111553, guid: b7a6d275be4a7b144b1008cdd85232f0, type: 3}
   exclamationMark: {fileID: 1549007648}
   combatTrigger: {fileID: 602178933}
-  preparationHintText: {fileID: 275401036}
+  preparationHintText: {fileID: 0}
   interactionDistance: 1.8
   forceCustomerColliderBlocksPlayer: 1
 --- !u!61 &1731938826
@@ -11470,7 +11469,7 @@ MonoBehaviour:
     backgroundImage: {fileID: 837111553, guid: b7a6d275be4a7b144b1008cdd85232f0, type: 3}
   exclamationMark: {fileID: 27682665}
   combatTrigger: {fileID: 602178933}
-  preparationHintText: {fileID: 275401036}
+  preparationHintText: {fileID: 0}
   interactionDistance: 1.8
   forceCustomerColliderBlocksPlayer: 1
 --- !u!61 &1823683730
