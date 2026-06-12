@@ -10,6 +10,20 @@ public class ShopManager : MonoBehaviour
     public TextMeshProUGUI messageText;
     public TextMeshProUGUI detailText;
 
+    [Header("Purchase Feedback")]
+    public PurchaseFeedbackPanelController purchaseFeedback;
+    public Sprite soapIcon;
+    public Sprite teaIcon;
+    public Sprite waterLadleIcon;
+    public Sprite towelIcon;
+
+    [Header("Price Texts")]
+    public TextMeshProUGUI soapPriceText;
+    public TextMeshProUGUI teaPriceText;
+    public TextMeshProUGUI waterLadlePriceText;
+    public TextMeshProUGUI towelPriceText;
+    public Color unaffordablePriceColor = Color.red;
+
     [Header("Prices")]
     public int soapPrice = 15;
     public int teaPrice = 15;
@@ -17,23 +31,37 @@ public class ShopManager : MonoBehaviour
     public int towelPrice = 100;
 
     private string selectedItem = "";
+    private Color soapPriceDefaultColor = Color.white;
+    private Color teaPriceDefaultColor = Color.white;
+    private Color waterLadlePriceDefaultColor = Color.white;
+    private Color towelPriceDefaultColor = Color.white;
+    private bool priceDefaultColorsCaptured;
+    private bool warnedMissingGameManager;
 
     private void Start()
     {
         ConfigureRichText();
+        ResolveOptionalReferences();
         ApplyP0Prices();
         BindBackButtons();
         CloseShop();
+        RefreshPriceTexts();
     }
 
     public void OpenShop()
     {
-        if (shopPanel != null)
-            shopPanel.SetActive(true);
+        if (shopPanel == null)
+        {
+            Debug.LogError("ShopManager cannot open shop because shopPanel is not assigned.");
+            return;
+        }
+
+        shopPanel.SetActive(true);
 
         selectedItem = "";
         RefreshUI("欢迎来到商店！");
         ShowDetail("请选择想购买的商品。");
+        RefreshPriceTexts();
         PausePlayer(true);
     }
 
@@ -77,33 +105,46 @@ public class ShopManager : MonoBehaviour
             return;
         }
 
+        GameManager gameManager = GetGameManager("ConfirmBuy");
+        if (gameManager == null)
+        {
+            ShowShopDataUnavailableMessage();
+            return;
+        }
+
         if (selectedItem == "soap")
         {
-            TryBuy(soapPrice, () => GameManager.Instance.soapCount++, "买到了肥皂！");
+            if (TryBuy(soapPrice, () => gameManager.soapCount++, "买到了肥皂！"))
+                ShowPurchaseFeedback(soapIcon, "你购买到了肥皂 ×1");
         }
         else if (selectedItem == "tea")
         {
-            TryBuy(teaPrice, () => GameManager.Instance.teaCount++, "买到了花茶！");
+            if (TryBuy(teaPrice, () => gameManager.teaCount++, "买到了花茶！"))
+                ShowPurchaseFeedback(teaIcon, "你购买到了花茶 ×1");
         }
         else if (selectedItem == "waterLadle")
         {
-            if (GameManager.Instance.hasWaterLadle)
+            if (gameManager.hasWaterLadle)
             {
-                RefreshUI("你已经买过【质变】高级证书了。");
+                RefreshUI("已经拥有这个道具了。");
+                RefreshPriceTexts();
                 return;
             }
 
-            TryBuy(waterLadlePrice, () => GameManager.Instance.hasWaterLadle = true, "获得【质变】高级证书！");
+            if (TryBuy(waterLadlePrice, () => gameManager.hasWaterLadle = true, "获得【质变】高级证书！"))
+                ShowPurchaseFeedback(waterLadleIcon, "你购买到了水瓢");
         }
         else if (selectedItem == "towel")
         {
-            if (GameManager.Instance.hasGoldenTowel)
+            if (gameManager.hasGoldenTowel)
             {
-                RefreshUI("你已经买过黄金搓澡巾了。");
+                RefreshUI("已经拥有这个道具了。");
+                RefreshPriceTexts();
                 return;
             }
 
-            TryBuy(towelPrice, () => GameManager.Instance.hasGoldenTowel = true, "获得【终极】黄金搓澡巾！");
+            if (TryBuy(towelPrice, () => gameManager.hasGoldenTowel = true, "获得【终极】黄金搓澡巾！"))
+                ShowPurchaseFeedback(towelIcon, "你购买到了黄金搓澡巾");
         }
     }
 
@@ -112,6 +153,7 @@ public class ShopManager : MonoBehaviour
         selectedItem = "";
         ShowDetail("请选择一个商品。");
         RefreshUI("已取消选择。");
+        RefreshPriceTexts();
     }
 
     public void ExitShop()
@@ -147,29 +189,42 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    private void TryBuy(int price, System.Action onSuccess, string successMessage)
+    private bool TryBuy(int price, System.Action onSuccess, string successMessage)
     {
-        if (GameManager.Instance.playerGold >= price)
+        GameManager gameManager = GetGameManager("TryBuy");
+        if (gameManager == null)
         {
-            GameManager.Instance.playerGold -= price;
+            ShowShopDataUnavailableMessage();
+            return false;
+        }
+
+        if (gameManager.playerGold >= price)
+        {
+            gameManager.playerGold -= price;
             onSuccess.Invoke();
             RefreshUI(successMessage);
-            Debug.Log("Shop purchase success. item=" + selectedItem + ", price=" + price + ", gold=" + GameManager.Instance.playerGold + ", soapCount=" + GameManager.Instance.soapCount + ", teaCount=" + GameManager.Instance.teaCount + ".");
+            RefreshPriceTexts();
+            Debug.Log("Shop purchase success. item=" + selectedItem + ", price=" + price + ", gold=" + gameManager.playerGold + ", soapCount=" + gameManager.soapCount + ", teaCount=" + gameManager.teaCount + ".");
+            return true;
         }
-        else
-        {
-            RefreshUI("金币不足，无法购买！");
-            Debug.Log("Shop purchase failed. item=" + selectedItem + ", price=" + price + ", gold=" + GameManager.Instance.playerGold + ".");
-        }
+
+        RefreshUI("金币不足");
+        RefreshPriceTexts();
+        Debug.Log("Shop purchase failed. item=" + selectedItem + ", price=" + price + ", gold=" + gameManager.playerGold + ".");
+        return false;
     }
 
     private void RefreshUI(string message)
     {
-        if (goldText != null)
-            goldText.text = "金币：" + GameManager.Instance.playerGold;
-
         if (messageText != null)
             messageText.text = message;
+
+        if (goldText == null)
+            return;
+
+        GameManager gameManager = GetGameManager("RefreshUI");
+        if (gameManager != null)
+            goldText.text = "金币：" + gameManager.playerGold;
     }
 
     private void ShowDetail(string text)
@@ -185,6 +240,154 @@ public class ShopManager : MonoBehaviour
 
         if (detailText != null)
             detailText.richText = true;
+    }
+
+    private GameManager GetGameManager(string context)
+    {
+        if (GameManager.Instance != null)
+            return GameManager.Instance;
+
+        if (!warnedMissingGameManager)
+        {
+            warnedMissingGameManager = true;
+            Debug.LogWarning("ShopManager " + context + " skipped because GameManager.Instance is missing.");
+        }
+
+        return null;
+    }
+
+    private void ShowShopDataUnavailableMessage()
+    {
+        if (messageText != null)
+            messageText.text = "商店数据暂时不可用。";
+    }
+
+    private void ResolveOptionalReferences()
+    {
+        if (shopPanel == null)
+            return;
+
+        if (purchaseFeedback == null)
+            purchaseFeedback = shopPanel.GetComponentInChildren<PurchaseFeedbackPanelController>(true);
+
+        Transform shopRoot = shopPanel.transform;
+        ResolveItemIcons(shopRoot);
+        soapPriceText = ResolvePriceText(soapPriceText, shopRoot, "Soap");
+        teaPriceText = ResolvePriceText(teaPriceText, shopRoot, "Tea");
+        waterLadlePriceText = ResolvePriceText(waterLadlePriceText, shopRoot, "Spoon");
+        towelPriceText = ResolvePriceText(towelPriceText, shopRoot, "Towel");
+
+        CapturePriceDefaultColors();
+    }
+
+    private void ResolveItemIcons(Transform shopRoot)
+    {
+        if (soapIcon == null)
+            soapIcon = ResolveItemIcon(shopRoot, "Soap");
+
+        if (teaIcon == null)
+            teaIcon = ResolveItemIcon(shopRoot, "Tea");
+
+        if (waterLadleIcon == null)
+            waterLadleIcon = ResolveItemIcon(shopRoot, "Spoon");
+
+        if (towelIcon == null)
+            towelIcon = ResolveItemIcon(shopRoot, "Towel");
+    }
+
+    private Sprite ResolveItemIcon(Transform shopRoot, string itemObjectName)
+    {
+        Transform itemTransform = FindChildRecursive(shopRoot, itemObjectName);
+        if (itemTransform == null)
+            return null;
+
+        Image image = itemTransform.GetComponent<Image>();
+        return image != null ? image.sprite : null;
+    }
+
+    private TextMeshProUGUI ResolvePriceText(TextMeshProUGUI current, Transform shopRoot, string itemObjectName)
+    {
+        if (current != null)
+            return current;
+
+        Transform itemTransform = FindChildRecursive(shopRoot, itemObjectName);
+        if (itemTransform == null)
+            return null;
+
+        return itemTransform.GetComponentInChildren<TextMeshProUGUI>(true);
+    }
+
+    private Transform FindChildRecursive(Transform parent, string childName)
+    {
+        if (parent == null)
+            return null;
+
+        foreach (Transform child in parent)
+        {
+            if (child.name == childName)
+                return child;
+
+            Transform match = FindChildRecursive(child, childName);
+            if (match != null)
+                return match;
+        }
+
+        return null;
+    }
+
+    private void CapturePriceDefaultColors()
+    {
+        if (priceDefaultColorsCaptured)
+            return;
+
+        if (soapPriceText != null)
+            soapPriceDefaultColor = soapPriceText.color;
+
+        if (teaPriceText != null)
+            teaPriceDefaultColor = teaPriceText.color;
+
+        if (waterLadlePriceText != null)
+            waterLadlePriceDefaultColor = waterLadlePriceText.color;
+
+        if (towelPriceText != null)
+            towelPriceDefaultColor = towelPriceText.color;
+
+        priceDefaultColorsCaptured = true;
+    }
+
+    private void RefreshPriceTexts()
+    {
+        ResolveOptionalReferences();
+
+        GameManager gameManager = GetGameManager("RefreshPriceTexts");
+        if (gameManager == null)
+            return;
+
+        int gold = gameManager.playerGold;
+        RefreshPriceText(soapPriceText, soapPrice, soapPriceDefaultColor, gold);
+        RefreshPriceText(teaPriceText, teaPrice, teaPriceDefaultColor, gold);
+        RefreshPriceText(waterLadlePriceText, waterLadlePrice, waterLadlePriceDefaultColor, gold);
+        RefreshPriceText(towelPriceText, towelPrice, towelPriceDefaultColor, gold);
+    }
+
+    private void RefreshPriceText(TextMeshProUGUI priceText, int price, Color defaultColor, int gold)
+    {
+        if (priceText == null)
+            return;
+
+        priceText.text = price.ToString();
+        priceText.color = gold >= price ? defaultColor : unaffordablePriceColor;
+    }
+
+    private void ShowPurchaseFeedback(Sprite icon, string message)
+    {
+        if (purchaseFeedback == null)
+        {
+            Debug.LogWarning("ShopManager purchaseFeedback is not assigned. Purchase feedback will not be shown.");
+            return;
+        }
+
+        purchaseFeedback.Show(icon, message);
     }
 
     private void PausePlayer(bool shouldPause)

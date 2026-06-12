@@ -7187,10 +7187,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7632895452764808405, guid: 2f83e84da3af9c84184d2bee02e3ff3a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1534773067}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f83e84da3af9c84184d2bee02e3ff3a, type: 3}
 --- !u!1 &852788962 stripped
 GameObject:
@@ -10082,26 +10079,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7632895452764808405, guid: 2f83e84da3af9c84184d2bee02e3ff3a, type: 3}
   m_PrefabInstance: {fileID: 852788961}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1534773067
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1534773062}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc07c0039fe35aa4faeefc6ee6816273, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shopPanel: {fileID: 0}
-  goldText: {fileID: 0}
-  messageText: {fileID: 0}
-  detailText: {fileID: 0}
-  soapPrice: 10
-  teaPrice: 10
-  waterLadlePrice: 60
-  towelPrice: 100
 --- !u!1 &1538392982 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5209460926906584758, guid: 1e6ff63d035755d4b96268eaa54b01e8, type: 3}
