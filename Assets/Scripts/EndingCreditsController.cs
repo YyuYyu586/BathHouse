@@ -50,24 +50,11 @@ public class EndingCreditsController : MonoBehaviour
     private bool isPlaying;
     private bool isReturning;
     private Coroutine creditsRoutine;
-    private float playStartedAt;
-    private bool loggedFirstScrollLoop;
-    private bool loggedTopEnteredViewport;
 
     private void Awake()
     {
         if (endingCreditsPanel != null)
             endingCreditsPanel.SetActive(false);
-    }
-
-    private void OnEnable()
-    {
-        Debug.Log($"EndingCreditsController OnEnable at time={Time.time:0.###}");
-    }
-
-    private void Start()
-    {
-        Debug.Log($"EndingCreditsController Start at time={Time.time:0.###}");
     }
 
     private void Update()
@@ -102,15 +89,10 @@ public class EndingCreditsController : MonoBehaviour
         }
 
         isPlaying = true;
-        playStartedAt = Time.time;
-        loggedFirstScrollLoop = false;
-        loggedTopEnteredViewport = false;
-        Debug.Log($"EndingCreditsController PlayCredits started at time={Time.time:0.###}");
 
         endingCreditsPanel.SetActive(true);
         creditsText.gameObject.SetActive(true);
         ApplyCreditsTextForCurrentMode();
-        Debug.Log($"EndingCreditsController text applied at time={Time.time:0.###}, sincePlay={Time.time - playStartedAt:0.###}");
 
         PrepareCreditsText();
 
@@ -118,8 +100,6 @@ public class EndingCreditsController : MonoBehaviour
         RectTransform viewportRect = GetCreditsViewportRect(textRect);
 
         MoveCreditsToViewportBottom(textRect, viewportRect);
-        Debug.Log($"EndingCreditsController start position set at time={Time.time:0.###}, sincePlay={Time.time - playStartedAt:0.###}");
-        LogCreditsBounds("start", textRect, viewportRect, 0f);
 
         creditsRoutine = StartCoroutine(PlayCreditsRoutine(textRect, viewportRect));
     }
@@ -196,22 +176,9 @@ public class EndingCreditsController : MonoBehaviour
 
         while (!HasCreditsExitedViewport(textRect, viewportRect))
         {
-            if (!loggedFirstScrollLoop)
-            {
-                loggedFirstScrollLoop = true;
-                Debug.Log($"EndingCreditsController first scroll loop at time={Time.time:0.###}, sincePlay={Time.time - playStartedAt:0.###}");
-            }
-
-            if (!loggedTopEnteredViewport && HasCreditsTopEnteredViewportBottom(textRect, viewportRect))
-            {
-                loggedTopEnteredViewport = true;
-                Debug.Log($"EndingCreditsController credits top entered viewport bottom at time={Time.time:0.###}, sincePlay={Time.time - playStartedAt:0.###}");
-            }
-
             elapsed += Time.deltaTime;
             if (elapsed >= Mathf.Max(0.1f, maxScrollSeconds))
             {
-                LogCreditsBounds("timeout", textRect, viewportRect, elapsed);
                 Debug.LogWarning($"EndingCreditsController credits scroll exceeded maxScrollSeconds={maxScrollSeconds:0.###}. Returning to MainMenu.");
                 ReturnToMainMenu();
                 yield break;
@@ -220,8 +187,6 @@ public class EndingCreditsController : MonoBehaviour
             textRect.anchoredPosition += Vector2.up * Mathf.Max(1f, scrollSpeed) * Time.deltaTime;
             yield return null;
         }
-
-        LogCreditsBounds("finished", textRect, viewportRect, elapsed);
 
         yield return new WaitForSeconds(Mathf.Max(0f, endWaitSeconds));
 
@@ -243,13 +208,6 @@ public class EndingCreditsController : MonoBehaviour
         return textBottom > viewportTop + Mathf.Max(0f, extraScrollPadding);
     }
 
-    private bool HasCreditsTopEnteredViewportBottom(RectTransform textRect, RectTransform viewportRect)
-    {
-        GetWorldVerticalBounds(textRect, out _, out float textTop);
-        GetWorldVerticalBounds(viewportRect, out float viewportBottom, out _);
-        return textTop >= viewportBottom;
-    }
-
     private static void GetWorldVerticalBounds(RectTransform rectTransform, out float bottom, out float top)
     {
         Vector3[] corners = new Vector3[4];
@@ -262,17 +220,6 @@ public class EndingCreditsController : MonoBehaviour
             bottom = Mathf.Min(bottom, corners[i].y);
             top = Mathf.Max(top, corners[i].y);
         }
-    }
-
-    private void LogCreditsBounds(string phase, RectTransform textRect, RectTransform viewportRect, float elapsed)
-    {
-        GetWorldVerticalBounds(textRect, out float textBottom, out float textTop);
-        GetWorldVerticalBounds(viewportRect, out float viewportBottom, out float viewportTop);
-        Debug.Log(
-            $"EndingCreditsController {phase}: preferredHeight={creditsText.preferredHeight:0.###}, " +
-            $"viewportTop={viewportTop:0.###}, viewportBottom={viewportBottom:0.###}, " +
-            $"creditsTextTop={textTop:0.###}, creditsTextBottom={textBottom:0.###}, " +
-            $"scrollSpeed={scrollSpeed:0.###}, extraScrollPadding={extraScrollPadding:0.###}, elapsed={elapsed:0.###}");
     }
 
     private void ReturnToMainMenu()
