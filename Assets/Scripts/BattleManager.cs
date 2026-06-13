@@ -87,6 +87,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private int maxBattleLogLines = 5;
     [SerializeField] private float battleLogLineDelay = 0.75f;
     [SerializeField] private RectTransform playerDamagePopupPoint;
+    [SerializeField] private Image playerAvatarImage;
 
     [Header("Enemy UI")]
     [SerializeField] private Image enemyImage;
@@ -179,6 +180,9 @@ public class BattleManager : MonoBehaviour
     private bool warnedMissingEnemyHitFeedback;
     private bool warnedMissingPlayerHitFeedback;
     private bool warnedMissingBathGodTitleText;
+    private bool warnedMissingPlayerAvatarImage;
+    private bool hasCachedPlayerAvatarColor;
+    private Color playerAvatarOriginalColor = Color.white;
     private int currentRound = 1;
     private readonly List<string> battleLogLines = new List<string>();
     private readonly Queue<string> battleLogQueue = new Queue<string>();
@@ -270,6 +274,7 @@ public class BattleManager : MonoBehaviour
             bathGodEffect.SetActive(false);
 
         HideBathGodTitle();
+        SetPlayerAvatarDefeatedVisual(false);
         ClearBattleLog();
         ApplyEnemyVisualForCurrentDay();
         RefreshActionButtonsForCurrentState("battle start");
@@ -600,6 +605,15 @@ public class BattleManager : MonoBehaviour
 
         if (currentPlayerHP <= 0)
         {
+            yield return new WaitForSeconds(GetPlayerDefeatFeedbackDelay());
+            ShowPlayerDefeatedFeedback();
+
+            if (IsMainStoryDay7FinalBoss() && !day7InterludeTriggered)
+            {
+                yield return StartCoroutine(Day7PlayerDefeatInterludeRoutine());
+                yield break;
+            }
+
             TriggerBathGodIntervention("Player HP reached zero.");
             yield break;
         }
@@ -666,6 +680,7 @@ public class BattleManager : MonoBehaviour
 
             currentPlayerHP = Mathf.Max(1, currentPlayerHP);
             currentEnemyHP = 0;
+            SetPlayerAvatarDefeatedVisual(false);
             SavePlayerState();
             RefreshAllUI();
 
@@ -684,6 +699,7 @@ public class BattleManager : MonoBehaviour
 
             currentPlayerHP = Mathf.Min(maxPlayerHP, Mathf.Max(1, currentPlayerHP) + Mathf.CeilToInt(maxPlayerHP * 0.5f));
             currentPlayerSP = Mathf.Min(maxPlayerSP, currentPlayerSP + Mathf.CeilToInt(maxPlayerSP * 0.5f));
+            SetPlayerAvatarDefeatedVisual(false);
 
             if (!day7InterludeTriggered)
                 yield return Day7InterludeRoutine();
@@ -709,6 +725,7 @@ public class BattleManager : MonoBehaviour
 
         currentPlayerHP = Mathf.Max(1, currentPlayerHP);
         currentEnemyHP = 0;
+        SetPlayerAvatarDefeatedVisual(false);
         SavePlayerState();
         RefreshAllUI();
 
@@ -829,13 +846,57 @@ public class BattleManager : MonoBehaviour
         return baseDamage;
     }
 
+    private bool IsMainStoryDay7FinalBoss()
+    {
+        return currentDay == 7 && !IsDiabetesDLCMode();
+    }
+
     private bool ShouldTriggerDay7HalfHpInterlude(int nextEnemyHP)
     {
+        if (IsDiabetesDLCMode())
+            return false;
+
+        if (IsMainStoryDay7FinalBoss())
+            return false;
+
         if (currentDay != 7 || day7InterludeTriggered || day7BossWeakened)
             return false;
 
         int halfHpThreshold = Mathf.CeilToInt(maxEnemyHP * 0.5f);
         return nextEnemyHP <= halfHpThreshold;
+    }
+
+    private IEnumerator Day7PlayerDefeatInterludeRoutine()
+    {
+        if (isChangingDay7Phase)
+            yield break;
+
+        day7InterludeTriggered = true;
+        isChangingDay7Phase = true;
+        battleEnded = true;
+        isPlayerTurn = false;
+        SetActionButtonsInteractable(false);
+        ShowPlayerDefeatedFeedback();
+
+        yield return new WaitForSeconds(Mathf.Max(1.5f, fillSmoothTime));
+
+        yield return Day7InterludeRoutine();
+        yield return StartCoroutine(PlayBathGodEffectRoutine());
+
+        currentPlayerHP = maxPlayerHP;
+        currentPlayerSP = maxPlayerSP;
+        SetPlayerAvatarDefeatedVisual(false);
+        ApplyDay7BossWeakening();
+        PlayEnemyIdleAnimation(GetEnemyIdleFramesForCurrentDay(), GetEnemySpriteForCurrentDay());
+
+        battleEnded = false;
+        isChangingDay7Phase = false;
+        isDay7InterludePlaying = false;
+        isPlayerTurn = true;
+        SavePlayerState();
+        RefreshAllUI();
+        RefreshActionButtonsForCurrentState("day7 defeat interlude complete");
+        LogBattleState("Day7 defeat interlude finished");
     }
 
     private IEnumerator Day7HalfHpInterludeRoutine()
@@ -895,6 +956,9 @@ public class BattleManager : MonoBehaviour
 
     private bool HasReachedBathGodTurnLimit()
     {
+        if (IsMainStoryDay7FinalBoss())
+            return false;
+
         return bathGodTurnLimit > 0 && currentRound >= bathGodTurnLimit;
     }
 
@@ -1754,6 +1818,73 @@ public class BattleManager : MonoBehaviour
     #endregion
 
     #region Messages and Feedback
+
+    private void ShowPlayerDefeatedFeedback()
+    {
+        currentPlayerHP = 0;
+        RefreshPlayerUI();
+        SetActionButtonsInteractable(false);
+        SetPlayerAvatarDefeatedVisual(true);
+    }
+
+    private float GetPlayerDefeatFeedbackDelay()
+    {
+        float feedbackDelay = 0f;
+
+        if (playerHitFeedback != null)
+            feedbackDelay = Mathf.Max(playerHitFeedback.flashDuration, playerHitFeedback.shakeDuration);
+
+        return Mathf.Max(feedbackDelay, fillSmoothTime, 0.2f);
+    }
+
+    private void CachePlayerAvatarImageIfNeeded()
+    {
+        if (playerAvatarImage == null && playerHitFeedback != null)
+            playerAvatarImage = playerHitFeedback.GetComponent<Image>();
+
+        if (playerAvatarImage == null)
+        {
+            GameObject playerAvatarObject = GameObject.Find("PlayerAvatar");
+            if (playerAvatarObject != null)
+                playerAvatarImage = playerAvatarObject.GetComponent<Image>();
+        }
+
+        if (playerAvatarImage == null)
+            return;
+
+        if (!hasCachedPlayerAvatarColor)
+        {
+            playerAvatarOriginalColor = playerAvatarImage.color;
+            hasCachedPlayerAvatarColor = true;
+        }
+    }
+
+    private void SetPlayerAvatarDefeatedVisual(bool defeated)
+    {
+        CachePlayerAvatarImageIfNeeded();
+
+        if (playerAvatarImage == null)
+        {
+            if (!warnedMissingPlayerAvatarImage)
+            {
+                warnedMissingPlayerAvatarImage = true;
+                Debug.LogWarning("BattleManager could not find PlayerAvatar Image for defeated visual.");
+            }
+
+            return;
+        }
+
+        if (defeated)
+        {
+            Color defeatedColor = Color.Lerp(playerAvatarOriginalColor, Color.gray, 0.75f);
+            defeatedColor.a = playerAvatarOriginalColor.a;
+            playerAvatarImage.color = defeatedColor;
+        }
+        else if (hasCachedPlayerAvatarColor)
+        {
+            playerAvatarImage.color = playerAvatarOriginalColor;
+        }
+    }
 
     private void PlayEnemyHitFeedback()
     {

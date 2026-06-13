@@ -271,7 +271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tooltipManager: {fileID: 720426484}
   tooltipTitle: 
-  tooltipDescription: "\u6D88\u801715\u70B9SP\uFF0C\u9020\u621025\u70B9\u603B\u4F24\u5BB3\uFF0C\u52062-3\u6BB5\u547D\u4E2D\u3002"
+  tooltipDescription: "\u73CD\u73E0\u6D74\u7403\u5927\u51B2\u6D17\uFF1A\u6D88\u801715\u70B9SP\uFF0C\u9020\u621025\u70B9\u603B\u4F24\u5BB3\uFF0C\u52062-3\u6BB5\u547D\u4E2D\u3002"
   hoverDelay: 0.5
 --- !u!1 &81266526
 GameObject:
@@ -1011,6 +1011,7 @@ MonoBehaviour:
   maxBattleLogLines: 3
   battleLogLineDelay: 0.8
   playerDamagePopupPoint: {fileID: 1014386401}
+  playerAvatarImage: {fileID: 0}
   enemyImage: {fileID: 2101508064}
   enemyAnimationPlayer: {fileID: 2101508066}
   enemyHPFillImage: {fileID: 132333631}
@@ -1407,7 +1408,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tooltipManager: {fileID: 720426484}
   tooltipTitle: 
-  tooltipDescription: "\u6D88\u801720\u70B9SP\uFF0C\u9020\u621015\u70B9\u4F24\u5BB3\uFF0C\u56DE\u590D15\u70B9HP\uFF0C\u4F7F\u654C\u4EBA\u8DF3\u8FC7\u4E00\u6B21\u884C\u52A8\u3002"
+  tooltipDescription: "\u6CE1\u6CE1\u8FF7\u4EBA\u773C\uFF1A\u6D88\u801720\u70B9SP\uFF0C\u9020\u621015\u70B9\u4F24\u5BB3\uFF0C\u56DE\u590D15\u70B9HP\uFF0C\u4F7F\u654C\u4EBA\u8DF3\u8FC7\u4E00\u6B21\u884C\u52A8\u3002"
   hoverDelay: 0.5
 --- !u!1 &293720856
 GameObject:
@@ -3244,7 +3245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tooltipManager: {fileID: 720426484}
   tooltipTitle: 
-  tooltipDescription: "\u9020\u621010\u70B9\u4F24\u5BB3\uFF0C\u56DE\u590D5\u70B9SP\u3002"
+  tooltipDescription: "\u53EA\u662F\u5355\u7EAF\u7684\u6413\uFF1A\u9AD8\u7EA7\u6413\u6FA1\u5DFE\u540D\u4E0D\u865A\u4F20\uFF01\u9020\u621010\u70B9\u4F24\u5BB3\uFF0C\u56DE\u590D5\u70B9SP\u3002"
   hoverDelay: 0.5
 --- !u!114 &998121156
 MonoBehaviour:
@@ -4055,8 +4056,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32
-  m_fontSizeBase: 32
+  m_fontSize: 31
+  m_fontSizeBase: 31
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4091,7 +4092,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -20.161621, z: -125.93884, w: 6.2511597}
+  m_margin: {x: -64.73248, y: -20.161621, z: -125.93884, w: 6.2511597}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -5088,7 +5089,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tooltipManager: {fileID: 720426484}
   tooltipTitle: 
-  tooltipDescription: "\u6D88\u801740\u70B9SP\uFF0C\u9020\u621080\u70B9\u4F24\u5BB3\u3002"
+  tooltipDescription: "\u7075\u9B42\u629B\u5149\uFF1A\u4F7F\u7528\u91D1\u5AC2\u8D2D\u4E70\u7684\u8D85\u7EA7\u6D01\u51C0\u80A5\u7682\uFF0C\u6D88\u801740\u70B9SP\uFF0C\u9020\u621080\u70B9\u4F24\u5BB3\u3002"
   hoverDelay: 0.5
 --- !u!1 &2101508062
 GameObject:

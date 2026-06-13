@@ -47,6 +47,12 @@ public class AfterCombatStoryController : MonoBehaviour
             Debug.LogWarning("AfterCombatStoryController continueButton is not assigned. Drag the DayTransitionPanel Continue Button in Inspector.");
         }
 
+        if (IsMainStoryDayOneTransition())
+        {
+            EndStory();
+            return;
+        }
+
         DialogueLine[] todayLines = GetTodayDialogueLines();
         int linesCount = todayLines != null ? todayLines.Length : 0;
 
@@ -169,6 +175,9 @@ public class AfterCombatStoryController : MonoBehaviour
         if (gameManager == null)
             gameManager = GameManager.EnsureInstance();
 
+        if (IsMainStoryDayOneTransition())
+            return null;
+
         if (gameManager.currentGameMode == GameMode.DiabetesDLC)
             return GetTodayDLCDialogueLines();
 
@@ -215,5 +224,13 @@ public class AfterCombatStoryController : MonoBehaviour
     {
         gameManager = GameManager.EnsureInstance();
         return Mathf.Clamp(gameManager.currentDay, 1, gameManager.maxDay) - 1;
+    }
+
+    private bool IsMainStoryDayOneTransition()
+    {
+        if (gameManager == null)
+            gameManager = GameManager.EnsureInstance();
+
+        return gameManager.currentGameMode == GameMode.MainStory && gameManager.currentDay == 1;
     }
 }
