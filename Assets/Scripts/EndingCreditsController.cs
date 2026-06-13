@@ -2,12 +2,15 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class EndingCreditsController : MonoBehaviour
 {
     [Header("UI")]
     public GameObject endingCreditsPanel;
     public TextMeshProUGUI creditsText;
+    public RectTransform viewport;
 
     [Header("Credits Text")]
     [TextArea(8, 20)]
@@ -35,9 +38,11 @@ public class EndingCreditsController : MonoBehaviour
 
     [Header("Scroll")]
     public float scrollSpeed = 60f;
-    public float startY = -500f;
-    public float endY = 700f;
-    [SerializeField] private float dlcExtraScrollPadding = 300f;
+    [FormerlySerializedAs("dlcExtraScrollPadding")]
+    public float extraScrollPadding = 300f;
+    public float startPadding = 30f;
+    public float endWaitSeconds = 1f;
+    public float maxScrollSeconds = 180f;
 
     [Header("Scene")]
     public string mainMenuSceneName = "MainMenu";
@@ -45,11 +50,24 @@ public class EndingCreditsController : MonoBehaviour
     private bool isPlaying;
     private bool isReturning;
     private Coroutine creditsRoutine;
+    private float playStartedAt;
+    private bool loggedFirstScrollLoop;
+    private bool loggedTopEnteredViewport;
 
     private void Awake()
     {
         if (endingCreditsPanel != null)
             endingCreditsPanel.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        Debug.Log($"EndingCreditsController OnEnable at time={Time.time:0.###}");
+    }
+
+    private void Start()
+    {
+        Debug.Log($"EndingCreditsController Start at time={Time.time:0.###}");
     }
 
     private void Update()
@@ -84,17 +102,26 @@ public class EndingCreditsController : MonoBehaviour
         }
 
         isPlaying = true;
+        playStartedAt = Time.time;
+        loggedFirstScrollLoop = false;
+        loggedTopEnteredViewport = false;
+        Debug.Log($"EndingCreditsController PlayCredits started at time={Time.time:0.###}");
+
         endingCreditsPanel.SetActive(true);
         creditsText.gameObject.SetActive(true);
         ApplyCreditsTextForCurrentMode();
-        float actualEndY = GetCreditsEndYForCurrentMode();
+        Debug.Log($"EndingCreditsController text applied at time={Time.time:0.###}, sincePlay={Time.time - playStartedAt:0.###}");
+
+        PrepareCreditsText();
 
         RectTransform textRect = creditsText.rectTransform;
-        Vector2 position = textRect.anchoredPosition;
-        position.y = startY;
-        textRect.anchoredPosition = position;
+        RectTransform viewportRect = GetCreditsViewportRect(textRect);
 
-        creditsRoutine = StartCoroutine(PlayCreditsRoutine(textRect, actualEndY));
+        MoveCreditsToViewportBottom(textRect, viewportRect);
+        Debug.Log($"EndingCreditsController start position set at time={Time.time:0.###}, sincePlay={Time.time - playStartedAt:0.###}");
+        LogCreditsBounds("start", textRect, viewportRect, 0f);
+
+        creditsRoutine = StartCoroutine(PlayCreditsRoutine(textRect, viewportRect));
     }
 
     private void ApplyCreditsTextForCurrentMode()
@@ -108,34 +135,144 @@ public class EndingCreditsController : MonoBehaviour
             creditsText.text = selectedText;
     }
 
-    private float GetCreditsEndYForCurrentMode()
+    private void PrepareCreditsText()
     {
-        GameManager gm = GameManager.EnsureInstance();
-        if (gm.currentGameMode != GameMode.DiabetesDLC)
-            return endY;
+        creditsText.overflowMode = TextOverflowModes.Overflow;
 
-        creditsText.ForceMeshUpdate();
-        float dlcEndY = startY + creditsText.preferredHeight + dlcExtraScrollPadding;
-        return Mathf.Max(endY, dlcEndY);
+        Canvas.ForceUpdateCanvases();
+        creditsText.ForceMeshUpdate(true, true);
+
+        RectTransform textRect = creditsText.rectTransform;
+        float preferredHeight = Mathf.Max(creditsText.preferredHeight, textRect.rect.height);
+        Vector2 sizeDelta = textRect.sizeDelta;
+        sizeDelta.y = preferredHeight;
+        textRect.sizeDelta = sizeDelta;
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(textRect);
+        Canvas.ForceUpdateCanvases();
+        creditsText.ForceMeshUpdate(true, true);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(textRect);
+        Canvas.ForceUpdateCanvases();
     }
 
-    private IEnumerator PlayCreditsRoutine(RectTransform textRect, float actualEndY)
+    private void MoveCreditsToViewportBottom(RectTransform textRect, RectTransform viewportRect)
     {
-        float distance = Mathf.Abs(actualEndY - startY);
-        float duration = Mathf.Max(0.1f, distance / Mathf.Max(1f, scrollSpeed));
+        RefreshCreditsLayout(textRect);
+
+        for (int i = 0; i < 12; i++)
+        {
+            GetWorldVerticalBounds(textRect, out _, out float textTop);
+            GetWorldVerticalBounds(viewportRect, out float viewportBottom, out _);
+            float targetTop = viewportBottom + Mathf.Max(0f, startPadding);
+
+            if (Mathf.Abs(textTop - targetTop) <= 0.01f)
+                return;
+
+            Vector2 position = textRect.anchoredPosition;
+            position.y += targetTop - textTop;
+            textRect.anchoredPosition = position;
+            RefreshCreditsLayout(textRect);
+        }
+    }
+
+    private RectTransform GetCreditsViewportRect(RectTransform textRect)
+    {
+        if (viewport != null)
+            return viewport;
+
+        Canvas canvas = textRect.GetComponentInParent<Canvas>();
+        if (canvas != null && canvas.transform is RectTransform canvasRect)
+            return canvasRect;
+
+        if (endingCreditsPanel != null && endingCreditsPanel.TryGetComponent(out RectTransform panelRect))
+            return panelRect;
+
+        return textRect;
+    }
+
+    private IEnumerator PlayCreditsRoutine(RectTransform textRect, RectTransform viewportRect)
+    {
         float elapsed = 0f;
 
-        while (elapsed < duration)
+        while (!HasCreditsExitedViewport(textRect, viewportRect))
         {
+            if (!loggedFirstScrollLoop)
+            {
+                loggedFirstScrollLoop = true;
+                Debug.Log($"EndingCreditsController first scroll loop at time={Time.time:0.###}, sincePlay={Time.time - playStartedAt:0.###}");
+            }
+
+            if (!loggedTopEnteredViewport && HasCreditsTopEnteredViewportBottom(textRect, viewportRect))
+            {
+                loggedTopEnteredViewport = true;
+                Debug.Log($"EndingCreditsController credits top entered viewport bottom at time={Time.time:0.###}, sincePlay={Time.time - playStartedAt:0.###}");
+            }
+
             elapsed += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsed / duration);
-            Vector2 position = textRect.anchoredPosition;
-            position.y = Mathf.Lerp(startY, actualEndY, t);
-            textRect.anchoredPosition = position;
+            if (elapsed >= Mathf.Max(0.1f, maxScrollSeconds))
+            {
+                LogCreditsBounds("timeout", textRect, viewportRect, elapsed);
+                Debug.LogWarning($"EndingCreditsController credits scroll exceeded maxScrollSeconds={maxScrollSeconds:0.###}. Returning to MainMenu.");
+                ReturnToMainMenu();
+                yield break;
+            }
+
+            textRect.anchoredPosition += Vector2.up * Mathf.Max(1f, scrollSpeed) * Time.deltaTime;
             yield return null;
         }
 
+        LogCreditsBounds("finished", textRect, viewportRect, elapsed);
+
+        yield return new WaitForSeconds(Mathf.Max(0f, endWaitSeconds));
+
         ReturnToMainMenu();
+    }
+
+    private void RefreshCreditsLayout(RectTransform textRect)
+    {
+        Canvas.ForceUpdateCanvases();
+        creditsText.ForceMeshUpdate(true, true);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(textRect);
+        Canvas.ForceUpdateCanvases();
+    }
+
+    private bool HasCreditsExitedViewport(RectTransform textRect, RectTransform viewportRect)
+    {
+        GetWorldVerticalBounds(textRect, out float textBottom, out _);
+        GetWorldVerticalBounds(viewportRect, out _, out float viewportTop);
+        return textBottom > viewportTop + Mathf.Max(0f, extraScrollPadding);
+    }
+
+    private bool HasCreditsTopEnteredViewportBottom(RectTransform textRect, RectTransform viewportRect)
+    {
+        GetWorldVerticalBounds(textRect, out _, out float textTop);
+        GetWorldVerticalBounds(viewportRect, out float viewportBottom, out _);
+        return textTop >= viewportBottom;
+    }
+
+    private static void GetWorldVerticalBounds(RectTransform rectTransform, out float bottom, out float top)
+    {
+        Vector3[] corners = new Vector3[4];
+        rectTransform.GetWorldCorners(corners);
+        bottom = corners[0].y;
+        top = corners[0].y;
+
+        for (int i = 1; i < corners.Length; i++)
+        {
+            bottom = Mathf.Min(bottom, corners[i].y);
+            top = Mathf.Max(top, corners[i].y);
+        }
+    }
+
+    private void LogCreditsBounds(string phase, RectTransform textRect, RectTransform viewportRect, float elapsed)
+    {
+        GetWorldVerticalBounds(textRect, out float textBottom, out float textTop);
+        GetWorldVerticalBounds(viewportRect, out float viewportBottom, out float viewportTop);
+        Debug.Log(
+            $"EndingCreditsController {phase}: preferredHeight={creditsText.preferredHeight:0.###}, " +
+            $"viewportTop={viewportTop:0.###}, viewportBottom={viewportBottom:0.###}, " +
+            $"creditsTextTop={textTop:0.###}, creditsTextBottom={textBottom:0.###}, " +
+            $"scrollSpeed={scrollSpeed:0.###}, extraScrollPadding={extraScrollPadding:0.###}, elapsed={elapsed:0.###}");
     }
 
     private void ReturnToMainMenu()
