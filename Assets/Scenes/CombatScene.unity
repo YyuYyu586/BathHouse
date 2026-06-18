@@ -1027,9 +1027,9 @@ MonoBehaviour:
   day7BossSprite: {fileID: 0}
   day7BossWeakenedSprite: {fileID: 0}
   dlcEnemySprites:
-  - {fileID: 21300000, guid: 3eb8a96dedf092147be8b8067029d54a, type: 3}
-  - {fileID: 21300000, guid: 2628a3142bdfce445b676255c32cfc69, type: 3}
-  - {fileID: 21300000, guid: 14420e1b57cecd54f95712c74cf222a5, type: 3}
+  - {fileID: 21300000, guid: 18c835cbb200f8c449ebf8e3172e2b10, type: 3}
+  - {fileID: 21300000, guid: 00e5deac27122274c966613e2d1570d7, type: 3}
+  - {fileID: 21300000, guid: 90c277f58db9085489fd1d370fd97d02, type: 3}
   day2EnemyIdleFrames:
   - {fileID: -1609513239, guid: 90d384637b797424b800b924ed205612, type: 3}
   - {fileID: -998434474, guid: 90d384637b797424b800b924ed205612, type: 3}
